@@ -1,0 +1,186 @@
+h4,p,h5 {
+    font-family: 'Lato', sans-serif !important;
+}
+
+h5,a {
+    color: #0035aa !important;
+}
+
+hr {
+    border-top: 1px solid #848484 !important;
+}
+
+/*  CSS MENU */
+.nav-bar {
+    background-color: white !important;
+}
+
+.navbar-nav {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.navbar-logo {
+    max-width: 150px !important;
+}
+
+.navbar-nav .nav-link {
+    color: black !important;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #414141 !important;
+}
+
+.navbar-nav .nav-item:nth-child(5) .nav-link, .navbar-nav .nav-item:nth-child(6) .nav-link {
+    font-size: 24px !important;
+}
+/* FIN CSS MENU */
+
+/* FORM LOGIN */
+.login {
+    background-color: #ededed !important;
+    border-radius: 35px;
+    margin-top: 100px;
+    padding: 35px !important;
+}
+
+.login h4,h5 {
+    color: #0035aa;
+}
+
+.input-login {
+    width: 80% !important;
+    border-radius: 25px !important;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px !important;
+}
+
+.input-group-append {
+    width: 44px !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-group {
+    width: 80% !important;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+}
+
+.input-login i {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    background-color: white;
+    color: #0035aa;
+    padding-right: 10px;
+}
+
+.button-login {
+    background-color: #0035aa !important;
+    font-size: 20px !important;
+    border-radius: 25px !important;
+    width: 220px !important;
+    color: white !important;
+}
+/* FIN FORM LOGIN */
+
+/* FOOTER */
+.footer {
+    background-color: #ededed;
+    padding-top: 25px;
+}
+
+ul a {
+    color: #949494 !important;
+    
+}
+
+ul.custom-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul.custom-list > li:before {
+    content: ">";
+    color: #000000;
+    font-size: 15px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.ruc {
+    background-color: #0035aa;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ruc p {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 0px;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.col-sm>.row>.col-3>a i {
+    background-color: #009d2c;
+    color: white;
+    border-radius: 45px;
+    padding: 12px;
+}
+/* FIN FOOTER */
+
+/* MODAL */
+.modal-content {
+    border-radius: 30px !important;
+    background-color: #fbfbfb;
+    padding: 15px;
+}
+
+.modal-header {
+    border-bottom: none;
+    text-align: center;
+    margin: 0 auto;
+    color: #0035aa;
+}
+
+.modal-body {
+    font-size: 25px;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.modal-footer {
+    margin-top: none;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.modal-footer button {
+    background-color: #0035aa;
+    font-size: 20px;
+    border-radius: 25px;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.button-codigo {
+    background-color: #0035aa;
+    font-size: 20px;
+    border-radius: 25px;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.input-codigo{
+    border-radius: 25px;
+    font-size: 20px;
+}
+
+.cancel a {
+    font-size: 18px;
+    color: black;
+}
+/* FIN MODAL */
