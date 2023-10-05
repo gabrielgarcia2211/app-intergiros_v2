@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Login\loginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Controllers\ResponseController as Response;
 
 class LoginController extends Controller
 {
@@ -36,5 +41,44 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function index()
+    {
+        return view('auth.login');
+    }
+
+    public function login(loginRequest $request)
+    {
+        dd($request->all());
+    }
+
+    public function sendLoginResponse($request)
+    {
+        
+        try {
+            $ingresoError = [];
+            $user = User::where('email', $request['email'])->first();
+
+            if ($user && Hash::check($request['password'], $user->password)) {
+                $this->guard()->login($user);
+
+                if ($user->hasRole('admin')) {
+                    return redirect('/admin');
+                }
+                return redirect('');
+            } else {
+                array_push($ingresoError, "¡Los datos ingresados son incorrectos!");
+                return view('home.inicioSesion')->with(compact('ingresoError'));;
+            }
+        } catch (\Exception $ex) {
+            return Response::sendError("Ocurrio un error inesperado al intentar procesar la solicitud", 500);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+        return $this->loggedOut($request) ?: redirect('/');
     }
 }

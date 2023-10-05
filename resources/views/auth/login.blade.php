@@ -10,7 +10,8 @@
         <div class="text-center mt-5">
             <h5>Ingresa tus datos de usuario</h5>
         </div>
-        <form>
+        <form  id="formLogin">
+            @csrf
             <div class="form-row mt-5">
                 <div class="form-group col-md-6">
                     <div id="inputEmail"></div>
@@ -35,7 +36,7 @@
     @include('layouts.footer')
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="popupLogin" tabindex="-1" role="dialog" aria-labelledby="popupLoginLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -45,7 +46,8 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    Alguno de los datos ingresados no son correctos. Si has olvidado tu contraseña pulsa "Restablecer"
+                    <p id="popupDataLogin"></p>
+                    Si has olvidado tu contraseña pulsa "Restablecer"
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Intentar de nuevo</button>
@@ -57,5 +59,5 @@
 @endsection
 
 @section('script')
-    {{-- <script src="{{ asset('js/home/index.js') }}"></script> --}}
+    <script src="{{ asset('js/login/index.js') }}"></script>
 @endsection
