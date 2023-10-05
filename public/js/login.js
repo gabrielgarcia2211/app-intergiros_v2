@@ -17,7 +17,7 @@ $(() => {
         },
     });
 
-    $("#inputEmail").dxTextBox({
+    $("#codigoRecuperacion").dxTextBox({
         placeholder: "CÓDIGO",
         mode: "text",
         elementAttr: {
