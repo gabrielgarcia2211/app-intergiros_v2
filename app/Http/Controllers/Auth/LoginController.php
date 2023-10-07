@@ -48,6 +48,11 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
+    public function registro()
+    {
+        return view('auth.register');
+    }
+
     public function login(loginRequest $request)
     {
         dd($request->all());
