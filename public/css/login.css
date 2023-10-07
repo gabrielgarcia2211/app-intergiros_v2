@@ -167,6 +167,14 @@ ul.custom-list > li:before {
     font-family: 'Lato', sans-serif !important;
 }
 
+.new-password {
+    background-color: #0035aa;
+    font-size: 20px;
+    border-radius: 25px;
+    color: white !important;
+    font-family: 'Lato', sans-serif !important;
+}
+
 .button-codigo {
     background-color: #0035aa;
     font-size: 20px;
@@ -184,3 +192,96 @@ ul.custom-list > li:before {
     color: black;
 }
 /* FIN MODAL */
+
+/* TIMELINE */
+.timeline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    color: #0035aa;
+    border-radius: 50%;
+    border: #0035aa 4px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.line {
+    flex: 1;
+    height: 4px;
+    background-color: #0035aa;
+}
+/* FIN TIMELINE */
+
+/* REGISTRO */
+.continue {
+    background-color: #0035aa !important;
+    font-size: 20px !important;
+    border-radius: 25px !important;
+    width: 220px !important;
+    color: white !important;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.input-registro {
+    width: 80% !important;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px !important;
+    font-family: 'Lato', sans-serif !important;
+    border-radius: 25px !important;
+    color: #999999 !important;
+}
+
+.dx-dropdowneditor-icon {
+    border-top-right-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
+}
+
+.input-indicativo {
+    font-size: 20px !important;
+    font-family: 'Lato', sans-serif !important;
+    border-top-left-radius: 25px !important;
+    border-bottom-left-radius: 25px !important;
+}
+
+.input-telefono {
+    font-size: 20px !important;
+    font-family: 'Lato', sans-serif !important;
+    border-top-right-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
+}
+
+.input-registro i {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    background-color: white;
+    color: #0035aa;
+    padding-right: 10px;
+}
+
+.dx-button-text {
+    font-size: 20px;
+}
+
+.dx-fileuploader-button{
+    background-color: #0035aa !important;
+    color: white !important;
+    border-radius: 25px !important;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.atras {
+    font-size: 20px;
+}
+/* FIN REGISTRO */

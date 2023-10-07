@@ -27,7 +27,7 @@
                 <div id="loginButton"></div>
             </div>
             <div class="text-center mt-3">
-                <h5>¿Eres nuevo? <a href="#">¡Únete a la familia intergiros!</a></h5>
+                <h5>¿Eres nuevo? <a href="{{ asset('registro') }}">¡Únete a la familia intergiros!</a></h5>
             </div>
         </form>
     </div>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Intentar de nuevo</button>
-                    <button type="button" class="btn btn-primary">Restablecer</button>
+                    <a href="#" type="button" class="btn btn-primary new-password">Restablecer</a>
                 </div>
             </div>
         </div>
