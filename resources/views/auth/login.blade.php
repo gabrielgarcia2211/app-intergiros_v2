@@ -10,7 +10,7 @@
         <div class="text-center mt-5">
             <h5>Ingresa tus datos de usuario</h5>
         </div>
-        <form  id="formLogin">
+        <form id="formLogin">
             @csrf
             <div class="form-row mt-5">
                 <div class="form-group col-md-6">
@@ -24,7 +24,7 @@
             </div>
             <br>
             <div class="text-center mt-5 button">
-                <div id="loginButton"></div>
+                <div id="btn_login"></div>
             </div>
             <div class="text-center mt-3">
                 <h5>¿Eres nuevo? <a href="{{ asset('registro') }}">¡Únete a la familia intergiros!</a></h5>

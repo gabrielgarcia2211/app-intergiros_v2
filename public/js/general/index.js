@@ -1,3 +1,57 @@
+// FIELDS
+function setTextBox(element = "", config = {}, validations = []) {
+    return $(element).dxTextBox(config).dxValidator({
+        validationRules: validations,
+    });
+}
+
+function setTagBox(element = "", config = {}, validations = []) {
+    return $(element).dxTagBox(config).dxValidator({
+        validationRules: validations,
+    });
+}
+
+function setSelectBox(element = "", config = {}, validations = []) {
+    return $(element).dxSelectBox(config).dxValidator({
+        validationRules: validations,
+    });
+}
+
+function setCheckBox(element = "", value = true, text = "", callback) {
+    return $(element).dxCheckBox({
+        value,
+        text,
+        onValueChanged(data) {
+            callback(data);
+        },
+    });
+}
+
+function setTextArea(element = "", config = {}, validations = []) {
+    return $(element).dxTextArea(config).dxValidator({
+        validationRules: validations,
+    });
+}
+
+function setNumberBox(element = "", config = {}, validations = []) {
+    return $(element).dxNumberBox(config).dxValidator({
+        validationRules: validations,
+    });
+}
+
+function setDateBox(element = "", config = {}, validations = []) {
+    return $(element).dxDateBox(config).dxValidator({
+        validationRules: validations,
+    });
+}
+// END FIELDS
+
+// BUTTONS
+function setButton(element = "", config = {}) {
+    return $(element).dxButton(config);
+}
+// END BUTTONS
+
 // CONTROL DE ERRORES
 function handleErrorsLogin(error) {
     switch (error.response.status) {
