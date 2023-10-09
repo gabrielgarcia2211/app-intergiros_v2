@@ -117,7 +117,7 @@
             </div>
         </div>
         <hr>
-       {{--  <a href="#" onclick="atrasDiv2()" class="atras"><i class="fas fa-solid fa-chevron-left"></i>
+        {{--  <a href="#" onclick="atrasDiv2()" class="atras"><i class="fas fa-solid fa-chevron-left"></i>
             Atrás</a>
         <br> --}}
         <div id="atrasDiv2"></div>

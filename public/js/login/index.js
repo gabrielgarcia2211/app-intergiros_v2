@@ -1,16 +1,3 @@
-$(document).on("click", ".toggle-password", function () {
-    var $passwordInput = $(this).closest(".input-group").find("#inputPassword");
-    var isPasswordVisible =
-        $passwordInput.dxTextBox("option", "mode") === "text";
-
-    $passwordInput.dxTextBox(
-        "option",
-        "mode",
-        isPasswordVisible ? "password" : "text"
-    );
-    $(this).toggleClass("fa-eye fa-eye-slash");
-});
-
 var popupLogin = new bootstrap.Modal(
     document.getElementById("popupLogin"),
     {
@@ -50,6 +37,19 @@ $(document).ready(function () {
             validationStatus: "valid",
         });
 
+        const changePasswordMode = function (name) {
+            const editor = $(name).dxTextBox('instance');
+            editor.option('mode', editor.option('mode') === 'text' ? 'password' : 'text');
+    
+            const passwordButton = editor.getButton('password');
+    
+            if (editor.option('mode') === 'text') {
+                passwordButton.option('icon', 'fa fa-eye-slash');
+            } else {
+                passwordButton.option('icon', 'fa fa-eye');
+            }
+        };
+
         const inputPassword = setTextBox(
             "#inputPassword",
             {
@@ -58,14 +58,16 @@ $(document).ready(function () {
                 elementAttr: {
                     class: "form-control input-login",
                 },
-                onContentReady: function (e) {
-                    var $inputPassword = e.element.find(".dx-texteditor-input");
-                    $inputPassword.after(
-                        '<i class="fa fa-eye toggle-password" toggle="#' +
-                            $inputPassword.attr("id") +
-                            '"></i>'
-                    );
-                },
+                buttons: [{
+                    name: 'password',
+                    location: 'after',
+                    options: {
+                        icon: 'fa fa-eye',
+                        type: 'default',
+                        stylingMode: "text",
+                        onClick: () => changePasswordMode('#inputPassword'),
+                    },
+                }],
             },
             [
                 {
