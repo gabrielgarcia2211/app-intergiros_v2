@@ -11,7 +11,7 @@ $(document).on("click", ".toggle-password", function () {
     $(this).toggleClass("fa-eye fa-eye-slash");
 });
 
-popupLogin = new bootstrap.Modal(
+var popupLogin = new bootstrap.Modal(
     document.getElementById("popupLogin"),
     {
         keyboard: false,

@@ -21,6 +21,11 @@ var listTipoDoc = [
     { value: "A", text: "A" },
 ];
 
+var flagFormInfoGeneral = false;
+var flagFormInfoPassword = false;
+var flagFormInfoRedes = false;
+var flagFormInfoValidacion = false;
+
 $(document).on("click", ".toggle-password1", function () {
     event.stopPropagation();
     var $passwordInput = $(this)
@@ -58,6 +63,8 @@ $(document).ready(function () {
     initForm();
 
     function initForm() {
+        resetForm();
+
         const inputEmailRegistro = setTextBox(
             "#inputEmailRegistro",
             {
@@ -78,10 +85,6 @@ $(document).ready(function () {
                 },
             ]
         ).dxTextBox("instance");
-
-        inputEmailRegistro.option({
-            validationStatus: "valid",
-        });
 
         const inputNombresRegistro = setTextBox(
             "#inputNombresRegistro",
@@ -205,7 +208,7 @@ $(document).ready(function () {
             validationStatus: "valid",
         });
 
-        const inputNacimientoRegistro = setDateBox(
+        setDateBox(
             "#inputNacimientoRegistro",
             {
                 placeholder: "Fecha de nacimiento",
@@ -224,9 +227,11 @@ $(document).ready(function () {
             ]
         ).dxDateBox("instance");
 
-        inputNacimientoRegistro.option({
-            validationStatus: "valid",
-        });
+        /** Control de campos */
+        flagFormInfoGeneral = true;
+        flagFormInfoPassword = false;
+        flagFormInfoRedes = false;
+        flagFormInfoValidacion = false;
 
         setButton("#btn_infoGeneral", {
             text: "Continuar",
@@ -255,6 +260,8 @@ $(document).ready(function () {
     }
 
     function initFormPass() {
+        resetForm();
+
         const inputContraseñaRegistro = setTextBox(
             "#inputContraseñaRegistro",
             {
@@ -310,6 +317,11 @@ $(document).ready(function () {
             validationStatus: "valid",
         });
 
+        flagFormInfoGeneral = false;
+        flagFormInfoPassword = true;
+        flagFormInfoRedes = false;
+        flagFormInfoValidacion = false;
+
         setButton("#btn_infoPassword", {
             text: "Continuar",
             type: "submit",
@@ -337,6 +349,7 @@ $(document).ready(function () {
     }
 
     function initFormRedes() {
+        resetForm();
 
         const inputPlataforma1Registro = setSelectBox(
             "#inputPlataforma1Registro",
@@ -407,16 +420,18 @@ $(document).ready(function () {
             validationStatus: "valid",
         });
 
-        const inputRed2Registro = setTextBox(
-            "#inputRed2Registro",
-            {
-                placeholder: "Nombre de usuario",
-                mode: "text",
-                elementAttr: {
-                    class: "form-control input-registro",
-                },
-            }
-        ).dxTextBox("instance");
+        const inputRed2Registro = setTextBox("#inputRed2Registro", {
+            placeholder: "Nombre de usuario",
+            mode: "text",
+            elementAttr: {
+                class: "form-control input-registro",
+            },
+        }).dxTextBox("instance");
+
+        flagFormInfoGeneral = false;
+        flagFormInfoPassword = false;
+        flagFormInfoRedes = true;
+        flagFormInfoValidacion = false;
 
         setButton("#btn_infoRedes", {
             text: "Continuar",
@@ -428,7 +443,6 @@ $(document).ready(function () {
         });
 
         sendInfoRedes();
-
     }
 
     function sendInfoRedes() {
@@ -446,6 +460,7 @@ $(document).ready(function () {
     }
 
     function initFormValidacion() {
+        resetForm();
 
         const inputTipoDocRegistro = setSelectBox(
             "#inputTipoDocRegistro",
@@ -501,41 +516,46 @@ $(document).ready(function () {
         $("#fileSelfieRegistro").dxFileUploader({
             selectButtonText: "Toma/adjunta selfie",
             labelText: "",
-            accept: 'image/*',
+            accept: "image/*",
             uploadMode: "useForm",
             onValueChanged: function (e) {
                 console.log("Archivo seleccionado: " + e.value[0].name);
             },
         });
 
-        $('#fileSelfieRegistro').dxValidator({
+        $("#fileSelfieRegistro").dxValidator({
             validationRules: [
                 {
                     type: "required",
-                    message: "Debe agregar una selfie con el documento en mano"
-                }
-            ]
+                    message: "Debe agregar una selfie con el documento en mano",
+                },
+            ],
         });
-    
+
         $("#fileDocumentoRegistro").dxFileUploader({
             selectButtonText: "Adjunta el documento",
             labelText: "",
-            accept: 'image/*',
+            accept: "image/*",
             uploadMode: "useForm",
             onValueChanged: function (e) {
                 console.log("Archivo seleccionado: " + e.value[0].name);
             },
         });
 
-        $('#fileDocumentoRegistro').dxValidator({
+        $("#fileDocumentoRegistro").dxValidator({
             validationRules: [
                 {
                     type: "required",
-                    message: "Debe agregar una foto de su documento"
-                }
-            ]
+                    message: "Debe agregar una foto de su documento",
+                },
+            ],
         });
-    
+
+        flagFormInfoGeneral = false;
+        flagFormInfoPassword = false;
+        flagFormInfoRedes = false;
+        flagFormInfoValidacion = true;
+
         setButton("#btn_infoValidacion", {
             text: "Continuar",
             type: "submit",
@@ -552,15 +572,14 @@ $(document).ready(function () {
                 class: "button-codigo",
             },
             useSubmitBehavior: true,
-            onClick: function() {
+            onClick: function () {
                 $("#myModal").modal("hide");
                 document.getElementById("div4").style.display = "none";
                 document.getElementById("div5").style.display = "block";
-            } 
+            },
         });
 
         sendInfoValidacion();
-        
     }
 
     function sendInfoValidacion() {
@@ -572,30 +591,42 @@ $(document).ready(function () {
 
             document.getElementById("div4").style.display = "none";
             document.getElementById("div5").style.display = "block";
-
         });
     }
 
+    setButton("#atrasDiv1", {
+        text: "Atrás",
+        onClick: function () {
+            document.getElementById("div1").style.display = "block";
+            document.getElementById("div2").style.display = "none";
+            initForm();
+        },
+    });
+
+    setButton("#atrasDiv2", {
+        text: "Atrás",
+        onClick: function () {
+            document.getElementById("div2").style.display = "block";
+            document.getElementById("div3").style.display = "none";
+            initFormPass();
+        },
+    });
+
+    setButton("#atrasDiv3", {
+        text: "Atrás",
+        onClick: function () {
+            document.getElementById("div3").style.display = "block";
+            document.getElementById("div4").style.display = "none";
+            initFormRedes();
+        },
+    });
+
+    
 });
 
-/** Control de paginas */
-function atrasDiv1() {
-    document.getElementById("div1").style.display = "block";
-    document.getElementById("div2").style.display = "none";
-}
-
-function atrasDiv2() {
-    document.getElementById("div3").style.display = "none";
-    document.getElementById("div2").style.display = "block";
-}
-
-function atrasDiv3() {
-    document.getElementById("div4").style.display = "none";
-    document.getElementById("div3").style.display = "block";
-}
 
 function agregar() {
-    document.getElementById('agregar').style.display = 'none';
-    document.getElementById('otroP').style.display = 'block';
-    document.getElementById('otroN').style.display = 'block';
+    document.getElementById("agregar").style.display = "none";
+    document.getElementById("otroP").style.display = "block";
+    document.getElementById("otroN").style.display = "block";
 }

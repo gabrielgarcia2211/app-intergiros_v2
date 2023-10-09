@@ -76,9 +76,10 @@
             </div>
         </div>
         <hr>
-        <a href="#" onclick="atrasDiv1()" class="atras"><i class="fas fa-solid fa-chevron-left"></i>
+        {{-- <a href="#" onclick="atrasDiv1()" class="atras"><i class="fas fa-solid fa-chevron-left"></i>
             Atrás</a>
-        <br>
+        <br> --}}
+        <div id="atrasDiv1"></div>
         <div class="text-center mt-5">
             <h5>Crea tu contraseña</h5>
         </div>
@@ -116,9 +117,10 @@
             </div>
         </div>
         <hr>
-        <a href="#" onclick="atrasDiv2()" class="atras"><i class="fas fa-solid fa-chevron-left"></i>
+       {{--  <a href="#" onclick="atrasDiv2()" class="atras"><i class="fas fa-solid fa-chevron-left"></i>
             Atrás</a>
-        <br>
+        <br> --}}
+        <div id="atrasDiv2"></div>
         <div class="text-center mt-5">
             <h5>¿Por cuáles otras vías podemos contactarte?</h5>
         </div>
@@ -163,9 +165,10 @@
             </div>
         </div>
         <hr>
-        <a href="#" onclick="atrasDiv3()" class="atras"><i class="fas fa-solid fa-chevron-left"></i>
+        {{-- <a href="#" onclick="atrasDiv3()" class="atras"><i class="fas fa-solid fa-chevron-left"></i>
             Atrás</a>
-        <br>
+        <br> --}}
+        <div id="atrasDiv3"></div>
         <div class="text-center mt-5">
             <h5>Verifica tu identidad</h5>
             <h5>¡Ayúdanos a que todo el proceso sea más seguro!</h5>

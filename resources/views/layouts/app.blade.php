@@ -75,6 +75,7 @@
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
     </script>
     <script src="{{ asset('js/general/index.js') }}"></script>
+    <script src="{{ asset('js/general/reset.js') }}"></script>
     @yield('script')
 
 </body>
