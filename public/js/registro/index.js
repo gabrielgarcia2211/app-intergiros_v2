@@ -26,6 +26,20 @@ var flagFormInfoPassword = false;
 var flagFormInfoRedes = false;
 var flagFormInfoValidacion = false;
 
+var emailValue = "";
+var nombreValue = "";
+var apellidoValue = "";
+var indicativoValue = "";
+var numeroValue = "";
+var paisValue = "";
+var telefonoValue = "";
+var contraseñaValue = "";
+var confirmaValue = "";
+var plataforma1Value = "";
+var plataforma2Value = "";
+var red1Value = "";
+var red2Value = "";
+
 $(document).ready(function () {
     /* Registro */
     initForm();
@@ -38,8 +52,12 @@ $(document).ready(function () {
             {
                 placeholder: "Email",
                 mode: "email",
+                value: emailValue,
                 elementAttr: {
                     class: "form-control input-registro",
+                },
+                onValueChanged: function (e) {
+                    emailValue = e.value;
                 },
             },
             [
@@ -59,8 +77,12 @@ $(document).ready(function () {
             {
                 placeholder: "Nombres",
                 mode: "text",
+                value: nombreValue,
                 elementAttr: {
                     class: "form-control input-registro",
+                },
+                onValueChanged: function (e) {
+                    nombreValue = e.value;
                 },
             },
             [
@@ -80,8 +102,12 @@ $(document).ready(function () {
             {
                 placeholder: "Apellidos",
                 mode: "text",
+                value: apellidoValue,
                 elementAttr: {
                     class: "form-control input-registro",
+                },
+                onValueChanged: function (e) {
+                    apellidoValue = e.value;
                 },
             },
             [
@@ -109,8 +135,12 @@ $(document).ready(function () {
                 name: "pais",
                 searchEnabled: true,
                 minSearchLength: 0,
+                value: paisValue,
                 elementAttr: {
                     class: "form-control input-registro",
+                },
+                onValueChanged: function (e) {
+                    paisValue = e.value;
                 },
             },
             [
@@ -138,8 +168,12 @@ $(document).ready(function () {
                 searchEnabled: true,
                 minSearchLength: 0,
                 width: 100,
+                value: indicativoValue,
                 elementAttr: {
                     class: "form-control input-indicativo",
+                },
+                onValueChanged: function (e) {
+                    indicativoValue = e.value;
                 },
             },
             [
@@ -160,8 +194,12 @@ $(document).ready(function () {
                 placeholder: "Número celular",
                 name: "numero_celular",
                 mode: "number",
+                value: telefonoValue,
                 elementAttr: {
                     class: "form-control input-telefono",
+                },
+                onValueChanged: function (e) {
+                    telefonoValue = e.value;
                 },
             },
             [
@@ -248,8 +286,12 @@ $(document).ready(function () {
             {
                 placeholder: "Contraseña",
                 mode: "password",
+                value: contraseñaValue,
                 elementAttr: {
                     class: "form-control input-registro contraseña",
+                },
+                onValueChanged: function (e) {
+                    contraseñaValue = e.value;
                 },
                 buttons: [{
                     name: 'password',
@@ -279,8 +321,12 @@ $(document).ready(function () {
             {
                 placeholder: "Confirma la contraseña",
                 mode: "password",
+                value: confirmaValue,
                 elementAttr: {
                     class: "form-control input-registro contraseña",
+                },
+                onValueChanged: function (e) {
+                    confirmaValue = e.value;
                 },
                 buttons: [{
                     name: 'password',
@@ -364,8 +410,12 @@ $(document).ready(function () {
                 name: "plataforma1",
                 searchEnabled: true,
                 minSearchLength: 0,
+                value: plataforma1Value,
                 elementAttr: {
                     class: "form-control input-registro",
+                },
+                onValueChanged: function (e) {
+                    plataforma1Value = e.value;
                 },
             },
             [
@@ -393,8 +443,12 @@ $(document).ready(function () {
                 name: "plataforma2",
                 searchEnabled: true,
                 minSearchLength: 0,
+                value: plataforma2Value,
                 elementAttr: {
                     class: "form-control input-registro",
+                },
+                onValueChanged: function (e) {
+                    plataforma2Value = e.value;
                 },
             }
         ).dxSelectBox("instance");
@@ -404,8 +458,12 @@ $(document).ready(function () {
             {
                 placeholder: "Nombre de usuario",
                 mode: "text",
+                value: red1Value,
                 elementAttr: {
                     class: "form-control input-registro",
+                },
+                onValueChanged: function (e) {
+                    red1Value = e.value;
                 },
             },
             [
@@ -423,8 +481,12 @@ $(document).ready(function () {
         const inputRed2Registro = setTextBox("#inputRed2Registro", {
             placeholder: "Nombre de usuario",
             mode: "text",
+            value: red2Value,
             elementAttr: {
                 class: "form-control input-registro",
+            },
+            onValueChanged: function (e) {
+                red2Value = e.value;
             },
         }).dxTextBox("instance");
 
