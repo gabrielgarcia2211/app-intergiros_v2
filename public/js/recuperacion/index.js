@@ -52,40 +52,97 @@ $(document).ready(function () {
             class: "button-codigo",
         },
         onClick: function () {
-            alert("Botón 'Enviar' presionado");
+            $("#myModal").modal("hide");
+            document.getElementById('newPassword').style.display = "block";
+            document.getElementById('repeatPassword').style.display = "block";
         },
     });
 
-    $("#inputPasswordNuevo").dxTextBox({
-        placeholder: "Contraseña nueva",
-        mode: "password",
-        elementAttr: {
-            class: "form-control input-login",
+    const changePasswordMode = function (name) {
+        const editor = $(name).dxTextBox('instance');
+        editor.option('mode', editor.option('mode') === 'text' ? 'password' : 'text');
+
+        const passwordButton = editor.getButton('password');
+
+        if (editor.option('mode') === 'text') {
+            passwordButton.option('icon', 'fa fa-eye-slash');
+        } else {
+            passwordButton.option('icon', 'fa fa-eye');
+        }
+    };
+
+    const inputPasswordNuevo = setTextBox(
+        "#inputPasswordNuevo",
+        {
+            placeholder: "Contraseña nueva",
+            mode: "password",
+            elementAttr: {
+                class: "form-control input-registro contraseña",
+            },
+            buttons: [{
+                name: 'password',
+                location: 'after',
+                options: {
+                    icon: 'fa fa-eye',
+                    type: 'default',
+                    stylingMode: "text",
+                    onClick: () => changePasswordMode('#inputPasswordNuevo'),
+                },
+            }],
         },
-        onContentReady: function (e) {
-            var $inputPassword = e.element.find(".dx-texteditor-input");
-            $inputPassword.after(
-                '<i class="fa fa-eye toggle-password" toggle="#' +
-                $inputPassword.attr("id") +
-                '"></i>'
-            );
-        },
+        [
+            {
+                type: "required",
+                message: "El campo de contraseña nueva es obligatorio",
+            },
+        ]
+    ).dxTextBox("instance");
+
+    inputPasswordNuevo.option({
+        validationStatus: "valid",
     });
 
-    $("#inputPasswordConfirma").dxTextBox({
-        placeholder: "Confirma la contraseña",
-        mode: "password",
-        elementAttr: {
-            class: "form-control input-login",
+    const inputPasswordConfirma = setTextBox(
+        "#inputPasswordConfirma",
+        {
+            placeholder: "Confirma la contraseña",
+            mode: "password",
+            elementAttr: {
+                class: "form-control input-registro contraseña",
+            },
+            buttons: [{
+                name: 'password',
+                location: 'after',
+                options: {
+                    icon: 'fa fa-eye',
+                    type: 'default',
+                    stylingMode: "text",
+                    onClick: () => changePasswordMode('#inputPasswordConfirma'),
+                },
+            }],
         },
-        onContentReady: function (e) {
-            var $inputPassword = e.element.find(".dx-texteditor-input");
-            $inputPassword.after(
-                '<i class="fa fa-eye toggle-password" toggle="#' +
-                $inputPassword.attr("id") +
-                '"></i>'
-            );
-        },
+        [
+            {
+                type: 'compare',
+                comparisonTarget() {
+                    const password = $('#inputPasswordNuevo').dxTextBox('instance');
+                    if (password) {
+                        return password.option('value');
+                    }
+                    return null;
+                },
+                message: "Las contraseñas no coinciden",
+            },
+            {
+                type: "required",
+                message:
+                    "El campo de confirma la contraseña es obligatorio",
+            },
+        ]
+    ).dxTextBox("instance");
+
+    inputPasswordConfirma.option({
+        validationStatus: "valid",
     });
 
 });

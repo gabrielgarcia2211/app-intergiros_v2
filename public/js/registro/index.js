@@ -26,38 +26,6 @@ var flagFormInfoPassword = false;
 var flagFormInfoRedes = false;
 var flagFormInfoValidacion = false;
 
-$(document).on("click", ".toggle-password1", function () {
-    event.stopPropagation();
-    var $passwordInput = $(this)
-        .closest(".input-group")
-        .find("#inputContraseñaRegistro");
-    var isPasswordVisible =
-        $passwordInput.dxTextBox("option", "mode") === "text";
-
-    $passwordInput.dxTextBox(
-        "option",
-        "mode",
-        isPasswordVisible ? "password" : "text"
-    );
-    $(this).toggleClass("fa-eye fa-eye-slash");
-});
-
-$(document).on("click", ".toggle-password2", function () {
-    event.stopPropagation();
-    var $passwordInput = $(this)
-        .closest(".input-group")
-        .find("#inputConfirmaRegistro");
-    var isPasswordVisible =
-        $passwordInput.dxTextBox("option", "mode") === "text";
-
-    $passwordInput.dxTextBox(
-        "option",
-        "mode",
-        isPasswordVisible ? "password" : "text"
-    );
-    $(this).toggleClass("fa-eye fa-eye-slash");
-});
-
 $(document).ready(function () {
     /* Registro */
     initForm();
@@ -164,7 +132,7 @@ $(document).ready(function () {
                     data: listTelefono,
                     key: "value",
                 }),
-                placeholder: "",
+                placeholder: "+00",
                 displayExpr: "text",
                 valueExpr: "value",
                 searchEnabled: true,
@@ -259,6 +227,19 @@ $(document).ready(function () {
         });
     }
 
+    const changePasswordMode = function (name) {
+        const editor = $(name).dxTextBox('instance');
+        editor.option('mode', editor.option('mode') === 'text' ? 'password' : 'text');
+
+        const passwordButton = editor.getButton('password');
+
+        if (editor.option('mode') === 'text') {
+            passwordButton.option('icon', 'fa fa-eye-slash');
+        } else {
+            passwordButton.option('icon', 'fa fa-eye');
+        }
+    };
+
     function initFormPass() {
         resetForm();
 
@@ -270,12 +251,16 @@ $(document).ready(function () {
                 elementAttr: {
                     class: "form-control input-registro contraseña",
                 },
-                onContentReady: function (e) {
-                    var $inputPassword = e.element.find(".dx-texteditor-input");
-                    $inputPassword.after(
-                        '<i class="fa fa-eye toggle-password1" toggle="#inputContraseñaRegistro"></i>'
-                    );
-                },
+                buttons: [{
+                    name: 'password',
+                    location: 'after',
+                    options: {
+                        icon: 'fa fa-eye',
+                        type: 'default',
+                        stylingMode: "text",
+                        onClick: () => changePasswordMode('#inputContraseñaRegistro'),
+                    },
+                }],
             },
             [
                 {
@@ -297,14 +282,29 @@ $(document).ready(function () {
                 elementAttr: {
                     class: "form-control input-registro contraseña",
                 },
-                onContentReady: function (e) {
-                    var $inputPassword = e.element.find(".dx-texteditor-input");
-                    $inputPassword.after(
-                        '<i class="fa fa-eye toggle-password2" toggle="#inputConfirmaRegistro"></i>'
-                    );
-                },
+                buttons: [{
+                    name: 'password',
+                    location: 'after',
+                    options: {
+                        icon: 'fa fa-eye',
+                        type: 'default',
+                        stylingMode: "text",
+                        onClick: () => changePasswordMode('#inputConfirmaRegistro'),
+                    },
+                }],
             },
             [
+                {
+                    type: 'compare',
+                    comparisonTarget() {
+                        const password = $('#inputContraseñaRegistro').dxTextBox('instance');
+                        if (password) {
+                            return password.option('value');
+                        }
+                        return null;
+                    },
+                    message: "Las contraseñas no coinciden",
+                },
                 {
                     type: "required",
                     message:
@@ -596,6 +596,8 @@ $(document).ready(function () {
 
     setButton("#atrasDiv1", {
         text: "Atrás",
+        icon: "fas fa-chevron-left",
+        stylingMode: "text",
         onClick: function () {
             document.getElementById("div1").style.display = "block";
             document.getElementById("div2").style.display = "none";
@@ -605,6 +607,8 @@ $(document).ready(function () {
 
     setButton("#atrasDiv2", {
         text: "Atrás",
+        icon: "fas fa-chevron-left",
+        stylingMode: "text",
         onClick: function () {
             document.getElementById("div2").style.display = "block";
             document.getElementById("div3").style.display = "none";
@@ -614,6 +618,8 @@ $(document).ready(function () {
 
     setButton("#atrasDiv3", {
         text: "Atrás",
+        icon: "fas fa-chevron-left",
+        stylingMode: "text",
         onClick: function () {
             document.getElementById("div3").style.display = "block";
             document.getElementById("div4").style.display = "none";
@@ -621,7 +627,7 @@ $(document).ready(function () {
         },
     });
 
-    
+
 });
 
 

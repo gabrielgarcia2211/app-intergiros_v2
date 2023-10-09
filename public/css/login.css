@@ -299,7 +299,25 @@ ul.custom-list > li:before {
     font-family: 'Lato', sans-serif !important;
 }
 
-.atras {
-    font-size: 20px;
+#atrasDiv1.dx-button,#atrasDiv2.dx-button,#atrasDiv3.dx-button:hover {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: inherit !important;
+}
+
+#atrasDiv1.dx-button,#atrasDiv2.dx-button,#atrasDiv3.dx-button,.dx-button i {
+    color: #0035aa !important;
+}
+
+.dx-button-has-icon:hover {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: inherit !important;
+}
+
+.dx-button-has-icon {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: inherit !important;
 }
 /* FIN REGISTRO */
