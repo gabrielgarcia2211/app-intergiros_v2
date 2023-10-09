@@ -51,7 +51,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Intentar de nuevo</button>
-                    <a href="#" type="button" class="btn btn-primary new-password">Restablecer</a>
+                    <a href="{{ asset('restablecer') }}" type="button" class="btn btn-primary new-password">Restablecer</a>
                 </div>
             </div>
         </div>

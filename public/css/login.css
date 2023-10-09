@@ -6,6 +6,14 @@ h5,a {
     color: #0035aa !important;
 }
 
+h2 {
+    font-family: 'Lato', sans-serif !important;
+}
+
+.fa-check {
+    color: #009d2c;
+}
+
 hr {
     border-top: 1px solid #848484 !important;
 }
@@ -85,6 +93,7 @@ hr {
     border-radius: 25px !important;
     width: 220px !important;
     color: white !important;
+    font-family: 'Lato', sans-serif !important;
 }
 /* FIN FORM LOGIN */
 
@@ -149,6 +158,14 @@ ul.custom-list > li:before {
     color: #0035aa;
 }
 
+.button-codigo {
+    font-family: 'Lato', sans-serif !important;
+    color: white !important;
+    border-radius: 25px !important;
+    font-size: 25px !important;
+    background-color: #0035aa !important;
+}
+
 .modal-body {
     font-size: 25px;
     font-family: 'Lato', sans-serif !important;
@@ -183,8 +200,9 @@ ul.custom-list > li:before {
 }
 
 .input-codigo{
-    border-radius: 25px;
-    font-size: 20px;
+    border-radius: 25px !important;
+    font-size: 20px !important;
+    font-family: 'Lato', sans-serif !important;
 }
 
 .cancel a {

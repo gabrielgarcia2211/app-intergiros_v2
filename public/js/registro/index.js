@@ -10,12 +10,12 @@ var listTelefono = [
     { value: "+51", text: "+51" },
 ];
 
-var selectBoxData = [
+var listRedSocial = [
     { value: 1, text: "Facebook" },
     { value: 2, text: "Instagram" },
 ];
 
-var selectBoxData = [
+var listTipoDoc = [
     { value: "T", text: "T" },
     { value: "CC", text: "CC" },
     { value: "A", text: "A" },
@@ -174,7 +174,7 @@ $(document).ready(function () {
             [
                 {
                     type: "required",
-                    message: "Por favor, selecciona un país",
+                    message: "Por favor, selecciona un indicativo",
                 },
             ]
         ).dxSelectBox("instance");
@@ -332,9 +332,250 @@ $(document).ready(function () {
             document.getElementById("div2").style.display = "none";
             document.getElementById("div3").style.display = "block";
 
-            initFormPass();
+            initFormRedes();
         });
     }
+
+    function initFormRedes() {
+
+        const inputPlataforma1Registro = setSelectBox(
+            "#inputPlataforma1Registro",
+            {
+                dataSource: new DevExpress.data.ArrayStore({
+                    data: listRedSocial,
+                    key: "value",
+                }),
+                displayExpr: "text",
+                valueExpr: "value",
+                placeholder: "Plataforma",
+                name: "plataforma1",
+                searchEnabled: true,
+                minSearchLength: 0,
+                elementAttr: {
+                    class: "form-control input-registro",
+                },
+            },
+            [
+                {
+                    type: "required",
+                    message: "Por favor, selecciona una plataforma",
+                },
+            ]
+        ).dxSelectBox("instance");
+
+        inputPlataforma1Registro.option({
+            validationStatus: "valid",
+        });
+
+        const inputPlataforma2Registro = setSelectBox(
+            "#inputPlataforma2Registro",
+            {
+                dataSource: new DevExpress.data.ArrayStore({
+                    data: listRedSocial,
+                    key: "value",
+                }),
+                displayExpr: "text",
+                valueExpr: "value",
+                placeholder: "Plataforma",
+                name: "plataforma2",
+                searchEnabled: true,
+                minSearchLength: 0,
+                elementAttr: {
+                    class: "form-control input-registro",
+                },
+            }
+        ).dxSelectBox("instance");
+
+        const inputRed1Registro = setTextBox(
+            "#inputRed1Registro",
+            {
+                placeholder: "Nombre de usuario",
+                mode: "text",
+                elementAttr: {
+                    class: "form-control input-registro",
+                },
+            },
+            [
+                {
+                    type: "required",
+                    message: "El campo de nombre de usuario es obligatorio",
+                },
+            ]
+        ).dxTextBox("instance");
+
+        inputRed1Registro.option({
+            validationStatus: "valid",
+        });
+
+        const inputRed2Registro = setTextBox(
+            "#inputRed2Registro",
+            {
+                placeholder: "Nombre de usuario",
+                mode: "text",
+                elementAttr: {
+                    class: "form-control input-registro",
+                },
+            }
+        ).dxTextBox("instance");
+
+        setButton("#btn_infoRedes", {
+            text: "Continuar",
+            type: "submit",
+            elementAttr: {
+                class: "button-login",
+            },
+            useSubmitBehavior: true,
+        });
+
+        sendInfoRedes();
+
+    }
+
+    function sendInfoRedes() {
+        $("#formInfoRedes").off("submit");
+        $("#formInfoRedes").on("submit", function (e) {
+            e.preventDefault();
+            var formulario = $("#formInfoRedes")[0];
+            var formData = new FormData(formulario); // almacenamos la info del primer formulario, para continuar
+
+            document.getElementById("div3").style.display = "none";
+            document.getElementById("div4").style.display = "block";
+
+            initFormValidacion();
+        });
+    }
+
+    function initFormValidacion() {
+
+        const inputTipoDocRegistro = setSelectBox(
+            "#inputTipoDocRegistro",
+            {
+                dataSource: new DevExpress.data.ArrayStore({
+                    data: listTipoDoc,
+                    key: "value",
+                }),
+                placeholder: "",
+                displayExpr: "text",
+                valueExpr: "value",
+                searchEnabled: true,
+                minSearchLength: 0,
+                width: 100,
+                elementAttr: {
+                    class: "form-control input-indicativo",
+                },
+            },
+            [
+                {
+                    type: "required",
+                    message: "Por favor, selecciona un tipo de documento",
+                },
+            ]
+        ).dxSelectBox("instance");
+
+        inputTipoDocRegistro.option({
+            validationStatus: "valid",
+        });
+
+        const inputDocumentoRegistro = setTextBox(
+            "#inputDocumentoRegistro",
+            {
+                placeholder: "Número documento",
+                name: "numero_documento",
+                mode: "number",
+                elementAttr: {
+                    class: "form-control input-telefono",
+                },
+            },
+            [
+                {
+                    type: "required",
+                    message: "El campo de numero de documento es obligatorio",
+                },
+            ]
+        ).dxTextBox("instance");
+
+        inputDocumentoRegistro.option({
+            validationStatus: "valid",
+        });
+
+        $("#fileSelfieRegistro").dxFileUploader({
+            selectButtonText: "Toma/adjunta selfie",
+            labelText: "",
+            accept: 'image/*',
+            uploadMode: "useForm",
+            onValueChanged: function (e) {
+                console.log("Archivo seleccionado: " + e.value[0].name);
+            },
+        });
+
+        $('#fileSelfieRegistro').dxValidator({
+            validationRules: [
+                {
+                    type: "required",
+                    message: "Debe agregar una selfie con el documento en mano"
+                }
+            ]
+        });
+    
+        $("#fileDocumentoRegistro").dxFileUploader({
+            selectButtonText: "Adjunta el documento",
+            labelText: "",
+            accept: 'image/*',
+            uploadMode: "useForm",
+            onValueChanged: function (e) {
+                console.log("Archivo seleccionado: " + e.value[0].name);
+            },
+        });
+
+        $('#fileDocumentoRegistro').dxValidator({
+            validationRules: [
+                {
+                    type: "required",
+                    message: "Debe agregar una foto de su documento"
+                }
+            ]
+        });
+    
+        setButton("#btn_infoValidacion", {
+            text: "Continuar",
+            type: "submit",
+            elementAttr: {
+                class: "button-login",
+            },
+            useSubmitBehavior: true,
+        });
+
+        setButton("#btn_omitirValidacion", {
+            text: "Omitir y continuar",
+            type: "submit",
+            elementAttr: {
+                class: "button-codigo",
+            },
+            useSubmitBehavior: true,
+            onClick: function() {
+                $("#myModal").modal("hide");
+                document.getElementById("div4").style.display = "none";
+                document.getElementById("div5").style.display = "block";
+            } 
+        });
+
+        sendInfoValidacion();
+        
+    }
+
+    function sendInfoValidacion() {
+        $("#formInfoValidacion").off("submit");
+        $("#formInfoValidacion").on("submit", function (e) {
+            e.preventDefault();
+            var formulario = $("#formInfoValidacion")[0];
+            var formData = new FormData(formulario); // almacenamos la info del primer formulario, para continuar
+
+            document.getElementById("div4").style.display = "none";
+            document.getElementById("div5").style.display = "block";
+
+        });
+    }
+
 });
 
 /** Control de paginas */
@@ -351,4 +592,10 @@ function atrasDiv2() {
 function atrasDiv3() {
     document.getElementById("div4").style.display = "none";
     document.getElementById("div3").style.display = "block";
+}
+
+function agregar() {
+    document.getElementById('agregar').style.display = 'none';
+    document.getElementById('otroP').style.display = 'block';
+    document.getElementById('otroN').style.display = 'block';
 }
