@@ -53,6 +53,11 @@ class LoginController extends Controller
         return view('auth.register');
     }
 
+    public function restablecer()
+    {
+        return view('auth.restablecer');
+    }
+
     public function login(loginRequest $request)
     {
         dd($request->all());

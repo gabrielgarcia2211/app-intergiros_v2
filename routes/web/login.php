@@ -7,3 +7,4 @@ Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/registro', [LoginController::class, 'registro'])->name('registro');
+Route::get('/restablecer', [LoginController::class, 'restablecer'])->name('restablecer');

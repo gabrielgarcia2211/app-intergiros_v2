@@ -17,7 +17,7 @@
                 </div>
                 <div class="form-group col-md-6"></div>
             </div>
-            <div class="form-row mt-1" hidden>
+            <div class="form-row mt-1" style="display: none;">
                 <div class="form-group col-md-6">
                     <div class="input-group">
                         <div id="inputPasswordNuevo"></div>
@@ -33,10 +33,10 @@
             <div class="text-center mt-5 button">
                 <div class="row">
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary mb-2">Cancelar</button>
+                        <a href="{{ asset('login') }}" type="button" class="btn btn-primary mb-2 button-login">Cancelar</a>
                     </div>
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary mb-2">Restablecer</button>
+                        <a type="button" class="btn btn-primary mb-2 button-login" data-toggle="modal" data-target="#myModal">Restablecer</a>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,6 @@
                 <form action="">
                         <div class="codigo">
                             <div id="codigoRecuperacion"></div>
-                            <input type="number" class="form-control" id="inputEmail4" placeholder="CÓDIGO">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -78,5 +77,5 @@
 @endsection
 
 @section('script')
-    {{-- <script src="{{ asset('js/home/index.js') }}"></script> --}}
+    <script src="{{ asset('js/recuperacion/index.js') }}"></script>
 @endsection
