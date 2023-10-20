@@ -23,13 +23,14 @@
             <h5>Suminístranos tus datos personales</h5>
         </div>
         <form id="formInfoGeneral">
+            <div id="inputEmailRegistro"></div>
             <div class="row mt-5">
                 <div class="col-md-6">
                     <div class="form-group">
                         <div id="inputNombresRegistro"></div>
                     </div>
                     <div class="form-group">
-                        <div id="inputEmailRegistro"></div>
+                        
                     </div>
                     <div class="form-group">
                         <div id="inputPaisRegistro"></div>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Login\loginRequest;
+use App\Http\Requests\Login\RegistroRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\ResponseController as Response;
 
@@ -43,12 +44,12 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function index()
+    public function index_login()
     {
         return view('auth.login');
     }
 
-    public function registro()
+    public function index_registro()
     {
         return view('auth.register');
     }
@@ -59,6 +60,11 @@ class LoginController extends Controller
     }
 
     public function login(loginRequest $request)
+    {
+        dd($request->all());
+    }
+
+    public function registro(RegistroRequest $request)
     {
         dd($request->all());
     }

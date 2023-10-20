@@ -40,6 +40,13 @@ var plataforma2Value = "";
 var red1Value = "";
 var red2Value = "";
 
+var formDataRegister = {
+    formInfoGeneral: {},
+    formInfoPassword: {},
+    formInfoRedes: {},
+    formInfoValidacion: {},
+};
+
 $(document).ready(function () {
     /* Registro */
     initForm();
@@ -47,15 +54,13 @@ $(document).ready(function () {
     function initForm() {
         resetForm();
 
-        const inputEmailRegistro = setTextBox(
+        setTextBox(
             "#inputEmailRegistro",
             {
                 placeholder: "Email",
                 mode: "email",
                 value: emailValue,
-                elementAttr: {
-                    class: "form-control input-registro",
-                },
+                name: "inputEmailRegistro",
                 onValueChanged: function (e) {
                     emailValue = e.value;
                 },
@@ -70,7 +75,7 @@ $(document).ready(function () {
                     message: "Ingrese una dirección de email válida",
                 },
             ]
-        ).dxTextBox("instance");
+        );
 
         const inputNombresRegistro = setTextBox(
             "#inputNombresRegistro",
@@ -78,6 +83,7 @@ $(document).ready(function () {
                 placeholder: "Nombres",
                 mode: "text",
                 value: nombreValue,
+                name: "inputNombresRegistro",
                 elementAttr: {
                     class: "form-control input-registro",
                 },
@@ -103,6 +109,7 @@ $(document).ready(function () {
                 placeholder: "Apellidos",
                 mode: "text",
                 value: apellidoValue,
+                name: "inputApellidosRegistro",
                 elementAttr: {
                     class: "form-control input-registro",
                 },
@@ -132,7 +139,7 @@ $(document).ready(function () {
                 displayExpr: "text",
                 valueExpr: "value",
                 placeholder: "País",
-                name: "pais",
+                name: "inputPaisRegistro",
                 searchEnabled: true,
                 minSearchLength: 0,
                 value: paisValue,
@@ -168,6 +175,7 @@ $(document).ready(function () {
                 searchEnabled: true,
                 minSearchLength: 0,
                 width: 100,
+                name: "inputIndicativoRegistro",
                 value: indicativoValue,
                 elementAttr: {
                     class: "form-control input-indicativo",
@@ -192,7 +200,7 @@ $(document).ready(function () {
             "#inputTelefonoRegistro",
             {
                 placeholder: "Número celular",
-                name: "numero_celular",
+                name: "inputTelefonoRegistro",
                 mode: "number",
                 value: telefonoValue,
                 elementAttr: {
@@ -219,6 +227,7 @@ $(document).ready(function () {
             {
                 placeholder: "Fecha de nacimiento",
                 type: "date",
+                name: "inputNacimientoRegistro",
                 elementAttr: {
                     class: "form-control input-registro",
                     id: "fechaNacimiento",
@@ -255,9 +264,12 @@ $(document).ready(function () {
         $("#formInfoGeneral").off("submit");
         $("#formInfoGeneral").on("submit", function (e) {
             e.preventDefault();
-            var formulario = $("#formInfoGeneral")[0];
-            var formData = new FormData(formulario); // almacenamos la info del primer formulario, para continuar
+            var formulario = new FormData($("#formInfoGeneral")[0]);
 
+            console.log($("#formInfoGeneral"))
+            console.log(formulario)
+            return;
+            formDataRegister.formInfoGeneral = formulario;
             document.getElementById("div1").style.display = "none";
             document.getElementById("div2").style.display = "block";
 
@@ -266,15 +278,18 @@ $(document).ready(function () {
     }
 
     const changePasswordMode = function (name) {
-        const editor = $(name).dxTextBox('instance');
-        editor.option('mode', editor.option('mode') === 'text' ? 'password' : 'text');
+        const editor = $(name).dxTextBox("instance");
+        editor.option(
+            "mode",
+            editor.option("mode") === "text" ? "password" : "text"
+        );
 
-        const passwordButton = editor.getButton('password');
+        const passwordButton = editor.getButton("password");
 
-        if (editor.option('mode') === 'text') {
-            passwordButton.option('icon', 'fa fa-eye-slash');
+        if (editor.option("mode") === "text") {
+            passwordButton.option("icon", "fa fa-eye-slash");
         } else {
-            passwordButton.option('icon', 'fa fa-eye');
+            passwordButton.option("icon", "fa fa-eye");
         }
     };
 
@@ -287,22 +302,26 @@ $(document).ready(function () {
                 placeholder: "Contraseña",
                 mode: "password",
                 value: contraseñaValue,
+                name: "inputContraseñaRegistro",
                 elementAttr: {
                     class: "form-control input-registro contraseña",
                 },
                 onValueChanged: function (e) {
                     contraseñaValue = e.value;
                 },
-                buttons: [{
-                    name: 'password',
-                    location: 'after',
-                    options: {
-                        icon: 'fa fa-eye',
-                        type: 'default',
-                        stylingMode: "text",
-                        onClick: () => changePasswordMode('#inputContraseñaRegistro'),
+                buttons: [
+                    {
+                        name: "password",
+                        location: "after",
+                        options: {
+                            icon: "fa fa-eye",
+                            type: "default",
+                            stylingMode: "text",
+                            onClick: () =>
+                                changePasswordMode("#inputContraseñaRegistro"),
+                        },
                     },
-                }],
+                ],
             },
             [
                 {
@@ -322,30 +341,36 @@ $(document).ready(function () {
                 placeholder: "Confirma la contraseña",
                 mode: "password",
                 value: confirmaValue,
+                name: "inputConfirmaRegistro",
                 elementAttr: {
                     class: "form-control input-registro contraseña",
                 },
                 onValueChanged: function (e) {
                     confirmaValue = e.value;
                 },
-                buttons: [{
-                    name: 'password',
-                    location: 'after',
-                    options: {
-                        icon: 'fa fa-eye',
-                        type: 'default',
-                        stylingMode: "text",
-                        onClick: () => changePasswordMode('#inputConfirmaRegistro'),
+                buttons: [
+                    {
+                        name: "password",
+                        location: "after",
+                        options: {
+                            icon: "fa fa-eye",
+                            type: "default",
+                            stylingMode: "text",
+                            onClick: () =>
+                                changePasswordMode("#inputConfirmaRegistro"),
+                        },
                     },
-                }],
+                ],
             },
             [
                 {
-                    type: 'compare',
+                    type: "compare",
                     comparisonTarget() {
-                        const password = $('#inputContraseñaRegistro').dxTextBox('instance');
+                        const password = $(
+                            "#inputContraseñaRegistro"
+                        ).dxTextBox("instance");
                         if (password) {
-                            return password.option('value');
+                            return password.option("value");
                         }
                         return null;
                     },
@@ -384,9 +409,8 @@ $(document).ready(function () {
         $("#formInfoPassword").off("submit");
         $("#formInfoPassword").on("submit", function (e) {
             e.preventDefault();
-            var formulario = $("#formInfoPassword")[0];
-            var formData = new FormData(formulario); // almacenamos la info del primer formulario, para continuar
-
+            var formulario = new FormData($("#formInfoPassword")[0]);
+            formDataRegister.formInfoPassword = formulario;
             document.getElementById("div2").style.display = "none";
             document.getElementById("div3").style.display = "block";
 
@@ -459,6 +483,7 @@ $(document).ready(function () {
                 placeholder: "Nombre de usuario",
                 mode: "text",
                 value: red1Value,
+                name: "inputRed1Registro",
                 elementAttr: {
                     class: "form-control input-registro",
                 },
@@ -482,6 +507,7 @@ $(document).ready(function () {
             placeholder: "Nombre de usuario",
             mode: "text",
             value: red2Value,
+            name: "inputRed2Registro",
             elementAttr: {
                 class: "form-control input-registro",
             },
@@ -511,9 +537,8 @@ $(document).ready(function () {
         $("#formInfoRedes").off("submit");
         $("#formInfoRedes").on("submit", function (e) {
             e.preventDefault();
-            var formulario = $("#formInfoRedes")[0];
-            var formData = new FormData(formulario); // almacenamos la info del primer formulario, para continuar
-
+            var formulario = new FormData($("#formInfoRedes")[0]);
+            formDataRegister.formInfoRedes = formulario;
             document.getElementById("div3").style.display = "none";
             document.getElementById("div4").style.display = "block";
 
@@ -580,9 +605,7 @@ $(document).ready(function () {
             labelText: "",
             accept: "image/*",
             uploadMode: "useForm",
-            onValueChanged: function (e) {
-                console.log("Archivo seleccionado: " + e.value[0].name);
-            },
+            name: "fileSelfieRegistro",
         });
 
         $("#fileSelfieRegistro").dxValidator({
@@ -599,9 +622,7 @@ $(document).ready(function () {
             labelText: "",
             accept: "image/*",
             uploadMode: "useForm",
-            onValueChanged: function (e) {
-                console.log("Archivo seleccionado: " + e.value[0].name);
-            },
+            name: "fileDocumentoRegistro",
         });
 
         $("#fileDocumentoRegistro").dxValidator({
@@ -633,7 +654,6 @@ $(document).ready(function () {
             elementAttr: {
                 class: "button-codigo",
             },
-            useSubmitBehavior: true,
             onClick: function () {
                 $("#myModal").modal("hide");
                 document.getElementById("div4").style.display = "none";
@@ -648,11 +668,18 @@ $(document).ready(function () {
         $("#formInfoValidacion").off("submit");
         $("#formInfoValidacion").on("submit", function (e) {
             e.preventDefault();
-            var formulario = $("#formInfoValidacion")[0];
-            var formData = new FormData(formulario); // almacenamos la info del primer formulario, para continuar
-
-            document.getElementById("div4").style.display = "none";
-            document.getElementById("div5").style.display = "block";
+            var formulario = new FormData($("#formInfoValidacion")[0]);
+            formDataRegister.formInfoValidacion = formulario;
+            axios
+                .post("/registro", formDataRegister)
+                .then((response) => {
+                    showMessageText(response.data.message);
+                    document.getElementById("div4").style.display = "none";
+                    document.getElementById("div5").style.display = "block";
+                })
+                .catch((error) => {
+                    handleErrors(error);
+                });
         });
     }
 
@@ -688,10 +715,7 @@ $(document).ready(function () {
             initFormRedes();
         },
     });
-
-
 });
-
 
 function agregar() {
     document.getElementById("agregar").style.display = "none";
