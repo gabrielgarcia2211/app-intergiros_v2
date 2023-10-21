@@ -1,7 +1,7 @@
 var listPais = [
-    { value: 1, text: "Colombia" },
-    { value: 2, text: "Venezuela" },
-    { value: 3, text: "Perú" },
+    { value: "Colombia", text: "Colombia" },
+    { value: "Venezuela", text: "Venezuela" },
+    { value: "Perú", text: "Perú" },
 ];
 
 var listTelefono = [
@@ -11,8 +11,8 @@ var listTelefono = [
 ];
 
 var listRedSocial = [
-    { value: 1, text: "Facebook" },
-    { value: 2, text: "Instagram" },
+    { value: "Facebook", text: "Facebook" },
+    { value: "Instagram", text: "Instagram" },
 ];
 
 var listTipoDoc = [
@@ -61,6 +61,9 @@ $(document).ready(function () {
                 mode: "email",
                 value: emailValue,
                 name: "inputEmailRegistro",
+                elementAttr: {
+                    class: "form-control input-registro",
+                },
                 onValueChanged: function (e) {
                     emailValue = e.value;
                 },
@@ -268,7 +271,7 @@ $(document).ready(function () {
 
             console.log($("#formInfoGeneral"))
             console.log(formulario)
-            return;
+            //return;
             formDataRegister.formInfoGeneral = formulario;
             document.getElementById("div1").style.display = "none";
             document.getElementById("div2").style.display = "block";
@@ -410,6 +413,10 @@ $(document).ready(function () {
         $("#formInfoPassword").on("submit", function (e) {
             e.preventDefault();
             var formulario = new FormData($("#formInfoPassword")[0]);
+
+            console.log($("#formInfoPassword"))
+            console.log(formulario)
+            //return;
             formDataRegister.formInfoPassword = formulario;
             document.getElementById("div2").style.display = "none";
             document.getElementById("div3").style.display = "block";
@@ -538,6 +545,10 @@ $(document).ready(function () {
         $("#formInfoRedes").on("submit", function (e) {
             e.preventDefault();
             var formulario = new FormData($("#formInfoRedes")[0]);
+
+            console.log($("#formInfoRedes"))
+            console.log(formulario)
+            //return;
             formDataRegister.formInfoRedes = formulario;
             document.getElementById("div3").style.display = "none";
             document.getElementById("div4").style.display = "block";
@@ -559,6 +570,7 @@ $(document).ready(function () {
                 placeholder: "",
                 displayExpr: "text",
                 valueExpr: "value",
+                name: "tipo_documento",
                 searchEnabled: true,
                 minSearchLength: 0,
                 width: 100,
@@ -669,9 +681,16 @@ $(document).ready(function () {
         $("#formInfoValidacion").on("submit", function (e) {
             e.preventDefault();
             var formulario = new FormData($("#formInfoValidacion")[0]);
+
+            console.log($("#formInfoValidacion"))
+            console.log(formulario)
+            //return;
             formDataRegister.formInfoValidacion = formulario;
-            axios
-                .post("/registro", formDataRegister)
+            axios.post("/registro", formDataRegister, {
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            })
                 .then((response) => {
                     showMessageText(response.data.message);
                     document.getElementById("div4").style.display = "none";
