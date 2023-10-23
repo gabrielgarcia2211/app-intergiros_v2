@@ -48,51 +48,49 @@ hr {
 
 /* FORM LOGIN */
 .login {
-    background-color: #ededed !important;
+    background-color: #ededed;
     border-radius: 35px;
     margin-top: 100px;
-    padding: 35px !important;
+    padding: 25px;
 }
 
 .login h4,h5 {
     color: #0035aa;
 }
 
-.input-login {
-    width: 80% !important;
-    border-radius: 25px !important;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 20px !important;
-}
-
-.input-group-append {
-    width: 44px !important;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.input-group {
-    width: 80% !important;
+.form-row input {
+    width: 80%;
+    border-radius: 25px;
     margin-left: auto;
     margin-right: auto;
     font-size: 20px;
 }
 
-.input-login i {
+.input-group-append {
+    width: 44px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-group {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+}
+
+.input-group-append span {
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
     background-color: white;
     color: #0035aa;
-    padding-right: 10px;
 }
 
-.button-login {
-    background-color: #0035aa !important;
-    font-size: 20px !important;
-    border-radius: 25px !important;
-    width: 220px !important;
-    color: white !important;
+.button button {
+    background-color: #0035aa;
+    font-size: 20px;
+    border-radius: 25px;
+    width: 220px;
     font-family: 'Lato', sans-serif !important;
 }
 /* FIN FORM LOGIN */
