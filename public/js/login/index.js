@@ -15,8 +15,12 @@ $(document).on('click', '.toggle-password', function() {
     }
 });
 
-$(document).ready(function () {
-    /* Login */
+
+
+
+
+/* $(document).ready(function () {
+
     initForm();
 
     function initForm() {
@@ -120,3 +124,4 @@ $(document).ready(function () {
         });
     }
 });
+ */
