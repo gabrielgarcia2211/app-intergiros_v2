@@ -13,18 +13,23 @@
         <form id="formLogin">
             @csrf
             <div class="form-row mt-5">
-                <div class="form-group col-md-6">
-                    <div id="inputEmail"></div>
+            <div class="form-group col-md-6">
+                    <input type="email" class="form-control" id="loginEmail" placeholder="Email" required>
                 </div>
                 <div class="form-group col-md-6">
                     <div class="input-group">
-                        <div id="inputPassword"></div>
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Contraseña" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="fa fa-eye toggle-password" toggle="#inputPassword4"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
             <br>
             <div class="text-center mt-5 button">
-                <div id="btn_login"></div>
+                <button type="submit" class="btn btn-primary mb-2">Iniciar Sesión</button>
             </div>
             <div class="text-center mt-3">
                 <h5>¿Eres nuevo? <a href="{{ asset('registro') }}">¡Únete a la familia intergiros!</a></h5>
@@ -46,8 +51,7 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <p id="popupDataLogin"></p>
-                    Si has olvidado tu contraseña pulsa "Restablecer"
+                    Alguno de los datos ingresados no son correctos. Si has olvidado tu contraseña pulsa "Restablecer"
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Intentar de nuevo</button>
