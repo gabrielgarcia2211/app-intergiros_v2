@@ -13,23 +13,28 @@
         <form id="formLogin">
             @csrf
             <div class="form-row mt-5">
-            <div class="form-group col-md-6">
-                    <input type="email" class="form-control" id="loginEmail" placeholder="Email" required>
+                <div class="form-group col-md-6">
+                    <input type="email" class="form-control" id="loginEmail" name="email" placeholder="Email">
+                    <label for="loginEmail" class="error"></label>
+                    <!-- Agregar label para mostrar errores -->
                 </div>
                 <div class="form-group col-md-6">
                     <div class="input-group">
-                        <input type="password" class="form-control" id="loginPassword" placeholder="Contraseña" required>
+                        <input type="password" class="form-control" id="loginPassword" name="password"
+                            placeholder="Contraseña">
                         <div class="input-group-append">
                             <span class="input-group-text">
                                 <i class="fa fa-eye toggle-password" toggle="#inputPassword4"></i>
                             </span>
                         </div>
                     </div>
+                    <label for="loginPassword" class="error"></label>
+                    <!-- Agregar label para mostrar errores -->
                 </div>
             </div>
             <br>
             <div class="text-center mt-5 button">
-                <button type="submit" class="btn btn-primary mb-2">Iniciar Sesión</button>
+                <button type="button" class="btn btn-primary mb-2" onclick="submitLoginForm()">Iniciar Sesión</button>
             </div>
             <div class="text-center mt-3">
                 <h5>¿Eres nuevo? <a href="{{ asset('registro') }}">¡Únete a la familia intergiros!</a></h5>
@@ -60,6 +65,13 @@
             </div>
         </div>
     </div>
+
+
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 @endsection
 
 @section('script')

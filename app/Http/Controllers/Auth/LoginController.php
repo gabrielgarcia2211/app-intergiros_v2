@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
@@ -61,7 +62,17 @@ class LoginController extends Controller
 
     public function login(loginRequest $request)
     {
-        dd($request->all());
+        $user = User::where('email', $request['email'])
+            ->get();
+
+        if (count($user) > 0) {
+            if (!is_null($user) && Hash::check($request['password'], $user->first()->password)) {
+                $this->guard()->login($user[0]);
+                return Response::sendResponse($user, 'Inicio exitoso.');
+            }
+        }
+
+        return Response::sendError('¡Los datos ingresados son incorrectos!', 422);
     }
 
     public function registro(RegistroRequest $request)
@@ -71,7 +82,7 @@ class LoginController extends Controller
 
     public function sendLoginResponse($request)
     {
-        
+
         try {
             $ingresoError = [];
             $user = User::where('email', $request['email'])->first();

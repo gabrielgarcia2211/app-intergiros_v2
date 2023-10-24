@@ -1,127 +1,46 @@
-var popupLogin = new bootstrap.Modal(
-    document.getElementById("popupLogin"),
-    {
-        keyboard: false,
-    }
-);
-
-$(document).on('click', '.toggle-password', function() {
-    $(this).toggleClass("fa-eye fa-eye-slash");
-    var input = $($(this).attr("toggle"));
-    if (input.attr("type") == "password") {
-        input.attr("type", "text");
-    } else {
-        input.attr("type", "password");
-    }
+$(document).ready(function () {
+    $("#formLogin").validate({
+        rules: {
+            email: {
+                required: true,
+                email: true,
+            },
+            password: {
+                required: true,
+            },
+        },
+        messages: {
+            email: {
+                required: "El campo de correo electrónico es obligatorio",
+                email: "Ingresa una dirección de correo electrónico válida",
+            },
+            password: {
+                required: "El campo de contraseña es obligatorio",
+            },
+        },
+        errorPlacement: function (error, element) {
+            error.insertAfter(element);
+        },
+    });
 });
 
+function submitLoginForm() {
+    if ($("#formLogin").valid()) {
+        const email = $("#loginEmail").val();
+        const password = $("#loginPassword").val();
 
-
-
-
-/* $(document).ready(function () {
-
-    initForm();
-
-    function initForm() {
-        const inputEmail = setTextBox(
-            "#inputEmail",
-            {
-                value: "",
-                placeholder: "Email",
-                name: "email",
-                mode: "email",
-                elementAttr: {
-                    class: "form-control input-login",
-                },
-            },
-            [
-                {
-                    type: "required",
-                    message: "El campo de email es obligatorio",
-                },
-                {
-                    type: "email",
-                    message: "Ingrese una dirección de email válida",
-                },
-            ]
-        ).dxTextBox("instance");
-
-        inputEmail.option({
-            validationStatus: "valid",
-        });
-
-        const changePasswordMode = function (name) {
-            const editor = $(name).dxTextBox('instance');
-            editor.option('mode', editor.option('mode') === 'text' ? 'password' : 'text');
-    
-            const passwordButton = editor.getButton('password');
-    
-            if (editor.option('mode') === 'text') {
-                passwordButton.option('icon', 'fa fa-eye-slash');
-            } else {
-                passwordButton.option('icon', 'fa fa-eye');
-            }
+        var formData = {
+            email: email,
+            password: password,
         };
 
-        const inputPassword = setTextBox(
-            "#inputPassword",
-            {
-                placeholder: "Contraseña",
-                mode: "password",
-                elementAttr: {
-                    class: "form-control input-login",
-                },
-                buttons: [{
-                    name: 'password',
-                    location: 'after',
-                    options: {
-                        icon: 'fa fa-eye',
-                        type: 'default',
-                        stylingMode: "text",
-                        onClick: () => changePasswordMode('#inputPassword'),
-                    },
-                }],
-            },
-            [
-                {
-                    type: "required",
-                    message: "El campo de contraseña es obligatorio",
-                },
-            ]
-        ).dxTextBox("instance");
-
-        inputPassword.option({
-            validationStatus: "valid",
-        });
-
-        setButton("#btn_login", {
-            text: "Iniciar Sesión",
-            type: "submit",
-            elementAttr: {
-                class: "button-login",
-            },
-            useSubmitBehavior: true,
-        });
-
-        sendFormLogin();
+        axios
+            .post("/login", formData)
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                handleErrors(error);
+            });
     }
-
-    function sendFormLogin() {
-        $("#formLogin").off("submit");
-        $("#formLogin").on("submit", function (e) {
-            e.preventDefault();
-            var formulario = $("#formLogin")[0];
-            var formData = new FormData(formulario);
-            axios
-                .post("/login", formData)
-                .then((response) => {
-                    showMessageText(response.data.message);
-                })
-                .catch((error) => {
-                    handleErrorsLogin(error);
-                });
-        });
-    }
-});
- */
+}
