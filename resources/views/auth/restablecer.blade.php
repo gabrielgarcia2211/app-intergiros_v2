@@ -12,31 +12,40 @@
     </div>
     <div class="form-row mt-5">
         <div class="form-group col-md-6">
-            <div id="inputEmail"></div>
+            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
         </div>
         <div class="form-group col-md-6"></div>
     </div>
-    <div class="form-row mt-1">
+    <div class="form-row mt-1" style="display: none;">
         <div class="form-group col-md-6">
-            <div id="newPassword" style="display: none;">
-                <div id="inputPasswordNuevo"></div>
+            <div class="input-group">
+                <input type="password" class="form-control" id="inputPassword4" placeholder="Contraseña nueva">
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <i class="fa fa-eye toggle-password" toggle="#inputPassword4"></i>
+                    </span>
+                </div>
             </div>
         </div>
         <div class="form-group col-md-6">
-            <div id="repeatPassword" style="display: none;">
-                <div id="inputPasswordConfirma"></div>
+            <div class="input-group">
+                <input type="password" class="form-control" id="inputPassword4" placeholder="Confirma la contraseña">
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <i class="fa fa-eye toggle-password" toggle="#inputPassword4"></i>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
     <br>
-    <div class="text-center mt-5 button">
+    <div class="text-center mt-5">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 button">
                 <a href="{{ asset('login') }}" type="button" class="btn btn-primary mb-2 button-login">Cancelar</a>
             </div>
-            <div class="col-md-6">
-                <a type="button" class="btn btn-primary mb-2 button-login" data-toggle="modal"
-                    data-target="#myModal">Restablecer</a>
+            <div class="col-md-6 button">
+                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">Restablecer</button>
             </div>
         </div>
     </div>
@@ -46,7 +55,7 @@
 @include('layouts.footer')
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -58,12 +67,12 @@
                 Ingrese el código que recibirás en tu correo electrónico para restablecer tu contraseña.
                 <form action="">
                     <div class="codigo">
-                        <div id="codigoRecuperacion"></div>
+                        <input type="number" class="form-control" id="inputEmail4" placeholder="CÓDIGO">
                     </div>
             </div>
             <div class="modal-footer">
-                <div id="reenviarButton"></div>
-                <div id="enviarButton"></div>
+                <button type="button" class="btn btn-primary">Reenviar código</button>
+                <button type="button" class="btn btn-primary">Enviar</button>
             </div>
             <div class="text-center cancel">
                 <a href="" data-dismiss="modal">Cancelar</a>
