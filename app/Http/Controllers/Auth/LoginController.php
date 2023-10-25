@@ -55,11 +55,6 @@ class LoginController extends Controller
         return view('auth.register');
     }
 
-    public function restablecer()
-    {
-        return view('auth.restablecer');
-    }
-
     public function login(loginRequest $request)
     {
         $user = User::where('email', $request['email'])
@@ -72,7 +67,7 @@ class LoginController extends Controller
             }
         }
 
-        return Response::sendError('¡Los datos ingresados son incorrectos!', 422);
+        return Response::sendError("Algunos datos ingresados son incorrectos. Si olvidaste tu contraseña, haz clic en 'Recuperar'.", 422);
     }
 
     public function registro(RegistroRequest $request)

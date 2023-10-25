@@ -32,6 +32,7 @@ function submitLoginForm() {
         var formData = {
             email: email,
             password: password,
+            _token: $('input[name="_token"]').val(),
         };
 
         axios
@@ -40,9 +41,25 @@ function submitLoginForm() {
                 console.log(response.data);
             })
             .catch((error) => {
-                handleErrors(error);
+                if (error.response.data.message) {
+                    Swal.fire({
+                        title: "Error",
+                        text: error.response.data.message,
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Recuperar Contraseña",
+                        cancelButtonText: "Cerrar",
+                        position: "top",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/routes/password/reset";
+                        }
+                    });
+                } else {
+                    handleErrors(error);
+                }
             });
     }
 }
-
-
