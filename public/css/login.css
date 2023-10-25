@@ -93,6 +93,15 @@ hr {
     width: 220px;
     font-family: 'Lato', sans-serif !important;
 }
+
+.button a {
+    background-color: #0035aa;
+    font-size: 20px;
+    border-radius: 25px;
+    width: 220px;
+    color: white !important;
+    font-family: 'Lato', sans-serif !important;
+}
 /* FIN FORM LOGIN */
 
 /* FOOTER */

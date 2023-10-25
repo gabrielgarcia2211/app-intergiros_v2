@@ -15,7 +15,9 @@
             <div class="form-row mt-5">
                 <div class="form-group col-md-6">
                     <input type="email" class="form-control" id="loginEmail" name="email" placeholder="Email">
-                    <label for="loginEmail" class="error"></label>
+                    <div class="text-center">
+                        <label for="loginEmail" class="error"></label>
+                    </div>
                     <!-- Agregar label para mostrar errores -->
                 </div>
                 <div class="form-group col-md-6">
@@ -28,7 +30,9 @@
                             </span>
                         </div>
                     </div>
-                    <label for="loginPassword" class="error"></label>
+                    <div class="text-center">
+                        <label for="loginPassword" class="error"></label>
+                    </div>
                     <!-- Agregar label para mostrar errores -->
                 </div>
             </div>
