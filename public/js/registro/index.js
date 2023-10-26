@@ -32,6 +32,11 @@ function mostrarDiv4() {
     document.getElementById('div4').style.display = 'block';
 }
 
+function mostrarDiv5() {
+    document.getElementById('div4').style.display = 'none';
+    document.getElementById('div5').style.display = 'block';
+}
+
 function agregar() {
     document.getElementById('agregar').style.display = 'none';
     document.getElementById('otroP').style.display = 'block';
