@@ -141,3 +141,21 @@ function agregar() {
     document.getElementById("otroP").style.display = "block";
     document.getElementById("otroN").style.display = "block";
 }
+
+window.addEventListener('load',function(){
+
+    document.getElementById('fehaNacimiento').type= 'text';
+    
+    document.getElementById('fehaNacimiento').addEventListener('blur',function(){
+    
+    document.getElementById('fehaNacimiento').type= 'text';
+    
+    });
+    
+    document.getElementById('fehaNacimiento').addEventListener('focus',function(){
+    
+    document.getElementById('fehaNacimiento').type= 'date';
+    
+    });
+    
+});
