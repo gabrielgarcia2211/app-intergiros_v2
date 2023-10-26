@@ -244,14 +244,14 @@
                 </div>
                 <br>
                 <div class="text-center mt-5 button">
-                    <button type="button" class="btn btn-primary mb-2">Continuar</button>
+                    <button type="button" class="btn btn-primary mb-2"onclick="mostrarDiv5()">Continuar</button>
                 </div>
                 <div class="text-center">
                     <a href="#" class="atras" data-toggle="modal" data-target="#myModal">Omitir por ahora</a>
                 </div>
             </div>
             <!-- DIV BIENVENIDA -->
-            <div id="div4" style="display: none;">
+            <div id="div5" style="display: none;">
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="timeline">
