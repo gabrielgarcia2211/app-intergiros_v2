@@ -4,7 +4,7 @@
 <div class="container login">
         <form action="" id="registro">
             <!-- DIV INFORMACION GENERAL -->
-            <div id="div1"  style="display: none;">
+            <div id="div1">
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="timeline">
@@ -251,7 +251,7 @@
                 </div>
             </div>
             <!-- DIV BIENVENIDA -->
-            <div id="div4">
+            <div id="div4" style="display: none;">
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="timeline">
