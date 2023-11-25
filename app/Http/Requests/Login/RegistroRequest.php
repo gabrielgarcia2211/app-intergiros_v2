@@ -25,9 +25,10 @@ class RegistroRequest extends FormRequest
     {
         return [
             'formInfoGeneral' => 'required',
-            'formInfoPassword' => 'required',
-            'formInfoRedes' => 'required',
-            'formInfoValidacion' => 'required',
+            'formPassword' => 'required',
+            'formRedes' => 'required',
+            'formVerificacion' => 'required',
+            'formInfoGeneral.email' => 'unique:users,email',
         ];
     }
 
@@ -43,6 +44,7 @@ class RegistroRequest extends FormRequest
             'formInfoPassword.required' => 'Falta informacion en la validacion de contraseñas.',
             'formInfoRedes.required' => 'Falta informacion en la validacion de redes.',
             'formInfoValidacion.required' => 'Falta informacion en la validacion de perfil.',
+            'formInfoGeneral.email.unique' => 'El correo electronico ya se encuentra registrado.',
         ];
     }
 

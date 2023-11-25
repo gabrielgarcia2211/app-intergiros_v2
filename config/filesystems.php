@@ -56,6 +56,15 @@ return [
             'throw' => false,
         ],
 
+        
+        'comprobante_disk' => [
+            'driver' => 'local',
+            'root' => storage_path('app/comprobantes'),
+            'url' => env('APP_URL').'/comprobantes',
+            'visibility' => 'public',
+        ],
+
+
     ],
 
     /*
