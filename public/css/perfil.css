@@ -1,0 +1,267 @@
+h4 {
+    color: #0035aa;
+}
+
+p {
+    font-family: 'Lato', sans-serif !important;
+}
+
+/*  CSS MENU */
+.nav-bar {
+    background-color: white !important;
+}
+
+.navbar-nav {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.navbar-logo {
+    max-width: 150px !important;
+}
+
+.navbar-nav .nav-link {
+    color: black !important;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #414141 !important;
+}
+
+.navbar-nav .nav-item:nth-child(5) .nav-link {
+    color: white !important; 
+    background-color: #009d2c !important; 
+    border-radius: 20px !important; 
+    padding: 5px 15px !important; 
+}
+
+.navbar-nav .nav-item:nth-child(5) .nav-link:hover {
+    background-color: #02c73a !important;
+}
+
+.navbar-nav .nav-item:nth-child(6) .nav-link, .navbar-nav .nav-item:nth-child(7) .nav-link, .navbar-nav .nav-item:nth-child(8) .nav-link {
+    font-size: 24px !important;
+}
+/* FIN CSS MENU */
+
+/* PERFIL */
+.contenedor-perfil {
+    background-color: #ededed;
+    border-radius: 35px;
+    padding: 25px;
+}
+
+.col-md-3>img {
+    border-radius: 50%;
+}
+
+.col-md-3>a {
+    font-family: 'Lato', sans-serif !important;
+    color: #989898;
+    text-align: center;
+}
+
+.col-md-9{
+    padding-top: 7%;
+}
+
+.verificado {
+    margin-left: -50px;
+    margin-bottom: -100px;
+}
+
+@media only screen and (max-width: 991px) {
+    .verificado{
+        margin-left: 155px;
+        margin-bottom: 0px;
+        margin-top: -130px;
+    }
+
+    .col-md-9 {
+        padding-top: 10%;
+        padding-left: 10%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .col-md-9 {
+        padding-top: 7%;
+        text-align: center;
+        padding-left: 15px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .verificado {
+        margin-left: -50px;
+        margin-bottom: -100px;
+        margin-top: 0px;
+    }
+}
+/* FIN PERFIL */
+
+/* DATOS PERSONALES */
+
+/* FIN DATOS PERSONALES */
+
+#tab1-tab:hover {
+    background-color: #0035aa;
+    color: white !important;
+}
+
+#tab2-tab:hover {
+    background-color: #0035aa;
+    color: white !important;
+}
+
+#tab1-tab, #tab2-tab {
+    font-family: 'Lato', sans-serif !important;
+    color: #495057;
+    font-size: 20px;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #6a6b6d;
+}
+
+#tab1-tab:active {
+    background-color: #0035aa;
+    color: white;
+}
+
+/* vERIFICACION */
+.estado {
+    font-size: 20px;
+}
+
+.button button {
+    background-color: #0035aa;
+    font-size: 20px;
+    border-radius: 25px;
+    width: 220px;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.button a {
+    background-color: #0035aa;
+    font-size: 20px;
+    border-radius: 25px;
+    width: 220px;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.input-group {
+    width: 80% !important;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.input-indicativo {
+    font-size: 20px;
+    font-family: 'Lato', sans-serif !important;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+
+.input-telefono {
+    font-size: 20px;
+    font-family: 'Lato', sans-serif !important;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.custom-file label {
+    width: 80%;
+    border-radius: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.input-registro {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    font-family: 'Lato', sans-serif !important;
+    border-radius: 25px;
+}
+
+.input-group-append span {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    background-color: white;
+    color: #0035aa;
+}
+
+.form-row input {
+    width: 80%;
+    border-radius: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+}
+
+#esteNo {
+    font-size: 20px;
+    font-family: 'Lato', sans-serif !important;
+}
+/* FIN VERIFICACION */
+
+
+
+
+
+
+
+
+/* FOOTER */
+.footer {
+    background-color: #ededed;
+    padding-top: 25px;
+}
+
+ul a {
+    color: #949494 !important;
+    
+}
+
+ul.custom-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul.custom-list > li:before {
+    content: ">";
+    color: #000000;
+    font-size: 15px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.ruc {
+    background-color: #0035aa;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ruc p {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 0px;
+    font-family: 'Lato', sans-serif !important;
+}
+
+.col-sm>.row>.col-3>a i {
+    background-color: #009d2c;
+    color: white;
+    border-radius: 45px;
+    padding: 12px;
+}
+/* FIN FOOTER */
