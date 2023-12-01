@@ -50,10 +50,20 @@ function showSuccess(message, type = "success") {
     });
 }
 
+// Función para mostrar imagenes en sweetAlert
+function showImageAlert(imageSrc) {
+    Swal.fire({
+        imageUrl: imageSrc,
+        imageAlt: "Imagen",
+        confirmButtonText: "Aceptar",
+    });
+}
+
 // generar tokens
 function generateRandomToken() {
-    const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    let token = '';
+    const characters =
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    let token = "";
 
     for (let i = 0; i < 7; i++) {
         const randomIndex = Math.floor(Math.random() * characters.length);

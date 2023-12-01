@@ -91,6 +91,10 @@ $(document).ready(async function () {
 
     var details = await getUser();
     setUserDataFields(details);
+    setVerificationDataFields(details);
+
+    updateButtonAndBindClick("btnPreview01", details.data.path_documento);
+    updateButtonAndBindClick("btnPreview02", details.data.path_selfie);
 });
 
 var tab1 = document.getElementById("tab1-tab");
@@ -239,4 +243,25 @@ function validarToken(responseData) {
 function hasExpired(expiresAt) {
     var expiresDate = new Date(expiresAt);
     return new Date() > expiresDate;
+}
+
+/** verificacion de usuario */
+
+function setVerificationDataFields(details) {
+    $("#documento").val(details.data.documento);
+}
+
+function updateButtonAndBindClick(buttonId, imagePath) {
+    const buttonSelector = `#${buttonId}`;
+    const iconSelector = `${buttonSelector} i`;
+
+    if (imagePath) {
+        $(iconSelector).attr("class", "fas fa-eye");
+    }
+
+    $(buttonSelector).click(function () {
+        if (imagePath) {
+            showImageAlert(imagePath);
+        }
+    });
 }

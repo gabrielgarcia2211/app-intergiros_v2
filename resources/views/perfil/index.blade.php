@@ -143,8 +143,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control input-registro" id="nombreUsuario1" name="nombreUsuario1"
-                                        placeholder="Nombre de usuario" disabled>
+                                    <input type="text" class="form-control input-registro" id="nombreUsuario1"
+                                        name="nombreUsuario1" placeholder="Nombre de usuario" disabled>
                                     <div class="text-center">
                                         <label for="nombreUsuario1" class="error"></label>
                                     </div>
@@ -162,8 +162,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group" id="otroN">
-                                    <input type="text" class="form-control input-registro" id="nombreUsuario2" name="nombreUsuario2"
-                                        placeholder="Nombre de usuario" disabled>
+                                    <input type="text" class="form-control input-registro" id="nombreUsuario2"
+                                        name="nombreUsuario2" placeholder="Nombre de usuario" disabled>
                                     <div class="text-center">
                                         <label for="nombreUsuario2" class="error"></label>
                                     </div>
@@ -176,11 +176,11 @@
                                 datos</a>
                         </div>
                         <div class="text-center mt-5 button" style="display: none" id="actualizarDatos">
-                            <button type="button" class="btn btn-primary mb-2" onclick="updateUser()">Guardar datos</button>
+                            <button type="button" class="btn btn-primary mb-2" onclick="updateUser()">Guardar
+                                datos</button>
                         </div>
                     </form>
                 </div>
-
 
                 <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
                     <form action="" id="formVerificacion">
@@ -208,12 +208,19 @@
                                     <label for="documento" class="error"></label>
                                 </div>
                                 <div class="mt-3">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="inputGroupFile01">
-                                        <label class="custom-file-label input-registro" for="inputGroupFile01">Adjunta
-                                            selfie</label>
-                                        <div class="text-center">
-                                            <label for="inputGroupFile01" class="error"></label>
+                                    <div class="input-group mb-3">
+                                        <div class="custom-file">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-outline-secondary" type="button" id="btnPreview01">
+                                                    <i class="fas fa-eye-slash"></i>
+                                                </button>
+                                            </div>
+                                            <input type="file" class="custom-file-input" id="inputGroupFile01">
+                                            <label class="custom-file-label input-registro" for="inputGroupFile01">Adjunta
+                                                selfie</label>
+                                            <div class="text-center">
+                                                <label for="inputGroupFile01" class="error"></label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -223,12 +230,19 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="inputGroupFile02">
-                                        <label class="custom-file-label input-registro" for="inputGroupFile02">Adjunta
-                                            documento</label>
-                                        <div class="text-center">
-                                            <label for="inputGroupFile02" class="error"></label>
+                                    <div class="input-group mb-3">
+                                        <div class="custom-file">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-outline-secondary" type="button" id="btnPreview02">
+                                                    <i class="fas fa-eye-slash"></i>
+                                                </button>
+                                            </div>
+                                            <input type="file" class="custom-file-input" id="inputGroupFile02">
+                                            <label class="custom-file-label input-registro" for="inputGroupFile02">Adjunta
+                                                documento</label>
+                                            <div class="text-center">
+                                                <label for="inputGroupFile02" class="error"></label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
