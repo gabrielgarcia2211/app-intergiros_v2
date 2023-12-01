@@ -193,9 +193,8 @@ function mostrarDiv5() {
                 },
             })
             .then((response) => {
-                /* document.getElementById("div4").style.display = "none";
-                document.getElementById("div5").style.display = "block"; */
-                console.log(response.data);
+                document.getElementById("div4").style.display = "none";
+                document.getElementById("div5").style.display = "block";
             })
             .catch((error) => {
                 handleErrors(error);

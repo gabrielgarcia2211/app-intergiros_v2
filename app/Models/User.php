@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Registro\UserRedes;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -28,7 +30,9 @@ class User extends Authenticatable
         'fecha_nacimiento',
         'pais_id',
         'pais_telefono_id',
-        'tipo_documento_id'
+        'tipo_documento_id',
+        'path_selfie',
+        'path_documento',
     ];
 
     /**
@@ -50,4 +54,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function user_redes()
+    {
+        return $this->hasMany(UserRedes::class, 'user_id');
+    }
 }

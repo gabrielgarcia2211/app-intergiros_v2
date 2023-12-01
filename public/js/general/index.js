@@ -49,3 +49,16 @@ function showSuccess(message, type = "success") {
         position: "top",
     });
 }
+
+// generar tokens
+function generateRandomToken() {
+    const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    let token = '';
+
+    for (let i = 0; i < 7; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        token += characters.charAt(randomIndex);
+    }
+
+    return token;
+}

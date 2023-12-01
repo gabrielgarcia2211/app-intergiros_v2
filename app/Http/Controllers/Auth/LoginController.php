@@ -117,16 +117,16 @@ class LoginController extends Controller
                 $user_redes_ig->save();
             }
 
-            if (isset($formVerificacion['inputGroupFile01']) && !empty($formVerificacion['inputGroupFile01'])) {
-                $file = $formVerificacion['inputGroupFile01'];
-                $path = $this->fileService->saveFile($file);
-                //$response['imagen_comprobante'] = $path;
+            if ((isset($formVerificacion['inputGroupFile01']) && !empty($formVerificacion['inputGroupFile01']))
+                && (isset($formVerificacion['inputGroupFile02']) && !empty($formVerificacion['inputGroupFile02']))
+            ) {
+                $path_selfie = $this->fileService->saveFile($formVerificacion['inputGroupFile01']);
+                $path_documento = $this->fileService->saveFile($formVerificacion['inputGroupFile02']);
+                User::where('id', $user->id)->update([
+                    'path_selfie' => $path_selfie,
+                    'path_documento' => $path_documento,
+                ]);
             }
-
-
-            dd($request->all());
-
-
 
             return Response::sendResponse([], 'Registro guardado con exito.');
         } catch (\Exception $ex) {

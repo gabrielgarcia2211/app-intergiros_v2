@@ -3,9 +3,15 @@ var formData = {
     formVerificacion: {},
 };
 
-$(document).ready(function () {
+$(document).ready(async function () {
     $("#formActualizarInfo").validate({
         rules: {
+            email: {
+                required: true,
+            },
+            paisTelefono: {
+                required: true,
+            },
             pais: {
                 required: true,
             },
@@ -19,10 +25,6 @@ $(document).ready(function () {
                 required: true,
                 minlength: 6,
             },
-            inputPassword2: {
-                required: true,
-                equalTo: "#inputPassword1",
-            },
             nombreUsuario1: {
                 required: true,
             },
@@ -31,6 +33,12 @@ $(document).ready(function () {
             },
         },
         messages: {
+            email: {
+                required: "El campo email es obligatorio",
+            },
+            paisTelefono: {
+                required: "El indicativo del telefono es obligatorio",
+            },
             pais: {
                 required: "El campo de pais es obligatorio",
             },
@@ -80,54 +88,155 @@ $(document).ready(function () {
             error.insertAfter(element);
         },
     });
+
+    var details = await getUser();
+    setUserDataFields(details);
 });
 
+var tab1 = document.getElementById("tab1-tab");
+var tab2 = document.getElementById("tab2-tab");
 
+window.addEventListener("load", function () {
+    document.getElementById("fehaNacimiento").type = "text";
 
-
-
-
-
-    var tab1 = document.getElementById("tab1-tab");
-    var tab2 = document.getElementById("tab2-tab");
-
-
-    window.addEventListener('load', function () {
-
-        document.getElementById('fehaNacimiento').type = 'text';
-
-        document.getElementById('fehaNacimiento').addEventListener('blur', function () {
-
-            document.getElementById('fehaNacimiento').type = 'text';
-
+    document
+        .getElementById("fehaNacimiento")
+        .addEventListener("blur", function () {
+            document.getElementById("fehaNacimiento").type = "text";
         });
 
-        document.getElementById('fehaNacimiento').addEventListener('focus', function () {
-
-            document.getElementById('fehaNacimiento').type = 'date';
-
+    document
+        .getElementById("fehaNacimiento")
+        .addEventListener("focus", function () {
+            document.getElementById("fehaNacimiento").type = "date";
         });
+});
 
+function habilitarElementos() {
+    // Obtén todos los elementos <input>, <select> y <div> con la clase "input-group" en la página
+    var elementos = document.querySelectorAll("input, select");
+    var input = document.getElementById("ocultar");
+    var display1 = document.getElementById("passwordDisplay1");
+    var display2 = document.getElementById("passwordDisplay2");
+    var button1 = document.getElementById("actualizarDatos");
+    var button2 = document.getElementById("habilitarDatos");
+    // Recorre todos los elementos
+    elementos.forEach(function (elemento, index) {
+        elemento.disabled = index == 0;
     });
+    input.style.display = "none";
+    display1.style.display = "block";
+    display2.style.display = "block";
+    button2.style.display = "none";
+    button1.style.display = "block";
+}
 
+function getUser() {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios.get("/perfil/user");
+            resolve(response.data);
+        } catch (error) {
+            handleErrors(error);
+            reject(error);
+        }
+    });
+}
 
-    function habilitarElementos() {
-        // Obtén todos los elementos <input>, <select> y <div> con la clase "input-group" en la página
-        var elementos = document.querySelectorAll('input, select');
-        var input = document.getElementById('ocultar');
-        var display1 = document.getElementById('passwordDisplay1');
-        var display2 = document.getElementById('passwordDisplay2');
-        var button1 = document.getElementById('actualizarDatos');
-        var button2 = document.getElementById('habilitarDatos');
-        // Recorre todos los elementos
-        elementos.forEach(function (elemento, index) {
+function setUserDataFields(details) {
+    $("#email").val(details.data.email);
+    $("#pais").val(details.data.pais_id);
+    $("#paisTelefono").val(details.data.pais_telefono_id);
+    $("#telefono").val(details.data.telefono);
+    $("#fehaNacimiento").val(details.data.fecha_nacimiento);
+    $("#inputPassword1").val("*********");
 
-            elemento.disabled = index == 0;
-
-        });
-        input.style.display = 'none';
-        display1.style.display = 'block';
-        display2.style.display = 'block';
-        button2.style.display = 'none'
-        button1.style.display = 'block';
+    var redes = details.data.user_redes;
+    if (redes && redes.length) {
+        for (let index = 0; index < redes.length; index++) {
+            $("#redes" + (index + 1)).val(redes[index]["redes_id"]);
+            $("#nombreUsuario" + (index + 1)).val(redes[index]["nombre"]);
+        }
     }
+}
+
+function updateUser() {
+    if ($("#formActualizarInfo").valid()) {
+        formData.formActualizarInfo = {
+            email: $("#email").val(),
+            pais: $("#pais").val(),
+            paisTelefono: $("#paisTelefono").val(),
+            telefono: $("#telefono").val(),
+            fehaNacimiento: $("#fehaNacimiento").val(),
+            inputPassword1: $("#inputPassword1").val(),
+            inputPassword2: $("#inputPassword2").val(),
+            redes1: $("#redes1").val(),
+            nombreUsuario1: $("#nombreUsuario1").val(),
+            redes2: $("#redes2").val(),
+            nombreUsuario2: $("#nombreUsuario2").val(),
+        };
+
+        var formDataToken = {
+            token: generateRandomToken(),
+        };
+
+        axios
+            .post("/perfil/token", formDataToken)
+            .then((response) => {
+                const responseData = response.data.data;
+                validarToken(responseData);
+            })
+            .catch((error) => {
+                handleErrors(error);
+            });
+    }
+}
+
+function validarToken(responseData) {
+    Swal.fire({
+        title: 'Ingresa el token <br> <span style="font-size: 50%; font-weight: bold;">enviado a tu correo electrónico</span>',
+        input: "text",
+        inputAttributes: {
+            autocapitalize: "off",
+        },
+        showCancelButton: true,
+        confirmButtonText: "Validar",
+        cancelButtonText: "Cancelar",
+        showLoaderOnConfirm: true,
+        preConfirm: (token) => {
+            if (token !== responseData.token) {
+                Swal.showValidationMessage("Token incorrecto");
+                return;
+            }
+            if (hasExpired(responseData.expires_at)) {
+                Swal.showValidationMessage("El token ha expirado");
+                return;
+            }
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios
+                .post("/perfil/update", formData)
+                .then((actualizarResponse) => {
+                    Swal.fire(
+                        "Información actualizada correctamente!",
+                        "",
+                        "success"
+                    );
+                    setTimeout(function () {
+                        console.log("Recargando la página ahora");
+                        location.reload();
+                    }, 2000);
+                })
+                .catch((actualizarError) => {
+                    handleErrors(actualizarError);
+                });
+        }
+    });
+}
+
+function hasExpired(expiresAt) {
+    var expiresDate = new Date(expiresAt);
+    return new Date() > expiresDate;
+}

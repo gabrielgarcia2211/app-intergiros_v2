@@ -24,6 +24,9 @@ return new class extends Migration
             $table->unsignedInteger('pais_id')->nullable();
             $table->unsignedInteger('pais_telefono_id')->nullable();
             $table->unsignedInteger('tipo_documento_id')->nullable();
+            $table->string('path_selfie')->nullable();
+            $table->string('path_documento')->nullable();
+
             $table->foreign('pais_telefono_id')->references('id')->on('pais_telefono_combo');
             $table->foreign('pais_id')->references('id')->on('pais_combo');
             $table->foreign('tipo_documento_id')->references('id')->on('tipo_documento_combo');
