@@ -72,3 +72,56 @@ function generateRandomToken() {
 
     return token;
 }
+
+// Funcion para cargar imagenes en inputs type file
+async function loadImageFromURL(url, id) {
+    try {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const fileName = getFileNameFromUrl(url);
+
+        // Crear un objeto FileList con el blob
+        const dataTransfer = new DataTransfer();
+        const file = new File([blob], fileName, { type: blob.type, lastModified: new Date() });
+        dataTransfer.items.add(file);
+        $(id).prop('files', dataTransfer.files);
+
+        // Ayudar a Safari
+        if ($(id)[0].webkitEntries.length) {
+            $(id).data('file', fileName);
+        }
+    } catch (error) {
+        console.error('Error al cargar la imagen desde la URL:', error);
+    }
+}
+
+// Función para obtener el nombre del archivo desde la URL
+function getFileNameFromUrl(url) {
+    const urlParts = url.split('/');
+    return urlParts[urlParts.length - 1];
+}
+
+// Función para establecer una cookie
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+// Función para obtener el valor de una cookie
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == " ") c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0)
+            return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+

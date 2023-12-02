@@ -39,7 +39,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Inicio</a>
+                            <a class="nav-link" href="/">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Servicios</a>
@@ -57,9 +57,10 @@
                                     width="20px">
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Mi Perfil</a>
+                                <a class="dropdown-item" href="{{ route('perfil') }}"><i class="fas fa-user"></i> Mi Perfil</a>
                                 <a class="dropdown-item" href="#"><i class="fas fa-coins"></i> Panel de envíos</a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Cerrar sesion</a>
+                                <a class="dropdown-item" href={{ route('logout') }}><i class="fas fa-sign-out-alt"></i>
+                                    Cerrar sesion</a>
                             </div>
                         </li>
                         <li class="nav-item" id="child6">
@@ -93,7 +94,6 @@
     </script>
 
     <script src="{{ asset('js/general/index.js') }}"></script>
-    <script src="{{ asset('js/perfil/index.js') }}"></script>
     @yield('script')
 
 </body>

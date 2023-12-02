@@ -38,7 +38,7 @@ function submitLoginForm() {
         axios
             .post("/login", formData)
             .then((response) => {
-                console.log(response.data);
+                window.location.href = "/perfil"
             })
             .catch((error) => {
                 if (error.response.data.message) {

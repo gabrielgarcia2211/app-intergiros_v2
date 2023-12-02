@@ -8,8 +8,8 @@
             <img src="{{ asset('img/perfil/verificado.png') }}" alt="" width="50px" class="verificado">
         </div>
         <div class="col-md-9">
-            <h4><strong>User ID #0001</strong></h4>
-            <h4>Nombre del usuario</h4>
+            <h4><strong>User ID #000-{{ Auth()->user()->id }}</strong></h4>
+            <h4>{{ Auth()->user()->name }}</h4>
         </div>
     </div>
     <div class="row mt-2">
@@ -191,17 +191,16 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <select class="form-control input-indicativo" id="tipoDocumento">
+                                    <select class="form-control input-indicativo" id="tipoDocumento" name="tipoDocumento">
                                         <option value="1">T</option>
                                         <option value="2">CC</option>
                                         <option value="3">A</option>
-                                        <!-- Agrega más opciones aquí -->
                                     </select>
                                     <div class="text-center">
                                         <label for="tipoDocumento" class="error"></label>
                                     </div>
                                 </div>
-                                <input type="number" class="form-control input-telefono" id="documento"
+                                <input type="number" class="form-control input-telefono" id="documento" name="documento"
                                     placeholder="Número documento">
                             </div>
                             <div class="text-center">
@@ -215,7 +214,7 @@
                                                 <i class="fas fa-eye-slash"></i>
                                             </button>
                                         </div>
-                                        <input type="file" class="custom-file-input" id="inputGroupFile01">
+                                        <input type="file" class="custom-file-input" id="inputGroupFile01" name="inputGroupFile01">
                                         <label class="custom-file-label input-registro" for="inputGroupFile01" id="labelFile01">Adjunta
                                             selfie</label>
                                         <div class="text-center">
@@ -237,7 +236,7 @@
                                                 <i class="fas fa-eye-slash"></i>
                                             </button>
                                         </div>
-                                        <input type="file" class="custom-file-input" id="inputGroupFile02">
+                                        <input type="file" class="custom-file-input" id="inputGroupFile02" name="inputGroupFile02">
                                         <label class="custom-file-label input-registro" for="inputGroupFile02" id="labelFile02">Adjunta
                                             documento</label>
                                         <div class="text-center">
@@ -250,7 +249,7 @@
                     </div>
                     <br>
                     <div class="text-center mt-5 button">
-                        <button type="button" class="btn btn-primary mb-2">Solicitar
+                        <button type="button" class="btn btn-primary mb-2" onclick="updateVerification()">Solicitar
                             verificación</button>
                     </div>
                 </form>
@@ -262,4 +261,8 @@
 <br><br><br><br><br>
 <!-- FOOTER -->
 @include('layouts.footer')
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/perfil/index.js') }}"></script>
 @endsection

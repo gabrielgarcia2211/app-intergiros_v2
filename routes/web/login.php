@@ -9,7 +9,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 // RUTAS PARA CONTROL DE LOGIN
 Route::get('/login', [LoginController::class, 'index_login'])->name('login.index');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/registro', [LoginController::class, 'index_registro'])->name('registro.index');
 Route::post('/registro', [LoginController::class, 'registro'])->name('registro');
 

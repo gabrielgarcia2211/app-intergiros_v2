@@ -332,13 +332,13 @@
             </div>
             <div class="form-row mt-5">
                 <div class="col-md-4 button text-center">
-                    <button type="button" class="btn btn-primary mb-2">Contactarnos</button>
+                    <a class="btn btn-primary mb-2" href="">Contactarnos</a>
                 </div>
                 <div class="col-md-4 button text-center">
-                    <button type="button" class="btn btn-primary mb-2">Ver mi perfil</button>
+                    <a class="btn btn-primary mb-2" href="{{ route('perfil') }}">Ver mi perfil</a>
                 </div>
                 <div class="col-md-4 button text-center">
-                    <button type="button" class="btn btn-primary mb-2">Ir al panel de envios</button>
+                    <a class="btn btn-primary mb-2" href="">Ir al panel de envios</a>
                 </div>
             </div>
         </div>
