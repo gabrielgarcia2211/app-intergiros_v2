@@ -12,11 +12,11 @@
     max-width: 150px !important;
 }
 
-.navbar-nav .nav-item:nth-child(5) .nav-link {
+.navbar-nav #child5 .nav-link {
     color: #009d2c !important;
 }
 
-.navbar-nav .nav-item:nth-child(5) .nav-link:hover {
+.navbar-nav #child5 .nav-link:hover {
     color: #02c73a !important;
 }
 
@@ -29,18 +29,18 @@
     color: #414141 !important;
 }
 
-.navbar-nav .nav-item:nth-child(6) .nav-link {
+.navbar-nav #child6 .nav-link {
     color: white !important; 
     background-color: #009d2c !important; 
     border-radius: 20px !important; 
     padding: 5px 15px !important; 
 }
 
-.navbar-nav .nav-item:nth-child(6) .nav-link:hover {
+.navbar-nav #child6 .nav-link:hover {
     background-color: #02c73a !important;
 }
 
-.navbar-nav .nav-item:nth-child(7) .nav-link, .navbar-nav .nav-item:nth-child(8) .nav-link {
+.navbar-nav #child7 .nav-link, .navbar-nav #child8 .nav-link {
     font-size: 24px !important;
 }
 /* FIN CSS MENU */

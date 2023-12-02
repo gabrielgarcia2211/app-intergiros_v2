@@ -50,7 +50,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Noticias</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="child5">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                                 aria-expanded="false">
                                 Nombre Usuario <img src="{{ asset('img/perfil/verificado.png') }}" alt=""
@@ -59,15 +59,16 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Mi Perfil</a>
                                 <a class="dropdown-item" href="#"><i class="fas fa-coins"></i> Panel de envíos</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Cerrar sesion</a>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="child6">
                             <a class="nav-link" href="#"><i class="fas fa-comment-dots"></i></a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="child7">
                             <a class="nav-link" href="#"><i class="fab fa-instagram"></i></a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="child8">
                             <a class="nav-link" href="#"><i class="fab fa-facebook"></i></a>
                         </li>
                     </ul>
