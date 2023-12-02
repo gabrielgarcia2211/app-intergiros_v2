@@ -50,16 +50,16 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Noticias</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="child5">
                             <a class="nav-link" href="{{ asset('login') }}">Inicia Sesión</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="child6">
                             <a class="nav-link" href="{{ asset('registro') }}">Regístrate</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="child7">
                             <a class="nav-link" href="#"><i class="fab fa-instagram"></i></a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="child8">
                             <a class="nav-link" href="#"><i class="fab fa-facebook"></i></a>
                         </li>
                     </ul>
