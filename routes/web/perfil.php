@@ -6,6 +6,9 @@ use App\Http\Controllers\HomeController;
 /* Home */
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 
+/* Envio */
+Route::get('/servicios', [HomeController::class, 'envio'])->name('envio');
+
 /* Perfil */
 Route::group(['prefix' => 'perfil'], function() {
     Route::get('/', [HomeController::class, 'perfil'])->name('perfil');

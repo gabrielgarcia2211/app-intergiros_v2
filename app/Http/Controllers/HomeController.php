@@ -32,6 +32,10 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function envio(){
+        return view('envio.index');
+    }
+
     public function perfil()
     {
         return view('perfil.index');
