@@ -11,6 +11,9 @@ Route::get('/', function(){
 
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 
+/* Envio */
+Route::get('/servicios', [HomeController::class, 'envio'])->name('envio');
+
 /* Perfil */
 Route::group(['prefix' => 'perfil', 'middleware' => ['auth']], function() {
     Route::get('/', [HomeController::class, 'perfil'])->name('perfil');
