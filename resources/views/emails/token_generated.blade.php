@@ -1,13 +1,13 @@
 <x-mail::message>
-# Introduction
-The body of your message
+# Actualización de Perfil
+A continuación se le proporcionará un token para completar la actualización.
 
 Hola, {{ auth()->user()->name }}.
 
 <x-mail::button :url="''">
-Token Pa:  {{ $data['token'] }}
+Token:  {{ $data['token'] }}
 </x-mail::button>
 
-Thanks,<br>
+Desde,<br>
 {{ config('app.name') }}
 </x-mail::message>

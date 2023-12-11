@@ -71,37 +71,4 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function upload(Request $request)
-    {
-        dd($request->all());
-        $uploadedFile = $request->file('fileSelfieRegistro');
-
-        if (!$uploadedFile) {
-            return response()->json(['error' => 'No se ha seleccionado ningún archivo.'], 400);
-        }
-
-        $originalName = $uploadedFile->getClientOriginalName();
-        $mimeType = $uploadedFile->getClientMimeType();
-        $size = $uploadedFile->getSize();
-
-        // Puedes validar, procesar o almacenar el archivo aquí
-
-        $path = $uploadedFile->store('carpeta_de_almacenamiento');
-
-        dd([
-            'original_name' => $originalName,
-            'mime_type' => $mimeType,
-            'size' => $size,
-            'path' => $path,
-        ]);
-
-        return response()->json([
-            'message' => 'Archivo subido exitosamente',
-            'original_name' => $originalName,
-            'mime_type' => $mimeType,
-            'size' => $size,
-            'path' => $path
-        ]);
-    }
-
 }

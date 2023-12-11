@@ -5,16 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Mail\TokenGenerated;
 use App\Models\Perfil\Token;
-use Illuminate\Http\Request;
 use App\Services\FileService;
 use App\Models\Registro\UserRedes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\Token\StoreTokenRequest;
 use App\Http\Requests\Perfil\UpdateUserRequest;
+use App\Http\Requests\Perfil\UpdateVerificationRequest;
 use App\Http\Controllers\ResponseController as Response;
 
 class HomeController extends Controller
@@ -44,8 +43,8 @@ class HomeController extends Controller
     public function getUser()
     {
         $user = User::where('id', Auth()->user()->id)->with(['user_redes'])->get()[0];
-        $user["path_documento"] = $this->fileService->getFileUrl($user["path_documento"]);
-        $user["path_selfie"] = $this->fileService->getFileUrl($user["path_selfie"]);
+        $user["path_documento"] = !empty($user["path_documento"]) ? $this->fileService->getFileUrl($user["path_documento"]) : null;
+        $user["path_selfie"] = !empty($user["path_selfie"]) ? $this->fileService->getFileUrl($user["path_selfie"]) : null;
 
         return Response::sendResponse($user, 'Registro obtenido con exito.');
     }
@@ -101,6 +100,31 @@ class HomeController extends Controller
                     "nombre" => $formActualizarInfo["nombreUsuario2"],
                 ]);
             }
+
+            $user->save();
+            DB::commit();
+            return Response::sendResponse($user, 'Perfil actualizado con exito.');
+        } catch (\Exception $ex) {
+            DB::rollback();
+            Log::debug($ex->getMessage());
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
+        }
+    }
+
+    public function updateVerification(UpdateVerificationRequest $request)
+    {
+
+        DB::beginTransaction();
+
+        try {
+            $formVerificacion = $request->all()["formVerificacion"];
+            $user = User::find(Auth()->user()->id);
+            $user->documento = $formVerificacion["documento"];
+
+            $this->fileService->deleteFile($user->path_selfie);
+            $this->fileService->deleteFile($user->path_documento);
+            $user->path_selfie = $this->fileService->saveFile($formVerificacion['inputGroupFile01']);
+            $user->path_documento = $this->fileService->saveFile($formVerificacion['inputGroupFile02']);
 
             $user->save();
             DB::commit();

@@ -69,19 +69,31 @@ $(document).ready(async function () {
     });
     $("#formVerificacion").validate({
         rules: {
+            documento: {
+                required: true,
+            },
             tipoDocumento: {
                 required: true,
             },
-            documento: {
+            inputGroupFile01: {
+                required: true,
+            },
+            inputGroupFile02: {
                 required: true,
             },
         },
         messages: {
+            documento: {
+                required: "El campo documento es obligatorio",
+            },
             tipoDocumento: {
                 required: "El campo tipo de documento es obligatorio",
             },
-            documento: {
-                required: "El campo documento es obligatorio",
+            inputGroupFile01: {
+                required: "El campo selfie es requerido.",
+            },
+            inputGroupFile02: {
+                required: "El campo foto del documento es requerido.",
             },
         },
         errorPlacement: function (error, element) {
@@ -93,8 +105,18 @@ $(document).ready(async function () {
     setUserDataFields(details);
     setVerificationDataFields(details);
 
-    updateButtonAndBindClick("btnPreview01", details.data.path_documento);
-    updateButtonAndBindClick("btnPreview02", details.data.path_selfie);
+    updateButtonAndBindClick("btnPreview01", details.data.path_selfie);
+    updateButtonAndBindClick("btnPreview02", details.data.path_documento);
+
+    var activeTab = getCookie("activeTab");
+    if (activeTab) {
+        $('#myTabs a[href="' + activeTab + '"]').tab("show");
+    }
+    // Escuchar el evento de cambio de pestaña y actualizar la cookie
+    $("#myTabs a").on("shown.bs.tab", function (e) {
+        var selectedTab = $(e.target).attr("href");
+        setCookie("activeTab", selectedTab, 1);
+    });
 });
 
 var tab1 = document.getElementById("tab1-tab");
@@ -184,13 +206,24 @@ function updateUser() {
             token: generateRandomToken(),
         };
 
+        Swal.fire({
+            title: "Cargando...",
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            willOpen: () => {
+                Swal.showLoading();
+            },
+        });
+
         axios
             .post("/perfil/token", formDataToken)
             .then((response) => {
+                Swal.close();
                 const responseData = response.data.data;
                 validarToken(responseData);
             })
             .catch((error) => {
+                Swal.close();
                 handleErrors(error);
             });
     }
@@ -221,7 +254,7 @@ function validarToken(responseData) {
     }).then((result) => {
         if (result.isConfirmed) {
             axios
-                .post("/perfil/update", formData)
+                .post("/perfil/user/update", formData)
                 .then((actualizarResponse) => {
                     Swal.fire(
                         "Información actualizada correctamente!",
@@ -249,6 +282,12 @@ function hasExpired(expiresAt) {
 
 function setVerificationDataFields(details) {
     $("#documento").val(details.data.documento);
+    if (details.data.path_selfie) {
+        loadImageFromURL(details.data.path_selfie, "#inputGroupFile01");
+    }
+    if (details.data.path_documento) {
+        loadImageFromURL(details.data.path_documento, "#inputGroupFile02");
+    }
 }
 
 function updateButtonAndBindClick(buttonId, imagePath) {
@@ -264,4 +303,33 @@ function updateButtonAndBindClick(buttonId, imagePath) {
             showImageAlert(imagePath);
         }
     });
+}
+
+function updateVerification() {
+    if ($("#formVerificacion").valid()) {
+        formData.formVerificacion = {
+            documento: $("#documento").val(),
+            tipoDocumento: $("#tipoDocumento").val(),
+            inputGroupFile01: $("#inputGroupFile01")[0].files[0],
+            inputGroupFile02: $("#inputGroupFile02")[0].files[0],
+        };
+
+        axios
+            .post("/perfil/verification/update", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((response) => {
+                Swal.fire(
+                    "Información actualizada correctamente!",
+                    "",
+                    "success"
+                );
+                location.reload();
+            })
+            .catch((error) => {
+                handleErrors(error);
+            });
+    }
 }

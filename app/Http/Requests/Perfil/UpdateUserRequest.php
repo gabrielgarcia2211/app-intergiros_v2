@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Perfil;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -24,7 +25,11 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'formActualizarInfo' => 'required',
+            'formActualizarInfo' => 'required|array',
+            'formActualizarInfo.pais' => 'required',
+            'formActualizarInfo.telefono' => 'required',
+            'formActualizarInfo.paisTelefono' => 'required',
+            'formActualizarInfo.fehaNacimiento' => 'required',
         ];
     }
 
@@ -37,6 +42,20 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'formActualizarInfo.required' => 'Falta informacion en la actualización de datos personales.',
+            'formActualizarInfo.pais.required' => 'El campo pais es requerido.',
+            'formActualizarInfo.telefono.required' => 'El campo telefono es requerido.',
+            'formActualizarInfo.paisTelefono.required' => 'El indicativo del pais telefono es requerido.',
+            'formActualizarInfo.fehaNacimiento.required' => 'El campo fecha nacimiento es requerido.',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'formActualizarInfo.pais' => 'pais',
+            'formActualizarInfo.telefono' => 'telefono',
+            'formActualizarInfo.paisTelefono' => 'inidicativo telefono',
+            'formActualizarInfo.fehaNacimiento' => 'fecha nacimiento',
         ];
     }
 

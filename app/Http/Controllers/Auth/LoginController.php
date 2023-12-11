@@ -127,7 +127,7 @@ class LoginController extends Controller
                     'path_documento' => $path_documento,
                 ]);
             }
-
+            $this->guard()->login($user);
             return Response::sendResponse([], 'Registro guardado con exito.');
         } catch (\Exception $ex) {
             Log::debug($ex->getMessage());
