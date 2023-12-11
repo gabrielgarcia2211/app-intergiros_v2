@@ -29,7 +29,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/home">
                     <img src="{{ asset('img/Logo3-5.png') }}" alt="Logo" class="navbar-logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -39,7 +39,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Inicio</a>
+                            <a class="nav-link" href="/home">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Servicios</a>

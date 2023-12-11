@@ -1,4 +1,5 @@
 @extends('layouts.css-perfil')
+@include('layouts.nav-user')
 
 @section('content')
 
