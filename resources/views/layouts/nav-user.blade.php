@@ -29,7 +29,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/home">
                     <img src="{{ asset('img/Logo3-5.png') }}" alt="Logo" class="navbar-logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -39,7 +39,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Inicio</a>
+                            <a class="nav-link" href="/home">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Servicios</a>
@@ -75,6 +75,60 @@
                 </div>
             </div>
         </nav>
+
+        <style>
+            h4 {
+                color: #0035aa;
+            }
+
+            p {
+                font-family: 'Lato', sans-serif !important;
+            }
+
+            /*  CSS MENU */
+            .nav-bar {
+                background-color: white !important;
+            }
+
+            .navbar-nav {
+                display: flex !important;
+                align-items: center !important;
+            }
+
+            .navbar-logo {
+                max-width: 150px !important;
+            }
+
+            .navbar-nav .nav-link {
+                color: black !important;
+                font-family: 'Lato', sans-serif !important;
+            }
+
+            .navbar-nav .nav-link:hover {
+                color: #414141 !important;
+            }
+
+            .navbar-nav #child5 .nav-link {
+                color: white !important; 
+                background-color: #009d2c !important; 
+                border-radius: 20px !important; 
+                padding: 5px 15px !important; 
+            }
+
+            .navbar-nav  #child5 .nav-link:hover {
+                background-color: #02c73a !important;
+            }
+
+            .navbar-nav #child6 .nav-link, .navbar-nav #child7 .nav-link, .navbar-nav #child8 .nav-link {
+                font-size: 24px !important;
+            }
+
+            .dropdown-item {
+                color: #000000 !important;
+            }
+            /* FIN CSS MENU */
+
+        </style>
 
         <main class="">
             @yield('content')
