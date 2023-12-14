@@ -2,8 +2,7 @@
 @include('layouts.nav-user')
 
 @section('content')
-
-<div class="text-center mt-5">
+    <div class="text-center mt-5">
         <h1><strong>¡Hola Usuario!</strong></h1>
     </div>
     <div class="text-center mt-5">
@@ -11,14 +10,14 @@
     </div>
     <div class="text-center mt-5" id="slide-tasas">
         <div class="container">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel"
-                style="padding-top: 45px; padding-bottom: 30px;">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" style="padding-top: 45px; padding-bottom: 30px;">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="row">
                             <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
-                                    <img src="{{ asset('img/home/TDC Intergiros - Skrill.png') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('img/home/TDC Intergiros - Skrill.png') }}" class="img-fluid"
+                                        alt="">
                                     <div class="text-center mt-5">
                                         <h5><strong>Todos los bancos</strong></h5>
                                         <h5><strong>1 USD=31,00 BS.</strong></h5>
@@ -28,7 +27,8 @@
                             <!-- Repite este bloque para cada tarjeta -->
                             <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
-                                    <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid"
+                                        alt="">
                                     <div class="text-center mt-5">
                                         <h5><strong>Banesco</strong></h5>
                                         <h5><strong>1 USD=31,03 BS.</strong></h5>
@@ -40,7 +40,8 @@
                             <!-- Repite este bloque para cada tarjeta -->
                             <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
-                                    <img src="{{ asset('img/home/TDC Intergiros - Bitcoin.png') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('img/home/TDC Intergiros - Bitcoin.png') }}" class="img-fluid"
+                                        alt="">
                                     <div class="text-center mt-5">
                                         <h5><strong>Todos los bancos</strong></h5>
                                         <h5><strong>1 USD=31,00 BS.</strong></h5>
@@ -54,9 +55,10 @@
                     <!-- Repite este bloque para cada grupo de 3 tarjetas -->
                     <div class="carousel-item">
                         <div class="row">
-                        <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
-                                    <img src="{{ asset('img/home/TDC Intergiros - Skrill.png') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('img/home/TDC Intergiros - Skrill.png') }}" class="img-fluid"
+                                        alt="">
                                     <div class="text-center mt-5">
                                         <h5><strong>Todos los bancos</strong></h5>
                                         <h5><strong>1 USD=31,00 BS.</strong></h5>
@@ -66,7 +68,8 @@
                             <!-- Repite este bloque para cada tarjeta -->
                             <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
-                                    <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid"
+                                        alt="">
                                     <div class="text-center mt-5">
                                         <h5><strong>Banesco</strong></h5>
                                         <h5><strong>1 USD=31,03 BS.</strong></h5>
@@ -78,7 +81,8 @@
                             <!-- Repite este bloque para cada tarjeta -->
                             <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
-                                    <img src="{{ asset('img/home/TDC Intergiros - Bitcoin.png') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('img/home/TDC Intergiros - Bitcoin.png') }}" class="img-fluid"
+                                        alt="">
                                     <div class="text-center mt-5">
                                         <h5><strong>Todos los bancos</strong></h5>
                                         <h5><strong>1 USD=31,00 BS.</strong></h5>
@@ -92,9 +96,10 @@
                     <!-- Repite este bloque para cada grupo de 3 tarjetas -->
                     <div class="carousel-item">
                         <div class="row">
-                        <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
-                                    <img src="{{ asset('img/home/TDC Intergiros - Skrill.png') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('img/home/TDC Intergiros - Skrill.png') }}" class="img-fluid"
+                                        alt="">
                                     <div class="text-center mt-5">
                                         <h5><strong>Todos los bancos</strong></h5>
                                         <h5><strong>1 USD=31,00 BS.</strong></h5>
@@ -104,7 +109,8 @@
                             <!-- Repite este bloque para cada tarjeta -->
                             <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
-                                    <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid"
+                                        alt="">
                                     <div class="text-center mt-5">
                                         <h5><strong>Banesco</strong></h5>
                                         <h5><strong>1 USD=31,03 BS.</strong></h5>
@@ -116,7 +122,8 @@
                             <!-- Repite este bloque para cada tarjeta -->
                             <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
-                                    <img src="{{ asset('img/home/TDC Intergiros - Bitcoin.png') }}" class="img-fluid" alt="">
+                                    <img src="{{ asset('img/home/TDC Intergiros - Bitcoin.png') }}" class="img-fluid"
+                                        alt="">
                                     <div class="text-center mt-5">
                                         <h5><strong>Todos los bancos</strong></h5>
                                         <h5><strong>1 USD=31,00 BS.</strong></h5>
@@ -149,8 +156,7 @@
             <div class="col-md-5">
                 <div class="input-group mt-4">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01"
-                            id="izquierda"><strong>de</strong></label>
+                        <label class="input-group-text" for="inputGroupSelect01" id="izquierda"><strong>de</strong></label>
                     </div>
                     <select class="custom-select" id="inputGroupSelect01">
                         <option selected>Selecciona</option>
@@ -167,8 +173,7 @@
             <div class="col-md-5">
                 <div class="input-group mt-4">
                     <div class="input-group-prepend">
-                        <label class="input-group-text"
-                            for="inputGroupSelect01"><strong></strong>&ensp;a</strong></label>
+                        <label class="input-group-text" for="inputGroupSelect01"><strong></strong>&ensp;a</strong></label>
                     </div>
                     <select class="custom-select" id="inputGroupSelect02">
                         <option selected>Selecciona</option>
@@ -190,9 +195,6 @@
             <div class="col-md-6">
                 <select class="form-control input-registro" id="selectBeneficiario" onchange="verificarSelect1()">
                     <option value="0" selected disabled>Beneficiarios afiliados</option>
-                    <option value="1">Nombre 1</option>
-                    <option value="2">Nombre 2</option>
-                    <option value="3">Nombre 3</option>
                 </select>
                 <div class="text-center">
                     <p onclick="activarBeneficiario()"
@@ -200,56 +202,92 @@
                         Afiliar nuevo beneficiario</p>
                 </div>
 
-                <div class="text-center mt-4" style="display: none;" id="beneficiario">
-                    <div class="form-group">
-                        <input type="text" class="form-control input-registro miInput1" id="paypalAliasBeneficiario"
-                            placeholder="Alias">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control input-registro miInput1" id="paypalNombreBeneficiario"
-                            placeholder="Nombres y apellidos">
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <select class="form-control input-indicativo miSelect1" id="paypalTipoDocumentoBeneficiario">
-                                    <option value="1">T</option>
-                                    <option value="2">CC</option>
-                                    <option value="3">A</option>
-                                    <!-- Agrega más opciones aquí -->
-                                </select>
-                            </div>
-                            <input type="number" class="form-control input-telefono miInput1" id="paypalDocumentoBeneficiario"
-                                placeholder="Número documento">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control input-registro miInput1" id="paypalBancoBeneficiario"
-                            placeholder="Banco">
-                    </div>
-                    <div class="form-group">
-                        <input type="number" class="form-control input-registro miInput1" id="paypalCuentaBeneficiario"
-                            placeholder="Número de cuenta">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control input-registro miInput1" id="paypalPagoMovilBeneficiario"
-                            placeholder="Pago móvil">
-                    </div>
-                    <div class="text-center">
-                        <a href="#" style="color: #0035aa;" id="cuentaNueva1" style="display: none;">Guardar</a>
-                        <div id="cuentaExistente1" style="display: none;">
-                            <div class="row">
-                                <div class="col-6">
-                                    <a href="#" style="color: #0035aa;">Editar</a>
-                                </div>
-                                <div class="col-6">
-                                    <i class="fas fa-trash-alt"></i>
-                                </div>
+                <form action="" id="formPaytoPaypal">
+                    <div class="text-center mt-4" style="display: none;" id="beneficiario">
+                        <div class="form-group">
+                            <input type="text" class="form-control input-registro miInput1"
+                                id="paypalAliasBeneficiario" name="paypalAliasBeneficiario" placeholder="Alias">
+                            <div class="text-center">
+                                <label for="paypalAliasBeneficiario" class="error"></label>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control input-registro miInput1"
+                                id="paypalNombreBeneficiario" name="paypalNombreBeneficiario"
+                                placeholder="Nombres y apellidos">
+                            <div class="text-center">
+                                <label for="paypalNombreBeneficiario" class="error"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <select class="form-control input-indicativo miSelect1"
+                                        id="paypalTipoDocumentoBeneficiario" name="paypalTipoDocumentoBeneficiario">
+                                        <option value="1">T</option>
+                                        <option value="2">CC</option>
+                                        <option value="3">A</option>
+                                        <!-- Agrega más opciones aquí -->
+                                    </select>
+                                </div>
+                                <div class="text-center">
+                                    <label for="paypalTipoDocumentoBeneficiario" class="error"></label>
+                                </div>
+                                <input type="number" class="form-control input-telefono miInput1"
+                                    id="paypalDocumentoBeneficiario" name="paypalDocumentoBeneficiario"
+                                    placeholder="Número documento">
+                            </div>
+                            <div class="text-center">
+                                <label for="paypalDocumentoBeneficiario" class="error"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control input-registro miInput1"
+                                id="paypalBancoBeneficiario" name="paypalBancoBeneficiario" placeholder="Banco">
+                            <div class="text-center">
+                                <label for="paypalBancoBeneficiario" class="error"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control input-registro miInput1"
+                                id="paypalCuentaBeneficiario" name="paypalCuentaBeneficiario"
+                                placeholder="Número de cuenta">
+                            <div class="text-center">
+                                <label for="paypalCuentaBeneficiario" class="error"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control input-registro miInput1"
+                                id="paypalPagoMovilBeneficiario" name="paypalPagoMovilBeneficiario"
+                                placeholder="Pago móvil">
+                        </div>
+                        <div class="text-center">
+                            <label for="paypalPagoMovilBeneficiario" class="error"></label>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" onclick="addBeneficiario()" id="cuentaNueva1"
+                                style="display: none;">Guardar</button>
+                            <div id="cuentaExistente1" style="display: none;">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-primary"
+                                            onclick="activarEditBeneficiario()">Editar</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-primary"
+                                            onclick="setBeneficiario()">Guardar Edicion</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-primary" onclick="deleteBeneficiario()"> <i
+                                                class="fas fa-trash-alt"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
+
             <!-- depositante -->
             <div class="col-md-6">
                 <select class="form-control input-registro" id="selectDepositante" onchange="verificarSelect2()">
@@ -266,7 +304,8 @@
 
                 <div class="text-center mt-4" style="display: none;" id="depositante">
                     <div class="form-group">
-                        <input type="text" class="form-control input-registro miInput2" id="paypalAliasDepositante" placeholder="Alias">
+                        <input type="text" class="form-control input-registro miInput2" id="paypalAliasDepositante"
+                            placeholder="Alias">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control input-registro miInput2" id="paypalNombreDepositante"
@@ -275,15 +314,16 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select class="form-control input-indicativo miSelect2" id="paypalTipoDocumentoDepositante">
+                                <select class="form-control input-indicativo miSelect2"
+                                    id="paypalTipoDocumentoDepositante">
                                     <option value="1">T</option>
                                     <option value="2">CC</option>
                                     <option value="3">A</option>
                                     <!-- Agrega más opciones aquí -->
                                 </select>
                             </div>
-                            <input type="number" class="form-control input-telefono miInput2" id="paypalDocumentoDepositante"
-                                placeholder="Número documento">
+                            <input type="number" class="form-control input-telefono miInput2"
+                                id="paypalDocumentoDepositante" placeholder="Número documento">
                         </div>
                     </div>
                     <div class="form-group">
@@ -300,8 +340,8 @@
                                     <!-- Agrega más opciones aquí -->
                                 </select>
                             </div>
-                            <input type="number" class="form-control input-telefono miInput2" id="paypalCelularDepositante"
-                                placeholder="Número celular">
+                            <input type="number" class="form-control input-telefono miInput2"
+                                id="paypalCelularDepositante" placeholder="Número celular">
                         </div>
                     </div>
                     <div class="form-group">
@@ -360,7 +400,8 @@
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                 <label class="form-check-label" for="defaultCheck1">
-                    <p>Acepto los <a href="#" style="color: #0035aa;"><strong>Terminos y Condiciones</strong></a> del
+                    <p>Acepto los <a href="#" style="color: #0035aa;"><strong>Terminos y Condiciones</strong></a>
+                        del
                         servicio de intergiros.</p>
                 </label>
             </div>
@@ -372,6 +413,6 @@
     </div>
     <br><br><br><br><br>
 
-<!-- FOOTER -->
-@include('layouts.footer')
+    <!-- FOOTER -->
+    @include('layouts.footer')
 @endsection

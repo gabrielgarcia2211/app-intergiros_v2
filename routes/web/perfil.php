@@ -12,7 +12,7 @@ Route::get('/', function(){
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 
 /* Envio */
-Route::get('/servicios', [HomeController::class, 'envio'])->name('envio');
+Route::get('/servicios', [HomeController::class, 'envio'])->name('servicios');
 
 /* Perfil */
 Route::group(['prefix' => 'perfil', 'middleware' => ['auth']], function() {

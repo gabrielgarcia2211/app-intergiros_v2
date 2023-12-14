@@ -262,7 +262,6 @@ function validarToken(responseData) {
                         "success"
                     );
                     setTimeout(function () {
-                        console.log("Recargando la página ahora");
                         location.reload();
                     }, 2000);
                 })

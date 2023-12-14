@@ -39,10 +39,10 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/home">Inicio</a>
+                            <a class="nav-link" href="{{ route('servicios') }}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Servicios</a>
+                            <a class="nav-link" href="{{ route('servicios') }}">Servicios</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Tasas</a>
