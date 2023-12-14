@@ -142,6 +142,10 @@ function activarBeneficiario() {
 }
 
 function activarEditBeneficiario() {
+    var editBeneficiario = document.getElementById('editBeneficiario');
+    var guardarEdit = document.getElementById('guardarEdit');
+    editBeneficiario.setAttribute("disabled", "disabled");
+    guardarEdit.removeAttribute("disabled");
     for (var i = 0; i < elementos1.length; i++) {
         elementos1[i].removeAttribute("disabled");
     }
