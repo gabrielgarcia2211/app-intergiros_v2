@@ -270,12 +270,10 @@
                             <div id="cuentaExistente1" style="display: none;">
                                 <div class="row">
                                     <div class="col-6">
-                                        <button type="button" class="btn btn-primary"
+                                        <button type="button" class="btn btn-primary" id="editBeneficiario"
                                             onclick="activarEditBeneficiario()">Editar</button>
-                                    </div>
-                                    <div class="col-6">
-                                        <button type="button" class="btn btn-primary"
-                                            onclick="setBeneficiario()">Guardar Edicion</button>
+                                        <button type="button" class="btn btn-primary" id="guardarEdit"
+                                            onclick="setBeneficiario()" disable>Guardar Edicion</button>
                                     </div>
                                     <div class="col-6">
                                         <button type="button" class="btn btn-primary" onclick="deleteBeneficiario()"> <i
