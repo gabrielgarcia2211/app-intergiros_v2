@@ -143,7 +143,7 @@ function activarBeneficiario() {
 
 function activarEditBeneficiario() {
     var editBeneficiario = document.getElementById('editBeneficiario');
-    var guardarEdit = document.getElementById('guardarEdit');
+    var guardarEdit = document.getElementById('guardarEdit1');
     editBeneficiario.setAttribute("disabled", "disabled");
     guardarEdit.removeAttribute("disabled");
     for (var i = 0; i < elementos1.length; i++) {
@@ -167,6 +167,19 @@ function activarDepositante() {
     adjuntarFoto.style.display = "block";
     cuentaNueva2.style.display = "block";
     depositante.style.display = "block";
+}
+
+function activarEditDepositante() {
+    var editDepositante = document.getElementById('editDepositante');
+    var guardarEdit = document.getElementById('guardarEdit2');
+    editDepositante.setAttribute("disabled", "disabled");
+    guardarEdit.removeAttribute("disabled");
+    for (var i = 0; i < elementos2.length; i++) {
+        elementos1[i].removeAttribute("disabled");
+    }
+    for (var j = 0; j < selects2.length; j++) {
+        selects1[j].removeAttribute("disabled");
+    }
 }
 
 for (var i = 0; i < elementos1.length; i++) {
