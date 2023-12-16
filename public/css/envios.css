@@ -81,10 +81,18 @@ h3 {
     border-radius: 25px;
 }
 
-#adjuntarDocumento {
+/* #adjuntarDocumento {
     background-color: #0035aa;
     color: white;
     border-radius: 25px;
+} */
+
+.form-row input {
+    width: 80%;
+    border-radius: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
 }
 
 /* FOOTER */
