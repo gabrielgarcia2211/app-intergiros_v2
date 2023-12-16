@@ -59,7 +59,7 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ route('perfil') }}"><i class="fas fa-user"></i> Mi Perfil</a>
                                 <a class="dropdown-item" href="#"><i class="fas fa-coins"></i> Panel de envíos</a>
-                                <a class="dropdown-item" href={{ route('logout') }}><i class="fas fa-sign-out-alt"></i>
+                                <a class="dropdown-item" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i>
                                     Cerrar sesion</a>
                             </div>
                         </li>

@@ -352,9 +352,21 @@
                             <!-- Agrega más opciones aquí -->
                         </select>
                     </div>
-                    <div class="text-center" id="adjuntarFoto" name="adjuntarFoto" style="display: none;">
-                        <button class="btn btn-primary" type="button" id="adjuntarDocumento">Adjuntar foto del
-                            documento</button>
+                    <div class="" id="adjuntarFoto" name="adjuntarFoto" style="display: none;">
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-secondary" type="button" id="btnPreview01">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </button>
+                                </div>
+                                <input type="file" class="custom-file-input" id="adjuntarDocumento"
+                                    name="adjuntarDocumento">
+                                <label class="custom-file-label input-registro" for="adjuntarDocumento" id="labelFile01"
+                                    style="text-align: left;">Adjunta
+                                    foto del documento</label>
+                            </div>
+                        </div>
                     </div>
                     <div class="text-center mt-3">
                         <div class="text-center" style="display: flex; justify-content: center;">
