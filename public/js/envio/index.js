@@ -171,8 +171,8 @@ function activarBeneficiario() {
 function activarEditBeneficiario() {
     var editBeneficiario = document.getElementById("editBeneficiario");
     var guardarEdit = document.getElementById("guardarEdit1");
-    editBeneficiario.setAttribute("disabled", "disabled");
-    guardarEdit.removeAttribute("disabled");
+    editBeneficiario.style.display = 'none';
+    guardarEdit.style.display = 'block';
     for (var i = 0; i < elementos1.length; i++) {
         elementos1[i].removeAttribute("disabled");
     }
@@ -199,13 +199,13 @@ function activarDepositante() {
 function activarEditDepositante() {
     var editDepositante = document.getElementById("editDepositante");
     var guardarEdit = document.getElementById("guardarEdit2");
-    editDepositante.setAttribute("disabled", "disabled");
-    guardarEdit.removeAttribute("disabled");
+    editDepositante.style.display = 'none';
+    guardarEdit.style.display = 'block';
     for (var i = 0; i < elementos2.length; i++) {
-        elementos1[i].removeAttribute("disabled");
+        elementos2[i].removeAttribute("disabled");
     }
     for (var j = 0; j < selects2.length; j++) {
-        selects1[j].removeAttribute("disabled");
+        selects2[j].removeAttribute("disabled");
     }
 }
 
