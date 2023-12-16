@@ -17,6 +17,7 @@ var cuentaExistente2 = document.getElementById("cuentaExistente2");
 var adjuntarFoto = document.getElementById("adjuntarFoto");
 
 var formDataBeneficiario;
+var formDataDepositante;
 
 /* inputs paypal*/
 $(document).ready(async function () {
@@ -71,12 +72,15 @@ $(document).ready(async function () {
             error.insertAfter(element);
         },
     });
-    /* $(" ").validate({
+    $("#formPaytoBolivares").validate({
         rules: {
             paypalAliasDepositante: {
                 required: true,
             },
             paypalNombreDepositante: {
+                required: true,
+            },
+            paypalTipoDocumentoDepositante: {
                 required: true,
             },
             paypalDocumentoDepositante: {
@@ -85,45 +89,68 @@ $(document).ready(async function () {
             paypalCorreoDepositante: {
                 required: true,
             },
+            paypalIndicativoDepositante: {
+                required: true,
+            },
             paypalCelularDepositante: {
                 required: true,
             },
             paypalPaisDepositante: {
                 required: true,
             },
+            adjuntarFoto: {
+                required: true,
+            },
         },
         messages: {
-            email: {
-                required: "El campo alias electrónico es obligatorio",
+            paypalAliasDepositante: {
+                required: "El campo alias es obligatorio",
             },
-            nombre: {
+            paypalNombreDepositante: {
                 required: "El campo de nombre es obligatorio",
             },
-            pais: {
+            paypalTipoDocumentoDepositante: {
+                required: "El campo tipo documento es obligatorio",
+            },
+            paypalDocumentoDepositante: {
                 required: "El campo documento es obligatorio",
             },
-            apellidos: {
+            paypalCorreoDepositante: {
                 required: "El campo correo depositante es obligatorio",
             },
-            telefono: {
+            paypalIndicativoDepositante: {
                 required: "El campo celular es obligatorio",
             },
-            fehaNacimiento: {
+            paypalCelularDepositante: {
+                required: "El campo celular es obligatorio",
+            },
+            paypalPaisDepositante: {
                 required: "El campo pais es obligatorio",
+            },
+            adjuntarFoto: {
+                required: "La foto del documento es obligatoria",
             },
         },
         errorPlacement: function (error, element) {
             error.insertAfter(element);
         },
-    }); 
-    */
+    });
 
     var beneficiarios = await getBeneficiarios();
+    var depositantes = await getDepositantes();
+
     $.each(beneficiarios, function (key, value) {
         $("#selectBeneficiario").append(
             $("<option>", { value: value.id }).text(value.nombre)
         );
     });
+
+    $.each(depositantes, function (key, value) {
+        $("#selectDepositante").append(
+            $("<option>", { value: value.id }).text(value.nombre)
+        );
+    });
+
 });
 /* fin input paypal */
 
@@ -142,8 +169,8 @@ function activarBeneficiario() {
 }
 
 function activarEditBeneficiario() {
-    var editBeneficiario = document.getElementById('editBeneficiario');
-    var guardarEdit = document.getElementById('guardarEdit1');
+    var editBeneficiario = document.getElementById("editBeneficiario");
+    var guardarEdit = document.getElementById("guardarEdit1");
     editBeneficiario.setAttribute("disabled", "disabled");
     guardarEdit.removeAttribute("disabled");
     for (var i = 0; i < elementos1.length; i++) {
@@ -170,8 +197,8 @@ function activarDepositante() {
 }
 
 function activarEditDepositante() {
-    var editDepositante = document.getElementById('editDepositante');
-    var guardarEdit = document.getElementById('guardarEdit2');
+    var editDepositante = document.getElementById("editDepositante");
+    var guardarEdit = document.getElementById("guardarEdit2");
     editDepositante.setAttribute("disabled", "disabled");
     guardarEdit.removeAttribute("disabled");
     for (var i = 0; i < elementos2.length; i++) {
@@ -290,7 +317,7 @@ async function verificarSelect1() {
     }
 }
 
-function verificarSelect2() {
+async function verificarSelect2() {
     if (miSelect2.value !== "") {
         // Muestra el div si la opción no es la por defecto
         for (var i = 0; i < elementos2.length; i++) {
@@ -304,6 +331,9 @@ function verificarSelect2() {
         adjuntarFoto.style.display = "none";
         cuentaExistente2.style.display = "block";
         depositante.style.display = "block";
+
+        var details = await showDepositante();
+        setFieldsDepositante(details);
     } else {
         // Oculta el div si la opción es la por defecto
         depositante.style.display = "none";
@@ -414,3 +444,57 @@ function setFieldsBeneficiario(data) {
     $("#paypalPagoMovilBeneficiario").val(data.pago_movil);
     $("#paypalTipoDocumentoBeneficiario").val(data.tipo_documento_id);
 }
+
+function getDepositantes() {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios.get("/depositante/list");
+            resolve(response.data);
+        } catch (error) {
+            handleErrors(error);
+            reject(error);
+        }
+    });
+}
+
+function showDepositante() {
+    var selectedValue = $("#selectDepositante").val();
+    return new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios.get(
+                "/depositante/show/" + selectedValue
+            );
+            resolve(response.data);
+        } catch (error) {
+            handleErrors(error);
+            reject(error);
+        }
+    });
+}
+
+function addDepositante() {
+    if ($("#formPaytoBolivares").valid()) {
+        var formData = $("#formPaytoBolivares").serialize();
+        axios
+            .post("/depositante/store", formData)
+            .then((response) => {
+                showSuccess(response.data.message);
+            })
+            .catch((error) => {
+                handleErrors(error);
+            });
+    }
+}
+
+function setFieldsDepositante(data) {
+    formDataDepositante = data;
+    $("#paypalAliasDepositante").val(data.alias);
+    $("#paypalNombreDepositante").val(data.nombre);
+    $("#paypalDocumentoDepositante").val(data.documento);
+    $("#paypalCorreoDepositante").val(data.correo);
+    $("#paypalCelularDepositante").val(data.celular);
+    $("#paypalIndicativoDepositante").val(data.pais_telefono_id);
+    $("#paypalTipoDocumentoDepositante").val(data.tipo_documento_id);
+    $("#paypalPaisDepositante").val(data.pais_id);
+}
+
