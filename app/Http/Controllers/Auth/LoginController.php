@@ -120,8 +120,8 @@ class LoginController extends Controller
             if ((isset($formVerificacion['inputGroupFile01']) && !empty($formVerificacion['inputGroupFile01']))
                 && (isset($formVerificacion['inputGroupFile02']) && !empty($formVerificacion['inputGroupFile02']))
             ) {
-                $path_selfie = $this->fileService->saveFile($formVerificacion['inputGroupFile01']);
-                $path_documento = $this->fileService->saveFile($formVerificacion['inputGroupFile02']);
+                $path_selfie = $this->fileService->saveFile($formVerificacion['inputGroupFile01'], Auth()->user()->id, "verificacion");
+                $path_documento = $this->fileService->saveFile($formVerificacion['inputGroupFile02'], Auth()->user()->id, "verificacion");
                 User::where('id', $user->id)->update([
                     'path_selfie' => $path_selfie,
                     'path_documento' => $path_documento,

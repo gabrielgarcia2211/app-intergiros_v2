@@ -49,7 +49,7 @@ class DepositanteController extends Controller
             $pais = $request->input("paypalPaisDepositante");
             $pais = $request->input("paypalPaisDepositante");
 
-            $path_documento = $this->fileService->saveFile($request->file("adjuntarDocumento"));
+            $path_documento = $this->fileService->saveFile($request->file("adjuntarDocumento"), Auth()->user()->id, "documento_depositante");
 
             $data = Depositante::create([
                 'alias' => $alias,

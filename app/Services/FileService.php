@@ -7,11 +7,11 @@ use Illuminate\Http\UploadedFile;
 
 class FileService
 {
-    public function saveFile(UploadedFile $file, $disk = 'comprobante_disk')
+    public function saveFile(UploadedFile $file, $userId, $subfolder = null, $disk = 'comprobante_disk')
     {
         $filename = time() . '_' . $file->getClientOriginalName();
-        $path = $file->storeAs('', $filename, $disk);
-
+        $path = $this->buildPath($userId, $subfolder, $filename);
+        $file->storeAs('', $path, $disk);
         return $path;
     }
 
@@ -20,7 +20,7 @@ class FileService
         if (empty($path)) {
             return false;
         }
-        
+
         if (Storage::disk($disk)->exists($path)) {
             Storage::disk($disk)->delete($path);
             return true;
@@ -34,5 +34,18 @@ class FileService
             return Storage::disk($disk)->url($path);
         }
         return null;
+    }
+
+    private function buildPath($userId, $subfolder, $filename)
+    {
+        $path = $userId . '/';
+
+        if ($subfolder) {
+            $path .= $subfolder . '/';
+        }
+
+        $path .= $filename;
+
+        return $path;
     }
 }

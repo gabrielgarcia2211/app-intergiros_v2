@@ -123,8 +123,8 @@ class HomeController extends Controller
 
             $this->fileService->deleteFile($user->path_selfie);
             $this->fileService->deleteFile($user->path_documento);
-            $user->path_selfie = $this->fileService->saveFile($formVerificacion['inputGroupFile01']);
-            $user->path_documento = $this->fileService->saveFile($formVerificacion['inputGroupFile02']);
+            $user->path_selfie = $this->fileService->saveFile($formVerificacion['inputGroupFile01'], Auth()->user()->id, "verificacion");
+            $user->path_documento = $this->fileService->saveFile($formVerificacion['inputGroupFile02'], Auth()->user()->id, "verificacion");
 
             $user->save();
             DB::commit();
