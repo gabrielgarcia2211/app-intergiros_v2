@@ -33,6 +33,7 @@ class StoreDepositanteRequest extends FormRequest
             'paypalIndicativoDepositante' => 'required',
             'paypalCelularDepositante' => 'required',
             'paypalPaisDepositante' => 'required',
+            'adjuntarDocumento' => 'required',
         ];
     }
 
@@ -52,6 +53,7 @@ class StoreDepositanteRequest extends FormRequest
             'paypalIndicativoDepositante' => 'El campo indicativo celular  es obligatorio.',
             'paypalCelularDepositante' => 'El campo celular  es obligatorio.',
             'paypalPaisDepositante' => 'El campo pais es obligatorio.',
+            'adjuntarDocumento' => 'La foto del documento es obligatoria.',
         ];
     }
 
@@ -66,6 +68,7 @@ class StoreDepositanteRequest extends FormRequest
             'paypalIndicativoDepositante' => 'indicativo celular',
             'paypalCelularDepositante' => 'celular',
             'paypalPaisDepositante' => 'pais',
+            'adjuntarDocumento' => 'foto documento',
         ];
     }
 

@@ -98,7 +98,7 @@ $(document).ready(async function () {
             paypalPaisDepositante: {
                 required: true,
             },
-            adjuntarFoto: {
+            adjuntarDocumento: {
                 required: true,
             },
         },
@@ -127,7 +127,7 @@ $(document).ready(async function () {
             paypalPaisDepositante: {
                 required: "El campo pais es obligatorio",
             },
-            adjuntarFoto: {
+            adjuntarDocumento: {
                 required: "La foto del documento es obligatoria",
             },
         },
@@ -171,8 +171,8 @@ function activarBeneficiario() {
 function activarEditBeneficiario() {
     var editBeneficiario = document.getElementById("editBeneficiario");
     var guardarEdit = document.getElementById("guardarEdit1");
-    editBeneficiario.style.display = 'none';
-    guardarEdit.style.display = 'block';
+    editBeneficiario.style.display = "none";
+    guardarEdit.style.display = "block";
     for (var i = 0; i < elementos1.length; i++) {
         elementos1[i].removeAttribute("disabled");
     }
@@ -199,8 +199,8 @@ function activarDepositante() {
 function activarEditDepositante() {
     var editDepositante = document.getElementById("editDepositante");
     var guardarEdit = document.getElementById("guardarEdit2");
-    editDepositante.style.display = 'none';
-    guardarEdit.style.display = 'block';
+    editDepositante.style.display = "none";
+    guardarEdit.style.display = "block";
     for (var i = 0; i < elementos2.length; i++) {
         elementos2[i].removeAttribute("disabled");
     }
@@ -474,9 +474,13 @@ function showDepositante() {
 
 function addDepositante() {
     if ($("#formPaytoBolivares").valid()) {
-        var formData = $("#formPaytoBolivares").serialize();
+        var formData = new FormData($("#formPaytoBolivares")[0]);
         axios
-            .post("/depositante/store", formData)
+            .post("/depositante/store", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
             .then((response) => {
                 showSuccess(response.data.message);
             })
@@ -484,6 +488,53 @@ function addDepositante() {
                 handleErrors(error);
             });
     }
+}
+
+function setDepositante() {
+    if ($("#formPaytoBolivares").valid()) {
+        const id = formDataDepositante.id;
+        var formData = new FormData($("#formPaytoBolivares")[0]);
+
+        axios
+            .post("/depositante/update/" + id, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((response) => {
+                showSuccess(response.data.message);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
+            })
+            .catch((error) => {
+                handleErrors(error);
+            });
+    }
+}
+
+function deleteDepositante() {
+    const id = formDataDepositante.id;
+
+    Swal.fire({
+        title: "Estas seguro de eliminar el registro?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminar!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios
+                .post("/depositante/destroy/" + id)
+                .then((response) => {
+                    showSuccess(response.data.message);
+                })
+                .catch((error) => {
+                    handleErrors(error);
+                });
+        }
+    });
 }
 
 function setFieldsDepositante(data) {
@@ -497,4 +548,3 @@ function setFieldsDepositante(data) {
     $("#paypalTipoDocumentoDepositante").val(data.tipo_documento_id);
     $("#paypalPaisDepositante").val(data.pais_id);
 }
-

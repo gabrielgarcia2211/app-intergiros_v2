@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string("banco");
             $table->string("cuenta");
             $table->string("pago_movil");
-            $table->unsignedInteger('tipo_documento_id')->nullable();
+            $table->integer('tipo_documento_id')->unsigned()->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('tipo_documento_id')->references('id')->on('tipo_documento_combo');
+            $table->foreign('tipo_documento_id')->references('id')->on('master_combos');
             $table->timestamps();
         });
     }

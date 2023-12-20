@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('users_redes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedInteger('redes_id');
+            $table->integer('redes_id')->unsigned()->nullable();
             $table->string('nombre');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('redes_id')->references('id')->on('redes_combo');
+            $table->foreign('redes_id')->references('id')->on('master_combos');
             $table->timestamps();
         });
     }

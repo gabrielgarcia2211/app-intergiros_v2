@@ -18,6 +18,7 @@ class Depositante extends Model
         'pais_id',
         'tipo_documento_id',
         'pais_telefono_id',
+        'path_documento',
         'user_id',
     ];
 }

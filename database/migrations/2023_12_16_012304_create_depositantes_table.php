@@ -18,14 +18,15 @@ return new class extends Migration
             $table->integer("documento");
             $table->string("correo");
             $table->string("celular");
-            $table->unsignedInteger('tipo_documento_id')->nullable();
-            $table->unsignedInteger('pais_id')->nullable();
-            $table->unsignedInteger('pais_telefono_id')->nullable();
+            $table->integer('tipo_documento_id')->unsigned()->nullable();
+            $table->integer('pais_id')->unsigned()->nullable();
+            $table->integer('pais_telefono_id')->unsigned()->nullable();
+            $table->string('path_documento')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('tipo_documento_id')->references('id')->on('tipo_documento_combo');
-            $table->foreign('pais_telefono_id')->references('id')->on('pais_telefono_combo');
-            $table->foreign('pais_id')->references('id')->on('pais_combo');
+            $table->foreign('tipo_documento_id')->references('id')->on('master_combos');
+            $table->foreign('pais_telefono_id')->references('id')->on('master_combos');
+            $table->foreign('pais_id')->references('id')->on('master_combos');
             $table->timestamps();
         });
     }

@@ -256,11 +256,7 @@ function validarToken(responseData) {
             axios
                 .post("/perfil/user/update", formData)
                 .then((actualizarResponse) => {
-                    Swal.fire(
-                        "Información actualizada correctamente!",
-                        "",
-                        "success"
-                    );
+                    showSuccess("Información actualizada correctamente!");
                     setTimeout(function () {
                         location.reload();
                     }, 2000);
@@ -278,7 +274,6 @@ function hasExpired(expiresAt) {
 }
 
 /** verificacion de usuario */
-
 function setVerificationDataFields(details) {
     $("#documento").val(details.data.documento);
     if (details.data.path_selfie) {
@@ -320,11 +315,7 @@ function updateVerification() {
                 },
             })
             .then((response) => {
-                Swal.fire(
-                    "Información actualizada correctamente!",
-                    "",
-                    "success"
-                );
+                showSuccess("Información actualizada correctamente!");
                 location.reload();
             })
             .catch((error) => {

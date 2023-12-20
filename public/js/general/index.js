@@ -30,7 +30,7 @@ function handleErrors(error) {
     }
 }
 
-// Función para mostrar un mensaje de error
+// función para mostrar un mensaje de error
 function showError(message, type = "error") {
     Swal.fire({
         icon: type,
@@ -40,7 +40,7 @@ function showError(message, type = "error") {
     });
 }
 
-// Función para mostrar un mensaje de éxito
+// función para mostrar un mensaje de éxito
 function showSuccess(message, type = "success") {
     Swal.fire({
         icon: type,
@@ -50,12 +50,27 @@ function showSuccess(message, type = "success") {
     });
 }
 
-// Función para mostrar imagenes en sweetAlert
+// función para mostrar imagenes en sweetAlert
 function showImageAlert(imageSrc) {
     Swal.fire({
         imageUrl: imageSrc,
         imageAlt: "Imagen",
         confirmButtonText: "Aceptar",
+    });
+}
+
+// get combos
+function getComboRelations(gestor) {
+    return new Promise((resolve, reject) => {
+        axios
+            .get(`/configuration/gestor/${gestor.join(",")}`)
+            .then(function (response) {
+                resolve(response.data);
+            })
+            .catch(function (error) {
+                handleErrors(error);
+                reject(error);
+            });
     });
 }
 

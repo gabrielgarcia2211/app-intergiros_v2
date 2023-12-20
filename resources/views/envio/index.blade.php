@@ -154,10 +154,7 @@
                     <label class="input-group-text" for="inputGroupSelect01" id="izquierda"><strong>de</strong></label>
                 </div>
                 <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Selecciona</option>
-                    <option value="1">Paypal</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="0" selected>Selecciona</option>
                 </select>
             </div>
         </div>
@@ -171,10 +168,7 @@
                     <label class="input-group-text" for="inputGroupSelect01"><strong></strong>&ensp;a</strong></label>
                 </div>
                 <select class="custom-select" id="inputGroupSelect02">
-                    <option selected>Selecciona</option>
-                    <option value="1">Bolívares, VE</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="0" selected>Selecciona</option>
                 </select>
             </div>
         </div>
@@ -219,9 +213,6 @@
                             <div class="input-group-prepend">
                                 <select class="form-control input-indicativo miSelect1"
                                     id="paypalTipoDocumentoBeneficiario" name="paypalTipoDocumentoBeneficiario">
-                                    <option value="1">T</option>
-                                    <option value="2">CC</option>
-                                    <option value="3">A</option>
                                     <!-- Agrega más opciones aquí -->
                                 </select>
                             </div>
@@ -311,9 +302,6 @@
                             <div class="input-group-prepend">
                                 <select class="form-control input-indicativo miSelect2"
                                     id="paypalTipoDocumentoDepositante" name="paypalTipoDocumentoDepositante">
-                                    <option value="1">T</option>
-                                    <option value="2">CC</option>
-                                    <option value="3">A</option>
                                     <!-- Agrega más opciones aquí -->
                                 </select>
                             </div>
@@ -331,9 +319,6 @@
                             <div class="input-group-prepend">
                                 <select class="form-control input-indicativo miSelect2" id="paypalIndicativoDepositante"
                                     name="paypalIndicativoDepositante">
-                                    <option value="1">+57</option>
-                                    <option value="2">+58</option>
-                                    <option value="3">+51</option>
                                     <!-- Agrega más opciones aquí -->
                                 </select>
                             </div>
@@ -346,9 +331,6 @@
                         <select class="form-control input-registro miSelect2" id="paypalPaisDepositante"
                             name="paypalPaisDepositante">
                             <option value="0" selected disabled>País</option>
-                            <option value="1">Colombia</option>
-                            <option value="2">Venezuela</option>
-                            <option value="3">Perú</option>
                             <!-- Agrega más opciones aquí -->
                         </select>
                     </div>

@@ -46,9 +46,6 @@
                             </div>
                             <div class="form-group">
                                 <select class="form-control input-registro" id="pais" name="pais" disabled>
-                                    <option value="1">Colombia</option>
-                                    <option value="2">Venezuela</option>
-                                    <option value="3">Perú</option>
                                     <!-- Agrega más opciones aquí -->
                                 </select>
                                 <div class="text-center">
@@ -62,9 +59,6 @@
                                     <div class="input-group-prepend">
                                         <select class="form-control input-indicativo" id="paisTelefono"
                                             name="paisTelefono" disabled>
-                                            <option value="1">+57</option>
-                                            <option value="2">+58</option>
-                                            <option value="3">+51</option>
                                         </select>
                                         <div class="text-center">
                                             <label for="paisTelefono" class="error"></label>
@@ -134,8 +128,6 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <select class="form-control input-registro" id="redes1" name="redes1" disabled>
-                                    <option value="1">Facebook</option>
-                                    <option value="2">Instagram</option>
                                     <!-- Agrega más opciones aquí -->
                                 </select>
                                 <div class="text-center">
@@ -153,8 +145,6 @@
                         <div class="col-md-6">
                             <div class="form-group" id="otroP">
                                 <select class="form-control input-registro" id="redes2" name="redes2" disabled>
-                                    <option value="1">Facebook</option>
-                                    <option value="2">Instagram</option>
                                     <!-- Agrega más opciones aquí -->
                                 </select>
                                 <div class="text-center">
@@ -192,9 +182,6 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <select class="form-control input-indicativo" id="tipoDocumento" name="tipoDocumento">
-                                        <option value="1">T</option>
-                                        <option value="2">CC</option>
-                                        <option value="3">A</option>
                                     </select>
                                     <div class="text-center">
                                         <label for="tipoDocumento" class="error"></label>
@@ -264,5 +251,6 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('js/perfil/input.js') }}"></script>
     <script src="{{ asset('js/perfil/index.js') }}"></script>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Depositante;
 
+use App\Services\FileService;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Depositante\Depositante;
@@ -11,6 +12,13 @@ use App\Http\Requests\Depositante\UpdateDepositanteRequest;
 
 class DepositanteController extends Controller
 {
+
+    protected $fileService;
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
 
     public function index()
     {
@@ -39,7 +47,9 @@ class DepositanteController extends Controller
             $ind_celular = $request->input("paypalIndicativoDepositante");
             $celular = $request->input("paypalCelularDepositante");
             $pais = $request->input("paypalPaisDepositante");
-            
+            $pais = $request->input("paypalPaisDepositante");
+
+            $path_documento = $this->fileService->saveFile($request->file("adjuntarDocumento"));
 
             $data = Depositante::create([
                 'alias' => $alias,
@@ -50,6 +60,7 @@ class DepositanteController extends Controller
                 'pais_telefono_id' => $ind_celular,
                 'celular' => $celular,
                 'pais_id' => $pais,
+                'path_documento' => $path_documento,
                 'user_id' => Auth()->user()->id,
             ]);
 

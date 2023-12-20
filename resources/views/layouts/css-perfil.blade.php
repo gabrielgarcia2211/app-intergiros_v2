@@ -44,6 +44,7 @@
     </script>
 
     <script src="{{ asset('js/general/index.js') }}"></script>
+    <script src="{{ asset('js/envio/input.js') }}"></script>
     <script src="{{ asset('js/envio/index.js') }}"></script>
     @yield('script')
 
