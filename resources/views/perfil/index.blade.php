@@ -40,17 +40,11 @@
                             <div class="form-group">
                                 <input type="email" class="form-control input-registro" id="email" name="email"
                                     placeholder="Email" disabled>
-                                <div class="text-center">
-                                    <label for="email" class="error"></label>
-                                </div>
                             </div>
                             <div class="form-group">
                                 <select class="form-control input-registro" id="pais" name="pais" disabled>
                                     <!-- Agrega más opciones aquí -->
                                 </select>
-                                <div class="text-center">
-                                    <label for="pais" class="error"></label>
-                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -60,34 +54,22 @@
                                         <select class="form-control input-indicativo" id="paisTelefono"
                                             name="paisTelefono" disabled>
                                         </select>
-                                        <div class="text-center">
-                                            <label for="paisTelefono" class="error"></label>
-                                        </div>
                                     </div>
                                     <input type="number" class="form-control input-telefono" id="telefono"
                                         name="telefono" placeholder="Número celular" disabled>
-                                </div>
-                                <div class="text-center">
-                                    <label for="telefono" class="error"></label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <input type="date" class="form-control input-registro" id="fehaNacimiento"
                                     name="fehaNacimiento" placeholder="Fecha de nacimiento" disabled>
-                                <div class="text-center">
-                                    <label for="fehaNacimiento" class="error"></label>
-                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-row" id="ocultar">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="password" class="form-control" id="esteNo" placeholder="Contraseña"
+                                <input type="password" class="form-control" id="esteNo" value="**********"
                                     disabled>
-                                <div class="text-center">
-                                    <label></label>
-                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -105,9 +87,6 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="text-center">
-                                <label for="inputPassword1" class="error"></label>
-                            </div>
                         </div>
                         <div class="form-group col-md-6" style="display: none;" id="passwordDisplay2">
                             <div class="input-group">
@@ -119,9 +98,6 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="text-center">
-                                <label for="inputPassword2" class="error"></label>
-                            </div>
                         </div>
                     </div>
                     <div class="form-row">
@@ -130,16 +106,10 @@
                                 <select class="form-control input-registro" id="redes1" name="redes1" disabled>
                                     <!-- Agrega más opciones aquí -->
                                 </select>
-                                <div class="text-center">
-                                    <label for="redes1" class="error"></label>
-                                </div>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control input-registro" id="nombreUsuario1"
                                     name="nombreUsuario1" placeholder="Nombre de usuario" disabled>
-                                <div class="text-center">
-                                    <label for="nombreUsuario1" class="error"></label>
-                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -147,16 +117,10 @@
                                 <select class="form-control input-registro" id="redes2" name="redes2" disabled>
                                     <!-- Agrega más opciones aquí -->
                                 </select>
-                                <div class="text-center">
-                                    <label for="redes2" class="error"></label>
-                                </div>
                             </div>
                             <div class="form-group" id="otroN">
                                 <input type="text" class="form-control input-registro" id="nombreUsuario2"
                                     name="nombreUsuario2" placeholder="Nombre de usuario" disabled>
-                                <div class="text-center">
-                                    <label for="nombreUsuario2" class="error"></label>
-                                </div>
                             </div>
                         </div>
                     </div>

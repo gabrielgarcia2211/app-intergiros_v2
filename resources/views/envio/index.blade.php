@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="text-center mt-5">
-    <h1><strong>¡Hola Usuario!</strong></h1>
+    <h1><strong>¡Hola {{ Auth::user()->name }}!</strong></h1>
 </div>
 <div class="text-center mt-5">
     <button class="btn btn-primary" type="button" id="tasas-venezuela">Tasas para cambios a Venezuela</button>
@@ -174,6 +174,7 @@
         </div>
     </div>
 </div>
+
 <div class="container mt-5" id="panel-envios" style="display: none;">
     <div class="text-center">
         <p><strong>Monto minimo:</strong> $5USD+comisión PayPal($5,60USD)</p>
@@ -197,16 +198,10 @@
                     <div class="form-group">
                         <input type="text" class="form-control input-registro miInput1" id="paypalAliasBeneficiario"
                             name="paypalAliasBeneficiario" placeholder="Alias">
-                        <div class="text-center">
-                            <label for="paypalAliasBeneficiario" class="error"></label>
-                        </div>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control input-registro miInput1" id="paypalNombreBeneficiario"
                             name="paypalNombreBeneficiario" placeholder="Nombres y apellidos">
-                        <div class="text-center">
-                            <label for="paypalNombreBeneficiario" class="error"></label>
-                        </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
@@ -216,30 +211,19 @@
                                     <!-- Agrega más opciones aquí -->
                                 </select>
                             </div>
-                            <div class="text-center">
-                                <label for="paypalTipoDocumentoBeneficiario" class="error"></label>
-                            </div>
+
                             <input type="number" class="form-control input-telefono miInput1"
                                 id="paypalDocumentoBeneficiario" name="paypalDocumentoBeneficiario"
                                 placeholder="Número documento">
-                        </div>
-                        <div class="text-center">
-                            <label for="paypalDocumentoBeneficiario" class="error"></label>
                         </div>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control input-registro miInput1" id="paypalBancoBeneficiario"
                             name="paypalBancoBeneficiario" placeholder="Banco">
-                        <div class="text-center">
-                            <label for="paypalBancoBeneficiario" class="error"></label>
-                        </div>
                     </div>
                     <div class="form-group">
                         <input type="number" class="form-control input-registro miInput1" id="paypalCuentaBeneficiario"
                             name="paypalCuentaBeneficiario" placeholder="Número de cuenta">
-                        <div class="text-center">
-                            <label for="paypalCuentaBeneficiario" class="error"></label>
-                        </div>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control input-registro miInput1" id="paypalPagoMovilBeneficiario"

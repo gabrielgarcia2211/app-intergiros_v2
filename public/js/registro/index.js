@@ -82,8 +82,16 @@ $(document).ready(function () {
                 equalTo: "Las contraseñas no coinciden.",
             },
         },
+        errorElement: "div",
         errorPlacement: function (error, element) {
-            error.insertAfter(element);
+            error.addClass('invalid-feedback text-center'); 
+            element.closest(".form-group").append(error); 
+        },
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid"); 
         },
     });
     $("#formRedes").validate({
@@ -103,8 +111,16 @@ $(document).ready(function () {
                 required: "El campo redes 1 es obligatorio",
             },
         },
+        errorElement: "div",
         errorPlacement: function (error, element) {
-            error.insertAfter(element);
+            error.addClass('invalid-feedback text-center'); 
+            element.closest(".form-group").append(error); 
+        },
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid"); 
         },
     });
     $("#formVerificacion").validate({
@@ -123,9 +139,23 @@ $(document).ready(function () {
             documento: {
                 required: "El campo documento es obligatorio",
             },
+            inputGroupFile01: {
+                required: "La foto del documento es obligatoria",
+            },
+            inputGroupFile02: {
+                required: "La selfie es obligatoria",
+            },
         },
+        errorElement: "div",
         errorPlacement: function (error, element) {
-            error.insertAfter(element);
+            error.addClass('invalid-feedback text-center'); 
+            element.closest(".form-group").append(error); 
+        },
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid"); 
         },
     });
 });

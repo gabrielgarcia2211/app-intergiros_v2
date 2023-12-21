@@ -101,9 +101,6 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="text-center">
-                            <label for="inputPassword1" class="error"></label>
-                        </div>
                     </div>
                     <div class="form-group col-md-6">
                         <div class="input-group">
@@ -114,9 +111,6 @@
                                     <i class="fa fa-eye toggle-password" toggle="#inputPassword2"></i>
                                 </span>
                             </div>
-                        </div>
-                        <div class="text-center">
-                            <label for="inputPassword2" class="error"></label>
                         </div>
                     </div>
                 </div>
@@ -154,32 +148,20 @@
                         <div class="form-group">
                             <select class="form-control input-registro" name="redes1" id="redes1">
                             </select>
-                            <div class="text-center">
-                                <label for="redes1" class="error"></label>
-                            </div>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control input-registro" name="nombreUsuario1"
                                 id="nombreUsuario1" placeholder="Nombre de usuario">
-                            <div class="text-center">
-                                <label for="nombreUsuario1" class="error"></label>
-                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" id="otroP" style="display: none;">
                             <select class="form-control input-registro" name="redes2" id="redes2">
                             </select>
-                            <div class="text-center">
-                                <label for="redes2" class="error"></label>
-                            </div>
                         </div>
                         <div class="form-group" id="otroN" style="display: none;">
                             <input type="text" class="form-control input-registro" name="nombreUsuario2"
                                 id="nombreUsuario2" placeholder="Nombre de usuario">
-                            <div class="text-center">
-                                <label for="nombreUsuario2" class="error"></label>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -222,15 +204,9 @@
                             <div class="input-group-prepend">
                                 <select class="form-control input-indicativo" name="tipoDocumento" id="tipoDocumento">
                                 </select>
-                                <div class="text-center">
-                                    <label for="tipoDocumento" class="error"></label>
-                                </div>
                             </div>
                             <input type="number" class="form-control input-telefono" name="documento" id="documento"
                                 placeholder="Número documento">
-                            <div class="text-center">
-                                <label for="documento" class="error"></label>
-                            </div>
                         </div>
                         <div class="mt-3">
                             <div class="custom-file">
@@ -238,9 +214,6 @@
                                     id="inputGroupFile01">
                                 <label class="custom-file-label input-registro" for="inputGroupFile01">Adjunta
                                     selfie</label>
-                                <div class="text-center">
-                                    <label for="inputGroupFile01" class="error"></label>
-                                </div>
                             </div>
                         </div>
                         <div class="text-center mt-4">
@@ -254,9 +227,6 @@
                                     id="inputGroupFile02">
                                 <label class="custom-file-label input-registro" for="inputGroupFile02">Adjunta
                                     documento</label>
-                                <div class="text-center">
-                                    <label for="inputGroupFile02" class="error"></label>
-                                </div>
                             </div>
                         </div>
                     </div>

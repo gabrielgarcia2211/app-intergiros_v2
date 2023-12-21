@@ -68,8 +68,16 @@ $(document).ready(async function () {
                 required: "El campo tipo documento es obligatorio",
             },
         },
+        errorElement: "div",
         errorPlacement: function (error, element) {
-            error.insertAfter(element);
+            error.addClass('invalid-feedback text-center'); 
+            element.closest(".form-group").append(error); 
+        },
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid"); 
         },
     });
     $("#formPaytoBolivares").validate({
@@ -131,8 +139,16 @@ $(document).ready(async function () {
                 required: "La foto del documento es obligatoria",
             },
         },
+        errorElement: "div",
         errorPlacement: function (error, element) {
-            error.insertAfter(element);
+            error.addClass('invalid-feedback text-center'); 
+            element.closest(".form-group").append(error); 
+        },
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid"); 
         },
     });
 

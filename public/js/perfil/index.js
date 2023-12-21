@@ -31,6 +31,12 @@ $(document).ready(async function () {
             redes1: {
                 required: true,
             },
+            nombreUsuario2: {
+                required: true,
+            },
+            redes2: {
+                required: true,
+            },
         },
         messages: {
             email: {
@@ -62,9 +68,23 @@ $(document).ready(async function () {
             redes1: {
                 required: "El campo redes 1 es obligatorio",
             },
+            nombreUsuario1: {
+                required: "El campo de nombre de usuario 2 es obligatorio",
+            },
+            redes1: {
+                required: "El campo redes 2 es obligatorio",
+            },
         },
+        errorElement: "div",
         errorPlacement: function (error, element) {
-            error.insertAfter(element);
+            error.addClass('invalid-feedback text-center'); 
+            element.closest(".form-group").append(error); 
+        },
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid"); 
         },
     });
     $("#formVerificacion").validate({
