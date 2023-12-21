@@ -198,7 +198,9 @@ function activarDepositante() {
 
 function activarEditDepositante() {
     var editDepositante = document.getElementById("editDepositante");
-    var guardarEdit = document.getElementById("guardarEdit2");
+    var guardarEdit = document.getElementById("guardarEdit2");3
+    var adjuntarFoto = document.getElementById("adjuntarFoto");
+    adjuntarFoto.style.display = "block";
     editDepositante.style.display = "none";
     guardarEdit.style.display = "block";
     for (var i = 0; i < elementos2.length; i++) {
@@ -548,3 +550,8 @@ function setFieldsDepositante(data) {
     $("#paypalTipoDocumentoDepositante").val(data.tipo_documento_id);
     $("#paypalPaisDepositante").val(data.pais_id);
 }
+
+
+/* Agregar al guardar la edicion */
+/* var adjuntarFoto = document.getElementById("adjuntarFoto");
+adjuntarFoto.style.display = "none"; */
