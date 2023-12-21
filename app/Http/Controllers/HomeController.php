@@ -40,6 +40,16 @@ class HomeController extends Controller
         return view('perfil.index');
     }
 
+    public function pago()
+    {
+        return view('envio.pagopaypal');
+    }
+
+    public function notificaciones()
+    {
+        return view('notificaciones.notificaciones');
+    }
+
     public function getUser()
     {
         $user = User::where('id', Auth()->user()->id)->with(['user_redes'])->get()[0];

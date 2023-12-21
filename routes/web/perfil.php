@@ -9,6 +9,13 @@ Route::get('/', function(){
     return view('home');
 });
 
+/* Pago paypal se deja aqui para trabajar mientras, esta apgina tendra su propia ur externa */
+Route::get('/pago', [HomeController::class, 'pago'])->name('pago');
+
+/* Notificaciones generales */
+Route::get('/notificaciones', [HomeController::class, 'notificaciones'])->name('notificaciones');
+
+
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 
 /* Envio */
