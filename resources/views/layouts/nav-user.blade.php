@@ -64,7 +64,7 @@
                             </div>
                         </li>
                         <li class="nav-item" id="child6">
-                            <a class="nav-link" href="{{ route('notificaciones') }}"><i class="fas fa-comment-dots"></i></a>
+                            <a class="nav-link" href="{{ route('notificaciones') }}"><i class="fas fa-comment-dots"></i><span class="notification-badge"></a>
                         </li>
                         <li class="nav-item" id="child7">
                             <a class="nav-link" href="#"><i class="fab fa-instagram"></i></a>
@@ -76,60 +76,6 @@
                 </div>
             </div>
         </nav>
-
-        <style>
-            h4 {
-                color: #0035aa;
-            }
-
-            p {
-                font-family: 'Lato', sans-serif !important;
-            }
-
-            /*  CSS MENU */
-            .nav-bar {
-                background-color: white !important;
-            }
-
-            .navbar-nav {
-                display: flex !important;
-                align-items: center !important;
-            }
-
-            .navbar-logo {
-                max-width: 150px !important;
-            }
-
-            .navbar-nav .nav-link {
-                color: black !important;
-                font-family: 'Lato', sans-serif !important;
-            }
-
-            .navbar-nav .nav-link:hover {
-                color: #414141 !important;
-            }
-
-            .navbar-nav #child5 .nav-link {
-                color: white !important; 
-                background-color: #009d2c !important; 
-                border-radius: 20px !important; 
-                padding: 5px 15px !important; 
-            }
-
-            .navbar-nav  #child5 .nav-link:hover {
-                background-color: #02c73a !important;
-            }
-
-            .navbar-nav #child6 .nav-link, .navbar-nav #child7 .nav-link, .navbar-nav #child8 .nav-link {
-                font-size: 24px !important;
-            }
-
-            .dropdown-item {
-                color: #000000 !important;
-            }
-            /* FIN CSS MENU */
-
-        </style>
 
         <main class="">
             @yield('content')
