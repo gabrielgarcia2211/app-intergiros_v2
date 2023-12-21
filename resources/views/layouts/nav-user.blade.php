@@ -53,7 +53,7 @@
                         <li class="nav-item dropdown" id="child5">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                                 aria-expanded="false">
-                                Nombre Usuario <img src="{{ asset('img/perfil/verificado.png') }}" alt=""
+                                {{ Auth::user()->name }} <img src="{{ asset('img/perfil/verificado.png') }}" alt=""
                                     width="20px">
                             </a>
                             <div class="dropdown-menu">
