@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(Configuration\CoreMasterComboTipoDocumentoSeeder::class);
 
         // Tipos de cambio
-        $this->call(Administracion\TipoEntidadSeeder::class);
         $this->call(Administracion\TipoMonedaSeeder::class);
         $this->call(Administracion\TipoFormularioSeeder::class);
         $this->call(Administracion\TasaCambioSeeder::class);

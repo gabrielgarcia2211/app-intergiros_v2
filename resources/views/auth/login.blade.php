@@ -15,9 +15,6 @@
             <div class="form-row mt-5">
                 <div class="form-group col-md-6">
                     <input type="email" class="form-control" id="loginEmail" name="email" placeholder="Email">
-                    <div class="text-center">
-                        <label for="loginEmail" class="error"></label>
-                    </div>
                     <!-- Agregar label para mostrar errores -->
                 </div>
                 <div class="form-group col-md-6">
@@ -29,9 +26,6 @@
                                 <i class="fa fa-eye toggle-password" toggle="#inputPassword4"></i>
                             </span>
                         </div>
-                    </div>
-                    <div class="text-center">
-                        <label for="loginPassword" class="error"></label>
                     </div>
                     <!-- Agregar label para mostrar errores -->
                 </div>
@@ -74,6 +68,12 @@
     <style>
         .error {
             color: red;
+        }
+
+        .invalid-feedback {
+            display: block;
+            width: 100%;
+            margin-top: .25rem;
         }
     </style>
 @endsection

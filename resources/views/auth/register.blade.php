@@ -28,33 +28,21 @@
                         <div class="form-group">
                             <input type="text" class="form-control input-registro" name="nombre" id="nombre"
                                 placeholder="Nombres">
-                            <div class="text-center">
-                                <label for="nombre" class="error"></label>
-                            </div>
                         </div>
                         <div class="form-group">
                             <input type="email" class="form-control input-registro" name="email" id="email"
                                 placeholder="Email">
-                            <div class="text-center">
-                                <label for="email" class="error"></label>
-                            </div>
                         </div>
                         <div class="form-group">
                             <select class="form-control input-registro" name="pais" id="pais">
                                 <!-- Agrega más opciones aquí -->
                             </select>
-                            <div class="text-center">
-                                <label for="pais" class="error"></label>
-                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <input type="text" class="form-control input-registro" name="apellidos" id="apellidos"
                                 placeholder="Apellidos">
-                            <div class="text-center">
-                                <label for="apellidos" class="error"></label>
-                            </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
@@ -62,23 +50,14 @@
                                     <select class="form-control input-indicativo" name="paisTelefono" id="paisTelefono">
                                         <!-- Agrega más opciones aquí -->
                                     </select>
-                                    <div class="text-center">
-                                        <label for="paisTelefono" class="error"></label>
-                                    </div>
                                 </div>
                                 <input type="number" class="form-control input-telefono" name="telefono" id="telefono"
                                     placeholder="Número celular">
-                            </div>
-                            <div class="text-center">
-                                <label for="telefono" class="error"></label>
                             </div>
                         </div>
                         <div class="form-group">
                             <input type="date" class="form-control input-registro" name="fehaNacimiento"
                                 id="fehaNacimiento" placeholder="Fecha de nacimiento">
-                            <div class="text-center">
-                                <label for="fehaNacimiento" class="error"></label>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -291,7 +270,6 @@
                 </div>
             </div>
         </form>
-
         <!-- DIV BIENVENIDA -->
         <div id="div5" style="display: none;">
             <div class="row justify-content-center">
@@ -360,6 +338,11 @@
     <style>
         .error {
             color: red;
+        }
+        .invalid-feedback {
+            display: block;
+            width: 100%;
+            margin-top: .25rem;
         }
     </style>
 @endsection

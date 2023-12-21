@@ -18,8 +18,16 @@ $(document).ready(function () {
                 required: "El campo de contraseña es obligatorio",
             },
         },
+        errorElement: "div",
         errorPlacement: function (error, element) {
-            error.insertAfter(element);
+            error.addClass('invalid-feedback text-center'); 
+            element.closest(".form-group").append(error); 
+        },
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid"); 
         },
     });
 });
@@ -38,7 +46,7 @@ function submitLoginForm() {
         axios
             .post("/login", formData)
             .then((response) => {
-                window.location.href = "/perfil"
+                window.location.href = "/perfil";
             })
             .catch((error) => {
                 if (error.response.data.message) {
