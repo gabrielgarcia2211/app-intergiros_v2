@@ -227,10 +227,6 @@ function activarEditDepositante() {
     }
 }
 
-for (var i = 0; i < elementos1.length; i++) {
-    elementos1[i].addEventListener("input", verificarInputs);
-}
-
 function verificarInputs() {
     // Obtén todos los inputs y el select con la clase 'miInput'
 
@@ -303,6 +299,10 @@ function verificarInputs() {
                 break;
             }
         }
+    }
+
+    for (var i = 0; i < elementos1.length; i++) {
+        elementos1[i].addEventListener("input", verificarInputs);
     }
 
     // Habilita o deshabilita el botón según si todos los elementos están llenos o no

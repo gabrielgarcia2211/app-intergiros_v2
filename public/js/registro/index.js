@@ -261,3 +261,33 @@ window.addEventListener("load", function () {
             document.getElementById("fehaNacimiento").type = "date";
         });
 });
+
+function togglePasswordVisibility1() {
+    var passwordField = document.getElementById("inputPassword1");
+    var toggleIcon = document.querySelector(".toggle-password1");
+
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        toggleIcon.classList.remove("fa-eye");
+        toggleIcon.classList.add("fa-eye-slash");
+    } else {
+        passwordField.type = "password";
+        toggleIcon.classList.remove("fa-eye-slash");
+        toggleIcon.classList.add("fa-eye");
+    }
+}
+
+function togglePasswordVisibility2() {
+    var passwordField = document.getElementById("inputPassword2");
+    var toggleIcon = document.querySelector(".toggle-password2");
+
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        toggleIcon.classList.remove("fa-eye");
+        toggleIcon.classList.add("fa-eye-slash");
+    } else {
+        passwordField.type = "password";
+        toggleIcon.classList.remove("fa-eye-slash");
+        toggleIcon.classList.add("fa-eye");
+    }
+}

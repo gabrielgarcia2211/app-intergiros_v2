@@ -230,9 +230,6 @@
                             name="paypalPagoMovilBeneficiario" placeholder="Pago móvil">
                     </div>
                     <div class="text-center">
-                        <label for="paypalPagoMovilBeneficiario" class="error"></label>
-                    </div>
-                    <div class="text-center">
                         <div class="text-center" style="display: flex; justify-content: center;">
                             <button type="button" class="btn btn-primary" onclick="addBeneficiario()" id="cuentaNueva1"
                                 style="display: none;background-color: transparent; border: none; color: #0035aa;">Guardar</button>

@@ -97,7 +97,7 @@
                                 placeholder="Contraseña">
                             <div class="input-group-append">
                                 <span class="input-group-text">
-                                    <i class="fa fa-eye toggle-password" toggle="#inputPassword1"></i>
+                                    <i class="fa fa-eye toggle-password1" data-toggle="inputPassword1" onclick="togglePasswordVisibility1()"></i>
                                 </span>
                             </div>
                         </div>
@@ -108,7 +108,7 @@
                                 placeholder="Confirma la contraseña">
                             <div class="input-group-append">
                                 <span class="input-group-text">
-                                    <i class="fa fa-eye toggle-password" toggle="#inputPassword2"></i>
+                                    <i class="fa fa-eye toggle-password2" data-toggle="inputPassword2" onclick="togglePasswordVisibility2()"></i>
                                 </span>
                             </div>
                         </div>

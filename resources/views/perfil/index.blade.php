@@ -78,15 +78,8 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6" style="display: none;" id="passwordDisplay1">
-                            <div class="input-group">
-                                <input type="password" class="form-control" id="inputPassword1" name="inputPassword1"
-                                    placeholder="Contraseña">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <i class="fa fa-eye toggle-password" toggle="#inputPassword1"></i>
-                                    </span>
-                                </div>
-                            </div>
+                            <input type="password" class="form-control" id="inputPassword1" name="inputPassword1"
+                                placeholder="Contraseña">
                         </div>
                         <div class="form-group col-md-6" style="display: none;" id="passwordDisplay2">
                             <div class="input-group">
@@ -94,7 +87,7 @@
                                     placeholder="Nueva contraseña">
                                 <div class="input-group-append">
                                     <span class="input-group-text">
-                                        <i class="fa fa-eye toggle-password" toggle="#inputPassword2"></i>
+                                        <i class="fa fa-eye toggle-password" data-toggle="password" onclick="togglePasswordVisibility()"></i>
                                     </span>
                                 </div>
                             </div>
