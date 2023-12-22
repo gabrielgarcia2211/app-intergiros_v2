@@ -23,7 +23,7 @@
                             placeholder="Contraseña">
                         <div class="input-group-append">
                             <span class="input-group-text">
-                                <i class="fa fa-eye toggle-password" toggle="#inputPassword4"></i>
+                                <i class="fa fa-eye toggle-password" data-toggle="password" onclick="togglePasswordVisibility()"></i>
                             </span>
                         </div>
                     </div>
