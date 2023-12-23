@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Solicitudes;
 
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Solicitudes\Producto;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Depositante\Depositante;
+use App\Models\Solicitudes\Solicitudes;
+use Spatie\Ignition\Contracts\Solution;
 use App\Models\Configuration\MasterCombos;
 use App\Http\Controllers\ResponseController as Response;
 use App\Http\Requests\Solicitudes\StoreSolicitudRequest;
@@ -12,9 +16,9 @@ use App\Http\Requests\Solicitudes\StoreSolicitudRequest;
 class SolicitudesController extends Controller
 {
 
-    public function index()
+    public function indexPago()
     {
-        return view('envio.index');
+        return view('envio.pagopaypal');
     }
 
     public function initSolicitud(StoreSolicitudRequest $request)
@@ -22,16 +26,46 @@ class SolicitudesController extends Controller
         try {
             $depositante_id = $request->input('depositante_id');
             $beneficiario_id = $request->input('beneficiario_id');
+            $tipo_formulario_id = $request->input('tipo_formulario_id');
+            $tipo_moneda_id = $request->input('tipo_moneda_id');
+            $monto_a_pagar = $request->input('monto_a_pagar');
+            $monto_a_recibir = $request->input('monto_a_recibir');
 
-            $estado = MasterCombos::whereRaw("parent_id = (SELECT id FROM master_combos WHERE code = 'estados_solicitud')")
-                ->whereRaw("LOWER(name) = LOWER('pendiente')")
+            $estado_id = MasterCombos::whereRaw("parent_id = (SELECT id FROM master_combos WHERE code = 'estados_solicitud')")
+                ->whereRaw("LOWER(name) = LOWER('iniciado')")
                 ->get()
                 ->first()->id;
+                
+            $range = getCostRange($monto_a_pagar);
+            if (!$range) {
+                return Response::sendError('No se encontro un producto en este rango de costo', 422);
+            }
+            $product = Producto::whereBetween('costo', $range)->inRandomOrder()->first();
 
-            Log::debug($request->all());
-            Log::debug($depositante_id);
-            Log::debug($beneficiario_id);
-            return Response::sendResponse(true, 'Registro obtenido con exito.');
+            $solicitud = Solicitudes::create([
+                'tipo_formulario_id' => $tipo_formulario_id,
+                'tipo_moneda_id' => $tipo_moneda_id,
+                'depositante_id' => $depositante_id,
+                'beneficiario_id' => $beneficiario_id,
+                'monto_a_pagar' => $monto_a_pagar,
+                'monto_a_recibir' => $monto_a_recibir,
+                'user_id' => Auth()->user()->id,
+                'estado_id' => $estado_id,
+                'producto_id' => $product->id,
+            ]);
+
+            return Response::sendResponse($solicitud, 'Registro creado con exito.');
+        } catch (\Exception $ex) {
+            Log::debug($ex->getMessage());
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
+        }
+    }
+
+    public function getSolicitud($id)
+    {
+        try {
+            $solicitud = Solicitudes::where(['id' => $id])->with(Solicitudes::RELATIONS)->get()->first();
+            return Response::sendResponse($solicitud, 'Registro obtenido con exito.');
         } catch (\Exception $ex) {
             Log::debug($ex->getMessage());
             return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);

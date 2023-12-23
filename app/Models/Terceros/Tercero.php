@@ -27,17 +27,19 @@ class Tercero extends Model
         'path_documento',
     ];
 
+    const RELATIONS = [];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function tipoDocumento()
+    public function tipo_documento()
     {
         return $this->belongsTo(MasterCombos::class, 'tipo_documento_id');
     }
 
-    public function tipoTercero()
+    public function tipo_tercero()
     {
         return $this->belongsTo(MasterCombos::class, 'tipo_tercero_id');
     }
@@ -47,7 +49,7 @@ class Tercero extends Model
         return $this->belongsTo(MasterCombos::class, 'pais_id');
     }
 
-    public function paisTelefono()
+    public function pais_telefono()
     {
         return $this->belongsTo(MasterCombos::class, 'pais_telefono_id');
     }

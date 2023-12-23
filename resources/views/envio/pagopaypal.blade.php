@@ -8,23 +8,7 @@
         </div>
         <div class="text-center mt-5">
             <div class="table-responsive">
-                <table class="table table-borderless">
-                    <thead style="background-color: #e99700; color: white;">
-                        <tr>
-                            <th scope="col"><strong>Cantidad</strong></th>
-                            <th scope="col"><strong>Servicio</strong></th>
-                            <th scope="col"><strong>Costo</strong></th>
-                            <th scope="col"><strong>Total</strong></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Juan Pérez</td>
-                            <td>juan@example.com</td>
-                            <td>nnn</td>
-                        </tr>
-                    </tbody>
+                <table class="table table-borderless" id="tablaProductos">
                 </table>
             </div>
         </div>
@@ -36,9 +20,9 @@
                     <p><strong>TOTAL</strong></p>
                 </div>
                 <div class="col-6 col-md-4" style="text-align: right;">
-                    <p><strong>$10 USD</strong></p>
-                    <p><strong>$0,89 USD</strong></p>
-                    <p><strong>$10,89 USD</strong></p>
+                    <p>$ <strong><span id="monto_a_pagar"style="display: inline-block">0.00</span> USD</strong></p>
+                    <p>$ <strong><span id="monto_comision"style="display: inline-block">0.00</span> USD</strong></p>
+                    <p>$ <strong><span id="monto_total"style="display: inline-block">0.00</span> USD</strong></p>
                 </div>
             </div>
         </div>
@@ -53,16 +37,12 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select class="form-control input-indicativo" id="paypalTipoDocumentoBeneficiario"
+                                <select class="form-control input-indicativo" id="tipoDocumentoPago"
                                     disabled>
-                                    <option value="1">T</option>
-                                    <option value="2">CC</option>
-                                    <option value="3">A</option>
-                                    <!-- Agrega más opciones aquí -->
                                 </select>
                             </div>
                             <input type="number" class="form-control input-telefono miInput1"
-                                id="paypalDocumentoBeneficiario" placeholder="Número documento" disabled>
+                                id="numeroDocumento" placeholder="Número documento" disabled>
                         </div>
                     </div>
                     <div class="form-group">
@@ -70,14 +50,10 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group style=" margin-bottom: 16px;">
+                    <div class="form-group" style="margin-bottom: 16px;">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select class="form-control input-indicativo" id="paisTelefono" disabled>
-                                    <option value="1">+57</option>
-                                    <option value="2">+58</option>
-                                    <option value="3">+51</option>
-                                    <!-- Agrega más opciones aquí -->
+                                <select class="form-control input-indicativo" id="paisTelefonoPago" disabled>
                                 </select>
                             </div>
                             <input type="number" class="form-control input-telefono" id="telefono"
@@ -85,11 +61,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <select class="form-control input-registro" id="pais" disabled>
-                            <option value="1">País</option>
-                            <option value="2">Colombia</option>
-                            <option value="3">Venezuela</option>
-                            <option value="3">Perú</option>
+                        <select class="form-control input-registro" id="paisPago" disabled>
                             <!-- Agrega más opciones aquí -->
                         </select>
                     </div>
@@ -111,5 +83,6 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('js/pagos/input.js') }}"></script>
     <script src="{{ asset('js/pagos/index.js') }}"></script>
 @endsection

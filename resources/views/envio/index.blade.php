@@ -394,7 +394,7 @@
             <div class="col-md-6">
                 <div class="text-center mt-4">
                     <button class="btn btn-primary" onclick="addSolicitudPago()" type="button" id="realizarPago"
-                        style="width: 80%;">Realizar
+                        style="width: 80%;" disabled>Realizar
                         pago</button>
                 </div>
             </div>

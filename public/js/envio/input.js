@@ -46,9 +46,6 @@ $(document).ready(async function () {
                 }).text(value.descripcion)
             );
         });
-        console.log("wsqw")
-       /*  $("#inputGroupSelect01").val(1);
-        mostrarOcultarDiv(1) */
     }
 
     function setLoadSelectsMonedas(data) {

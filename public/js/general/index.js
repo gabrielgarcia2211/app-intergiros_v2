@@ -1,14 +1,17 @@
 $(document).ready(async function () {
-    $.validator.addMethod('filesize', function(value, element, param) {
-        // Check if file is selected
-        if (element.files && element.files.length) {
-            // Check file size
-            return this.optional(element) || (element.files[0].size <= param);
-        }
-        return true; // If no file is selected, validation passes by default
-    }, 'El tamaño del archivo debe ser menor a {0} bytes');
+    $.validator.addMethod(
+        "filesize",
+        function (value, element, param) {
+            // Check if file is selected
+            if (element.files && element.files.length) {
+                // Check file size
+                return this.optional(element) || element.files[0].size <= param;
+            }
+            return true; // If no file is selected, validation passes by default
+        },
+        "El tamaño del archivo debe ser menor a {0} bytes"
+    );
 });
-
 
 var FILE_MAX_SIZE = 10097152;
 
@@ -112,22 +115,25 @@ async function loadImageFromURL(url, id) {
 
         // Crear un objeto FileList con el blob
         const dataTransfer = new DataTransfer();
-        const file = new File([blob], fileName, { type: blob.type, lastModified: new Date() });
+        const file = new File([blob], fileName, {
+            type: blob.type,
+            lastModified: new Date(),
+        });
         dataTransfer.items.add(file);
-        $(id).prop('files', dataTransfer.files);
+        $(id).prop("files", dataTransfer.files);
 
         // Ayudar a Safari
         if ($(id)[0].webkitEntries.length) {
-            $(id).data('file', fileName);
+            $(id).data("file", fileName);
         }
     } catch (error) {
-        console.error('Error al cargar la imagen desde la URL:', error);
+        console.error("Error al cargar la imagen desde la URL:", error);
     }
 }
 
 // Función para obtener el nombre del archivo desde la URL
 function getFileNameFromUrl(url) {
-    const urlParts = url.split('/');
+    const urlParts = url.split("/");
     return urlParts[urlParts.length - 1];
 }
 
@@ -149,8 +155,7 @@ function getCookie(name) {
     for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
         while (c.charAt(0) == " ") c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0)
-            return c.substring(nameEQ.length, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
 }
@@ -188,5 +193,43 @@ function devFormatoMoneda(key, value) {
             });
     });
 }
-// END FORMATO DE MONEDAS
 
+// funcion para obtener parametro de ruta get
+function obtenerParametroGET(parametro) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(parametro);
+}
+
+// funcion para cargar data en una table
+function llenarTabla(selector, cabeceras, datos) {
+    var $tabla = $(selector);
+
+    // Limpia la tabla existente
+    $tabla.empty();
+
+    // Construye y agrega el encabezado de la tabla
+    var $thead = $(
+        '<thead style="background-color: #e99700; color: white;"></thead>'
+    );
+    var $trHead = $("<tr></tr>");
+    cabeceras.forEach(function (cabecera) {
+        $trHead.append("<th><strong>" + cabecera + "</strong></th>");
+    });
+    $thead.append($trHead);
+    $tabla.append($thead);
+
+    // Construye y agrega el cuerpo de la tabla
+    var $tbody = $("<tbody></tbody>");
+    datos.forEach(function (item) {
+        var $fila = $("<tr></tr>");
+        cabeceras.forEach(function (cabecera) {
+            var valor = item[cabecera.toLowerCase()];
+            // Comprueba si el valor está definido, si no, usa 'n/a'
+            var textoCelda =
+                valor !== undefined && valor !== null ? valor : "n/a";
+            $fila.append("<td>" + textoCelda + "</td>");
+        });
+        $tbody.append($fila);
+    });
+    $tabla.append($tbody);
+}

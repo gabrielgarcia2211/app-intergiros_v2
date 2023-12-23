@@ -22,24 +22,29 @@ class CoreMasterComboEstadosSeeder extends Seeder
                 'status' => true,
                 'childrens' => [
                     [
+                        'name' => 'INICIADO',
+                        'code' => 'iniciado',
+                        'orden' => 0,
+                    ],
+                    [
                         'name' => 'PENDIENTE',
                         'code' => 'pendiente',
-                        'orden' => 0,
+                        'orden' => 1,
                     ],
                     [
                         'name' => 'EN PROCESO',
                         'code' => 'en_proceso',
-                        'orden' => 1,
+                        'orden' => 2,
                     ],
                     [
                         'name' => 'ENTREGADO',
                         'code' => 'entregado',
-                        'orden' => 2,
+                        'orden' => 3,
                     ],
                     [
                         'name' => 'CANCELADO',
                         'code' => 'cancelado',
-                        'orden' => 3,
+                        'orden' => 4,
                     ]
                 ],
             ],

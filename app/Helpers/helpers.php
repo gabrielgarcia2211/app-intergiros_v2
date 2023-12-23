@@ -30,3 +30,19 @@ function mapTipoTercero($data)
             break;
     }
 }
+
+function getCostRange($cost)
+{
+    $ranges = [
+        [0, 100], [101, 200], [201, 300], [301, 400], [401, 500],
+        [501, 600], [601, 700], [701, 800], [801, 900], [901, 1000]
+    ];
+
+    foreach ($ranges as $range) {
+        if ($cost >= $range[0] && $cost <= $range[1]) {
+            return $range;
+        }
+    }
+
+    return null;
+}

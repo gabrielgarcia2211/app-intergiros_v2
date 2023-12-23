@@ -178,12 +178,10 @@ $(document).ready(async function () {
         let calculo = await devFormatoMoneda(tipoFormularioCode, $(this).val());
         $("#monto_a_pagar_paypal").html(calculo.data.monto_a_pagar);
         $("#monto_a_recibir_paypal").html(calculo.data.monto_a_recibir);
-
         calculoFormulario.monto_a_pagar = calculo.data.monto_a_pagar;
         calculoFormulario.monto_a_recibir = calculo.data.monto_a_recibir;
+        checkRealizarPago();
     });
-
-    //localStorage.setItem("myData", "gabriel");
 });
 /* fin input paypal */
 
@@ -244,92 +242,6 @@ function activarEditDepositante() {
     }
 }
 
-function verificarInputs() {
-    // Obtén todos los inputs y el select con la clase 'miInput'
-
-    // Obtén el botón
-    var miBoton = document.getElementById("realizarPago");
-
-    // Establece una bandera para verificar si todos los elementos están llenos
-    var todosLlenos = true;
-
-    // Recorre los elementos y verifica si alguno está vacío (o es el valor por defecto en el caso del select)
-    for (var i = 0; i < elementos1.length; i++) {
-        if (elementos1[i].type === "select-one") {
-            // Para el select, verifica si no es el valor por defecto
-            if (elementos1[i].value === "" || elementos1[i].value === null) {
-                todosLlenos = false;
-                break;
-            }
-        } else {
-            // Para otros elementos, verifica si el valor está vacío
-            if (elementos1[i].value.trim() === "") {
-                todosLlenos = false;
-                break;
-            }
-        }
-    }
-
-    for (var j = 0; j < elementos2.length; j++) {
-        if (elementos2[j].type === "select-one") {
-            // Para el select, verifica si no es el valor por defecto
-            if (elementos2[j].value === "" || elementos2[j].value === null) {
-                todosLlenos = false;
-                break;
-            }
-        } else {
-            // Para otros elementos, verifica si el valor está vacío
-            if (elementos2[j].value.trim() === "") {
-                todosLlenos = false;
-                break;
-            }
-        }
-    }
-
-    for (var k = 0; k < selects1.length; k++) {
-        if (selects1[k].type === "select-one") {
-            // Para el select, verifica si no es el valor por defecto
-            if (selects1[k].value === "" || selects1[k].value === null) {
-                todosLlenos = false;
-                break;
-            }
-        } else {
-            // Para otros elementos, verifica si el valor está vacío
-            if (selects1[k].value.trim() === "") {
-                todosLlenos = false;
-                break;
-            }
-        }
-    }
-
-    for (var l = 0; l < selects2.length; l++) {
-        if (selects2[l].type === "select-one") {
-            // Para el select, verifica si no es el valor por defecto
-            if (selects2[l].value === "" || selects2[l].value === null) {
-                todosLlenos = false;
-                break;
-            }
-        } else {
-            // Para otros elementos, verifica si el valor está vacío
-            if (selects2[l].value.trim() === "") {
-                todosLlenos = false;
-                break;
-            }
-        }
-    }
-
-    for (var i = 0; i < elementos1.length; i++) {
-        elementos1[i].addEventListener("input", verificarInputs);
-    }
-
-    // Habilita o deshabilita el botón según si todos los elementos están llenos o no
-    if (todosLlenos) {
-        miBoton.removeAttribute("disabled");
-    } else {
-        miBoton.setAttribute("disabled", "disabled");
-    }
-}
-
 async function verificarSelect1() {
     if (miSelect1.value !== "") {
         // Muestra el div si la opción no es la por defecto
@@ -346,6 +258,7 @@ async function verificarSelect1() {
 
         var details = await showTercero("TB");
         setFieldsBeneficiario(details);
+        checkRealizarPago();
     } else {
         // Oculta el div si la opción es la por defecto
         beneficiario.style.display = "none";
@@ -369,22 +282,19 @@ async function verificarSelect2() {
 
         var details = await showTercero("TD");
         setFieldsDepositante(details);
+        checkRealizarPago();
     } else {
         // Oculta el div si la opción es la por defecto
         depositante.style.display = "none";
     }
 }
 
-function mostrarOcultarDiv(id = null) {
-    var select1 = id == null ? document.getElementById("inputGroupSelect01") : id;
+function mostrarOcultarDiv() {
+    var select1 = document.getElementById("inputGroupSelect01");
     var miDiv = document.getElementById("panel-envios");
 
     // Mostrar el div si el valor seleccionado es 1
-    if (id != null) {
-        miDiv.style.display = select1 == 1 ? "block" : "none";
-    } else {
-        miDiv.style.display = select1.value === "1" ? "block" : "none";
-    }
+    miDiv.style.display = select1.value === "1" ? "block" : "none";
 
     // SE DEBE CAPTURAR EL TIPO DE FORMULARIO EN ESTA SECCION
     var selectedOption = $("#inputGroupSelect01").find("option:selected");
@@ -469,31 +379,6 @@ function setTercero(code) {
     }
 }
 
-function mapTercero(code, tipo) {
-    switch (tipo) {
-        case "select":
-            return code == "TB"
-                ? $("#selectBeneficiario").val()
-                : $("#selectDepositante").val();
-            break;
-        case "validateForm":
-            return code == "TB"
-                ? $("#formBeneficiario").valid()
-                : $("#formDepositante").valid();
-            break;
-        case "dataForm":
-            return code == "TB"
-                ? new FormData($("#formBeneficiario")[0])
-                : new FormData($("#formDepositante")[0]);
-            break;
-        case "dataFormVariable":
-            return code == "TB" ? formDataBeneficiario : formDataDepositante;
-            break;
-        default:
-            break;
-    }
-}
-
 function deleteTercero(code) {
     const id = mapTercero(code, "dataFormVariable").id;
 
@@ -519,6 +404,43 @@ function deleteTercero(code) {
                 });
         }
     });
+}
+
+function mapTercero(code, tipo) {
+    switch (tipo) {
+        case "select":
+            return code == "TB"
+                ? $("#selectBeneficiario").val()
+                : $("#selectDepositante").val();
+            break;
+        case "validateForm":
+            return code == "TB"
+                ? $("#formBeneficiario").valid()
+                : $("#formDepositante").valid();
+            break;
+        case "dataForm":
+            return code == "TB"
+                ? new FormData($("#formBeneficiario")[0])
+                : new FormData($("#formDepositante")[0]);
+            break;
+        case "dataFormVariable":
+            return code == "TB" ? formDataBeneficiario : formDataDepositante;
+            break;
+        default:
+            break;
+    }
+}
+
+function checkRealizarPago() {
+    if (
+        formDataBeneficiario != null &&
+        formDataDepositante != null &&
+        $("#montoCambiar").val().trim() !== ""
+    ) {
+        $("#realizarPago").prop("disabled", false);
+    } else {
+        $("#realizarPago").prop("disabled", true);
+    }
 }
 
 function setFieldsBeneficiario(beneficiario) {
@@ -569,15 +491,24 @@ function addSolicitudPago() {
                 .post("/solicitudes/pago", {
                     beneficiario_id: formDataBeneficiario
                         ? formDataBeneficiario.id
-                        : null,
+                        : "",
                     depositante_id: formDataDepositante
                         ? formDataDepositante.id
-                        : null,
+                        : "",
+                    tipo_formulario_id:
+                        $("#inputGroupSelect01").val() != 0
+                            ? $("#inputGroupSelect01").val()
+                            : "",
+                    tipo_moneda_id:
+                        $("#inputGroupSelect02").val() != 0
+                            ? $("#inputGroupSelect02").val()
+                            : "",
                     monto_a_pagar: calculoFormulario.monto_a_pagar,
                     monto_a_recibir: calculoFormulario.monto_a_recibir,
                 })
                 .then((response) => {
-                    // Abre la nueva pestaña y guarda una referencia a ella
+                    const id = response.data.data.id;
+                    handlePeticion(`/solicitudes/proceso?solicitud=${id}`);
                 })
                 .catch((error) => {
                     handleErrors(error);
