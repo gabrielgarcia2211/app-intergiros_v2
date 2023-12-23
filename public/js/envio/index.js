@@ -186,6 +186,10 @@ $(document).ready(async function () {
 /* fin input paypal */
 
 function activarBeneficiario() {
+    var editBeneficiario = document.getElementById("editBeneficiario");
+    var guardarEdit = document.getElementById("guardarEdit1");
+    editBeneficiario.style.display = 'block';
+    guardarEdit.style.display = 'none';
     for (var i = 0; i < elementos1.length; i++) {
         elementos1[i].removeAttribute("disabled");
         elementos1[i].value = "";
@@ -213,6 +217,10 @@ function activarEditBeneficiario() {
 }
 
 function activarDepositante() {
+    var editDepositante = document.getElementById("editDepositante");
+    var guardarEdit = document.getElementById("guardarEdit2");
+    editDepositante.style.display = 'block';
+    guardarEdit.style.display = 'none';
     for (var i = 0; i < elementos2.length; i++) {
         elementos2[i].removeAttribute("disabled");
         elementos2[i].value = "";

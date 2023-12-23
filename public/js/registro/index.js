@@ -131,6 +131,12 @@ $(document).ready(function () {
             documento: {
                 required: true,
             },
+            inputGroupFile01: {
+                required: true,
+            },
+            inputGroupFile02: {
+                required: true,
+            },
         },
         messages: {
             tipoDocumento: {
@@ -140,10 +146,10 @@ $(document).ready(function () {
                 required: "El campo documento es obligatorio",
             },
             inputGroupFile01: {
-                required: "La foto del documento es obligatoria",
+                required: "La selfie es obligatoria",
             },
             inputGroupFile02: {
-                required: "La selfie es obligatoria",
+                required: "La foto del documento es obligatoria",
             },
         },
         errorElement: "div",
@@ -238,6 +244,11 @@ function mostrarDiv5() {
                 handleErrors(error);
             });
     }
+    // Obtener el valor del input
+    var valorInput = document.getElementById("nombre").value;
+
+    // Asignar el valor al strong dentro del h2
+    document.querySelector("#miH2 strong").textContent = valorInput;
 }
 
 function agregar() {
