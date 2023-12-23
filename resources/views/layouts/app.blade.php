@@ -42,7 +42,7 @@
                             <a class="nav-link" href="{{ asset('') }}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('servicios') }}">Servicios</a>
+                            <a class="nav-link" href="{{ route('servicios.index') }}">Servicios</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Tasas</a>

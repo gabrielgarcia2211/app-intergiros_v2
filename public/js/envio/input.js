@@ -40,9 +40,15 @@ $(document).ready(async function () {
     function setLoadSelectsForms(data) {
         $.each(data, function (key, value) {
             $("#inputGroupSelect01").append(
-                $("<option>", { value: value.id }).text(value.descripcion)
+                $("<option>", {
+                    value: value.id,
+                    "data-code": value.codigo,
+                }).text(value.descripcion)
             );
         });
+        console.log("wsqw")
+       /*  $("#inputGroupSelect01").val(1);
+        mostrarOcultarDiv(1) */
     }
 
     function setLoadSelectsMonedas(data) {

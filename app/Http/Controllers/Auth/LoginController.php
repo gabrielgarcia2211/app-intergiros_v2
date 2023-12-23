@@ -73,12 +73,12 @@ class LoginController extends Controller
     {
 
         try {
-            $formInfoGeneral = $request->all()["formInfoGeneral"];
-            $formPassword = $request->all()["formPassword"];
-            $formInfoRedes = $request->all()["formRedes"];
-            $formVerificacion = $request->all()["formVerificacion"];
+            $form_info_general = $request->all()['formInfoGeneral'];
+            $form_password = $request->all()['formPassword'];
+            $form_info_redes = $request->all()['formRedes'];
+            $form_verificacion = $request->all()['formVerificacion'];
 
-            if ($formPassword["inputPassword1"] !== $formPassword["inputPassword2"]) {
+            if ($form_password['inputPassword1'] !== $form_password['inputPassword2']) {
                 return Response::sendError('Las contraseñas no coinciden', 500);
             }
 
@@ -86,42 +86,42 @@ class LoginController extends Controller
             $user_redes_fk = new UserRedes();
             $user_redes_ig = new UserRedes();
 
-            $user->name = $formInfoGeneral["nombre"];
-            $user->email = $formInfoGeneral["email"];
-            $user->apellidos = $formInfoGeneral["apellidos"];
-            $user->fecha_nacimiento = $formInfoGeneral["fehaNacimiento"];
-            $user->fecha_nacimiento = $formInfoGeneral["fehaNacimiento"];
-            $user->password = Hash::make($formPassword["inputPassword1"]);
+            $user->name = $form_info_general['nombre'];
+            $user->email = $form_info_general['email'];
+            $user->apellidos = $form_info_general['apellidos'];
+            $user->fecha_nacimiento = $form_info_general['fehaNacimiento'];
+            $user->fecha_nacimiento = $form_info_general['fehaNacimiento'];
+            $user->password = Hash::make($form_password['inputPassword1']);
 
             // campos relacionados
-            $user->pais_id = $formInfoGeneral["pais"];
-            $user->telefono = $formInfoGeneral["telefono"];
-            $user->pais_telefono_id = $formInfoGeneral["paisTelefono"];
-            $user->documento = $formVerificacion["documento"];
-            $user->tipo_documento_id = $formVerificacion["tipoDocumento"];
+            $user->pais_id = $form_info_general['pais'];
+            $user->telefono = $form_info_general['telefono'];
+            $user->pais_telefono_id = $form_info_general['paisTelefono'];
+            $user->documento = $form_verificacion['documento'];
+            $user->tipo_documento_id = $form_verificacion['tipoDocumento'];
 
             // campos de redes
             $user->save();
 
-            if (isset($formInfoRedes["nombreUsuario1"]) && isset($formInfoRedes["redes1"])) {
+            if (isset($form_info_redes['nombreUsuario1']) && isset($form_info_redes['redes1'])) {
                 $user_redes_fk->user_id = $user->id;
-                $user_redes_fk->redes_id = $formInfoRedes["redes1"];
-                $user_redes_fk->nombre = $formInfoRedes["nombreUsuario1"];
+                $user_redes_fk->redes_id = $form_info_redes['redes1'];
+                $user_redes_fk->nombre = $form_info_redes['nombreUsuario1'];
                 $user_redes_fk->save();
             }
 
-            if (isset($formInfoRedes["nombreUsuario2"]) && isset($formInfoRedes["redes2"])) {
+            if (isset($form_info_redes['nombreUsuario2']) && isset($form_info_redes['redes2'])) {
                 $user_redes_ig->user_id = $user->id;
-                $user_redes_ig->redes_id = $formInfoRedes["redes2"];
-                $user_redes_ig->nombre = $formInfoRedes["nombreUsuario2"];
+                $user_redes_ig->redes_id = $form_info_redes['redes2'];
+                $user_redes_ig->nombre = $form_info_redes['nombreUsuario2'];
                 $user_redes_ig->save();
             }
 
-            if ((isset($formVerificacion['inputGroupFile01']) && !empty($formVerificacion['inputGroupFile01']))
-                && (isset($formVerificacion['inputGroupFile02']) && !empty($formVerificacion['inputGroupFile02']))
+            if ((isset($form_verificacion['inputGroupFile01']) && !empty($form_verificacion['inputGroupFile01']))
+                && (isset($form_verificacion['inputGroupFile02']) && !empty($form_verificacion['inputGroupFile02']))
             ) {
-                $path_selfie = $this->fileService->saveFile($formVerificacion['inputGroupFile01'], Auth()->user()->id, "verificacion");
-                $path_documento = $this->fileService->saveFile($formVerificacion['inputGroupFile02'], Auth()->user()->id, "verificacion");
+                $path_selfie = $this->fileService->saveFile($form_verificacion['inputGroupFile01'], $user->id, 'verificacion');
+                $path_documento = $this->fileService->saveFile($form_verificacion['inputGroupFile02'], $user->id, 'verificacion');
                 User::where('id', $user->id)->update([
                     'path_selfie' => $path_selfie,
                     'path_documento' => $path_documento,
@@ -139,7 +139,7 @@ class LoginController extends Controller
     {
 
         try {
-            $ingresoError = [];
+            $ingreso_error = [];
             $user = User::where('email', $request['email'])->first();
 
             if ($user && Hash::check($request['password'], $user->password)) {
@@ -150,11 +150,11 @@ class LoginController extends Controller
                 }
                 return redirect('');
             } else {
-                array_push($ingresoError, "¡Los datos ingresados son incorrectos!");
-                return view('home.inicioSesion')->with(compact('ingresoError'));;
+                array_push($ingreso_error, '¡Los datos ingresados son incorrectos!');
+                return view('home.inicioSesion')->with(compact('ingreso_error'));;
             }
         } catch (\Exception $ex) {
-            return Response::sendError("Ocurrio un error inesperado al intentar procesar la solicitud", 500);
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
         }
     }
 

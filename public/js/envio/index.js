@@ -18,10 +18,15 @@ var adjuntarFoto = document.getElementById("adjuntarFoto");
 
 var formDataBeneficiario;
 var formDataDepositante;
+var tipoFormularioCode;
+var calculoFormulario = {
+    monto_a_pagar: null,
+    monto_a_recibir: null,
+};
 
 /* inputs paypal*/
 $(document).ready(async function () {
-    $("#formPaytoPaypal").validate({
+    $("#formBeneficiario").validate({
         rules: {
             paypalAliasBeneficiario: {
                 required: true,
@@ -70,17 +75,17 @@ $(document).ready(async function () {
         },
         errorElement: "div",
         errorPlacement: function (error, element) {
-            error.addClass('invalid-feedback text-center'); 
-            element.closest(".form-group").append(error); 
+            error.addClass("invalid-feedback text-center");
+            element.closest(".form-group").append(error);
         },
         highlight: function (element) {
             $(element).addClass("is-invalid");
         },
         unhighlight: function (element) {
-            $(element).removeClass("is-invalid"); 
+            $(element).removeClass("is-invalid");
         },
     });
-    $("#formPaytoBolivares").validate({
+    $("#formDepositante").validate({
         rules: {
             paypalAliasDepositante: {
                 required: true,
@@ -108,6 +113,7 @@ $(document).ready(async function () {
             },
             adjuntarDocumento: {
                 required: true,
+                filesize: FILE_MAX_SIZE,
             },
         },
         messages: {
@@ -137,23 +143,24 @@ $(document).ready(async function () {
             },
             adjuntarDocumento: {
                 required: "La foto del documento es obligatoria",
+                filesize: "El tamaño del archivo debe ser menor a 2MB",
             },
         },
         errorElement: "div",
         errorPlacement: function (error, element) {
-            error.addClass('invalid-feedback text-center'); 
-            element.closest(".form-group").append(error); 
+            error.addClass("invalid-feedback text-center");
+            element.closest(".form-group").append(error);
         },
         highlight: function (element) {
             $(element).addClass("is-invalid");
         },
         unhighlight: function (element) {
-            $(element).removeClass("is-invalid"); 
+            $(element).removeClass("is-invalid");
         },
     });
 
-    var beneficiarios = await getBeneficiarios();
-    var depositantes = await getDepositantes();
+    var beneficiarios = await getTerceros("TB");
+    var depositantes = await getTerceros("TD");
 
     $.each(beneficiarios, function (key, value) {
         $("#selectBeneficiario").append(
@@ -167,6 +174,16 @@ $(document).ready(async function () {
         );
     });
 
+    $("#montoCambiar").keyup(async function () {
+        let calculo = await devFormatoMoneda(tipoFormularioCode, $(this).val());
+        $("#monto_a_pagar_paypal").html(calculo.data.monto_a_pagar);
+        $("#monto_a_recibir_paypal").html(calculo.data.monto_a_recibir);
+
+        calculoFormulario.monto_a_pagar = calculo.data.monto_a_pagar;
+        calculoFormulario.monto_a_recibir = calculo.data.monto_a_recibir;
+    });
+
+    //localStorage.setItem("myData", "gabriel");
 });
 /* fin input paypal */
 
@@ -214,7 +231,7 @@ function activarDepositante() {
 
 function activarEditDepositante() {
     var editDepositante = document.getElementById("editDepositante");
-    var guardarEdit = document.getElementById("guardarEdit2");3
+    var guardarEdit = document.getElementById("guardarEdit2");
     var adjuntarFoto = document.getElementById("adjuntarFoto");
     adjuntarFoto.style.display = "block";
     editDepositante.style.display = "none";
@@ -327,7 +344,7 @@ async function verificarSelect1() {
         cuentaExistente1.style.display = "block";
         beneficiario.style.display = "block";
 
-        var details = await showBeneficiario();
+        var details = await showTercero("TB");
         setFieldsBeneficiario(details);
     } else {
         // Oculta el div si la opción es la por defecto
@@ -350,7 +367,7 @@ async function verificarSelect2() {
         cuentaExistente2.style.display = "block";
         depositante.style.display = "block";
 
-        var details = await showDepositante();
+        var details = await showTercero("TD");
         setFieldsDepositante(details);
     } else {
         // Oculta el div si la opción es la por defecto
@@ -358,12 +375,20 @@ async function verificarSelect2() {
     }
 }
 
-function mostrarOcultarDiv() {
-    var select1 = document.getElementById("inputGroupSelect01");
+function mostrarOcultarDiv(id = null) {
+    var select1 = id == null ? document.getElementById("inputGroupSelect01") : id;
     var miDiv = document.getElementById("panel-envios");
 
     // Mostrar el div si el valor seleccionado es 1
-    miDiv.style.display = select1.value === "1" ? "block" : "none";
+    if (id != null) {
+        miDiv.style.display = select1 == 1 ? "block" : "none";
+    } else {
+        miDiv.style.display = select1.value === "1" ? "block" : "none";
+    }
+
+    // SE DEBE CAPTURAR EL TIPO DE FORMULARIO EN ESTA SECCION
+    var selectedOption = $("#inputGroupSelect01").find("option:selected");
+    tipoFormularioCode = selectedOption.data("code");
 }
 
 // Asociar la función al evento "change" del select1
@@ -372,10 +397,10 @@ document
     .addEventListener("change", mostrarOcultarDiv);
 /* Fin PayPal */
 
-function getBeneficiarios() {
+function getTerceros(code) {
     return new Promise(async (resolve, reject) => {
         try {
-            const response = await axios.get("/beneficiario/list");
+            const response = await axios.get("/terceros/list/" + code);
             resolve(response.data);
         } catch (error) {
             handleErrors(error);
@@ -384,12 +409,12 @@ function getBeneficiarios() {
     });
 }
 
-function showBeneficiario() {
-    var selectedValue = $("#selectBeneficiario").val();
+function showTercero(code) {
+    var selectedValue = mapTercero(code, "select");
     return new Promise(async (resolve, reject) => {
         try {
             const response = await axios.get(
-                "/beneficiario/show/" + selectedValue
+                "/terceros/show/" + selectedValue + "/" + code
             );
             resolve(response.data);
         } catch (error) {
@@ -399,122 +424,12 @@ function showBeneficiario() {
     });
 }
 
-function addBeneficiario() {
-    if ($("#formPaytoPaypal").valid()) {
-        var formData = $("#formPaytoPaypal").serialize();
+function addTercero(code) {
+    if (mapTercero(code, "validateForm")) {
+        var formData = mapTercero(code, "dataForm");
+        formData.append("code", code);
         axios
-            .post("/beneficiario/store", formData)
-            .then((response) => {
-                showSuccess(response.data.message);
-            })
-            .catch((error) => {
-                handleErrors(error);
-            });
-    }
-}
-
-function setBeneficiario() {
-    if ($("#formPaytoPaypal").valid()) {
-        const id = formDataBeneficiario.id;
-        var formData = $("#formPaytoPaypal").serialize();
-        axios
-            .post("/beneficiario/update/" + id, formData)
-            .then((response) => {
-                showSuccess(response.data.message);
-            })
-            .catch((error) => {
-                handleErrors(error);
-            });
-    }
-}
-
-function deleteBeneficiario() {
-    const id = formDataBeneficiario.id;
-
-    Swal.fire({
-        title: "Estas seguro de eliminar el registro?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Si, eliminar!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            axios
-                .post("/beneficiario/destroy/" + id)
-                .then((response) => {
-                    showSuccess(response.data.message);
-                })
-                .catch((error) => {
-                    handleErrors(error);
-                });
-        }
-    });
-}
-
-function setFieldsBeneficiario(data) {
-    formDataBeneficiario = data;
-    $("#paypalAliasBeneficiario").val(data.alias);
-    $("#paypalNombreBeneficiario").val(data.nombre);
-    $("#paypalDocumentoBeneficiario").val(data.documento);
-    $("#paypalBancoBeneficiario").val(data.banco);
-    $("#paypalCuentaBeneficiario").val(data.cuenta);
-    $("#paypalPagoMovilBeneficiario").val(data.pago_movil);
-    $("#paypalTipoDocumentoBeneficiario").val(data.tipo_documento_id);
-}
-
-function getDepositantes() {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const response = await axios.get("/depositante/list");
-            resolve(response.data);
-        } catch (error) {
-            handleErrors(error);
-            reject(error);
-        }
-    });
-}
-
-function showDepositante() {
-    var selectedValue = $("#selectDepositante").val();
-    return new Promise(async (resolve, reject) => {
-        try {
-            const response = await axios.get(
-                "/depositante/show/" + selectedValue
-            );
-            resolve(response.data);
-        } catch (error) {
-            handleErrors(error);
-            reject(error);
-        }
-    });
-}
-
-function addDepositante() {
-    if ($("#formPaytoBolivares").valid()) {
-        var formData = new FormData($("#formPaytoBolivares")[0]);
-        axios
-            .post("/depositante/store", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-            .then((response) => {
-                showSuccess(response.data.message);
-            })
-            .catch((error) => {
-                handleErrors(error);
-            });
-    }
-}
-
-function setDepositante() {
-    if ($("#formPaytoBolivares").valid()) {
-        const id = formDataDepositante.id;
-        var formData = new FormData($("#formPaytoBolivares")[0]);
-
-        axios
-            .post("/depositante/update/" + id, formData, {
+            .post("/terceros/store", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -531,8 +446,56 @@ function setDepositante() {
     }
 }
 
-function deleteDepositante() {
-    const id = formDataDepositante.id;
+function setTercero(code) {
+    if (mapTercero(code, "validateForm")) {
+        const id = mapTercero(code, "dataFormVariable").id;
+        var formData = mapTercero(code, "dataForm");
+        formData.append("code", code);
+        axios
+            .post("/terceros/update/" + id, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((response) => {
+                showSuccess(response.data.message);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
+            })
+            .catch((error) => {
+                handleErrors(error);
+            });
+    }
+}
+
+function mapTercero(code, tipo) {
+    switch (tipo) {
+        case "select":
+            return code == "TB"
+                ? $("#selectBeneficiario").val()
+                : $("#selectDepositante").val();
+            break;
+        case "validateForm":
+            return code == "TB"
+                ? $("#formBeneficiario").valid()
+                : $("#formDepositante").valid();
+            break;
+        case "dataForm":
+            return code == "TB"
+                ? new FormData($("#formBeneficiario")[0])
+                : new FormData($("#formDepositante")[0]);
+            break;
+        case "dataFormVariable":
+            return code == "TB" ? formDataBeneficiario : formDataDepositante;
+            break;
+        default:
+            break;
+    }
+}
+
+function deleteTercero(code) {
+    const id = mapTercero(code, "dataFormVariable").id;
 
     Swal.fire({
         title: "Estas seguro de eliminar el registro?",
@@ -544,9 +507,12 @@ function deleteDepositante() {
     }).then((result) => {
         if (result.isConfirmed) {
             axios
-                .post("/depositante/destroy/" + id)
+                .post("/terceros/destroy/" + id + "/" + code)
                 .then((response) => {
                     showSuccess(response.data.message);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
                 })
                 .catch((error) => {
                     handleErrors(error);
@@ -555,19 +521,67 @@ function deleteDepositante() {
     });
 }
 
-function setFieldsDepositante(data) {
-    formDataDepositante = data;
-    $("#paypalAliasDepositante").val(data.alias);
-    $("#paypalNombreDepositante").val(data.nombre);
-    $("#paypalDocumentoDepositante").val(data.documento);
-    $("#paypalCorreoDepositante").val(data.correo);
-    $("#paypalCelularDepositante").val(data.celular);
-    $("#paypalIndicativoDepositante").val(data.pais_telefono_id);
-    $("#paypalTipoDocumentoDepositante").val(data.tipo_documento_id);
-    $("#paypalPaisDepositante").val(data.pais_id);
+function setFieldsBeneficiario(beneficiario) {
+    formDataBeneficiario = beneficiario.data;
+    $("#paypalAliasBeneficiario").val(beneficiario.data.alias);
+    $("#paypalNombreBeneficiario").val(beneficiario.data.nombre);
+    $("#paypalDocumentoBeneficiario").val(beneficiario.data.documento);
+    $("#paypalBancoBeneficiario").val(beneficiario.data.banco);
+    $("#paypalCuentaBeneficiario").val(beneficiario.data.cuenta);
+    $("#paypalPagoMovilBeneficiario").val(beneficiario.data.pago_movil);
+    $("#paypalTipoDocumentoBeneficiario").val(
+        beneficiario.data.tipo_documento_id
+    );
 }
 
+function setFieldsDepositante(depositante) {
+    formDataDepositante = depositante.data;
+    $("#paypalAliasDepositante").val(depositante.data.alias);
+    $("#paypalNombreDepositante").val(depositante.data.nombre);
+    $("#paypalDocumentoDepositante").val(depositante.data.documento);
+    $("#paypalCorreoDepositante").val(depositante.data.correo);
+    $("#paypalCelularDepositante").val(depositante.data.celular);
+    $("#paypalIndicativoDepositante").val(depositante.data.pais_telefono_id);
+    $("#paypalTipoDocumentoDepositante").val(
+        depositante.data.tipo_documento_id
+    );
+    $("#paypalPaisDepositante").val(depositante.data.pais_id);
+    if (depositante.data.path_documento) {
+        loadImageFromURL(depositante.data.path_documento, "#adjuntarDocumento");
+        updateButtonAndBindClick(
+            "btnPreview01",
+            depositante.data.path_documento
+        );
+    }
+}
 
-/* Agregar al guardar la edicion */
-/* var adjuntarFoto = document.getElementById("adjuntarFoto");
-adjuntarFoto.style.display = "none"; */
+function addSolicitudPago() {
+    Swal.fire({
+        title: "Estas seguro que se desea continuar?",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, Continuar!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios
+                .post("/solicitudes/pago", {
+                    beneficiario_id: formDataBeneficiario
+                        ? formDataBeneficiario.id
+                        : null,
+                    depositante_id: formDataDepositante
+                        ? formDataDepositante.id
+                        : null,
+                    monto_a_pagar: calculoFormulario.monto_a_pagar,
+                    monto_a_recibir: calculoFormulario.monto_a_recibir,
+                })
+                .then((response) => {
+                    // Abre la nueva pestaña y guarda una referencia a ella
+                })
+                .catch((error) => {
+                    handleErrors(error);
+                });
+        }
+    });
+}

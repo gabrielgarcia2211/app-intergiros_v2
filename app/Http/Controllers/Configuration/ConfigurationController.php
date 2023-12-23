@@ -14,7 +14,7 @@ class ConfigurationController extends Controller
         try {
             return MasterCombos::getChildrens($name);
         } catch (\Exception $ex) {
-            return Response::sendError("Ocurrio un error inesperado al intentar procesar la solicitud", 500);
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
         }
     }
 }

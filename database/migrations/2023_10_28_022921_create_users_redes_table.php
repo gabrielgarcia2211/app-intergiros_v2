@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->integer('redes_id')->unsigned()->nullable();
             $table->string('nombre');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('redes_id')->references('id')->on('master_combos');
             $table->timestamps();
         });

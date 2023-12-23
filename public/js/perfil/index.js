@@ -304,21 +304,6 @@ function setVerificationDataFields(details) {
     }
 }
 
-function updateButtonAndBindClick(buttonId, imagePath) {
-    const buttonSelector = `#${buttonId}`;
-    const iconSelector = `${buttonSelector} i`;
-
-    if (imagePath) {
-        $(iconSelector).attr("class", "fas fa-eye");
-    }
-
-    $(buttonSelector).click(function () {
-        if (imagePath) {
-            showImageAlert(imagePath);
-        }
-    });
-}
-
 function updateVerification() {
     if ($("#formVerificacion").valid()) {
         formData.formVerificacion = {

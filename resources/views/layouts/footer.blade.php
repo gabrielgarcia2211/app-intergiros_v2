@@ -5,7 +5,7 @@
                     <h5><strong>SOBRE NOSOTROS</strong></h5>
                     <ul class="custom-list">
                         <li><a href="#">¿Quiénes somos?</a></li>
-                        <li><a href="{{ route('servicios') }}">Servicios disponible</a></li>
+                        <li><a href="{{ route('servicios.index') }}">Servicios disponible</a></li>
                         <li><a href="#">Horarios de atencion</a></li>
                     </ul>
                 </div>

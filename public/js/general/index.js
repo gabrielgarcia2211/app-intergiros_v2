@@ -1,3 +1,18 @@
+$(document).ready(async function () {
+    $.validator.addMethod('filesize', function(value, element, param) {
+        // Check if file is selected
+        if (element.files && element.files.length) {
+            // Check file size
+            return this.optional(element) || (element.files[0].size <= param);
+        }
+        return true; // If no file is selected, validation passes by default
+    }, 'El tamaño del archivo debe ser menor a {0} bytes');
+});
+
+
+var FILE_MAX_SIZE = 10097152;
+
+// funcion para controlar errores
 function handleErrors(error) {
     switch (error.response.status) {
         case 401:
@@ -139,4 +154,39 @@ function getCookie(name) {
     }
     return null;
 }
+
+// funcion para activar boton de visualizacion de imagenes
+function updateButtonAndBindClick(buttonId, imagePath) {
+    const buttonSelector = `#${buttonId}`;
+    const iconSelector = `${buttonSelector} i`;
+
+    if (imagePath) {
+        $(iconSelector).attr("class", "fas fa-eye");
+    }
+
+    $(buttonSelector).click(function () {
+        if (imagePath) {
+            showImageAlert(imagePath);
+        }
+    });
+}
+
+// funcion de conversion de monedas
+function devFormatoMoneda(key, value) {
+    return new Promise((resolve, reject) => {
+        var formData = new FormData();
+        formData.append("tasa", key);
+        formData.append("monto", value);
+
+        axios
+            .post("/convertidor/tasa", formData)
+            .then((response) => {
+                resolve(response.data);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
+// END FORMATO DE MONEDAS
 

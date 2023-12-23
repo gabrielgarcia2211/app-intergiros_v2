@@ -17,6 +17,4 @@ class TipoMoneda extends Model
         'codigo',
     ];
 
-    const RELATION_SHIPS = [''];
-
 }

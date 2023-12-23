@@ -2,7 +2,6 @@
 
 namespace App\Models\Registro;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 class UserRedes extends Model

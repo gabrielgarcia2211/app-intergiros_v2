@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
         $this->call(Configuration\CoreMasterComboPaisTelefonoSeeder::class);
         $this->call(Configuration\CoreMasterComboRedesSeeder::class);
         $this->call(Configuration\CoreMasterComboTipoDocumentoSeeder::class);
+        $this->call(Configuration\CoreMasterComboEstadosSeeder::class);
+        $this->call(Configuration\CoreMasterComboTercerosSeeder::class);
 
         // Tipos de cambio
         $this->call(Administracion\TipoMonedaSeeder::class);

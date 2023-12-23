@@ -17,8 +17,6 @@ class TasaCambio extends Model
         'tipo_formulario_id',
     ];
 
-    const RELATION_SHIPS = ['tipo_formulario'];
-
     public function tipo_formulario()
     {
         return $this->belongsTo(TipoFormulario::class, 'tipo_formulario_id');

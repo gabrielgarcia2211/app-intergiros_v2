@@ -14,9 +14,8 @@ class TipoFormulario extends Model
 
     protected $fillable = [
         'descripcion',
+        'codigo',
     ];
-
-    const RELATION_SHIPS = ['tasa_cambios'];
 
     public function tasa_cambios()
     {
