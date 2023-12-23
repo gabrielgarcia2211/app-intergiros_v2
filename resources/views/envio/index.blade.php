@@ -238,9 +238,6 @@
                                 placeholder="Pago móvil">
                         </div>
                         <div class="text-center">
-                            <label for="paypalPagoMovilBeneficiario" class="error"></label>
-                        </div>
-                        <div class="text-center">
                             <div class="text-center" style="display: flex; justify-content: center;">
                                 <button type="button" class="btn btn-primary" onclick="addTercero('TB')"
                                     id="cuentaNueva1"
@@ -251,7 +248,7 @@
                                     <div class="col-6">
                                         <button type="button" class="btn btn-primary" id="editBeneficiario"
                                             onclick="activarEditBeneficiario()"
-                                            style="background-color: transparent; border: none; color: #0035aa;">Editar</button>
+                                            style="background-color: transparent; border: none; color: #0035aa; margin-left: 22%;">Editar</button>
                                         <button type="button" class="btn btn-primary" id="guardarEdit1"
                                             onclick="setTercero('TB')"
                                             style="display: none;background-color: transparent; border: none; color: #0035aa; margin-left: 22%;">Guardar
@@ -357,7 +354,7 @@
                                     <div class="col-6">
                                         <button type="button" class="btn btn-primary" id="editDepositante"
                                             onclick="activarEditDepositante()"
-                                            style="background-color: transparent; border: none; color: #0035aa;">Editar</button>
+                                            style="background-color: transparent; border: none; color: #0035aa; margin-left: 22%;">Editar</button>
                                         <button type="button" class="btn btn-primary" id="guardarEdit2"
                                             onclick="setTercero('TD')"
                                             style="display: none;background-color: transparent; border: none; color: #0035aa; margin-left: 22%;">Guardar

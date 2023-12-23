@@ -116,8 +116,16 @@ $(document).ready(async function () {
                 required: "El campo foto del documento es requerido.",
             },
         },
+        errorElement: "div",
         errorPlacement: function (error, element) {
-            error.insertAfter(element);
+            error.addClass("invalid-feedback text-center");
+            element.closest(".form-group").append(error);
+        },
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid");
         },
     });
 

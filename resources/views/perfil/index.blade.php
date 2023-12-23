@@ -68,8 +68,7 @@
                     <div class="form-row" id="ocultar">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="password" class="form-control" id="esteNo" value="**********"
-                                    disabled>
+                                <input type="password" class="form-control" id="esteNo" value="**********" disabled>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -87,7 +86,8 @@
                                     placeholder="Nueva contraseña">
                                 <div class="input-group-append">
                                     <span class="input-group-text">
-                                        <i class="fa fa-eye toggle-password" data-toggle="password" onclick="togglePasswordVisibility()"></i>
+                                        <i class="fa fa-eye toggle-password" data-toggle="password"
+                                            onclick="togglePasswordVisibility()"></i>
                                     </span>
                                 </div>
                             </div>
@@ -136,33 +136,32 @@
                     </div>
                     <div class="form-row">
                         <div class="col-md-6">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <select class="form-control input-indicativo" id="tipoDocumento" name="tipoDocumento">
-                                    </select>
-                                    <div class="text-center">
-                                        <label for="tipoDocumento" class="error"></label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <select class="form-control input-indicativo" id="tipoDocumento"
+                                            name="tipoDocumento">
+                                        </select>
                                     </div>
+                                    <input type="number" class="form-control input-telefono" id="documento"
+                                        name="documento" placeholder="Número documento">
                                 </div>
-                                <input type="number" class="form-control input-telefono" id="documento" name="documento"
-                                    placeholder="Número documento">
-                            </div>
-                            <div class="text-center">
-                                <label for="documento" class="error"></label>
                             </div>
                             <div class="mt-3">
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <div class="input-group-prepend">
-                                            <button class="btn btn-outline-secondary" type="button" id="btnPreview01">
-                                                <i class="fas fa-eye-slash"></i>
-                                            </button>
-                                        </div>
-                                        <input type="file" class="custom-file-input" id="inputGroupFile01" name="inputGroupFile01">
-                                        <label class="custom-file-label input-registro" for="inputGroupFile01" id="labelFile01">Adjunta
-                                            selfie</label>
-                                        <div class="text-center">
-                                            <label for="inputGroupFile01" class="error"></label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-outline-secondary" type="button"
+                                                    id="btnPreview01">
+                                                    <i class="fas fa-eye-slash"></i>
+                                                </button>
+                                            </div>
+                                            <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                                name="inputGroupFile01">
+                                            <label class="custom-file-label input-registro" for="inputGroupFile01"
+                                                id="labelFile01">Adjunta
+                                                selfie</label>
                                         </div>
                                     </div>
                                 </div>
@@ -180,12 +179,11 @@
                                                 <i class="fas fa-eye-slash"></i>
                                             </button>
                                         </div>
-                                        <input type="file" class="custom-file-input" id="inputGroupFile02" name="inputGroupFile02">
-                                        <label class="custom-file-label input-registro" for="inputGroupFile02" id="labelFile02">Adjunta
+                                        <input type="file" class="custom-file-input" id="inputGroupFile02"
+                                            name="inputGroupFile02">
+                                        <label class="custom-file-label input-registro" for="inputGroupFile02"
+                                            id="labelFile02">Adjunta
                                             documento</label>
-                                        <div class="text-center">
-                                            <label for="inputGroupFile02" class="error"></label>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -208,6 +206,6 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('js/perfil/input.js') }}"></script>
-    <script src="{{ asset('js/perfil/index.js') }}"></script>
+<script src="{{ asset('js/perfil/input.js') }}"></script>
+<script src="{{ asset('js/perfil/index.js') }}"></script>
 @endsection
