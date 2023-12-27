@@ -20,14 +20,14 @@ $(document).ready(function () {
         },
         errorElement: "div",
         errorPlacement: function (error, element) {
-            error.addClass('invalid-feedback text-center'); 
-            element.closest(".form-group").append(error); 
+            error.addClass('invalid-feedback text-center');
+            element.closest(".form-group").append(error);
         },
         highlight: function (element) {
             $(element).addClass("is-invalid");
         },
         unhighlight: function (element) {
-            $(element).removeClass("is-invalid"); 
+            $(element).removeClass("is-invalid");
         },
     });
 });
@@ -86,3 +86,22 @@ function togglePasswordVisibility() {
         toggleIcon.classList.add("fa-eye");
     }
 }
+
+var inputs = document.querySelectorAll('input[type="text"], input[type="email"]');
+
+// Función para convertir texto a mayúsculas
+function toUpperCaseInput(event) {
+    // Guardar la posición actual del cursor
+    var cursorPosition = event.target.selectionStart;
+
+    // Convertir el texto a mayúsculas
+    event.target.value = event.target.value.toUpperCase();
+
+    // Restaurar la posición del cursor
+    event.target.setSelectionRange(cursorPosition, cursorPosition);
+}
+
+// Aplica el event listener a cada input
+inputs.forEach(function (input) {
+    input.addEventListener('input', toUpperCaseInput);
+});
