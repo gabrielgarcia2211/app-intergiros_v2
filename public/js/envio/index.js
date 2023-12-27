@@ -524,3 +524,15 @@ function addSolicitudPago() {
         }
     });
 }
+
+var inputs = document.querySelectorAll('input[type="text"], input[type="email"]');
+
+// Función para convertir texto a mayúsculas
+function toUpperCaseInput() {
+    this.value = this.value.toUpperCase();
+}
+
+// Aplica el event listener a cada input
+inputs.forEach(function (input) {
+    input.addEventListener('input', toUpperCaseInput);
+});
