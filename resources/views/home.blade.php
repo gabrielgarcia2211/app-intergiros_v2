@@ -1,7 +1,7 @@
 @extends('layouts.nav-home')
 
 @section('content')
-<div class="container mt-4">
+    <div class="container mt-4">
         <div class="row">
             <!-- Columna de texto (se coloca primero en dispositivos pequeños) -->
             <div class="col-md-5 columna-texto order-2 order-md-1">
@@ -39,20 +39,20 @@
     <div class="container">
         <div class="form-group text-center">
             <div class="custom-select-container">
-                <select class="custom-select custom-select-lg mb-3 text-white" id="selector">
+                <select class="custom-select custom-select-lg mb-3 text-white" id="selectorCambioHome">
                     <option value="null" selected>Selecciona el servicio de tu interés</option>
-                    <option value="pay-ven">Cambiar saldo PayPal a Venezuela</option>
-                    <option value="pay-peru">Cambiar saldo PayPal a Perú</option>
-                    <option value="usd-ven">Cambiar saldo USDT a Venezuela</option>
-                    <option value="peru-ven">Enviar dinero de Perú a Venezuela</option>
-                    <option value="col-ven">Enviar dinero de Colombia a Venezuela</option>
+                    <option value="TP-01">Cambiar saldo PayPal a Venezuela</option>
+                    <option value="TP-01">Cambiar saldo PayPal a Perú</option>
+                    <option value="TP-09">Cambiar saldo USDT a Venezuela</option>
+                    <option value="TP-05">Enviar dinero de Perú a Venezuela</option>
+                    <option value="TP-07">Enviar dinero de Colombia a Venezuela</option>
                 </select>
             </div>
         </div>
         <p class="text-select">Para desplegar su información general y tasas</p>
     </div>
-    <!-- pay-ven -->
-    <div class="container cambios" style="display: none;" id="pay-ven">
+    <!-- TP-01 -->
+    <div class="container cambios" style="display: none;" id="TP-01">
         <div class="row">
             <div class="col-md-5 info">
                 <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid" alt="">
@@ -85,7 +85,8 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-3 icon">
-                        <img src="{{ asset('img/home/Ícono términos y condiciones.png') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('img/home/Ícono términos y condiciones.png') }}" class="img-fluid"
+                            alt="">
                     </div>
                     <div class="col-9">
                         <h5><span class="resaltar">Consulta aquí los</span></h5>
@@ -97,15 +98,15 @@
             </div>
             <div class="col-md-7 data">
                 <div class="form-group">
-                    <input type="number" class="form-control w-100%" id="monto_enviar"
-                        placeholder="Monto a enviar">
+                    <input type="number" class="form-control w-100%" id="montoCambiarHome" placeholder="Monto a enviar"
+                        onkeyup="obtenerValor(this.value)">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
                 </div>
                 <div class="form-group mt-4">
-                    <input type="number" class="form-control w-100%" id="monto_recibir"
-                        placeholder="Monto a recibir" readonly>
+                    <input type="number" class="form-control w-100%" id="montoRecibirHome" placeholder="Monto a recibir"
+                        readonly>
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
@@ -114,8 +115,8 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4>$85,94 USD</h4>
-                        <h4>$1585,94 USD</h4>
+                        <h4>$ <span id="monto_a_pagar_home">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_a_recibir_comision" style="display: inline-block">0.00</span> USD</h4>
                         <h4>$1 USD=30,00 BS</h4>
                     </div>
                 </div>
@@ -124,15 +125,15 @@
                         comisión cobrada por PayPal en sus transacciones.</h4>
                 </div>
                 <!-- <div class="mt-5 text-center">
-                    <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                </div> -->
+                                            <h6>Si realizas un pedido ahora:</h6>
+                                            <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                                        </div> -->
             </div>
         </div>
     </div>
 
-    <!-- pay-peru -->
-    <div class="container cambios" style="display: none;" id="pay-peru">
+    <!-- TP-01 -->
+    <div class="container cambios" style="display: none;" id="TP-01">
         <div class="row">
             <div class="col-md-5 info">
                 <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid" alt="">
@@ -165,7 +166,8 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-3 icon">
-                        <img src="{{ asset('img/home/Ícono términos y condiciones.png') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('img/home/Ícono términos y condiciones.png') }}" class="img-fluid"
+                            alt="">
                     </div>
                     <div class="col-9">
                         <h5><span class="resaltar">Consulta aquí los</span></h5>
@@ -177,14 +179,14 @@
             </div>
             <div class="col-md-7 data">
                 <div class="form-group">
-                    <input type="number" class="form-control w-100%" id="inputConTextoDeReferencia"
-                        placeholder="Monto a enviar">
+                    <input type="number" class="form-control w-100%" id="montoCambiarHome" placeholder="Monto a enviar"
+                        onkeyup="obtenerValor(this.value)">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
                 </div>
                 <div class="form-group mt-4">
-                    <input type="number" class="form-control w-100%" id="inputConTextoDeReferencia"
+                    <input type="number" class="form-control w-100%" id="montoRecibirHome"
                         placeholder="Monto a recibir">
                 </div>
                 <div class="row mt-4">
@@ -194,8 +196,8 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4>$85,94 USD</h4>
-                        <h4>$1585,94 USD</h4>
+                        <h4>$ <span id="monto_a_pagar_home">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_a_recibir_comision" style="display: inline-block">0.00</span> USD</h4>
                         <h4>$1 USD=30,00 BS</h4>
                     </div>
                 </div>
@@ -204,15 +206,15 @@
                         comisión cobrada por PayPal en sus transacciones.</h4>
                 </div>
                 <!-- <div class="mt-5 text-center">
-                <h6>Si realizas un pedido ahora:</h6>
-                <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-            </div> -->
+                                        <h6>Si realizas un pedido ahora:</h6>
+                                        <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                                    </div> -->
             </div>
         </div>
     </div>
 
-    <!-- usd-ven -->
-    <div class="container cambios" style="display: none;" id="usd-ven">
+    <!-- TP-09 -->
+    <div class="container cambios" style="display: none;" id="TP-09">
         <div class="row">
             <div class="col-md-5 info">
                 <img src="{{ asset('img/home/TDC Intergiros - USDT.png') }}" class="img-fluid" alt="">
@@ -227,7 +229,8 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-3 icon">
-                        <img src="{{ asset('img/home/Ícono traansferencias en.png') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('img/home/Ícono traansferencias en.png') }}" class="img-fluid"
+                            alt="">
                     </div>
                     <div class="col-9">
                         <h5>Transferencias en</h5>
@@ -245,7 +248,8 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-3 icon">
-                        <img src="{{ asset('img/home/Ícono términos y condiciones.png') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('img/home/Ícono términos y condiciones.png') }}" class="img-fluid"
+                            alt="">
                     </div>
                     <div class="col-9">
                         <h5><span class="resaltar">Consulta aquí los</span></h5>
@@ -257,15 +261,15 @@
             </div>
             <div class="col-md-7 data">
                 <div class="form-group">
-                    <input type="number" class="form-control w-100%" id="inputConTextoDeReferencia"
-                        placeholder="Monto a enviar">
+                    <input type="number" class="form-control w-100%" id="montoCambiarHome" placeholder="Monto a enviar"
+                        onkeyup="obtenerValor(this.value)">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
                 </div>
                 <div class="form-group mt-4">
-                    <input type="number" class="form-control w-100%" id="inputConTextoDeReferencia"
-                        placeholder="Monto a recibir">
+                    <input type="number" class="form-control w-100%" id="montoRecibirHome"
+                        placeholder="Monto a recibir" readonly>
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
@@ -274,8 +278,8 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4>$85,94 USD</h4>
-                        <h4>$1585,94 USD</h4>
+                        <h4>$ <span id="monto_a_pagar_home">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_a_recibir_comision" style="display: inline-block">0.00</span> USD</h4>
                         <h4>$1 USD=30,00 BS</h4>
                     </div>
                 </div>
@@ -284,15 +288,15 @@
                         comisión cobrada por PayPal en sus transacciones.</h4>
                 </div>
                 <!-- <div class="mt-5 text-center">
-                <h6>Si realizas un pedido ahora:</h6>
-                <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-            </div> -->
+                                        <h6>Si realizas un pedido ahora:</h6>
+                                        <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                                    </div> -->
             </div>
         </div>
     </div>
 
-    <!-- peru-ven -->
-    <div class="container cambios" style="display: none;" id="peru-ven">
+    <!-- TP-05 -->
+    <div class="container cambios" style="display: none;" id="TP-05">
         <div class="row">
             <div class="col-md-5 info">
                 <img src="{{ asset('img/home/TDC Intergiros - Perú.png') }}" class="img-fluid" alt="">
@@ -307,7 +311,8 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-3 icon">
-                        <img src="{{ asset('img/home/Ícono traansferencias en.png') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('img/home/Ícono traansferencias en.png') }}" class="img-fluid"
+                            alt="">
                     </div>
                     <div class="col-9">
                         <h5>Transferencias en</h5>
@@ -325,7 +330,8 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-3 icon">
-                        <img src="{{ asset('img/home/Ícono términos y condiciones.png') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('img/home/Ícono términos y condiciones.png') }}" class="img-fluid"
+                            alt="">
                     </div>
                     <div class="col-9">
                         <h5><span class="resaltar">Consulta aquí los</span></h5>
@@ -337,15 +343,15 @@
             </div>
             <div class="col-md-7 data">
                 <div class="form-group">
-                    <input type="number" class="form-control w-100%" id="inputConTextoDeReferencia"
-                        placeholder="Monto a enviar">
+                    <input type="number" class="form-control w-100%" id="montoCambiarHome" placeholder="Monto a enviar"
+                        onkeyup="obtenerValor(this.value)">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
                 </div>
                 <div class="form-group mt-4">
-                    <input type="number" class="form-control w-100%" id="inputConTextoDeReferencia"
-                        placeholder="Monto a recibir">
+                    <input type="number" class="form-control w-100%" id="montoRecibirHome"
+                        placeholder="Monto a recibir" readonly>
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
@@ -354,8 +360,8 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4>$85,94 USD</h4>
-                        <h4>$1585,94 USD</h4>
+                        <h4>$ <span id="monto_a_pagar_home">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_a_recibir_comision" style="display: inline-block">0.00</span> USD</h4>
                         <h4>$1 USD=30,00 BS</h4>
                     </div>
                 </div>
@@ -364,15 +370,15 @@
                         comisión cobrada por PayPal en sus transacciones.</h4>
                 </div>
                 <!-- <div class="mt-5 text-center">
-                <h6>Si realizas un pedido ahora:</h6>
-                <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-            </div> -->
+                                        <h6>Si realizas un pedido ahora:</h6>
+                                        <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                                    </div> -->
             </div>
         </div>
     </div>
 
-    <!-- col-ven -->
-    <div class="container cambios" style="display: none;" id="col-ven">
+    <!-- TP-07 -->
+    <div class="container cambios" style="display: none;" id="TP-07">
         <div class="row">
             <div class="col-md-5 info">
                 <img src="{{ asset('img/home/TDC Intergiros - Colombia.png') }}" class="img-fluid" alt="">
@@ -387,7 +393,8 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-3 icon">
-                        <img src="{{ asset('img/home/Ícono traansferencias en.png') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('img/home/Ícono traansferencias en.png') }}" class="img-fluid"
+                            alt="">
                     </div>
                     <div class="col-9">
                         <h5>Transferencias en</h5>
@@ -405,7 +412,8 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-3 icon">
-                        <img src="{{ asset('img/home/Ícono términos y condiciones.png') }}" class="img-fluid" alt="">
+                        <img src="{{ asset('img/home/Ícono términos y condiciones.png') }}" class="img-fluid"
+                            alt="">
                     </div>
                     <div class="col-9">
                         <h5><span class="resaltar">Consulta aquí los</span></h5>
@@ -417,15 +425,15 @@
             </div>
             <div class="col-md-7 data">
                 <div class="form-group">
-                    <input type="number" class="form-control w-100%" id="inputConTextoDeReferencia"
-                        placeholder="Monto a enviar">
+                    <input type="number" class="form-control w-100%" id="montoCambiarHome" placeholder="Monto a enviar"
+                        onkeyup="obtenerValor(this.value)">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
                 </div>
                 <div class="form-group mt-4">
-                    <input type="number" class="form-control w-100%" id="inputConTextoDeReferencia"
-                        placeholder="Monto a recibir">
+                    <input type="number" class="form-control w-100%" id="montoRecibirHome"
+                        placeholder="Monto a recibir" readonly>
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
@@ -434,8 +442,8 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4>$85,94 USD</h4>
-                        <h4>$1585,94 USD</h4>
+                        <h4>$ <span id="monto_a_pagar_home">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_a_recibir_comision" style="display: inline-block">0.00</span> USD</h4>
                         <h4>$1 USD=30,00 BS</h4>
                     </div>
                 </div>
@@ -444,9 +452,9 @@
                         comisión cobrada por PayPal en sus transacciones.</h4>
                 </div>
                 <!-- <div class="mt-5 text-center">
-                <h6>Si realizas un pedido ahora:</h6>
-                <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-            </div> -->
+                                        <h6>Si realizas un pedido ahora:</h6>
+                                        <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                                    </div> -->
             </div>
         </div>
     </div>
@@ -588,5 +596,4 @@
     <br><br><br><br><br>
     <!-- FOOTER -->
     @include('layouts.footer')
-
 @endsection

@@ -19,6 +19,7 @@ class TipoFormularioSeeder extends Seeder
             ['descripcion' => 'Peru Dolar', 'codigo' => 'TP-06'],
             ['descripcion' => 'Colombia Bolivar', 'codigo' => 'TP-07'],
             ['descripcion' => 'Zinli', 'codigo' => 'TP-08'],
+            ['descripcion' => 'Usdt', 'codigo' => 'TP-09'],
         ];
 
         foreach ($tiposFormulario as $tipo) {

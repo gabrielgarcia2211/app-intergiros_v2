@@ -22,9 +22,6 @@ function handlePeticion(url) {
                     `,
                 },
             });
-
-            // Remove the event listener
-            //window.removeEventListener("message", handleMessage, false);
         }
     }
 

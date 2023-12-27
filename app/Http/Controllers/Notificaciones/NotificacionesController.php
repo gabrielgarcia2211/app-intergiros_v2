@@ -52,4 +52,27 @@ class NotificacionesController extends Controller
             'notificacion' => 0
         ]);
     }
+
+    public function statusNotificaciones()
+    {
+        try {
+            $user_id = Auth::user()->id;
+            $hoy = Carbon::today();
+
+            $nuevas = Solicitudes::where('user_id', $user_id)
+                ->whereDate('created_at', $hoy)
+                ->where([
+                    'notificacion' => 1
+                ])
+                ->with('estado')
+                ->get();
+
+            return Response::sendResponse([
+                'nuevas' => count($nuevas) > 0,
+            ], 'Registros obtenidos con exito.');
+        } catch (\Exception $ex) {
+            Log::debug($ex->getMessage());
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
+        }
+    }
 }

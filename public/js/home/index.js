@@ -1,13 +1,19 @@
-var pay_ven = document.getElementById("pay-ven");
-var pay_peru = document.getElementById("pay-peru");
-var usd_ven = document.getElementById("usd-ven");
-var peru_ven = document.getElementById("peru-ven");
-var col_ven = document.getElementById("col-ven");
+var pay_ven = document.getElementById("TP-01");
+var pay_peru = document.getElementById("TP-01");
+var usd_ven = document.getElementById("TP-09");
+var peru_ven = document.getElementById("TP-05");
+var col_ven = document.getElementById("TP-07");
 
+var select = document.getElementById("selectorCambioHome");
 
-var select = document.getElementById("selector");
+$(document).ready(function () {});
 
 select.addEventListener("change", function () {
+    $("#montoCambiarHome").val("");
+    $("#montoRecibirHome").val("");
+    $("#monto_a_pagar_home").html("0.00");
+    $("#monto_a_recibir_comision").html("0.00");
+
     var selectedOption = select.options[select.selectedIndex];
 
     if (selectedOption) {
@@ -17,36 +23,31 @@ select.addEventListener("change", function () {
             usd_ven.style.display = "none";
             peru_ven.style.display = "none";
             col_ven.style.display = "none";
-        } else
-        if (selectedOption.value === "pay-ven") {
+        } else if (selectedOption.value === "TP-01") {
             pay_peru.style.display = "none";
             usd_ven.style.display = "none";
             peru_ven.style.display = "none";
             col_ven.style.display = "none";
             pay_ven.style.display = "block";
-        } else 
-        if (selectedOption.value === "pay-peru") {
+        } else if (selectedOption.value === "TP-01") {
             pay_ven.style.display = "none";
             usd_ven.style.display = "none";
             peru_ven.style.display = "none";
             col_ven.style.display = "none";
             pay_peru.style.display = "block";
-        } else 
-        if (selectedOption.value === "usd-ven") {
+        } else if (selectedOption.value === "TP-09") {
             pay_ven.style.display = "none";
             pay_peru.style.display = "none";
             peru_ven.style.display = "none";
             col_ven.style.display = "none";
             usd_ven.style.display = "block";
-        } else 
-        if (selectedOption.value === "peru-ven") {
+        } else if (selectedOption.value === "TP-05") {
             pay_ven.style.display = "none";
             pay_peru.style.display = "none";
             usd_ven.style.display = "none";
             col_ven.style.display = "none";
             peru_ven.style.display = "block";
-        }else 
-        if (selectedOption.value === "col-ven") {
+        } else if (selectedOption.value === "TP-07") {
             pay_ven.style.display = "none";
             pay_peru.style.display = "none";
             usd_ven.style.display = "none";
@@ -56,11 +57,9 @@ select.addEventListener("change", function () {
     }
 });
 
-const input1 = document.getElementById("monto_enviar");
-const input2 = document.getElementById("monto_recibir");
-
-// Añadimos un evento de escucha al primer input
-input1.addEventListener("input", function() {
-    // Cuando el usuario escribe algo en el primer input, copiamos ese valor en el segundo input
-    input2.value = input1.value*30.00;
-});
+async function obtenerValor(value) {
+    let calculo = await devFormatoMoneda($("#selectorCambioHome").val(), value);
+    $("#montoRecibirHome").val(calculo.data.monto_a_recibir);
+    $("#monto_a_pagar_home").html(calculo.data.monto_a_pagar);
+    $("#monto_a_recibir_comision").html(calculo.data.monto_a_recibir);
+}

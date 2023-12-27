@@ -14,6 +14,7 @@ $(document).ready(async function () {
 });
 
 var FILE_MAX_SIZE = 10097152;
+var URL_SITE =  "http://127.0.0.1:80";
 
 // funcion para controlar errores
 function handleErrors(error) {
@@ -65,16 +66,6 @@ function showSuccess(message, type = "success") {
         title: "Éxito",
         text: message,
         position: "top",
-    });
-}
-
-// función para mostrar un mensaje de éxito 
-function showSuccess(message, type = "success") {
-    Swal.fire({
-        icon: type,
-        title: "Éxito",
-        text: message,
-        position: "top-end",
     });
 }
 

@@ -48,8 +48,7 @@ class UserController extends Controller
                 'token' => $request->all()['token'],
                 'expires_at' => now()->addMinutes(5),
             ]);
-            // Enviar el correo electrónico - Auth()->user()->email
-            Mail::to('garciaquinteroga@gmail.com')->send(new TokenGenerated($token));
+            Mail::to(Auth()->user()->email)->send(new TokenGenerated($token));
             return Response::sendResponse($token, 'Token generado con exito.');
         } catch (\Exception $ex) {
             Log::debug($ex->getMessage());

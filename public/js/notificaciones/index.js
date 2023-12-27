@@ -21,13 +21,22 @@ $(document).ready(async function () {
     }
 
     function mostrarNotificaciones(details) {
+        if (details.data.nuevas.length > 0) {
+            $(".sinMsjNotificacion").hide();
+            $("#nuevasNotificaciones").show();
+            $("#pointNotificacion").show();
+        }
+        if (details.data.anteriores.length > 0) {
+            $(".sinMsjNotificacion").hide();
+            $("#anterioresNotificaciones").show();
+        }
         details.data.nuevas.forEach(function (notificacion) {
-            $("#nuevas-notificaciones").append(
+            $("#nuevasNotificaciones").append(
                 crearElementoNotificacion(notificacion, true)
             );
         });
         details.data.anteriores.forEach(function (notificacion) {
-            $("#anteriores-notificaciones").append(
+            $("#anterioresNotificaciones").append(
                 crearElementoNotificacion(notificacion, false)
             );
         });
@@ -36,18 +45,18 @@ $(document).ready(async function () {
     function crearElementoNotificacion(notificacion, is_new) {
         // Estilo para ocultar el ícono si no es nuevo
         const iconStyle = is_new ? "" : "style='display: none;'";
-    
+
         return `<div>
                     <div class="text-right">
                         ${notificacion.created_at} 
                         <a href="#" onclick="hiddenNotificacion(${notificacion.id}); return false;"><i class="fas fa-trash-alt" ${iconStyle}></i></a>
                     </div>
                     <h5><strong>${notificacion.estado.name}</strong></h5>
+                    <h5><strong># ID: </strong>${notificacion.id}</h5>
                     <h5>${notificacion.estado.valor1}</h5>
                     <p>${notificacion.estado.valor2}</p>
                 </div>`;
     }
-    
 });
 
 function hiddenNotificacion(id) {
