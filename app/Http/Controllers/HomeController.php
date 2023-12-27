@@ -14,10 +14,4 @@ class HomeController extends Controller
     {
         return view('envio.pagopaypal');
     }
-
-    public function notificaciones()
-    {
-        return view('notificaciones.notificaciones');
-    }
-
 }

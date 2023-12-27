@@ -68,6 +68,16 @@ function showSuccess(message, type = "success") {
     });
 }
 
+// función para mostrar un mensaje de éxito 
+function showSuccess(message, type = "success") {
+    Swal.fire({
+        icon: type,
+        title: "Éxito",
+        text: message,
+        position: "top-end",
+    });
+}
+
 // función para mostrar imagenes en sweetAlert
 function showImageAlert(imageSrc) {
     Swal.fire({

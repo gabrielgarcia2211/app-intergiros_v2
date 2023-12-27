@@ -2,12 +2,13 @@
 
 namespace App\Models\Solicitudes;
 
-use App\Models\Administracion\TipoFormulario;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Terceros\Tercero;
+use Illuminate\Database\Eloquent\Model;
 use App\Models\Administracion\TipoMoneda;
 use App\Models\Configuration\MasterCombos;
-use App\Models\Terceros\Tercero;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Administracion\TipoFormulario;
 
 class Solicitudes extends Model
 {
@@ -21,6 +22,7 @@ class Solicitudes extends Model
         'producto_id',
         'monto_a_pagar',
         'monto_a_recibir',
+        'notificacion',
         'user_id',
         'estado_id',
     ];
@@ -60,5 +62,20 @@ class Solicitudes extends Model
     public function estado()
     {
         return $this->belongsTo(MasterCombos::class);
+    }
+
+    // mutadores
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d');;
+    }
+
+    public static function setStatusSolicitud($estado, $solicitud_id)
+    {
+        $estado_id = MasterCombos::getEstadoSolicitud($estado);
+        Solicitudes::where('id', $solicitud_id)->update([
+            'estado_id' => $estado_id
+        ]);
+        return Solicitudes::find($solicitud_id);
     }
 }

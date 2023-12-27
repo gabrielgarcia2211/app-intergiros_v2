@@ -74,7 +74,7 @@
                 envío.</p>
         </div>
         <div class="text-center mt-5 boton">
-            <button type="submit" class="btn btn-primary mb-2"><strong>Realizar pago</strong></button>
+            <button type="submit" class="btn btn-primary mb-2" onclick="sendPaytoPaypal()"><strong>Realizar pago</strong></button>
         </div>
     </div>
 

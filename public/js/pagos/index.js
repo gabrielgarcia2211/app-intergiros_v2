@@ -1,13 +1,8 @@
-$(document).ready(async function () {
-    /* setInterval(function () {
-        window.opener.postMessage(
-            { status: "completed" },
-            "http://127.0.0.1:8000"
-        );
-    }, 10000); */
+var solicitudId;
 
-    var id = obtenerParametroGET("solicitud");
-    var details = await getSolicitudIniciada(id);
+$(document).ready(async function () {
+    solicitudId = obtenerParametroGET("solicitud");
+    var details = await getSolicitudIniciada(solicitudId);
     setFieldsDepositante(details);
 
     function getSolicitudIniciada(id) {
@@ -33,9 +28,12 @@ $(document).ready(async function () {
         $("#email").val(details.data.depositante.correo);
         $("#paisPago").val(details.data.depositante.pais_id);
         $("#monto_a_pagar").html(details.data.monto_a_pagar);
-        $("#monto_comision").html($("#monto_a_pagar").text() + 0.89);
+        $("#monto_comision").html(
+            parseFloat(details.data.monto_a_pagar) + parseFloat(0.89)
+        );
         $("#monto_total").html(
-            parseFloat($("#monto_a_pagar").text()) + parseFloat($("#monto_comision").text())
+            parseFloat($("#monto_a_pagar").text()) +
+                parseFloat($("#monto_comision").text())
         );
     }
 
@@ -44,3 +42,32 @@ $(document).ready(async function () {
 
     llenarTabla("#tablaProductos", headersTable, dataTable);
 });
+
+function sendPaytoPaypal() {
+    var formData = new FormData();
+    formData.append("solicitud_id", solicitudId);
+    Swal.fire({
+        title: "Cargando...",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        willOpen: () => {
+            Swal.showLoading();
+        },
+    });
+
+    axios
+        .post("/paypal/pay", formData)
+        .then((response) => {
+            let info = response.data;
+            Swal.close();
+            if (info.success) {
+                window.location.href = info.data.approval_url;
+            } else {
+                window.location.href = info.data.denied_url;
+            }
+        })
+        .catch((error) => {
+            Swal.close();
+            handleErrors(error);
+        });
+}

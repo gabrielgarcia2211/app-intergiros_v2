@@ -31,17 +31,13 @@ class SolicitudesController extends Controller
             $monto_a_pagar = $request->input('monto_a_pagar');
             $monto_a_recibir = $request->input('monto_a_recibir');
 
-            $estado_id = MasterCombos::whereRaw("parent_id = (SELECT id FROM master_combos WHERE code = 'estados_solicitud')")
-                ->whereRaw("LOWER(name) = LOWER('iniciado')")
-                ->get()
-                ->first()->id;
+            $estado_id = MasterCombos::getEstadoSolicitud('iniciado');
                 
             $range = getCostRange($monto_a_pagar);
             if (!$range) {
                 return Response::sendError('No se encontro un producto en este rango de costo', 422);
             }
             $product = Producto::whereBetween('costo', $range)->inRandomOrder()->first();
-
             $solicitud = Solicitudes::create([
                 'tipo_formulario_id' => $tipo_formulario_id,
                 'tipo_moneda_id' => $tipo_moneda_id,

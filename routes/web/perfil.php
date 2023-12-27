@@ -10,7 +10,7 @@ Route::get('/', function(){
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 
 /* Notificaciones generales */
-Route::get('/notificaciones', [HomeController::class, 'notificaciones'])->name('notificaciones');
+
 
 
 

@@ -64,7 +64,7 @@
                             </div>
                         </li>
                         <li class="nav-item" id="child6">
-                            <a class="nav-link" href="{{ route('notificaciones') }}"><i class="fas fa-comment-dots"></i><span class="notification-badge"></a>
+                            <a class="nav-link" href="{{ route('notificaciones.index') }}"><i class="fas fa-comment-dots"></i><span class="notification-badge"></a>
                         </li>
                         <li class="nav-item" id="child7">
                             <a class="nav-link" href="#"><i class="fab fa-instagram"></i></a>

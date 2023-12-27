@@ -14,6 +14,8 @@ class MasterCombos extends Model
         'code',
         'name',
         'description',
+        'valor1',
+        'valor2',
         'is_father',
         'status',
         'orden'
@@ -46,5 +48,13 @@ class MasterCombos extends Model
         }
 
         return $comboResponses;
+    }
+
+    public static function getEstadoSolicitud($status)
+    {
+        return MasterCombos::whereRaw("parent_id = (SELECT id FROM master_combos WHERE code = 'estados_solicitud')")
+            ->whereRaw("LOWER(code) = LOWER('$status')")
+            ->get()
+            ->first()->id;
     }
 }

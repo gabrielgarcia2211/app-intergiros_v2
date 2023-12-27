@@ -31,4 +31,15 @@ class ResponseController extends Controller
 
         return response()->json($response, $code);
     }
+
+    static public function sendResponseService($status, $data, $message = "")
+    {
+        $response = [
+            'success' => $status,
+            'data'    => $data,
+            'message' => $message,
+        ];
+
+        return response()->json($response, 200);
+    }
 }

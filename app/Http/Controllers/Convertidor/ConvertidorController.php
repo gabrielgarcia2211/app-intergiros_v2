@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Convertidor;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\ResponseController as Response;
 use App\Models\Administracion\TipoFormulario;
+use App\Http\Controllers\ResponseController as Response;
 
 class ConvertidorController extends Controller
 {

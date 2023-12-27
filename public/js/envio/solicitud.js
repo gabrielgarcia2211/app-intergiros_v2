@@ -1,13 +1,33 @@
-function handlePeticion(url){
+function handlePeticion(url) {
     window.open(url, "_blank");
-    /* window.addEventListener(
-        "message",
-        (event) => {
-            if (event.data.status === "completed") {
-                alert("melo");
-                //window.removeEventListener("message", handleMessage, false);
-            }
-        },
-        false
-    ); */
+
+    // Define the event listener as a named function
+    function handleMessage(event) {
+        if (event.data.status) {
+            Swal.fire({
+                title: event.data.message,
+                icon: event.data.status,
+                showClass: {
+                    popup: `
+                    animate__animated
+                    animate__fadeInUp
+                    animate__faster
+                    `,
+                },
+                hideClass: {
+                    popup: `
+                    animate__animated
+                    animate__fadeOutDown
+                    animate__faster
+                    `,
+                },
+            });
+
+            // Remove the event listener
+            //window.removeEventListener("message", handleMessage, false);
+        }
+    }
+
+    // Add the event listener
+    window.addEventListener("message", handleMessage, false);
 }

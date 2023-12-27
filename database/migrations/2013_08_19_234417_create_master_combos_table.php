@@ -14,6 +14,9 @@ class CreateMasterCombosTable extends Migration
             $table->string('code')->index()->unique()->nullable();
             $table->string('name')->index();
             $table->string('description', 255)->nullable();
+            $table->string('valor1', 512)->nullable();
+            $table->string('valor2', 512)->nullable();
+            $table->string('valor3', 512)->nullable();
             $table->boolean('is_father')->default(false);
             $table->boolean('status')->default(true);
             $table->integer('orden')->default(-1);
