@@ -39,20 +39,21 @@
     <div class="container">
         <div class="form-group text-center">
             <div class="custom-select-container">
-                <select class="custom-select custom-select-lg mb-3 text-white" id="selectorCambioHome">
+                <select class="custom-select custom-select-lg mb-3 text-white" id="selectorCambioHome"
+                    name="selectorCambioHome">
                     <option value="null" selected>Selecciona el servicio de tu interés</option>
-                    <option value="TP-01">Cambiar saldo PayPal a Venezuela</option>
-                    <option value="TP-01">Cambiar saldo PayPal a Perú</option>
-                    <option value="TP-09">Cambiar saldo USDT a Venezuela</option>
-                    <option value="TP-05">Enviar dinero de Perú a Venezuela</option>
-                    <option value="TP-07">Enviar dinero de Colombia a Venezuela</option>
+                    <option value="pay_ven" data-code="TP-01">Cambiar saldo PayPal a Venezuela</option>
+                    <option value="pay_peru" data-code="TP-01">Cambiar saldo PayPal a Perú</option>
+                    <option value="usd_ven" data-code="TP-09">Cambiar saldo USDT a Venezuela</option>
+                    <option value="peru_ven" data-code="TP-05">Enviar dinero de Perú a Venezuela</option>
+                    <option value="col_ven" data-code="TP-07">Enviar dinero de Colombia a Venezuela</option>
                 </select>
             </div>
         </div>
         <p class="text-select">Para desplegar su información general y tasas</p>
     </div>
-    <!-- TP-01 -->
-    <div class="container cambios" style="display: none;" id="TP-01">
+    <!-- pay_ven -->
+    <div class="container cambios" style="display: none;" id="pay_ven">
         <div class="row">
             <div class="col-md-5 info">
                 <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid" alt="">
@@ -98,15 +99,15 @@
             </div>
             <div class="col-md-7 data">
                 <div class="form-group">
-                    <input type="number" class="form-control w-100%" id="montoCambiarHome" placeholder="Monto a enviar"
-                        onkeyup="obtenerValor(this.value)">
+                    <input type="number" class="form-control w-100%" id="monto_cambiar_pay_ven"
+                        placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
                 </div>
                 <div class="form-group mt-4">
-                    <input type="number" class="form-control w-100%" id="montoRecibirHome" placeholder="Monto a recibir"
-                        readonly>
+                    <input type="text" class="form-control w-100%" id="monto_recibir_pay_ven"
+                        placeholder="Monto a recibir" readonly>
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
@@ -115,8 +116,8 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4>$ <span id="monto_a_pagar_home">0.00</span> USD</h4>
-                        <h4>$ <span id="monto_a_recibir_comision" style="display: inline-block">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_pagar_pay_ven">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_recibir_comision_pay_ven" style="display: inline-block">0.00</span> USD</h4>
                         <h4>$1 USD=30,00 BS</h4>
                     </div>
                 </div>
@@ -125,15 +126,15 @@
                         comisión cobrada por PayPal en sus transacciones.</h4>
                 </div>
                 <!-- <div class="mt-5 text-center">
-                                            <h6>Si realizas un pedido ahora:</h6>
-                                            <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                                        </div> -->
+                    <h6>Si realizas un pedido ahora:</h6>
+                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                </div> -->
             </div>
         </div>
     </div>
 
-    <!-- TP-01 -->
-    <div class="container cambios" style="display: none;" id="TP-01">
+    <!-- pay_peru -->
+    <div class="container cambios" style="display: none;" id="pay_peru">
         <div class="row">
             <div class="col-md-5 info">
                 <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid" alt="">
@@ -179,14 +180,14 @@
             </div>
             <div class="col-md-7 data">
                 <div class="form-group">
-                    <input type="number" class="form-control w-100%" id="montoCambiarHome" placeholder="Monto a enviar"
-                        onkeyup="obtenerValor(this.value)">
+                    <input type="number" class="form-control w-100%" id="monto_cambiar_pay_peru"
+                        placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
                 </div>
                 <div class="form-group mt-4">
-                    <input type="number" class="form-control w-100%" id="montoRecibirHome"
+                    <input type="number" class="form-control w-100%" id="monto_recibir_pay_peru"
                         placeholder="Monto a recibir">
                 </div>
                 <div class="row mt-4">
@@ -196,8 +197,9 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4>$ <span id="monto_a_pagar_home">0.00</span> USD</h4>
-                        <h4>$ <span id="monto_a_recibir_comision" style="display: inline-block">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_pagar_pay_peru">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_recibir_comision_pay_peru" style="display: inline-block">0.00</span> USD
+                        </h4>
                         <h4>$1 USD=30,00 BS</h4>
                     </div>
                 </div>
@@ -206,15 +208,15 @@
                         comisión cobrada por PayPal en sus transacciones.</h4>
                 </div>
                 <!-- <div class="mt-5 text-center">
-                                        <h6>Si realizas un pedido ahora:</h6>
-                                        <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                                    </div> -->
+                    <h6>Si realizas un pedido ahora:</h6>
+                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                </div> -->
             </div>
         </div>
     </div>
 
-    <!-- TP-09 -->
-    <div class="container cambios" style="display: none;" id="TP-09">
+    <!-- usd_ven -->
+    <div class="container cambios" style="display: none;" id="usd_ven">
         <div class="row">
             <div class="col-md-5 info">
                 <img src="{{ asset('img/home/TDC Intergiros - USDT.png') }}" class="img-fluid" alt="">
@@ -261,14 +263,14 @@
             </div>
             <div class="col-md-7 data">
                 <div class="form-group">
-                    <input type="number" class="form-control w-100%" id="montoCambiarHome" placeholder="Monto a enviar"
-                        onkeyup="obtenerValor(this.value)">
+                    <input type="number" class="form-control w-100%" id="monto_cambiar_usd_ven"
+                        placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
                 </div>
                 <div class="form-group mt-4">
-                    <input type="number" class="form-control w-100%" id="montoRecibirHome"
+                    <input type="text" class="form-control w-100%" id="monto_recibir_usd_ven"
                         placeholder="Monto a recibir" readonly>
                 </div>
                 <div class="row mt-4">
@@ -278,8 +280,8 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4>$ <span id="monto_a_pagar_home">0.00</span> USD</h4>
-                        <h4>$ <span id="monto_a_recibir_comision" style="display: inline-block">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_pagar_usd_ven">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_recibir_comision_usd_ven" style="display: inline-block">0.00</span> USD</h4>
                         <h4>$1 USD=30,00 BS</h4>
                     </div>
                 </div>
@@ -288,15 +290,15 @@
                         comisión cobrada por PayPal en sus transacciones.</h4>
                 </div>
                 <!-- <div class="mt-5 text-center">
-                                        <h6>Si realizas un pedido ahora:</h6>
-                                        <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                                    </div> -->
+                    <h6>Si realizas un pedido ahora:</h6>
+                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                </div> -->
             </div>
         </div>
     </div>
 
-    <!-- TP-05 -->
-    <div class="container cambios" style="display: none;" id="TP-05">
+    <!-- peru_ven -->
+    <div class="container cambios" style="display: none;" id="peru_ven">
         <div class="row">
             <div class="col-md-5 info">
                 <img src="{{ asset('img/home/TDC Intergiros - Perú.png') }}" class="img-fluid" alt="">
@@ -343,14 +345,14 @@
             </div>
             <div class="col-md-7 data">
                 <div class="form-group">
-                    <input type="number" class="form-control w-100%" id="montoCambiarHome" placeholder="Monto a enviar"
-                        onkeyup="obtenerValor(this.value)">
+                    <input type="number" class="form-control w-100%" id="monto_cambiar_peru_ven"
+                        placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
                 </div>
                 <div class="form-group mt-4">
-                    <input type="number" class="form-control w-100%" id="montoRecibirHome"
+                    <input type="text" class="form-control w-100%" id="monto_recibir_peru_ven"
                         placeholder="Monto a recibir" readonly>
                 </div>
                 <div class="row mt-4">
@@ -360,8 +362,9 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4>$ <span id="monto_a_pagar_home">0.00</span> USD</h4>
-                        <h4>$ <span id="monto_a_recibir_comision" style="display: inline-block">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_pagar_peru_ven">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_recibir_comision_peru_ven" style="display: inline-block">0.00</span> USD
+                        </h4>
                         <h4>$1 USD=30,00 BS</h4>
                     </div>
                 </div>
@@ -370,15 +373,15 @@
                         comisión cobrada por PayPal en sus transacciones.</h4>
                 </div>
                 <!-- <div class="mt-5 text-center">
-                                        <h6>Si realizas un pedido ahora:</h6>
-                                        <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                                    </div> -->
+                    <h6>Si realizas un pedido ahora:</h6>
+                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                </div> -->
             </div>
         </div>
     </div>
 
-    <!-- TP-07 -->
-    <div class="container cambios" style="display: none;" id="TP-07">
+    <!-- col_ven -->
+    <div class="container cambios" style="display: none;" id="col_ven">
         <div class="row">
             <div class="col-md-5 info">
                 <img src="{{ asset('img/home/TDC Intergiros - Colombia.png') }}" class="img-fluid" alt="">
@@ -425,14 +428,14 @@
             </div>
             <div class="col-md-7 data">
                 <div class="form-group">
-                    <input type="number" class="form-control w-100%" id="montoCambiarHome" placeholder="Monto a enviar"
-                        onkeyup="obtenerValor(this.value)">
+                    <input type="number" class="form-control w-100%" id="monto_cambiar_col_ven"
+                        placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
                 </div>
                 <div class="form-group mt-4">
-                    <input type="number" class="form-control w-100%" id="montoRecibirHome"
+                    <input type="text" class="form-control w-100%" id="monto_recibir_col_ven"
                         placeholder="Monto a recibir" readonly>
                 </div>
                 <div class="row mt-4">
@@ -442,8 +445,8 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4>$ <span id="monto_a_pagar_home">0.00</span> USD</h4>
-                        <h4>$ <span id="monto_a_recibir_comision" style="display: inline-block">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_pagar_col_ven">0.00</span> USD</h4>
+                        <h4>$ <span id="monto_recibir_comision_col_ven" style="display: inline-block">0.00</span> USD</h4>
                         <h4>$1 USD=30,00 BS</h4>
                     </div>
                 </div>
@@ -452,9 +455,9 @@
                         comisión cobrada por PayPal en sus transacciones.</h4>
                 </div>
                 <!-- <div class="mt-5 text-center">
-                                        <h6>Si realizas un pedido ahora:</h6>
-                                        <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                                    </div> -->
+                    <h6>Si realizas un pedido ahora:</h6>
+                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                </div> -->
             </div>
         </div>
     </div>

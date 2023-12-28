@@ -1,8 +1,8 @@
-var pay_ven = document.getElementById("TP-01");
-var pay_peru = document.getElementById("TP-01");
-var usd_ven = document.getElementById("TP-09");
-var peru_ven = document.getElementById("TP-05");
-var col_ven = document.getElementById("TP-07");
+var pay_ven = document.getElementById("pay_ven");
+var pay_peru = document.getElementById("pay_peru");
+var usd_ven = document.getElementById("usd_ven");
+var peru_ven = document.getElementById("peru_ven");
+var col_ven = document.getElementById("col_ven");
 
 var select = document.getElementById("selectorCambioHome");
 
@@ -23,31 +23,31 @@ select.addEventListener("change", function () {
             usd_ven.style.display = "none";
             peru_ven.style.display = "none";
             col_ven.style.display = "none";
-        } else if (selectedOption.value === "TP-01") {
+        } else if (selectedOption.value === "pay_ven") {
             pay_peru.style.display = "none";
             usd_ven.style.display = "none";
             peru_ven.style.display = "none";
             col_ven.style.display = "none";
             pay_ven.style.display = "block";
-        } else if (selectedOption.value === "TP-01") {
+        } else if (selectedOption.value === "pay_peru") {
             pay_ven.style.display = "none";
             usd_ven.style.display = "none";
             peru_ven.style.display = "none";
             col_ven.style.display = "none";
             pay_peru.style.display = "block";
-        } else if (selectedOption.value === "TP-09") {
+        } else if (selectedOption.value === "usd_ven") {
             pay_ven.style.display = "none";
             pay_peru.style.display = "none";
             peru_ven.style.display = "none";
             col_ven.style.display = "none";
             usd_ven.style.display = "block";
-        } else if (selectedOption.value === "TP-05") {
+        } else if (selectedOption.value === "peru_ven") {
             pay_ven.style.display = "none";
             pay_peru.style.display = "none";
             usd_ven.style.display = "none";
             col_ven.style.display = "none";
             peru_ven.style.display = "block";
-        } else if (selectedOption.value === "TP-07") {
+        } else if (selectedOption.value === "col_ven") {
             pay_ven.style.display = "none";
             pay_peru.style.display = "none";
             usd_ven.style.display = "none";
@@ -58,8 +58,13 @@ select.addEventListener("change", function () {
 });
 
 async function obtenerValor(value) {
-    let calculo = await devFormatoMoneda($("#selectorCambioHome").val(), value);
-    $("#montoRecibirHome").val(calculo.data.monto_a_recibir);
-    $("#monto_a_pagar_home").html(calculo.data.monto_a_pagar);
-    $("#monto_a_recibir_comision").html(calculo.data.monto_a_recibir);
+    var selectedOption = $("#selectorCambioHome").find("option:selected");
+    let calculo = await devFormatoMoneda(selectedOption.data("code"), value);
+    $("#monto_recibir_" + selectedOption.val()).val(
+        calculo.data.monto_a_recibir
+    );
+    $("#monto_pagar_" + selectedOption.val()).html(calculo.data.monto_a_pagar);
+    $("#monto_recibir_comision_" + selectedOption.val()).html(
+        calculo.data.monto_a_recibir
+    );
 }

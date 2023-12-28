@@ -190,6 +190,7 @@ function devFormatoMoneda(key, value) {
                 resolve(response.data);
             })
             .catch((error) => {
+                handleErrors(error);
                 reject(error);
             });
     });

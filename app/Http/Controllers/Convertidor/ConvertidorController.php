@@ -16,7 +16,6 @@ class ConvertidorController extends Controller
             $codigo = $request->input('tasa');
             $monto = $request->input('monto');
             $response = TipoFormulario::with('tasa_cambios')->where('codigo', $codigo)->first();
-            Log::debug($codigo);
             if (in_array($codigo, ['TP-01'])) {
                 $total = $monto * $response->tasa_cambios->valor;
                 return Response::sendResponse(['monto_a_pagar' => number_format($total, 2, '.'), 'monto_a_recibir' => number_format($total, 2, '.')]);
