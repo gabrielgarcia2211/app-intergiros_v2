@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-    <link href="{{ asset('css/pefil.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/home.css') }}" rel="stylesheet" />
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -44,9 +44,7 @@
     </script>
 
     <script src="{{ asset('js/general/index.js') }}"></script>
-    <script src="{{ asset('js/envio/input.js') }}"></script>
-    <script src="{{ asset('js/envio/index.js') }}"></script>
-    <script src="{{ asset('js/envio/solicitud.js') }}"></script>
+    <script src="{{ asset('js/home/index.js') }}"></script>
     @yield('script')
 
 </body>

@@ -1,4 +1,5 @@
-@extends('layouts.nav-user')
+@include('layouts.nav-user')
+@extends('layouts.css-perfil')
 
 @section('content')
 <div class="container mt-5 contenedor-perfil">
