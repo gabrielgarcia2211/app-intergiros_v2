@@ -1,4 +1,10 @@
-@extends('layouts.nav-home')
+@auth
+    @include('layouts.nav-user')
+    @extends('layouts.css-home-auth')
+@else
+    @include('layouts.nav-home')
+    @extends('layouts.css-home')
+@endauth
 
 @section('content')
     <div class="container mt-4">
