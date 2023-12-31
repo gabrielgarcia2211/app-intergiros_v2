@@ -115,10 +115,10 @@
                     <input type="text" class="form-control" id="monto_recibir_pay_ven" placeholder="Monto a recibir"
                         readonly>
                     <div class="input-group-append">
-                        <select class="form-control" id="paises">
-                            <option value="venezuela"><img src="{{ asset('img/home/venezuela.png') }}" alt="">Venezuela</option>
-                            <option value="peru"><img src="{{ asset('img/home/peru.png') }}" alt="">Perú</option>
-                            <option value="colombia"><img src="{{ asset('img/home/colombia.png') }}" alt="">Colombia</option>
+                        <select class="form-control select2" id="paises">
+                            <option value="venezuela" data-image="{{ asset('img/home/venezuela.png') }}">🇻🇪</option>
+                            <option value="peru" data-image="{{ asset('img/home/peru.png') }}">🇵🇪</option>
+                            <option value="colombia" data-image="{{ asset('img/home/colombia.png') }}">🇨🇴</option>
                         </select>
                     </div>
                 </div>
