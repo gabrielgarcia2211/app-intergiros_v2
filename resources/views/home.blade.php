@@ -116,9 +116,9 @@
                         readonly>
                     <div class="input-group-append">
                         <select class="form-control" id="paises">
-                            <option value="venezuela"><img src="{{ asset('img/home/venezuela.png') }}" alt=""></option>
-                            <option value="peru"><img src="{{ asset('img/home/peru.png') }}" alt=""></option>
-                            <option value="colombia"><img src="{{ asset('img/home/colombia.png') }}" alt=""></option>
+                            <option value="venezuela"><img src="{{ asset('img/home/venezuela.png') }}" alt="">Venezuela</option>
+                            <option value="peru"><img src="{{ asset('img/home/peru.png') }}" alt="">Perú</option>
+                            <option value="colombia"><img src="{{ asset('img/home/colombia.png') }}" alt="">Colombia</option>
                         </select>
                     </div>
                 </div>
