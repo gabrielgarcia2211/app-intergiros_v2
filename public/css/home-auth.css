@@ -166,6 +166,12 @@
     font-size: 20px;
     font-family: 'Lato', sans-serif !important;
 }
+
+#paises {
+    font-size: 24px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
 /* FIN SELECT DE SERVICIOS */
 
 /* FORMULARIO DE OPCIONES */
@@ -216,6 +222,7 @@
     position: absolute;
     margin-top: -14px;
     margin-left: -25px;
+    z-index: 10000;
 }
 
 .data h4 {
