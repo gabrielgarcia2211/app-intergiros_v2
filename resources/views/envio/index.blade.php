@@ -180,7 +180,7 @@
         </div>
     </div>
 
-    <div class="container mt-5" id="panel-envios" style="display: none;">
+    <div class="panel container mt-5" id="panel-paypal" style="display: none;">
         <div class="text-center">
             <p><strong>Monto minimo:</strong> $5USD+comisión PayPal($5,60USD)</p>
             <p><strong>Tiempo aproximado de espera:</strong> 8 horas laborales</p>

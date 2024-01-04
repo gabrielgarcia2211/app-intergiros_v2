@@ -46,6 +46,24 @@ $(document).ready(async function () {
                 }).text(value.descripcion)
             );
         });
+
+        var savedSelection = localStorage.getItem("selectedService");
+        var savedAction = localStorage.getItem("actionService");
+        if (savedSelection && savedAction) {
+            $("#inputGroupSelect01").val(savedSelection);
+            switch (savedSelection) {
+                case "1":
+                    $("#panel-paypal").show();
+                    break;
+                case "2":
+                    //$("#panel-otro").show();
+                    break;
+                default:
+                    break;
+            }
+            localStorage.removeItem("selectedService");
+            localStorage.removeItem("actionService");
+        }
     }
 
     function setLoadSelectsMonedas(data) {

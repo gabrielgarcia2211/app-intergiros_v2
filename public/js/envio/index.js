@@ -182,14 +182,32 @@ $(document).ready(async function () {
         calculoFormulario.monto_a_recibir = calculo.data.monto_a_recibir;
         checkRealizarPago();
     });
+
+    $("#inputGroupSelect01").change(function () {
+        var selectedValue = $(this).val();
+        var selectedOption = $(this).find("option:selected");
+        tipoFormularioCode = selectedOption.data("code");
+        localStorage.setItem("selectedService", $("#inputGroupSelect01").val());
+        $(".panel").hide();
+        switch (selectedValue) {
+            case "1":
+                $("#panel-paypal").show();
+                break;
+            case "2":
+                //$("#panel-otro").show();
+                break;
+            default:
+                break;
+        }
+    });
 });
 /* fin input paypal */
 
 function activarBeneficiario() {
     var editBeneficiario = document.getElementById("editBeneficiario");
     var guardarEdit = document.getElementById("guardarEdit1");
-    editBeneficiario.style.display = 'block';
-    guardarEdit.style.display = 'none';
+    editBeneficiario.style.display = "block";
+    guardarEdit.style.display = "none";
     for (var i = 0; i < elementos1.length; i++) {
         elementos1[i].removeAttribute("disabled");
         elementos1[i].value = "";
@@ -219,8 +237,8 @@ function activarEditBeneficiario() {
 function activarDepositante() {
     var editDepositante = document.getElementById("editDepositante");
     var guardarEdit = document.getElementById("guardarEdit2");
-    editDepositante.style.display = 'block';
-    guardarEdit.style.display = 'none';
+    editDepositante.style.display = "block";
+    guardarEdit.style.display = "none";
     for (var i = 0; i < elementos2.length; i++) {
         elementos2[i].removeAttribute("disabled");
         elementos2[i].value = "";
@@ -296,23 +314,6 @@ async function verificarSelect2() {
         depositante.style.display = "none";
     }
 }
-
-function mostrarOcultarDiv() {
-    var select1 = document.getElementById("inputGroupSelect01");
-    var miDiv = document.getElementById("panel-envios");
-
-    // Mostrar el div si el valor seleccionado es 1
-    miDiv.style.display = select1.value === "1" ? "block" : "none";
-
-    // SE DEBE CAPTURAR EL TIPO DE FORMULARIO EN ESTA SECCION
-    var selectedOption = $("#inputGroupSelect01").find("option:selected");
-    tipoFormularioCode = selectedOption.data("code");
-}
-
-// Asociar la función al evento "change" del select1
-document
-    .getElementById("inputGroupSelect01")
-    .addEventListener("change", mostrarOcultarDiv);
 /* Fin PayPal */
 
 function getTerceros(code) {
@@ -344,6 +345,7 @@ function showTercero(code) {
 
 function addTercero(code) {
     if (mapTercero(code, "validateForm")) {
+        localStorage.setItem("actionService", true);
         var formData = mapTercero(code, "dataForm");
         formData.append("code", code);
         axios
@@ -366,6 +368,7 @@ function addTercero(code) {
 
 function setTercero(code) {
     if (mapTercero(code, "validateForm")) {
+        localStorage.setItem("actionService", true);
         const id = mapTercero(code, "dataFormVariable").id;
         var formData = mapTercero(code, "dataForm");
         formData.append("code", code);
@@ -525,7 +528,9 @@ function addSolicitudPago() {
     });
 }
 
-var inputs = document.querySelectorAll('input[type="text"], input[type="email"]');
+var inputs = document.querySelectorAll(
+    'input[type="text"], input[type="email"]'
+);
 
 // Función para convertir texto a mayúsculas
 function toUpperCaseInput() {
@@ -534,5 +539,5 @@ function toUpperCaseInput() {
 
 // Aplica el event listener a cada input
 inputs.forEach(function (input) {
-    input.addEventListener('input', toUpperCaseInput);
+    input.addEventListener("input", toUpperCaseInput);
 });
