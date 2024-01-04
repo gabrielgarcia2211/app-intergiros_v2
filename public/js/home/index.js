@@ -34,3 +34,13 @@ async function obtenerValor(value) {
         calculo.data.monto_a_recibir
     );
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    var selectPaises = document.getElementById('paisesPaypal');
+    var imagenPais = document.getElementById('imagenPais');
+
+    selectPaises.addEventListener('change', function() {
+        var imagenUrl = selectPaises.options[selectPaises.selectedIndex].getAttribute('data-image');
+        imagenPais.innerHTML = '<img src="' + imagenUrl + '" alt="Bandera" style="margin-top: 8px;margin-left: 10px;">';
+    });
+});
