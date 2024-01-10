@@ -48,7 +48,7 @@
             <select class="custom-select custom-select-lg mb-3 text-white" id="selectorCambioHome"
                 name="selectorCambioHome">
                 <option value="null" selected>Selecciona el servicio de tu interés</option>
-                <option value="pay_ven" data-code="TP-01">Cambiar saldo PayPal a Venezuela</option>
+                <option value="pay_ven" data-code="TP-01">Cambiar saldo PayPal</option>
                 <option value="pay_peru" data-code="TP-01">Cambiar saldo PayPal a Perú</option>
                 <option value="usd_ven" data-code="TP-09">Cambiar saldo USDT a Venezuela</option>
                 <option value="peru_ven" data-code="TP-05">Enviar dinero de Perú a Venezuela</option>
@@ -69,7 +69,7 @@
                 </div>
                 <div class="col-9">
                     <h5>Monto mínimo</h5>
-                    <p>$5 USD + comisión PayPal</p>
+                    <p><span id="monto_minimo_paypal">$5 USD + comisión PayPal</span></p>
                 </div>
             </div>
             <div class="row mt-4">
@@ -78,7 +78,7 @@
                 </div>
                 <div class="col-9">
                     <h5>Transferencias en</h5>
-                    <p>Máximo 8h laborales</p>
+                    <p>Máximo <span id="tiempo_transferencia_paypal">8h laborales</span></p>
                 </div>
             </div>
             <div class="row mt-4">
@@ -87,7 +87,7 @@
                 </div>
                 <div class="col-9">
                     <h5>Pagamos desde</h5>
-                    <p>Banesco,BDV,pago móvil</p>
+                    <p><span id="bancos_paypal">BDV, pago móvil</span></p>
                 </div>
             </div>
             <div class="row mt-4">
@@ -115,11 +115,12 @@
                     <input type="text" class="form-control" id="monto_recibir_pay_ven" placeholder="Monto a recibir"
                         readonly>
                     <div class="input-group-append">
-                        <div id="imagenPais"><img src="{{ asset('img/home/venezuela.png') }}" alt="" style="margin-top: 8px;margin-left: 10px;"></div>
+                        <div id="imagenPais"><img src="{{ asset('img/home/venezuela.png') }}" alt="" style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesPaypal">
-                            <option data-image="{{ asset('img/home/venezuela.png') }}" value="venezuela">Ven</option>
-                            <option data-image="{{ asset('img/home/peru.png') }}" value="peru">Perú</option>
-                            <option data-image="{{ asset('img/home/colombia.png') }}" value="colombia">Col</option>
+                            <option data-image="{{ asset('img/home/venezuela.png') }}" value="venezuela">Bolívares</option>
+                            <option data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles</option>
+                            <option data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">Dólares</option>
+                            <option data-image="{{ asset('img/home/colombia.png') }}" value="colombia">Pesos colombianos</option>
                         </select>
                     </div>
                 </div>
@@ -133,7 +134,7 @@
                 <div class="col-6 text-right">
                     <h4>$ <span id="monto_pagar_pay_ven">0.00</span> USD</h4>
                     <h4>$ <span id="monto_recibir_comision_pay_ven" style="display: inline-block">0.00</span> USD</h4>
-                    <h4>$1 USD=30,00 BS</h4>
+                    <h4>$1 USD=30,00 <span id="tipo_cambio_paypal">BS</span></h4>
                 </div>
             </div>
             <div class="mt-5">
