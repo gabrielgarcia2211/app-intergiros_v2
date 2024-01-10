@@ -171,6 +171,8 @@
     font-size: 24px;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
+    width: 6.1ch;
+    overflow: hidden;
 }
 /* FIN SELECT DE SERVICIOS */
 
