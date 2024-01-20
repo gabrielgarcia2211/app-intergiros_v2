@@ -26,11 +26,7 @@
 </head>
 
 <body>
-    <div id="app">
-        <main class="">
-            @yield('content')
-        </main>
-    </div>
+    
 
     <!-- DevExtreme -->
     <script type="text/javascript" src="{{ asset('libraries/js/axios.min.js') }}"></script>
