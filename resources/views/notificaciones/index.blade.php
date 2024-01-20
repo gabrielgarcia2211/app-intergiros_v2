@@ -13,7 +13,7 @@
             <li class="nav-item">
                 <a class="nav-link w-100" id="opcion2-tab" data-toggle="tab" href="#opcion2" role="tab"
                     aria-controls="opcion2" aria-selected="false" style="color: #0035aa !important;">Noticias<span
-                        id="pointNoticias" class="notification-badge"></span></a>
+                        id="pointNoticias" class="notification-badge" style="display: none"></span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link w-100" id="opcion3-tab" data-toggle="tab" href="#opcion3" role="tab"
@@ -30,7 +30,7 @@
                     </div>
                     <div id="anterioresNotificaciones" style="margin-top: 5%;display:none">
                         <div class="text-center">
-                            <h4 style="color: #523f3f;">Notificaciones anteriores</h4>
+                            <h4 style="color: #0035aa;">Notificaciones anteriores</h4>
                         </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-center mt-4">
@@ -41,43 +41,19 @@
             </div>
             <div class="tab-pane fade" id="opcion2" role="tabpanel" aria-labelledby="opcion2-tab">
                 <div class="seccion mt-5">
-                    <div class="text-center">
-                        <h4 style="color: #0035aa;">Nuevas notificaciones</h4>
-                    </div>
-                    <div class="mt-3">
-                        <div class="text-right">
-                            Fecha <i class="fas fa-trash-alt"></i>
+                    <div id="nuevasNoticias" style="display:none" class="mt-3">
+                        <div class="text-center">
+                            <h4 style="color: #0035aa;">Nuevas notificaciones</h4>
                         </div>
-                        <h5>Titulo</h5>
-                        <h5>Referencia</h5>
-                        <p>Texto</p>
                     </div>
-                    <div class="mt-3">
-                        <div class="text-right">
-                            Fecha <i class="fas fa-trash-alt"></i>
+                    <div id="anterioresNoticias" style="display:none" class="mt-3">
+                        <div class="text-center">
+                            <h4 style="color: #575757;">Notificaciones anteriores</h4>
                         </div>
-                        <h5>Titulo</h5>
-                        <h5>Referencia</h5>
-                        <p>Texto</p>
                     </div>
-                    <div class="text-center">
-                        <h4 style="color: #575757;">Notificaciones anteriores</h4>
-                    </div>
-                    <div class="mt-3">
-                        <div class="text-right">
-                            Fecha <i class="fas fa-trash-alt"></i>
-                        </div>
-                        <h5>Titulo</h5>
-                        <h5>Referencia</h5>
-                        <p>Texto</p>
-                    </div>
-                    <div class="mt-3">
-                        <div class="text-right">
-                            Fecha <i class="fas fa-trash-alt"></i>
-                        </div>
-                        <h5>Titulo</h5>
-                        <h5>Referencia</h5>
-                        <p>Texto</p>
+                    <div class="d-flex align-items-center justify-content-center mt-4">
+                        <img src="{{ asset('img/notificaciones/Sin mensajes.png') }}" class="img-fluid sinMsjNoticias"
+                            alt="" width="400px">
                     </div>
                 </div>
             </div>

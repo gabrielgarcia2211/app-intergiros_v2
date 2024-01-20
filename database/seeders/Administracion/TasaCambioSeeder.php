@@ -15,7 +15,7 @@ class TasaCambioSeeder extends Seeder
         // Obtener IDs de tipos de formulario
         $tipoFormularioIds = TipoFormulario::pluck('id')->toArray();
 
-        for ($i = 0; $i < 8; $i++) {
+        for ($i = 0; $i < 12; $i++) {
             TasaCambio::create([
                 'valor' => rand(1, 100), // Valor de la tasa de cambio
                 'tipo_formulario_id' => $tipoFormularioIds[$i],
