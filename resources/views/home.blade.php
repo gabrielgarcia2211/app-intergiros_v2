@@ -108,9 +108,19 @@
             </div>
         </div>
         <div class="col-md-7 data">
-            <div class="form-group">
-                <input type="number" class="form-control w-100%" id="monto_cambiar_pay_ven" placeholder="Monto a enviar"
-                    onkeyup="obtenerValor(this.value)">
+            <div class="form-group mt-4">
+                <div class="input-group" style="width: 100% !important;">
+                    <input type="number" class="form-control w-100%" id="monto_cambiar_pay_ven"
+                        placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
+                    <div class="input-group-append">
+                        <div id=""><img src="{{ asset('img/home/paypal.png') }}" alt=""
+                                style="margin-top: 10px;margin-left: 10px; width: 50px;"></div>
+                        <select class="form-control" id="montoPaypalVenezuela">
+                            <option data-image="{{ asset('img/home/paypal.png') }}" value="paypal">PayPal
+                            </option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="text-center">
                 <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
@@ -123,10 +133,14 @@
                         <div id="imagenPais"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesPaypal">
-                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}" value="venezuela">Bolívares</option>
-                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles</option>
-                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">Dólares</option>
-                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">Pesos colombianos</option>
+                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
+                                value="venezuela">Bolívares</option>
+                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
+                            </option>
+                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
+                                Dólares</option>
+                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
+                                Pesos colombianos</option>
                         </select>
                     </div>
                 </div>
@@ -148,9 +162,9 @@
                     comisión cobrada por PayPal en sus transacciones.</h4>
             </div>
             <div class="mt-5 text-center">
-                    <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                </div>
+                <h6>Si realizas un pedido ahora:</h6>
+                <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+            </div>
         </div>
     </div>
 </div>
@@ -200,9 +214,19 @@
             </div>
         </div>
         <div class="col-md-7 data">
-            <div class="form-group">
-                <input type="number" class="form-control w-100%" id="monto_cambiar_pay_peru"
-                    placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
+            <div class="form-group mt-4">
+                <div class="input-group" style="width: 100% !important;">
+                    <input type="number" class="form-control w-100%" id="monto_cambiar_pay_peru"
+                        placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
+                    <div class="input-group-append">
+                        <div id=""><img src="{{ asset('img/home/zinli.png') }}" alt=""
+                                style="margin-top: 13px;margin-left: 10px; width: 50px;"></div>
+                        <select class="form-control" id="montoZinli">
+                            <option data-image="{{ asset('img/home/Zinli.png') }}" value="zinli">Zinli
+                            </option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="text-center">
                 <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
@@ -215,7 +239,8 @@
                         <div id="imagenPaisZinli"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesZinli">
-                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}" value="venezuela">Bolívares
+                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
+                                value="venezuela">Bolívares
                             </option>
                         </select>
                     </div>
@@ -238,9 +263,9 @@
                 <h4>No cobramos comisión por envíos.</h4>
             </div>
             <div class="mt-5 text-center">
-                    <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                </div>
+                <h6>Si realizas un pedido ahora:</h6>
+                <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+            </div>
         </div>
     </div>
 </div>
@@ -290,9 +315,19 @@
             </div>
         </div>
         <div class="col-md-7 data">
-            <div class="form-group">
-                <input type="number" class="form-control w-100%" id="monto_cambiar_usdt_ven" placeholder="Monto a enviar"
-                    onkeyup="obtenerValor(this.value)">
+            <div class="form-group mt-4">
+                <div class="input-group" style="width: 100% !important;">
+                    <input type="number" class="form-control w-100%" id="monto_cambiar_usdt_ven"
+                        placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
+                    <div class="input-group-append">
+                        <div id=""><img src="{{ asset('img/home/usdt.png') }}" alt=""
+                                style="margin-top: 15px;margin-left: 5px; width: 58px;"></div>
+                        <select class="form-control" id="montoUsdtVenezuela">
+                            <option data-image="{{ asset('img/home/usdt.png') }}" value="usdt">USDT
+                            </option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="text-center">
                 <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
@@ -305,11 +340,15 @@
                         <div id="imagenPaisUsdt"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesUsdt">
-                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}" value="venezuela">Bolívares
+                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
+                                value="venezuela">Bolívares
                             </option>
-                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles</option>
-                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">Dólares</option>
-                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">Pesos colombianos
+                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
+                            </option>
+                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
+                                Dólares</option>
+                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
+                                Pesos colombianos
                             </option>
                         </select>
                     </div>
@@ -333,9 +372,9 @@
                     pagos a través de Binance Pay para evitar cobro de comisiones.</h4>
             </div>
             <div class="mt-5 text-center">
-                    <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                </div>
+                <h6>Si realizas un pedido ahora:</h6>
+                <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+            </div>
         </div>
     </div>
 </div>
@@ -404,7 +443,8 @@
                         <select class="form-control" id="montoPeru">
                             <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
                             </option>
-                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">Dólar
+                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
+                                Dólar
                             </option>
                         </select>
                     </div>
@@ -421,9 +461,11 @@
                         <div id="imagenPaisPeru"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesPeru">
-                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}" value="venezuela">Bolívares
+                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
+                                value="venezuela">Bolívares
                             </option>
-                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">Pesos colombianos
+                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
+                                Pesos colombianos
                             </option>
                         </select>
                     </div>
@@ -447,9 +489,9 @@
                     por el pago que realice, se ajustará el cambio por el monto que recibamos en nuestra cuenta.</h4>
             </div>
             <div class="mt-5 text-center">
-                    <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                </div>
+                <h6>Si realizas un pedido ahora:</h6>
+                <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+            </div>
         </div>
     </div>
 </div>
@@ -516,7 +558,8 @@
                         <div id="imagenMontoColombia"><img src="{{ asset('img/home/colombia.png') }}" alt=""
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="montoColombia">
-                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">Pesos colombianos
+                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
+                                Pesos colombianos
                             </option>
                         </select>
                     </div>
@@ -533,11 +576,13 @@
                         <div id="imagenPaisColombia"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesColombia">
-                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}" value="venezuela">Bolívares
+                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
+                                value="venezuela">Bolívares
                             </option>
                             <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
                             </option>
-                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">Dólares
+                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
+                                Dólares
                             </option>
                         </select>
                     </div>
@@ -560,9 +605,9 @@
                     por el pago que realice, se ajustará el cambio por el monto que recibamos en nuestra cuenta.</h4>
             </div>
             <div class="mt-5 text-center">
-                    <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                </div>
+                <h6>Si realizas un pedido ahora:</h6>
+                <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+            </div>
         </div>
     </div>
 </div>
@@ -629,7 +674,8 @@
                         <div id="imagenMontoVenezuela"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="montoVenezuela">
-                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}" value="venezuela">Bolívares
+                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
+                                value="venezuela">Bolívares
                             </option>
                         </select>
                     </div>
@@ -646,11 +692,13 @@
                         <div id="imagenPaisVenezuela"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesVenezuela">
-                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">Pesos colombianos
+                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
+                                Pesos colombianos
                             </option>
                             <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
                             </option>
-                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">Dólares
+                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
+                                Dólares
                             </option>
                         </select>
                     </div>
@@ -673,9 +721,9 @@
                     por el pago que realice, se ajustará el cambio por el monto que recibamos en nuestra cuenta.</h4>
             </div>
             <div class="mt-5 text-center">
-                    <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                </div>
+                <h6>Si realizas un pedido ahora:</h6>
+                <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+            </div>
         </div>
     </div>
 </div>
@@ -733,13 +781,16 @@
                         <div id="imagenRecargaZinli"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesRecargaZinli">
-                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}" value="venezuela">Bolívares
+                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
+                                value="venezuela">Bolívares
                             </option>
-                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">Pesos colombianos
+                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
+                                Pesos colombianos
                             </option>
                             <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
                             </option>
-                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">Dólares
+                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
+                                Dólares
                             </option>
                         </select>
                     </div>
@@ -751,12 +802,12 @@
             </div>
             <div class="form-group mt-4">
                 <div class="input-group" style="width: 100% !important;">
-                    <input type="text" class="form-control" id="monto_recibir_recarga_zinli" placeholder="Monto a recibir"
-                        readonly>
+                    <input type="text" class="form-control" id="monto_recibir_recarga_zinli"
+                        placeholder="Monto a recibir" readonly>
                     <div class="input-group-append">
                         <div id="imagenMontoZinli"><img src="{{ asset('img/home/zinli.png') }}" alt=""
                                 style="margin-top: 13px;margin-left: 10px; width: 50px;"></div>
-                        <select class="form-control" id="montoZinli">
+                        <select class="form-control" id="montoRecargaZinli">
                             <option data-image="{{ asset('img/home/Zinli.png') }}" value="zinli">Zinli
                             </option>
                         </select>
@@ -780,9 +831,9 @@
                     que recibirá será exactamente el que coloque en el campo “Monto a enviar”.</h4>
             </div>
             <div class="mt-5 text-center">
-                    <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                </div>
+                <h6>Si realizas un pedido ahora:</h6>
+                <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+            </div>
         </div>
     </div>
 </div>
@@ -841,13 +892,16 @@
                         <div id="imagenRecargaPaypal"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesRecargaPaypal">
-                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}" value="venezuela">Bolívares
+                            <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
+                                value="venezuela">Bolívares
                             </option>
-                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">Pesos colombianos
+                            <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
+                                Pesos colombianos
                             </option>
                             <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
                             </option>
-                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">Dólares
+                            <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
+                                Dólares
                             </option>
                         </select>
                     </div>
@@ -859,12 +913,12 @@
             </div>
             <div class="form-group mt-4">
                 <div class="input-group" style="width: 100% !important;">
-                    <input type="text" class="form-control" id="monto_recibir_recarga_paypal" placeholder="Monto a recibir"
-                        readonly>
+                    <input type="text" class="form-control" id="monto_recibir_recarga_paypal"
+                        placeholder="Monto a recibir" readonly>
                     <div class="input-group-append">
                         <div id="imagenMontoPaypal"><img src="{{ asset('img/home/paypal.png') }}" alt=""
                                 style="margin-top: 10px;margin-left: 10px; width: 50px;"></div>
-                        <select class="form-control" id="montoPaypal">
+                        <select class="form-control" id="montoRecargaPaypal">
                             <option data-image="{{ asset('img/home/paypal.png') }}" value="paypal">PayPal
                             </option>
                         </select>
@@ -890,9 +944,9 @@
                 </h4>
             </div>
             <div class="mt-5 text-center">
-                    <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                </div>
+                <h6>Si realizas un pedido ahora:</h6>
+                <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+            </div>
         </div>
     </div>
 </div>
