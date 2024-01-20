@@ -44,39 +44,63 @@ async function obtenerValor(value) {
 function mapTipoMoneda(code) {
     switch (code) {
         case "":
+            var enviar = document.getElementById('montoPaypalVenezuela');
+            var recibir = document.getElementById('paisesPaypal');
+            var codigo = enviar.value + "-" + recibir.value;
             return "paisesPaypal";
             break;
         case "":
+            var enviar = document.getElementById('montoZinli');
+            var recibir = document.getElementById('paisesZinli');
+            var codigo = enviar.value + "-" + recibir.value;
             return "paisesZinli";
             break;
         case "":
+            var enviar = document.getElementById('montoUsdtVenezuela');
+            var recibir = document.getElementById('paisesUsdt');
+            var codigo = enviar.value + "-" + recibir.value;
             return "paisesUsdt";
             break;
         case "":
             return "montoPeru";
             break;
         case "":
+            var enviar = document.getElementById('montoPeru');
+            var recibir = document.getElementById('paisesPeru');
+            var codigo = enviar.value + "-" + recibir.value;
             return "paisesPeru";
             break;
         case "":
             return "montoColombia";
             break;
         case "":
+            var enviar = document.getElementById('montoColombia');
+            var recibir = document.getElementById('paisesColombia');
+            var codigo = enviar.value + "-" + recibir.value;
             return "paisesColombia";
             break;
         case "":
             return "montoVenezuela";
             break;
         case "":
+            var enviar = document.getElementById('montoVenezuela');
+            var recibir = document.getElementById('paisesVenezuela');
+            var codigo = enviar.value + "-" + recibir.value;
             return "paisesVenezuela";
             break;
         case "":
+            var enviar = document.getElementById('paisesRecargaZinli');
+            var recibir = document.getElementById('montoRecargaZinli');
+            var codigo = enviar.value + "-" + recibir.value;
             return "paisesRecargaZinli";
             break;
         case "":
             return "montoZinli";
             break;
         case "":
+            var enviar = document.getElementById('paisesRecargaPaypal');
+            var recibir = document.getElementById('montoRecargaPaypal');
+            var codigo = enviar.value + "-" + recibir.value;
             return "paisesRecargaPaypal";
             break;
         case "":
