@@ -167,7 +167,7 @@
     font-family: 'Lato', sans-serif !important;
 }
 
-#paisesPaypal, #montoPaypalVenezuela, #paisesUsdt, #montoUsdtVenezuela, #paisesPeru, #montoPeru, #paisesZinli, #montoColombia, #paisesColombia, #montoVenezuela, #paisesVenezuela, #montoZinli, #paisesRecargaZinli, #montoPaypal, #paisesRecargaPaypal {
+#paisesPaypal, #montoPaypalVenezuela, #paisesUsdt, #montoUsdtVenezuela, #paisesPeru, #montoPeru, #paisesZinli, #montoColombia, #paisesColombia, #montoVenezuela, #paisesVenezuela, #montoRecargaZinli, #paisesRecargaZinli, #montoRecargaPaypal, #paisesRecargaPaypal {
     font-size: 24px;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
