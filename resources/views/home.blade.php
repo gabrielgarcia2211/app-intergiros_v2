@@ -48,8 +48,8 @@
             <select class="custom-select custom-select-lg mb-3 text-white" id="selectorCambioHome"
                 name="selectorCambioHome">
                 <option value="null" selected>Selecciona el servicio de tu interés</option>
-                <option value="pay_ven" data-code="TP-01">Cambiar saldo PayPal</option>--
-                <option value="usd_ven" data-code="TP-02">Cambiar saldo USDT</option>--
+                <option value="pay_ven" data-code="TP-01">Cambiar saldo PayPal</option>
+                <option value="usd_ven" data-code="TP-02">Cambiar saldo USDT</option>
                 <option value="zinli_ven" data-code="TP-03">Cambiar saldo Zinli en Venezuela</option>
                 <option value="peru_ven" data-code="TP-04">Enviar dinero de Perú</option>
                 <option value="col_ven" data-code="TP-05">Enviar dinero de Colombia</option>

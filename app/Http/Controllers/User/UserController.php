@@ -43,12 +43,17 @@ class UserController extends Controller
     public function setToken(StoreTokenRequest $request)
     {
         try {
+
+            $user = User::find(Auth()->user()->id);
+            if (!$user->verificado) {
+                return Response::sendError('El usuario no ha sido verificado', 422);
+            }
             $token = Token::create([
-                'user_id' => Auth()->user()->id,
+                'user_id' => $user->id,
                 'token' => $request->all()['token'],
                 'expires_at' => now()->addMinutes(5),
             ]);
-            Mail::to(Auth()->user()->email)->send(new TokenGenerated($token));
+            Mail::to($user->email)->send(new TokenGenerated($token));
             return Response::sendResponse($token, 'Token generado con exito.');
         } catch (\Exception $ex) {
             Log::debug($ex->getMessage());
@@ -65,6 +70,11 @@ class UserController extends Controller
             $form_actualizar_info = $request->input()['formActualizarInfo'];
 
             $user = User::find(Auth()->user()->id);
+
+            if (!$user->verificado) {
+                return Response::sendError('El usuario no ha sido verificado', 403);
+            }
+
             $user->pais_id = $form_actualizar_info['pais'];
             $user->telefono = $form_actualizar_info['telefono'];
             $user->pais_telefono_id = $form_actualizar_info['paisTelefono'];
@@ -108,6 +118,11 @@ class UserController extends Controller
         try {
             $form_verificacion = $request->all()['formVerificacion'];
             $user = User::find(Auth()->user()->id);
+
+            if (!$user->verificado) {
+                return Response::sendError('El usuario no ha sido verificado', 403);
+            }
+
             $user->documento = $form_verificacion['documento'];
 
             $this->fileService->deleteFile($user->path_selfie);

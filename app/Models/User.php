@@ -33,6 +33,7 @@ class User extends Authenticatable
         'tipo_documento_id',
         'path_selfie',
         'path_documento',
+        'verificado'
     ];
 
     /**

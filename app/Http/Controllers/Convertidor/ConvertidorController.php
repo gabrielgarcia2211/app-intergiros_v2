@@ -15,31 +15,21 @@ class ConvertidorController extends Controller
         if (!empty($request->input('tasa'))  && !empty($request->input('monto'))) {
             $codigo = $request->input('tasa');
             $monto = $request->input('monto');
-            Log::debug($codigo);
-            Log::debug($monto);
             $response = TipoFormulario::with('tasa_cambios')->where('codigo', $codigo)->first();
-            if (in_array($codigo, ['TP-01'])) {
-                $total = $monto * $response->tasa_cambios->valor;
-                return Response::sendResponse(['monto_a_pagar' => number_format($total, 2, '.'), 'monto_a_recibir' => number_format($total, 2, '.')]);
-            } else if (in_array($codigo, ['TP-01-VED'])) {
-                $total = $monto * $response->tasa_cambios->valor;
-                return Response::sendResponse(['monto_a_pagar' => number_format($total, 2, '.'), 'monto_a_recibir' => number_format($total, 2, '.')]);
-            } else if (in_array($codigo, ['TP-01-PEN'])) {
-                $total = $monto * $response->tasa_cambios->valor;
-                return Response::sendResponse(['monto_a_pagar' => number_format($total, 2, '.'), 'monto_a_recibir' => number_format($total, 2, '.')]);
-            } else if (in_array($codigo, ['TP-01-USD'])) {
-                $total = $monto * $response->tasa_cambios->valor;
-                return Response::sendResponse(['monto_a_pagar' => number_format($total, 2, '.'), 'monto_a_recibir' => number_format($total, 2, '.')]);
-            } else if (in_array($codigo, ['TP-01-COP'])) {
-                $total = $monto * $response->tasa_cambios->valor;
-                return Response::sendResponse(['monto_a_pagar' => number_format($total, 2, '.'), 'monto_a_recibir' => number_format($total, 2, '.')]);
-            } else if (in_array($codigo, ['TP-05'])) {
-                $total = $monto * $response->tasa_cambios->valor;
-                return Response::sendResponse(['monto_a_pagar' => number_format($total, 2, '.'), 'monto_a_recibir' => number_format($total, 2, '.')]);
-            } else if (in_array($codigo, ['TP-07'])) {
-                $total = $monto * $response->tasa_cambios->valor;
-                return Response::sendResponse(['monto_a_pagar' => number_format($total, 2, '.'), 'monto_a_recibir' => number_format($total, 2, '.')]);
-            } else if (in_array($codigo, ['TP-09'])) {
+            if (empty($response)) {
+                return false;
+            } else if (in_array($codigo, [
+                'TP-01',
+                'TP-01-paypal-venezuela',
+                'TP-01-paypal-peru',
+                'TP-01-paypal-peru-dolar',
+                'TP-01-paypal-colombia'
+            ])) {
+                $comision_fija = 0.3;
+                $comision = (($monto + $comision_fija) * 100) / 94.6;
+                $monto_a_recibir = $monto * $response->tasa_cambios->valor;
+                return Response::sendResponse(['monto_a_pagar' => round($comision, 2), 'monto_a_recibir' => $monto_a_recibir]);
+            } else {
                 $total = $monto * $response->tasa_cambios->valor;
                 return Response::sendResponse(['monto_a_pagar' => number_format($total, 2, '.'), 'monto_a_recibir' => number_format($total, 2, '.')]);
             }

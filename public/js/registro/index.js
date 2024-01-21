@@ -51,14 +51,14 @@ $(document).ready(function () {
         },
         errorElement: "div",
         errorPlacement: function (error, element) {
-            error.addClass('invalid-feedback text-center'); 
-            element.closest(".form-group").append(error); 
+            error.addClass("invalid-feedback text-center");
+            element.closest(".form-group").append(error);
         },
         highlight: function (element) {
             $(element).addClass("is-invalid");
         },
         unhighlight: function (element) {
-            $(element).removeClass("is-invalid"); 
+            $(element).removeClass("is-invalid");
         },
     });
     $("#formPassword").validate({
@@ -84,14 +84,14 @@ $(document).ready(function () {
         },
         errorElement: "div",
         errorPlacement: function (error, element) {
-            error.addClass('invalid-feedback text-center'); 
-            element.closest(".form-group").append(error); 
+            error.addClass("invalid-feedback text-center");
+            element.closest(".form-group").append(error);
         },
         highlight: function (element) {
             $(element).addClass("is-invalid");
         },
         unhighlight: function (element) {
-            $(element).removeClass("is-invalid"); 
+            $(element).removeClass("is-invalid");
         },
     });
     $("#formRedes").validate({
@@ -113,14 +113,14 @@ $(document).ready(function () {
         },
         errorElement: "div",
         errorPlacement: function (error, element) {
-            error.addClass('invalid-feedback text-center'); 
-            element.closest(".form-group").append(error); 
+            error.addClass("invalid-feedback text-center");
+            element.closest(".form-group").append(error);
         },
         highlight: function (element) {
             $(element).addClass("is-invalid");
         },
         unhighlight: function (element) {
-            $(element).removeClass("is-invalid"); 
+            $(element).removeClass("is-invalid");
         },
     });
     $("#formVerificacion").validate({
@@ -154,14 +154,14 @@ $(document).ready(function () {
         },
         errorElement: "div",
         errorPlacement: function (error, element) {
-            error.addClass('invalid-feedback text-center'); 
-            element.closest(".form-group").append(error); 
+            error.addClass("invalid-feedback text-center");
+            element.closest(".form-group").append(error);
         },
         highlight: function (element) {
             $(element).addClass("is-invalid");
         },
         unhighlight: function (element) {
-            $(element).removeClass("is-invalid"); 
+            $(element).removeClass("is-invalid");
         },
     });
 });
@@ -251,6 +251,40 @@ function mostrarDiv5() {
     document.querySelector("#miH2 strong").textContent = valorInput;
 }
 
+function omitirDiv5() {
+    $("#formVerificacion").validate().settings.rules.inputGroupFile01 = {
+        required: false,
+    };
+    $("#formVerificacion").validate().settings.rules.inputGroupFile02 = {
+        required: false,
+    };
+    if ($("#formVerificacion").valid()) {
+        formData.formVerificacion = {
+            tipoDocumento: $("#tipoDocumento").val(),
+            documento: $("#documento").val(),
+        };
+
+        axios
+            .post("/registro", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((response) => {
+                document.getElementById("div4").style.display = "none";
+                document.getElementById("div5").style.display = "block";
+            })
+            .catch((error) => {
+                handleErrors(error);
+            });
+    }
+    // Obtener el valor del input
+    var valorInput = document.getElementById("nombre").value;
+
+    // Asignar el valor al strong dentro del h2
+    document.querySelector("#miH2 strong").textContent = valorInput;
+}
+
 function agregar() {
     document.getElementById("agregar").style.display = "none";
     document.getElementById("otroP").style.display = "block";
@@ -303,7 +337,9 @@ function togglePasswordVisibility2() {
     }
 }
 
-var inputs = document.querySelectorAll('input[type="text"], input[type="email"]');
+var inputs = document.querySelectorAll(
+    'input[type="text"], input[type="email"]'
+);
 
 // Función para convertir texto a mayúsculas
 function toUpperCaseInput() {
@@ -312,5 +348,5 @@ function toUpperCaseInput() {
 
 // Aplica el event listener a cada input
 inputs.forEach(function (input) {
-    input.addEventListener('input', toUpperCaseInput);
+    input.addEventListener("input", toUpperCaseInput);
 });

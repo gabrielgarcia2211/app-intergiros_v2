@@ -241,7 +241,7 @@
                 <button type="button" class="btn btn-primary mb-2" onclick="mostrarDiv5()">Continuar</button>
             </div>
             <div class="text-center">
-                <a href="#" class="atras" data-toggle="modal" data-target="#myModal">Omitir por ahora</a>
+                <a href="#" class="atras" data-toggle="modal" data-target="#myModal" onclick="omitirDiv5()">Omitir por ahora</a>
             </div>
         </div>
     </form>

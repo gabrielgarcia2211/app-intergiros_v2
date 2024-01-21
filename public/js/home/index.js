@@ -28,9 +28,7 @@ $(document).ready(function () {
 
 async function obtenerValor(value) {
     var selectedOption = $("#selectorCambioHome").find("option:selected");
-    var selectedPais = $("#paisesPaypal").find("option:selected").data("code");
-    let code = selectedOption.data("code") + "-" + selectedPais;
-
+    let code = mapTipoMoneda(selectedOption.data("code"));
     let calculo = await devFormatoMoneda(code, value);
     $("#monto_recibir_" + selectedOption.val()).val(
         calculo.data.monto_a_recibir
@@ -43,71 +41,48 @@ async function obtenerValor(value) {
 
 function mapTipoMoneda(code) {
     switch (code) {
-        case "":
-            var enviar = document.getElementById('montoPaypalVenezuela');
-            var recibir = document.getElementById('paisesPaypal');
-            var codigo = enviar.value + "-" + recibir.value;
-            return "paisesPaypal";
-            break;
-        case "":
-            var enviar = document.getElementById('montoZinli');
-            var recibir = document.getElementById('paisesZinli');
-            var codigo = enviar.value + "-" + recibir.value;
-            return "paisesZinli";
-            break;
-        case "":
-            var enviar = document.getElementById('montoUsdtVenezuela');
-            var recibir = document.getElementById('paisesUsdt');
-            var codigo = enviar.value + "-" + recibir.value;
-            return "paisesUsdt";
-            break;
-        case "":
-            return "montoPeru";
-            break;
-        case "":
-            var enviar = document.getElementById('montoPeru');
-            var recibir = document.getElementById('paisesPeru');
-            var codigo = enviar.value + "-" + recibir.value;
-            return "paisesPeru";
-            break;
-        case "":
-            return "montoColombia";
-            break;
-        case "":
-            var enviar = document.getElementById('montoColombia');
-            var recibir = document.getElementById('paisesColombia');
-            var codigo = enviar.value + "-" + recibir.value;
-            return "paisesColombia";
-            break;
-        case "":
-            return "montoVenezuela";
-            break;
-        case "":
-            var enviar = document.getElementById('montoVenezuela');
-            var recibir = document.getElementById('paisesVenezuela');
-            var codigo = enviar.value + "-" + recibir.value;
-            return "paisesVenezuela";
-            break;
-        case "":
-            var enviar = document.getElementById('paisesRecargaZinli');
-            var recibir = document.getElementById('montoRecargaZinli');
-            var codigo = enviar.value + "-" + recibir.value;
-            return "paisesRecargaZinli";
-            break;
-        case "":
-            return "montoZinli";
-            break;
-        case "":
-            var enviar = document.getElementById('paisesRecargaPaypal');
-            var recibir = document.getElementById('montoRecargaPaypal');
-            var codigo = enviar.value + "-" + recibir.value;
-            return "paisesRecargaPaypal";
-            break;
-        case "":
-            return "montoPaypal";
-            break;
+        case "TP-01":
+            var enviar = document.getElementById("montoPaypalVenezuela");
+            var recibir = document.getElementById("paisesPaypal");
+            var codigo = code + "-" + enviar.value + "-" + recibir.value;
+            return codigo;
+        case "TP-02":
+            var enviar = document.getElementById("montoUsdtVenezuela");
+            var recibir = document.getElementById("paisesUsdt");
+            var codigo = code + "-" + enviar.value + "-" + recibir.value;
+            return codigo;
+        case "TP-03":
+            var enviar = document.getElementById("montoZinli");
+            var recibir = document.getElementById("paisesZinli");
+            var codigo = code + "-" + enviar.value + "-" + recibir.value;
+            return codigo;
+        case "TP-04":
+            var enviar = document.getElementById("montoPeru");
+            var recibir = document.getElementById("paisesPeru");
+            var codigo = code + "-" + enviar.value + "-" + recibir.value;
+            return codigo;
+        case "TP-05":
+            var enviar = document.getElementById("montoColombia");
+            var recibir = document.getElementById("paisesColombia");
+            var codigo = code + "-" + enviar.value + "-" + recibir.value;
+            return codigo;
+        case "TP-06":
+            var enviar = document.getElementById("montoVenezuela");
+            var recibir = document.getElementById("paisesVenezuela");
+            var codigo = code + "-" + enviar.value + "-" + recibir.value;
+            return codigo;
+        case "TP-07":
+            var enviar = document.getElementById("paisesRecargaZinli");
+            var recibir = document.getElementById("montoRecargaZinli");
+            var codigo = code + "-" + enviar.value + "-" + recibir.value;
+            return codigo;
+        case "TP-08":
+            var enviar = document.getElementById("paisesRecargaPaypal");
+            var recibir = document.getElementById("montoRecargaPaypal");
+            var codigo = code + "-" + enviar.value + "-" + recibir.value;
+            return codigo;
         default:
-            break;
+            return "N/A";
     }
 }
 
