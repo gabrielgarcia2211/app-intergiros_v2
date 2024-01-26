@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Solicitudes\Producto;
+
 function mapTipoTercero($data)
 {
     switch ($data['code']) {
@@ -31,19 +33,30 @@ function mapTipoTercero($data)
     }
 }
 
-function getCostRange($cost)
+function getCostRange($monto)
 {
-    $cost = str_replace(',', '', $cost);
-    $ranges = [
-        [0, 100], [101, 200], [201, 300], [301, 400], [401, 500],
-        [501, 600], [601, 700], [701, 800], [801, 900], [901, 1000]
-    ];
-
-    foreach ($ranges as $range) {
-        if ($cost >= $range[0] && $cost <= $range[1]) {
-            return $range;
+    $servicios = Producto::all();
+    foreach ($servicios as $servicio) {
+        if ($monto >= $servicio->rango_min && $monto <= $servicio->rango_max) {
+            $revisiones = $monto - $servicio->costo_base;
+            return [
+                'id' => $servicio->id,
+                'servicio' => $servicio->nombre,
+                'costoBase' => $servicio->costo_base,
+                'revisiones' => $revisiones
+            ];
         }
     }
-
+    // Manejar montos que exceden el rango máximo
+    $ultimoServicio = $servicios->last();
+    if ($monto > $ultimoServicio->rango_max) {
+        return [
+            'id' => $servicio->id,
+            'servicio' => 'Personalizado',
+            'costoBase' => $ultimoServicio->rango_max + 1,
+            'revisiones' => $monto - ($ultimoServicio->rango_max + 1),
+            'mensaje' => 'El monto excede los rangos estándar. Considerar servicio personalizado.'
+        ];
+    }
     return null;
 }

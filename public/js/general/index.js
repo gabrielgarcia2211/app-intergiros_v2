@@ -201,37 +201,3 @@ function obtenerParametroGET(parametro) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(parametro);
 }
-
-// funcion para cargar data en una table
-function llenarTabla(selector, cabeceras, datos) {
-    var $tabla = $(selector);
-
-    // Limpia la tabla existente
-    $tabla.empty();
-
-    // Construye y agrega el encabezado de la tabla
-    var $thead = $(
-        '<thead style="background-color: #e99700; color: white;"></thead>'
-    );
-    var $trHead = $("<tr></tr>");
-    cabeceras.forEach(function (cabecera) {
-        $trHead.append("<th><strong>" + cabecera + "</strong></th>");
-    });
-    $thead.append($trHead);
-    $tabla.append($thead);
-
-    // Construye y agrega el cuerpo de la tabla
-    var $tbody = $("<tbody></tbody>");
-    datos.forEach(function (item) {
-        var $fila = $("<tr></tr>");
-        cabeceras.forEach(function (cabecera) {
-            var valor = item[cabecera.toLowerCase()];
-            // Comprueba si el valor está definido, si no, usa 'n/a'
-            var textoCelda =
-                valor !== undefined && valor !== null ? valor : "n/a";
-            $fila.append("<td>" + textoCelda + "</td>");
-        });
-        $tbody.append($fila);
-    });
-    $tabla.append($tbody);
-}

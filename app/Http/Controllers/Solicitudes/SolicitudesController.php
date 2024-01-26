@@ -32,12 +32,11 @@ class SolicitudesController extends Controller
             $monto_a_recibir = $request->input('monto_a_recibir');
 
             $estado_id = MasterCombos::getEstadoSolicitud('iniciado');
-                
-            $range = getCostRange($monto_a_pagar);
-            if (!$range) {
+
+            $producto = getCostRange($monto_a_pagar);
+            if (empty($producto)) {
                 return Response::sendError('No se encontro un producto en este rango de costo', 422);
             }
-            $product = Producto::whereBetween('costo', $range)->inRandomOrder()->first();
             $solicitud = Solicitudes::create([
                 'tipo_formulario_id' => $tipo_formulario_id,
                 'tipo_moneda_id' => $tipo_moneda_id,
@@ -47,7 +46,8 @@ class SolicitudesController extends Controller
                 'monto_a_recibir' => $monto_a_recibir,
                 'user_id' => Auth()->user()->id,
                 'estado_id' => $estado_id,
-                'producto_id' => $product->id,
+                'producto_id' => $producto['id'],
+                'revisiones' => $producto['revisiones'],
             ]);
 
             return Response::sendResponse($solicitud, 'Registro creado con exito.');
@@ -60,7 +60,10 @@ class SolicitudesController extends Controller
     public function getSolicitud($id)
     {
         try {
-            $solicitud = Solicitudes::where(['id' => $id])->with(Solicitudes::RELATIONS)->get()->first();
+            $solicitud = Solicitudes::where([
+                'id' => $id,
+                'user_id' => Auth()->user()->id,
+            ])->with(Solicitudes::RELATIONS)->get()->first();
             return Response::sendResponse($solicitud, 'Registro obtenido con exito.');
         } catch (\Exception $ex) {
             Log::debug($ex->getMessage());

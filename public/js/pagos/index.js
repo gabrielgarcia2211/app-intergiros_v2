@@ -35,13 +35,75 @@ $(document).ready(async function () {
             parseFloat($("#monto_a_pagar").text()) +
                 parseFloat($("#monto_comision").text())
         );
+
+        let cantidadRevisiones = Math.max(1, details.data.revisiones);
+        let costoTotal = cantidadRevisiones * 1; // costoPorRevision
+        var headersTable = ["Cantidad", "Nombre", "Costo", "Total"];
+
+        var dataTable = [
+            {
+                cantidad: 1,
+                nombre: details.data.producto.nombre,
+                costo: details.data.producto.rango_min,
+                total: details.data.producto.rango_min,
+            },
+            {
+                cantidad: cantidadRevisiones,
+                nombre: "Revision",
+                costo: 1,
+                total: costoTotal,
+            },
+        ];
+
+        llenarTabla("#tablaProductos", headersTable, dataTable);
     }
-
-    var headersTable = ["Cantidad", "Servicio", "Costo", "Total"];
-    var dataTable = [details.data.producto];
-
-    llenarTabla("#tablaProductos", headersTable, dataTable);
 });
+
+function llenarTabla(selector, cabeceras, datos) {
+    var $tabla = $(selector);
+
+    // Limpia la tabla existente
+    $tabla.empty();
+
+    // Construye y agrega el encabezado de la tabla
+    var $thead = $(
+        '<thead style="background-color: #e99700; color: white;"></thead>'
+    );
+    var $trHead = $("<tr></tr>");
+    cabeceras.forEach(function (cabecera) {
+        $trHead.append("<th><strong>" + cabecera + "</strong></th>");
+    });
+    $thead.append($trHead);
+    $tabla.append($thead);
+
+    // Construye y agrega el cuerpo de la tabla
+    var $tbody = $("<tbody></tbody>");
+    datos.forEach(function (item) {
+        var $fila = $("<tr></tr>");
+        cabeceras.forEach(function (_, index) {
+            // Obtiene la clave correspondiente a la posición actual
+            var clave = Object.keys(item)[index];
+            var valor = item[clave];
+            var textoCelda;
+
+            // Si es una de las dos últimas columnas, formatea el valor
+            if (
+                index === cabeceras.length - 1 ||
+                index === cabeceras.length - 2
+            ) {
+                textoCelda = "$ " + valor + " USD";
+            } else {
+                textoCelda =
+                    valor !== undefined && valor !== null ? valor : "n/a";
+            }
+
+            $fila.append("<td>" + textoCelda + "</td>");
+        });
+
+        $tbody.append($fila);
+    });
+    $tabla.append($tbody);
+}
 
 function sendPaytoPaypal() {
     var formData = new FormData();

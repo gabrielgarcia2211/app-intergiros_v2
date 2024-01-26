@@ -15,6 +15,7 @@ class TipoFormulario extends Model
     protected $fillable = [
         'descripcion',
         'codigo',
+        'principal'
     ];
 
     public function tasa_cambios()
@@ -22,4 +23,8 @@ class TipoFormulario extends Model
         return $this->hasOne(TasaCambio::class, 'tipo_formulario_id');
     }
 
+    public function moneda()
+    {
+        return $this->hasOne(TipoMoneda::class);
+    }
 }

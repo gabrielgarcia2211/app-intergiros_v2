@@ -22,6 +22,7 @@ class Solicitudes extends Model
         'producto_id',
         'monto_a_pagar',
         'monto_a_recibir',
+        'revisiones',
         'notificacion',
         'user_id',
         'estado_id',

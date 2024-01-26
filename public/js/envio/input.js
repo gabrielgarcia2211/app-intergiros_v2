@@ -76,10 +76,10 @@ $(document).ready(async function () {
         });
     }
 
-    function getForms() {
+    function getForms(principal = 1) {
         return new Promise(async (resolve, reject) => {
             try {
-                const response = await axios.get("/administracion/formularios");
+                const response = await axios.get("/administracion/formularios/" + principal);
                 resolve(response.data);
             } catch (error) {
                 handleErrors(error);

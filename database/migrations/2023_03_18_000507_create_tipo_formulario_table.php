@@ -17,6 +17,7 @@ class CreateTipoFormularioTable extends Migration
             $table->id();
             $table->string('descripcion');
             $table->string('codigo');
+            $table->boolean('principal');
             $table->timestamps();
         });
     }

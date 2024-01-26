@@ -10,9 +10,9 @@ class Producto extends Model
 
     protected $fillable = [
         'nombre',
-        'descripcion',
-        'servicio',
-        'costo',
+        'costoBase',
+        'rangoMin',
+        'rangoMax'
     ];
 
     const RELATIONS = [];
