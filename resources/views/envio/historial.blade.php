@@ -6,8 +6,8 @@
 <div class="container notificaciones">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active w-100" id="opcion1-tab" data-toggle="tab" href="#opcion1" role="tab"
-                aria-controls="opcion1" aria-selected="true">En proceso</a>
+            <a class="nav-link active w-100" id="en_proceso-tab" data-toggle="tab" href="#en_proceso" role="tab"
+                aria-controls="en_proceso" aria-selected="true">En proceso</a>
         </li>
         <li class="nav-item">
             <a class="nav-link w-100" id="opcion2-tab" data-toggle="tab" href="#opcion2" role="tab"
@@ -24,13 +24,13 @@
     </ul>
     <!-- En proceso -->
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="opcion1" role="tabpanel" aria-labelledby="opcion1-tab">
+        <div class="tab-pane fade show active" id="en_proceso" role="tabpanel" aria-labelledby="en_proceso-tab">
             <div class="seccion mt-5">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-2">
                             <div class="text-center">
-                                <img src="{{ asset('img/notificaciones/rechazados.png') }}" class="img-fluid" alt="" width="100px">
+                                <img src="{{ asset('img/notificaciones/proceso.png') }}" class="img-fluid" alt="" width="100px">
                             </div>
                         </div>
                         <div class="col-md-10">
@@ -99,7 +99,7 @@
                     <div class="row">
                         <div class="col-md-2">
                             <div class="text-center">
-                                <img src="{{ asset('img/notificaciones/rechazados.png') }}" class="img-fluid" alt="" width="100px">
+                                <img src="{{ asset('img/notificaciones/solucionar.png') }}" class="img-fluid" alt="" width="100px">
                             </div>
                         </div>
                         <div class="col-md-10">
@@ -168,7 +168,7 @@
                     <div class="row">
                         <div class="col-md-2">
                             <div class="text-center">
-                                <img src="{{ asset('img/notificaciones/rechazados.png') }}" class="img-fluid" alt="" width="100px">
+                                <img src="{{ asset('img/notificaciones/aprobados.png') }}" class="img-fluid" alt="" width="100px">
                             </div>
                         </div>
                         <div class="col-md-10">

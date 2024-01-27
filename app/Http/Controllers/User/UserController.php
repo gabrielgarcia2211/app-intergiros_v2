@@ -119,10 +119,6 @@ class UserController extends Controller
             $form_verificacion = $request->all()['formVerificacion'];
             $user = User::find(Auth()->user()->id);
 
-            if (!$user->verificado) {
-                return Response::sendError('El usuario no ha sido verificado', 403);
-            }
-
             $user->documento = $form_verificacion['documento'];
 
             $this->fileService->deleteFile($user->path_selfie);
