@@ -11,4 +11,9 @@ class ServiciosController extends Controller
     {
         return view('envio.index');
     }
+
+    public function historial()
+    {
+        return view('envio.historial');
+    }
 }
