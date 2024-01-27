@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="col-md-2">
                             <div class="text-center">
-                                <img src="img/rechazados.png" class="img-fluid" alt="" width="100px">
+                                <img src="{{ asset('img/notificaciones/rechazados.png') }}" class="img-fluid" alt="" width="100px">
                             </div>
                         </div>
                         <div class="col-md-10">
@@ -99,7 +99,7 @@
                     <div class="row">
                         <div class="col-md-2">
                             <div class="text-center">
-                                <img src="img/rechazados.png" class="img-fluid" alt="" width="100px">
+                                <img src="{{ asset('img/notificaciones/rechazados.png') }}" class="img-fluid" alt="" width="100px">
                             </div>
                         </div>
                         <div class="col-md-10">
@@ -168,7 +168,7 @@
                     <div class="row">
                         <div class="col-md-2">
                             <div class="text-center">
-                                <img src="img/rechazados.png" class="img-fluid" alt="" width="100px">
+                                <img src="{{ asset('img/notificaciones/rechazados.png') }}" class="img-fluid" alt="" width="100px">
                             </div>
                         </div>
                         <div class="col-md-10">
@@ -239,7 +239,7 @@
                     <div class="row">
                         <div class="col-md-2">
                             <div class="text-center">
-                                <img src="img/rechazados.png" class="img-fluid" alt="" width="100px">
+                                <img src="{{ asset('img/notificaciones/rechazados.png') }}" class="img-fluid" alt="" width="100px">
                             </div>
                         </div>
                         <div class="col-md-10">
@@ -313,7 +313,11 @@
             <span class="close">&times;</span>
         </div>
         <div class="text-center">
-            <img src="img/noticias.png" alt="" class="img-fluid" width="500px">
+            <img src="{{ asset('img/home/noticias.png') }}" alt="" class="img-fluid" width="500px">
+        </div>
+        <div class="text-center">
+            <a href="#" class="btn btn-primary">Descargar</a>
+            <a href="#" class="btn btn-primary">Imprimir</a>
         </div>
     </div>
 </div>
