@@ -18,12 +18,14 @@ class HistorialController extends Controller
     public function getSolicitudes($estado)
     {
         try {
-            return Solicitudes::join('master_combos as mc_estado', 'mc_estado.id', '=', 'solicitudes.estado_id')
+            $data = Solicitudes::select('solicitudes.*')
+                ->join('master_combos as mc_estado', 'mc_estado.id', '=', 'solicitudes.estado_id')
                 ->where([
                     'user_id' => Auth()->user()->id,
                     'mc_estado.code' => $estado
                 ])->with(Solicitudes::RELATIONS)
                 ->get();
+            return Response::sendResponse($data, "Informacion Obtenida");
         } catch (\Exception $ex) {
             Log::debug($ex->getMessage());
             return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);

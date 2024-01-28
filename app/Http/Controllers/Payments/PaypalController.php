@@ -26,7 +26,7 @@ class PaypalController extends Controller
         DB::beginTransaction();
         try {
             $solicitud_id = $request->input('solicitud_id');
-            $solicitud = Solicitudes::setStatusSolicitud('en_proceso', $solicitud_id);
+            $solicitud = Solicitudes::setStatusSolicitud('pendiente', $solicitud_id);
             $amount = $solicitud->monto_a_pagar;
             $response = $this->payPalService->createPayment($amount);
             if ($response) {
@@ -55,7 +55,7 @@ class PaypalController extends Controller
             $solicitud_id = session('solicitud_id');
             $payerId = $request->get('PayerID');
             $paymentId = $request->get('paymentId');
-            Solicitudes::setStatusSolicitud('pendiente', $solicitud_id);
+            Solicitudes::setStatusSolicitud('en_proceso', $solicitud_id);
             $response = $this->payPalService->executePayment($paymentId, $payerId);
             if ($response) {
                 DB::commit();

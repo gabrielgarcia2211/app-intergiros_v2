@@ -32,7 +32,7 @@ class Solicitudes extends Model
 
     public function tipo_formulario()
     {
-        return $this->belongsTo(TipoFormulario::class);
+        return $this->belongsTo(TipoFormulario::class)->with('tasa_cambios');
     }
 
     public function tipo_moneda()
@@ -68,7 +68,7 @@ class Solicitudes extends Model
     // mutadores
     public function getCreatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format('Y-m-d');;
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
     }
 
     public static function setStatusSolicitud($estado, $solicitud_id)

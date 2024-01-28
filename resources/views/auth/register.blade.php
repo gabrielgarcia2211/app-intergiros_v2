@@ -278,7 +278,7 @@
                 <a class="btn btn-primary mb-2" href="{{ route('perfil') }}">Ver mi perfil</a>
             </div>
             <div class="col-md-4 button text-center">
-                <a class="btn btn-primary mb-2" href="">Ir al panel de envios</a>
+                <a class="btn btn-primary mb-2" href="{{ route('historial') }}">Ir al panel de envios</a>
             </div>
         </div>
     </div>
