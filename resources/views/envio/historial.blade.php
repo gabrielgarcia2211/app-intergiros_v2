@@ -65,7 +65,6 @@
         </div>
     </div>
 
-
     <!-- ver comprobante -->
     <div id="myModal" class="modal">
         <!-- Contenido del modal -->
@@ -102,20 +101,26 @@
         <!-- Contenido del modal -->
         <div class="modal-content">
             <div class="text-center">
-                <span class="closeReclamo">&times;</span>
+                <span class="closeReclamo" onclick="closeReclamo()">&times;</span>
             </div>
-            <div class="container">
-                <p><strong>ID#32164</strong></p>
-                <div class="form-group">
-                    <select class="form-control" id="pais">
-                        <option value="1">Motivos de reclamo</option>
-                        <option value="2">Mi beneficiario no recibió el pago</option>
-                        <!-- Agrega más opciones aquí -->
-                    </select>
-
-                    <div class="text-center">
-                        <button class="btn btn-primary mt-5">Enviar reclamo</button>
+            <div class="modal-body">
+                <div class="container">
+                    <p id="idReclamo"></p>
+                    <div class="form-group">
+                        <select class="form-control">
+                            <option value="1">Motivos de reclamo</option>
+                            <option value="2">Mi beneficiario no recibió el pago</option>
+                        </select>
                     </div>
+                    <div class="form-group">
+                        <label for="comentarioReclamo">Comentario</label>
+                        <textarea class="form-control" id="comentarioReclamo" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="text-center">
+                    <button class="btn btn-primary">Enviar reclamo</button>
                 </div>
             </div>
         </div>
@@ -124,6 +129,12 @@
 
     <!-- FOOTER -->
     @include('layouts.footer')
+
+    <style>
+        .modal {
+            z-index: 1050;
+        }
+    </style>
 @endsection
 
 @section('script')
