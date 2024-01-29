@@ -390,6 +390,31 @@ $(document).ready(function () {
     };
 });
 
+
+document.getElementById('motivoReclamo').addEventListener('change', function () {
+    var divParaMostrar = document.getElementById('divChecks');
+    var info = document.getElementById('info');
+    var texto = document.getElementById('texto');
+    divParaMostrar.style.display = this.value === '2' ? 'block' : 'none';
+    info.style.display = this.value === '2' ? 'block' : 'none';
+    texto.style.display = this.value === '2' ? 'none' : 'block';
+});
+
+document.getElementById('otraCuenta').addEventListener('change', function () {
+    var selectParaMostrar = document.getElementById('selectCuenta');
+    selectParaMostrar.style.display = this.checked ? 'block' : 'none';
+});
+
+document.getElementById('cuentas').addEventListener('change', function () {
+    var divParaMostrar = document.getElementById('infoCuenta');
+    divParaMostrar.style.display = 'block';
+});
+
+
+
+
+
+
 /* Modal Comprobate
 // Obtén el modal
 var modal = document.getElementById("myModal");
