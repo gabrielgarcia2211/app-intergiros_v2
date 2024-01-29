@@ -107,20 +107,100 @@
                 <div class="container">
                     <p id="idReclamo"></p>
                     <div class="form-group">
-                        <select class="form-control">
+                        <select class="form-control" id="motivoReclamo">
                             <option value="1">Motivos de reclamo</option>
                             <option value="2">Mi beneficiario no recibió el pago</option>
+                            <!-- Agrega más opciones aquí -->
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="comentarioReclamo">Comentario</label>
-                        <textarea class="form-control" id="comentarioReclamo" rows="3"></textarea>
+                    <div id="info" style="display: none;">
+                        <p>Para este tipo de reclamo posee tres opciones disponibles. Cúentenos ¿qué desea hacer?</p>
                     </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="text-center">
-                    <button class="btn btn-primary">Enviar reclamo</button>
+                    <div id="divChecks" style="display: none;">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="mismaCuenta"
+                                value="option1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Procesar nuevamente a la misma cuenta
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios2" id="otraCuenta"
+                                value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Procesar a otra cuenta
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="rembolso" value="option3">
+                            <label class="form-check-label" for="exampleRadios3">
+                                Solicitar el rembolso
+                            </label>
+                        </div>
+                    </div>
+                    <div id="selectCuenta" style="display: none;">
+                        <div class="form-group mt-3">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="estadoCuenta">
+                                <label class="custom-file-label input-estado" for="estadoCuenta">Estado de
+                                    cuenta</label>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <select class="form-control" id="cuentas">
+                                <option value="1">Cuenta usada</option>
+                                <option value="2">otra cuenta 1</option>
+                                <option value="2">otra cuenta 2</option>
+                                <option value="2">otra cuenta 3</option>
+                                <!-- Agrega más opciones aquí -->
+                            </select>
+                        </div>
+                    </div>
+                    <div id="infoCuenta" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group text-center">
+                                    <input type="text" class="form-control input-cuenta">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group text-center">
+                                    <input type="text" class="form-control input-cuenta">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group text-center">
+                                    <input type="text" class="form-control input-cuenta">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group text-center">
+                                    <input type="text" class="form-control input-cuenta">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group text-center">
+                                    <input type="text" class="form-control input-cuenta">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group text-center">
+                                    <input type="text" class="form-control input-cuenta">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="texto">
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Escribenos un mensaje (Opcional)</label>
+                            <textarea class="form-control" id="comentarioReclamo" rows="3" readonly></textarea>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary mt-3" disabled>Enviar reclamo</button>
+                    </div>
                 </div>
             </div>
         </div>
