@@ -1,6 +1,9 @@
 var popupReclamo = "";
+var solicitudId = "";
 
 $(document).ready(function () {
+    $("#divChecks, #divMensaje").hide();
+
     $('[data-toggle="collapse"]').on("click", function () {
         // Obtén el ID del icono
         var iconoId = $(this).find("i").attr("id");
@@ -236,17 +239,23 @@ $(document).ready(function () {
                             <div class="row">
                                 <div class="col-6">
                                     <div class="text-left">
-                                    <p style="margin-bottom: 0px;">ID#${data[i].id}</p>
+                                    <p style="margin-bottom: 0px;">ID#${
+                                        data[i].id
+                                    }</p>
                                         <p style="color: #0035aa;">Procesado</p>
                                         <p style="margin-bottom: 0px; color: #009d2c;">Monto pagado</p>
-                                        <p style="color: #009d2c;">USD ${data[i].monto_a_pagar}</p>
+                                        <p style="color: #009d2c;">USD ${
+                                            data[i].monto_a_pagar
+                                        }</p>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="text-right">
                                         <p>${data[i].created_at}</p>
     
-                                        <p style="color: #009d2c;">${data[i].monto_a_recibir} BS.</p>
+                                        <p style="color: #009d2c;">${
+                                            data[i].monto_a_recibir
+                                        } BS.</p>
                                         <p style="color: #009d2c;">301,20 BS.</p>
                                     </div>
                                 </div>
@@ -268,14 +277,18 @@ $(document).ready(function () {
                                 <p>Enviado por:</p>
                                 <p>Enviado a:</p>
                                 <br><br>
-                                <a href="#" style="color: #0035aa;" id="openModal">Ver comprobante</a>
+                                <a href="#" style="color: #0035aa;" id="openModal${i}" onclick='viewComprobante(this, ${JSON.stringify(
+                data[i]
+            )})'>Ver comprobante </a>
                                 <br><br>
                                 <a class="btn btn-primary" id="openReclamo"> Reclamar </a>
                             </div>
                         </div>
                         <div class="col-6">
                         <div class="text-right">
-                            <p>USD 1 = ${data[i].tipo_formulario.tasa_cambios.valor} Bs.</p>
+                            <p>USD 1 = ${
+                                data[i].tipo_formulario.tasa_cambios.valor
+                            } Bs.</p>
                             <p>${data[i].tipo_formulario.descripcion}</p>
                             <p>${data[i].depositante.alias}</p>
                             <p>${data[i].beneficiario.alias}</p>
@@ -383,116 +396,62 @@ $(document).ready(function () {
     window.openReclamo = function (data) {
         popupReclamo.show();
         $("#idReclamo").html("<strong>ID # " + data.id + "</strong>");
+        solicitudId = data.id;
     };
 
     window.closeReclamo = function () {
         popupReclamo.hide();
     };
+
+    // popup reclamo
+    $("#motivoReclamo").change(function () {
+        if ($(this).val() !== "1") {
+            $("#divChecks").show();
+            $("#divMensaje").show();
+        } else {
+            $("#divChecks").hide();
+            $("#divMensaje").hide();
+        }
+    });
+
+    window.sendReclamo = function () {
+        var opcionesSeleccionadas = [];
+        $(".opcion-reclamo:checked").each(function () {
+            opcionesSeleccionadas.push($(this).val());
+        });
+        var comentario = $("#comentarioReclamo").val();
+
+        if (opcionesSeleccionadas.length === 0) {
+            showError("Por favor, selecciona al menos una opción.");
+            return;
+        }
+
+        var formData = {
+            solicitud_id: solicitudId,
+            opciones: opcionesSeleccionadas,
+            comentario: comentario,
+        };
+
+        axios
+            .post("/historial/store", formData)
+            .then((response) => {
+                showSuccess("Información actualizada correctamente!");
+                location.reload();
+            })
+            .catch((actualizarError) => {
+                handleErrors(actualizarError);
+            });
+    };
+
+    // popup entregado
+    window.viewComprobante = function (element, data) {
+        let path = data.imagen_comprobante;
+        let header = {
+            id: data.id,
+            fecha: data.created_at,
+            correo: data.user.email,
+        };
+
+        showImageAlert(path, header);
+    };
 });
-
-
-document.getElementById('motivoReclamo').addEventListener('change', function () {
-    var divParaMostrar = document.getElementById('divChecks');
-    var info = document.getElementById('info');
-    var texto = document.getElementById('texto');
-    divParaMostrar.style.display = this.value === '2' ? 'block' : 'none';
-    info.style.display = this.value === '2' ? 'block' : 'none';
-    texto.style.display = this.value === '2' ? 'none' : 'block';
-});
-
-document.getElementById('otraCuenta').addEventListener('change', function () {
-    var selectParaMostrar = document.getElementById('selectCuenta');
-    selectParaMostrar.style.display = this.checked ? 'block' : 'none';
-});
-
-document.getElementById('cuentas').addEventListener('change', function () {
-    var divParaMostrar = document.getElementById('infoCuenta');
-    divParaMostrar.style.display = 'block';
-});
-
-
-
-
-
-
-/* Modal Comprobate
-// Obtén el modal
-var modal = document.getElementById("myModal");
-
-// Obtén el botón que abre el modal
-var btn = document.getElementById("openModal");
-
-// Obtén el elemento <span> que cierra el modal
-var span = document.getElementsByClassName("close")[0];
-
-// Cuando el usuario haga clic en el botón, abre el modal
-btn.onclick = function () {
-    modal.style.display = "block";
-};
-
-// Cuando el usuario haga clic en <span> (x), cierra el modal
-span.onclick = function () {
-    modal.style.display = "none";
-};
-
-// Cuando el usuario haga clic en cualquier lugar fuera del modal, cierra el modal
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-};
-
-/* Modal Contacto 
-// Obtén el modal
-var modal = document.getElementById("myContacto");
-
-// Obtén el botón que abre el modal
-var btn = document.getElementById("openContacto");
-
-// Obtén el elemento <span> que cierra el modal
-var span = document.getElementsByClassName("closeContacto")[0];
-
-// Cuando el usuario haga clic en el botón, abre el modal
-btn.onclick = function () {
-    modal.style.display = "block";
-};
-
-// Cuando el usuario haga clic en <span> (x), cierra el modal
-span.onclick = function () {
-    modal.style.display = "none";
-};
-
-// Cuando el usuario haga clic en cualquier lugar fuera del modal, cierra el modal
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-};
-
-/* Modal Reclamo 
-// Obtén el modal
-var modal = document.getElementById("myReclamo");
-
-// Obtén el botón que abre el modal
-var btn = document.getElementById("openReclamo");
-
-// Obtén el elemento <span> que cierra el modal
-var span = document.getElementsByClassName("closeReclamo")[0];
-
-// Cuando el usuario haga clic en el botón, abre el modal
-btn.onclick = function () {
-    modal.style.display = "block";
-};
-
-// Cuando el usuario haga clic en <span> (x), cierra el modal
-span.onclick = function () {
-    modal.style.display = "none";
-};
-
-// Cuando el usuario haga clic en cualquier lugar fuera del modal, cierra el modal
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-};
-*/

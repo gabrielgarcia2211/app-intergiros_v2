@@ -104,103 +104,26 @@
                 <span class="closeReclamo" onclick="closeReclamo()">&times;</span>
             </div>
             <div class="modal-body">
-                <div class="container">
-                    <p id="idReclamo"></p>
+                <p id="idReclamo"></p>
+                <div class="form-group" style="text-align: center">
+                    <select class="form-control" id="motivoReclamo" style="width: 90%">
+                        <option value="1">Motivos de reclamo</option>
+                        <option value="2">Mi pedido no ha sido procesado</option>
+                    </select>
+                </div>
+                <div id="info">
+                    <p>Para este tipo de reclamo posee tres opciones disponibles. Cúentenos ¿qué desea hacer?</p>
+                </div>
+                <div id="divChecks">
+                </div>
+                <div class="mt-5" id="divMensaje">
                     <div class="form-group">
-                        <select class="form-control" id="motivoReclamo">
-                            <option value="1">Motivos de reclamo</option>
-                            <option value="2">Mi beneficiario no recibió el pago</option>
-                            <!-- Agrega más opciones aquí -->
-                        </select>
+                        <label for="exampleFormControlTextarea1">Escribenos un mensaje (Opcional)</label>
+                        <textarea class="form-control" id="comentarioReclamo" rows="3" maxlength="255"></textarea>
                     </div>
-                    <div id="info" style="display: none;">
-                        <p>Para este tipo de reclamo posee tres opciones disponibles. Cúentenos ¿qué desea hacer?</p>
-                    </div>
-                    <div id="divChecks" style="display: none;">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="mismaCuenta"
-                                value="option1">
-                            <label class="form-check-label" for="exampleRadios1">
-                                Procesar nuevamente a la misma cuenta
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios2" id="otraCuenta"
-                                value="option2">
-                            <label class="form-check-label" for="exampleRadios2">
-                                Procesar a otra cuenta
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="rembolso" value="option3">
-                            <label class="form-check-label" for="exampleRadios3">
-                                Solicitar el rembolso
-                            </label>
-                        </div>
-                    </div>
-                    <div id="selectCuenta" style="display: none;">
-                        <div class="form-group mt-3">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="estadoCuenta">
-                                <label class="custom-file-label input-estado" for="estadoCuenta">Estado de
-                                    cuenta</label>
-                            </div>
-                        </div>
-                        <div class="form-group mt-3">
-                            <select class="form-control" id="cuentas">
-                                <option value="1">Cuenta usada</option>
-                                <option value="2">otra cuenta 1</option>
-                                <option value="2">otra cuenta 2</option>
-                                <option value="2">otra cuenta 3</option>
-                                <!-- Agrega más opciones aquí -->
-                            </select>
-                        </div>
-                    </div>
-                    <div id="infoCuenta" style="display: none;">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group text-center">
-                                    <input type="text" class="form-control input-cuenta">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group text-center">
-                                    <input type="text" class="form-control input-cuenta">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group text-center">
-                                    <input type="text" class="form-control input-cuenta">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group text-center">
-                                    <input type="text" class="form-control input-cuenta">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group text-center">
-                                    <input type="text" class="form-control input-cuenta">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group text-center">
-                                    <input type="text" class="form-control input-cuenta">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="texto">
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Escribenos un mensaje (Opcional)</label>
-                            <textarea class="form-control" id="comentarioReclamo" rows="3" readonly></textarea>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <button class="btn btn-primary mt-3" disabled>Enviar reclamo</button>
-                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary mt-3" id="botonEnviarReclamo" onclick="sendReclamo()" disabled>Enviar reclamo</button>
                 </div>
             </div>
         </div>
@@ -218,5 +141,6 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('js/envio/input.js') }}"></script>
     <script src="{{ asset('js/envio/historial.js') }}"></script>
 @endsection

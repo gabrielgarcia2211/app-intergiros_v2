@@ -25,6 +25,7 @@ class CreateSolicitudesTable extends Migration
             $table->string('monto_a_pagar');
             $table->string('monto_a_recibir');
             $table->string('revisiones');
+            $table->string('imagen_comprobante', 255)->nullable();
             $table->tinyInteger('notificacion')->default(1);
             $table->foreign('tipo_formulario_id')->references('id')->on('tipo_formulario');
             $table->foreign('tipo_moneda_id')->references('id')->on('tipo_moneda');

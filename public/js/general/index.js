@@ -14,7 +14,7 @@ $(document).ready(async function () {
 });
 
 var FILE_MAX_SIZE = 10097152;
-var URL_SITE =  "http://127.0.0.1:80";
+var URL_SITE = "http://127.0.0.1:80";
 
 // funcion para controlar errores
 function handleErrors(error) {
@@ -70,13 +70,49 @@ function showSuccess(message, type = "success") {
 }
 
 // función para mostrar imagenes en sweetAlert
-function showImageAlert(imageSrc) {
-    Swal.fire({
-        imageUrl: imageSrc,
-        imageAlt: "Imagen",
-        confirmButtonText: "Aceptar",
-    });
+function showImageAlert(imageSrc, header = null) {
+    if (header != null) {
+        Swal.fire({
+            title: `<strong>ID #${header.id}</strong>`,
+            html: `
+                <h6>Enviado: ${header.correo}</h6>
+                <h6>Fecha: ${header.fecha}</h6>
+            `,
+            imageUrl: imageSrc,
+            imageAlt: "Imagen",
+            confirmButtonText: "Aceptar",
+            showCancelButton: true,
+            cancelButtonText: `<i class="fa fa-download"></i>`,
+            cancelButtonColor: "#008CBA",
+            cancelButtonAriaLabel: "Descargar Imagen",
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.cancel) {
+                downloadImage(
+                    imageSrc,
+                    `voucher_${new Date().toLocaleDateString()}.jpg`
+                );
+            }
+        });
+    } else {
+        Swal.fire({
+            imageUrl: imageSrc,
+            imageAlt: "Imagen",
+            confirmButtonText: "Aceptar",
+        });
+    }
 }
+
+// descargar imagen
+function downloadImage(url, filename) {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
 
 // get combos
 function getComboRelations(gestor) {

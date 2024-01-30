@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Terceros\Tercero;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Administracion\TipoMoneda;
 use App\Models\Configuration\MasterCombos;
 use App\Models\Administracion\TipoFormulario;
@@ -26,6 +27,7 @@ class Solicitudes extends Model
         'notificacion',
         'user_id',
         'estado_id',
+        'imagen_comprobante'
     ];
 
     const RELATIONS = ['tipo_formulario', 'tipo_moneda', 'depositante', 'beneficiario', 'producto', 'user', 'estado'];
@@ -78,5 +80,14 @@ class Solicitudes extends Model
             'estado_id' => $estado_id
         ]);
         return Solicitudes::find($solicitud_id);
+    }
+
+    public function getImagenComprobanteAttribute()
+    {
+        $disk = 'comprobante_disk';
+        if (!Storage::disk($disk)->exists($this->attributes['imagen_comprobante']) || empty($this->attributes['imagen_comprobante'])) {
+            return asset('img/no-image.png');
+        }
+        return Storage::disk($disk)->url($this->attributes['imagen_comprobante']);
     }
 }
