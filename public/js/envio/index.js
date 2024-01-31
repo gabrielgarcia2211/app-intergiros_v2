@@ -36,6 +36,7 @@ $(document).ready(async function () {
             },
             paypalDocumentoBeneficiario: {
                 required: true,
+                integer: true,
             },
             paypalBancoBeneficiario: {
                 required: true,
@@ -59,6 +60,7 @@ $(document).ready(async function () {
             },
             paypalDocumentoBeneficiario: {
                 required: "El campo documento es obligatorio",
+                integer: "Por favor, ingresa solo números enteros." 
             },
             paypalBancoBeneficiario: {
                 required: "El campo banco es obligatorio",
@@ -98,6 +100,7 @@ $(document).ready(async function () {
             },
             paypalDocumentoDepositante: {
                 required: true,
+                integer: true,
             },
             paypalCorreoDepositante: {
                 required: true,
@@ -128,6 +131,7 @@ $(document).ready(async function () {
             },
             paypalDocumentoDepositante: {
                 required: "El campo documento es obligatorio",
+                integer: "Por favor, ingresa solo números enteros." 
             },
             paypalCorreoDepositante: {
                 required: "El campo correo depositante es obligatorio",
@@ -343,7 +347,8 @@ function showTercero(code) {
     });
 }
 
-function addTercero(code) {
+function addTercero(code, e) {
+    e.preventDefault();
     if (mapTercero(code, "validateForm")) {
         localStorage.setItem("actionService", true);
         var formData = mapTercero(code, "dataForm");

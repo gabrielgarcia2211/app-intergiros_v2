@@ -1,8 +1,76 @@
-var popupReclamo = "";
+var popupPorSolucionar = "";
+var popupEntregado = "";
+var popupBeneficiarioAfiliado = "";
 var solicitudId = "";
+var adjuntarEstadoCuenta = "";
 
 $(document).ready(function () {
+    $("#formBeneficiarioAfiliado").validate({
+        rules: {
+            addAliasBeneficiario: {
+                required: true,
+            },
+            addNombreBeneficiario: {
+                required: true,
+            },
+            addDocumentoBeneficiario: {
+                required: true,
+                integer: true,
+            },
+            addBancoBeneficiario: {
+                required: true,
+            },
+            addCuentaBeneficiario: {
+                required: true,
+            },
+            addPagoMovilBeneficiario: {
+                required: true,
+            },
+            addTipoDocumentoBeneficiario: {
+                required: true,
+            },
+        },
+        messages: {
+            addAliasBeneficiario: {
+                required: "El campo alias es obligatorio",
+            },
+            addNombreBeneficiario: {
+                required: "El campo de nombre es obligatorio",
+            },
+            addDocumentoBeneficiario: {
+                required: "El campo documento es obligatorio",
+                integer: "Por favor, ingresa solo números enteros." 
+            },
+            addBancoBeneficiario: {
+                required: "El campo banco es obligatorio",
+            },
+            addCuentaBeneficiario: {
+                required: "El campo cuenta es obligatorio",
+            },
+            addPagoMovilBeneficiario: {
+                required: "El campo pago movil es obligatorio",
+            },
+            addTipoDocumentoBeneficiario: {
+                required: "El campo tipo documento es obligatorio",
+            },
+        },
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            error.addClass("invalid-feedback text-center");
+            element.closest(".form-group").append(error);
+        },
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid");
+        },
+    });
+
     $("#divChecks, #divMensaje").hide();
+    $(
+        "#divChecksEntregado, #divMensajeEntregado, #divMensajeBeneficiario"
+    ).hide();
 
     $('[data-toggle="collapse"]').on("click", function () {
         // Obtén el ID del icono
@@ -12,9 +80,26 @@ $(document).ready(function () {
         $("#" + iconoId).toggleClass("fa-chevron-down fa-chevron-up");
     });
 
-    popupReclamo = new bootstrap.Modal(document.getElementById("myReclamo"), {
-        keyboard: false,
-    });
+    popupPorSolucionar = new bootstrap.Modal(
+        document.getElementById("popupPorSolucionar"),
+        {
+            keyboard: false,
+        }
+    );
+
+    popupEntregado = new bootstrap.Modal(
+        document.getElementById("popupEntregado"),
+        {
+            keyboard: false,
+        }
+    );
+
+    popupBeneficiarioAfiliado = new bootstrap.Modal(
+        document.getElementById("popupBeneficiarioAfiliado"),
+        {
+            keyboard: false,
+        }
+    );
 
     $("#myTab a").on("click", async function (e) {
         e.preventDefault();
@@ -105,7 +190,7 @@ $(document).ready(function () {
                                 <p>Enviado por:</p>
                                 <p>Enviado a:</p>
                                 <br>
-                                <a class="btn btn-primary" onclick='openReclamo(${JSON.stringify(
+                                <a class="btn btn-primary" onclick='openPopupPorSolucionar(${JSON.stringify(
                                     data[i]
                                 )})'>Reclamar</a>
                             </div>
@@ -281,7 +366,9 @@ $(document).ready(function () {
                 data[i]
             )})'>Ver comprobante </a>
                                 <br><br>
-                                <a class="btn btn-primary" id="openReclamo"> Reclamar </a>
+                                <a class="btn btn-primary" id="openReclamo" onclick='openPopupEntregado(${JSON.stringify(
+                                    data[i]
+                                )})'> Reclamar </a>
                             </div>
                         </div>
                         <div class="col-6">
@@ -393,14 +480,15 @@ $(document).ready(function () {
         $("#content_cancelado").html(contenido);
     }
 
-    window.openReclamo = function (data) {
-        popupReclamo.show();
+    window.openPopupPorSolucionar = function (data) {
+        removeElementsReclamoPorSolucionar();
+        popupPorSolucionar.show();
         $("#idReclamo").html("<strong>ID # " + data.id + "</strong>");
         solicitudId = data.id;
     };
 
-    window.closeReclamo = function () {
-        popupReclamo.hide();
+    window.closePopupPorSolucionar = function () {
+        popupPorSolucionar.hide();
     };
 
     // popup reclamo
@@ -435,15 +523,34 @@ $(document).ready(function () {
         axios
             .post("/historial/store", formData)
             .then((response) => {
-                showSuccess("Información actualizada correctamente!");
-                location.reload();
+                showSuccess("Solicitud realizada correctamente!");
+                popupPorSolucionar.hide();
             })
             .catch((actualizarError) => {
                 handleErrors(actualizarError);
             });
     };
 
+    function removeElementsReclamoPorSolucionar() {
+        adjuntarEstadoCuenta = "";
+        $(".opcion-reclamo:checked").prop("checked", false);
+        $("#comentarioReclamo").val("");
+        $("#motivoReclamo").val(1);
+        $("#divChecks, #divMensaje").hide();
+    }
+
     // popup entregado
+    $("#motivoReclamoEntregado").change(function () {
+        if ($(this).val() !== "1") {
+            $("#divChecksEntregado").show();
+            $("#divMensajeEntregado").show();
+        } else {
+            $("#divChecksEntregado").hide();
+            $("#divMensajeEntregado").hide();
+            $("#divMensajeBeneficiario").hide();
+        }
+    });
+
     window.viewComprobante = function (element, data) {
         let path = data.imagen_comprobante;
         let header = {
@@ -453,5 +560,193 @@ $(document).ready(function () {
         };
 
         showImageAlert(path, header);
+    };
+
+    window.uploadImageAfiliado = function () {
+        var input = document.getElementById("adjuntarEstadoCuenta");
+        var file = input.files[0];
+        adjuntarEstadoCuenta = input.files[0];
+
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var imageUrl = e.target.result;
+                loadImageFromURL(imageUrl, "#adjuntarEstadoCuenta");
+                updateButtonAndBindClick("btnPreview03", imageUrl);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    window.openPopupEntregado = function (data) {
+        removeElementsReclamoEntregado();
+        popupEntregado.show();
+        $("#idReclamoEntregado").html("<strong>ID # " + data.id + "</strong>");
+        solicitudId = data.id;
+        loadTerceros();
+    };
+
+    window.verificarAfiliado = async function () {
+        let detail = await showTercero($("#afiliadoEntregado").val(), "TB");
+        setFieldsBeneficiario(detail);
+    };
+
+    window.closePopupEntregado = function () {
+        popupEntregado.hide();
+    };
+
+    window.sendReclamoEntregado = function () {
+        var opcionesSeleccionadas = [];
+        var reintentarBeneficiarioESeleccionado = false;
+
+        $(".opcion-reclamo-entregado:checked").each(function () {
+            opcionesSeleccionadas.push($(this).val());
+            if ($(this).attr("data-code") === "reintentar_beneficiario_e") {
+                reintentarBeneficiarioESeleccionado = true;
+            }
+        });
+
+        var comentario = $("#comentarioReclamoEntregado").val();
+        var afiliadoSeleccionado = $("#afiliadoEntregado").val();
+
+        if (opcionesSeleccionadas.length === 0) {
+            showError("Por favor, selecciona al menos una opción.");
+            return;
+        }
+
+        if (
+            reintentarBeneficiarioESeleccionado &&
+            afiliadoSeleccionado == null
+        ) {
+            showError("Por favor, selecciona un afiliado.");
+            return;
+        }
+
+        var formData = {
+            solicitud_id: solicitudId,
+            opciones: opcionesSeleccionadas,
+            comentario: comentario,
+            beneficiario_id: afiliadoSeleccionado,
+            estadoCuenta: adjuntarEstadoCuenta,
+        };
+
+        axios
+            .post("/historial/store", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((response) => {
+                showSuccess("Solicitud realizada correctamente!");
+                popupEntregado.hide();
+            })
+            .catch((actualizarError) => {
+                handleErrors(actualizarError);
+            });
+    };
+
+    // popup benfeciario - afiliado
+    window.openPopupBeneficiarioAfiliado = function () {
+        popupBeneficiarioAfiliado.show();
+        popupEntregado.hide();
+    };
+
+    window.closePopupBeneficiarioAfiliado = function (e) {
+        e.preventDefault();
+        popupBeneficiarioAfiliado.hide();
+        popupEntregado.show();
+    };
+
+    function removeElementsReclamoEntregado() {
+        adjuntarEstadoCuenta = "";
+        $("#adjuntarEstadoCuenta").val("");
+        loadImageFromURL("", "#adjuntarEstadoCuenta");
+        updateButtonAndBindClick("btnPreview03", "");
+        $(".opcion-reclamo-entregado:checked").prop("checked", false);
+        $("#comentarioReclamoEntregado").val("");
+        $("#afiliadoEntregado").val(0);
+        $("#motivoReclamoEntregado").val(1);
+        $("#aliasBeneficiario").val("");
+        $("#nombreBeneficiario").val("");
+        $("#documentoBeneficiario").val("");
+        $("#bancoBeneficiario").val("");
+        $("#cuentaBeneficiario").val("");
+        $("#pagoMovilBeneficiario").val("");
+        $("#tipoDocumentoBeneficiario").val("");
+        $(
+            "#divChecksEntregado, #divMensajeEntregado, #divMensajeBeneficiario"
+        ).hide();
+    }
+
+    function setFieldsBeneficiario(beneficiario) {
+        formDataBeneficiario = beneficiario.data;
+        $("#aliasBeneficiario").val(beneficiario.data.alias);
+        $("#nombreBeneficiario").val(beneficiario.data.nombre);
+        $("#documentoBeneficiario").val(beneficiario.data.documento);
+        $("#bancoBeneficiario").val(beneficiario.data.banco);
+        $("#cuentaBeneficiario").val(beneficiario.data.cuenta);
+        $("#pagoMovilBeneficiario").val(beneficiario.data.pago_movil);
+        $("#tipoDocumentoBeneficiario").val(
+            beneficiario.data.tipo_documento_id
+        );
+    }
+
+    function getTerceros(code) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const response = await axios.get("/terceros/list/" + code);
+                resolve(response.data);
+            } catch (error) {
+                handleErrors(error);
+                reject(error);
+            }
+        });
+    }
+
+    async function loadTerceros(){
+        var beneficiarios = await getTerceros("TB");
+        $("#afiliadoEntregado option").not('[value="0"]').remove();
+        $.each(beneficiarios, function (key, value) {
+            $("#afiliadoEntregado").append(
+                $("<option>", { value: value.id }).text(value.nombre)
+            );
+        });
+    }
+
+    function showTercero(selectedValue, code) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const response = await axios.get(
+                    "/terceros/show/" + selectedValue + "/" + code
+                );
+                resolve(response.data);
+            } catch (error) {
+                handleErrors(error);
+                reject(error);
+            }
+        });
+    }
+
+    window.addTercero = function (code, e) {
+        e.preventDefault();
+        if ($("#formBeneficiarioAfiliado").valid()) {
+            var formData = new FormData($("#formBeneficiarioAfiliado")[0]);
+            formData.append("code", code);
+            axios
+                .post("/terceros/store", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then((response) => {
+                    showSuccess(response.data.message);
+                    loadTerceros();
+                    popupBeneficiarioAfiliado.hide();
+                    popupEntregado.show();
+                })
+                .catch((error) => {
+                    handleErrors(error);
+                });
+        }
     };
 });

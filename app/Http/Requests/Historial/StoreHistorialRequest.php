@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Historial;
 
+use App\Models\Configuration\MasterCombos;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -24,11 +25,25 @@ class StoreHistorialRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+
+        $opciones = request('opciones');
+
+        $rules = [
             'solicitud_id' => 'required',
             'opciones' => 'required',
             'comentario' => 'nullable|max:200',
         ];
+
+        $masterCombos = MasterCombos::whereIn('id', $opciones)->get();
+        $tieneReintentarBeneficiarioE = $masterCombos->contains(function ($value, $key) {
+            return $value->code == 'reintentar_beneficiario_e';
+        });
+
+        if ($tieneReintentarBeneficiarioE) {
+            $rules['beneficiario_id'] = 'required';
+        }
+
+        return $rules;
     }
 
     /**
@@ -40,6 +55,7 @@ class StoreHistorialRequest extends FormRequest
     {
         return [
             'solicitud_id.required' => 'El campo solicitud es obligatorio.',
+            'afiliado_id.required' => 'El campo afiliado es obligatorio.',
         ];
     }
 
@@ -47,6 +63,7 @@ class StoreHistorialRequest extends FormRequest
     {
         return [
             'solicitud_id' => 'solicitud',
+            'afiliado_id' => 'afiliado',
         ];
     }
 

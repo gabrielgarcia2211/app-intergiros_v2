@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('historial', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('solicitud_id')->unsigned();
+            $table->bigInteger('beneficiario_id')->unsigned()->nullable();
             $table->string('comentarios')->nullable();
             $table->json('opciones');
+            $table->string('path_estado_cuenta', 255)->nullable();
             $table->foreign('solicitud_id')->references('id')->on('solicitudes');
+            $table->foreign('beneficiario_id')->references('id')->on('terceros');
             $table->timestamps();
         });
     }

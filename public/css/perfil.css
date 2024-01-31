@@ -136,14 +136,14 @@ p {
 
 /* vERIFICACION */
 
-#labelFile01, #labelFile02 {
+#labelFile01, #labelFile02, #labelFile03 {
     width: 90%;
     margin-left: 42.4px;
     border-top-left-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
 }
 
-#btnPreview01, #btnPreview02 {
+#btnPreview01, #btnPreview02, #btnPreview03 {
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
     background-color: white;

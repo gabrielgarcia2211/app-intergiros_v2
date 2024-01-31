@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Terceros;
 
+use Illuminate\Http\Request;
 use App\Services\FileService;
 use App\Models\Terceros\Tercero;
 use Illuminate\Support\Facades\Log;
@@ -47,6 +48,10 @@ class TercerosController extends Controller
             $data = mapTipoTercero($request->all());
             $code = $request->input('code');
 
+            if ($code == "TAF") {
+                $code = "TB";
+            }
+
             $data['user_id'] = Auth()->user()->id;
             $data['tipo_tercero_id'] = MasterCombos::whereRaw("parent_id = (SELECT id FROM master_combos WHERE code = 'terceros')")
                 ->whereRaw("LOWER(code) = LOWER('$code')")
@@ -60,6 +65,7 @@ class TercerosController extends Controller
             $tercero = Tercero::create($data);
             return Response::sendResponse($tercero, 'Registro guardado con exito.');
         } catch (\Exception $ex) {
+            Log::debug($ex->getLine());
             Log::debug($ex->getMessage());
             return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
         }

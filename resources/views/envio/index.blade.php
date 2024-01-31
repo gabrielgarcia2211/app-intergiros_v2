@@ -239,7 +239,7 @@
                         </div>
                         <div class="text-center">
                             <div class="text-center" style="display: flex; justify-content: center;">
-                                <button type="button" class="btn btn-primary" onclick="addTercero('TB')"
+                                <button type="button" class="btn btn-primary" onclick="addTercero('TB', event)"
                                     id="cuentaNueva1"
                                     style="display: none;background-color: transparent; border: none; color: #0035aa;">Guardar</button>
                             </div>
@@ -345,7 +345,7 @@
                         </div>
                         <div class="text-center mt-3">
                             <div class="text-center" style="display: flex; justify-content: center;">
-                                <button type="button" class="btn btn-primary" onclick="addTercero('TD')"
+                                <button type="button" class="btn btn-primary" onclick="addTercero('TD', event)"
                                     id="cuentaNueva2"
                                     style="display: none;background-color: transparent; border: none; color: #0035aa;">Guardar</button>
                             </div>

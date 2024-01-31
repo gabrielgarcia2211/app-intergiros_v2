@@ -4,7 +4,8 @@ $(document).ready(async function () {
     const rpMonedas = await getMonedas();
     setLoadSelectsForms(rpForms);
     setLoadSelectsMonedas(rpMonedas);
-    modalReclamos();
+    modalReclamoPorSolucionar();
+    modalReclamoEntregado();
 
     async function setLoadInputs() {
         const comboNames = ["pais_telefono", "pais", "tipo_documento"];
@@ -21,6 +22,9 @@ $(document).ready(async function () {
                 $("<option>", { value: value.id }).text(value.name)
             );
             $("#paypalTipoDocumentoDepositante").append(
+                $("<option>", { value: value.id }).text(value.name)
+            );
+            $("#addTipoDocumentoBeneficiario").append(
                 $("<option>", { value: value.id }).text(value.name)
             );
         });
@@ -103,11 +107,11 @@ $(document).ready(async function () {
         });
     }
 
-    async function modalReclamos() {
-        const comboNames = ["modal_reclamo"];
+    async function modalReclamoPorSolucionar() {
+        const comboNames = ["m_reclamo_por_solucionar"];
 
         const response = await getComboRelations(comboNames);
-        const { modal_reclamo: responseReclamo } = response;
+        const { m_reclamo_por_solucionar: responseReclamo } = response;
 
         $.each(responseReclamo, function (key, value) {
             $("#divChecks").append(
@@ -131,5 +135,54 @@ $(document).ready(async function () {
             var algunoSeleccionado = $(".opcion-reclamo:checked").length > 0;
             $("#botonEnviarReclamo").prop("disabled", !algunoSeleccionado);
         });
+    }
+
+    async function modalReclamoEntregado() {
+        const comboNames = ["m_reclamo_entregado"];
+
+        const response = await getComboRelations(comboNames);
+        const { m_reclamo_entregado: responseReclamo } = response;
+
+        $.each(responseReclamo, function (key, value) {
+            var checkbox = $("<input>")
+                .addClass("form-check-input opcion-reclamo-entregado")
+                .attr("type", "checkbox")
+                .attr("id", "option" + value.id)
+                .attr("data-code", value.code)
+                .val(value.id);
+
+            $("#divChecksEntregado").append(
+                $("<div>")
+                    .addClass("form-check")
+                    .append(
+                        checkbox,
+                        $("<label>")
+                            .addClass("form-check-label")
+                            .attr("for", "option" + value.id)
+                            .text(value.valor1)
+                    )
+            );
+        });
+
+        $("#divChecksEntregado").on(
+            "change",
+            ".opcion-reclamo-entregado",
+            function () {
+                var algunoSeleccionado =
+                    $(".opcion-reclamo-entregado:checked").length > 0;
+                $("#botonEnviarReclamoEntregado").prop(
+                    "disabled",
+                    !algunoSeleccionado
+                );
+
+                if ($(this).attr("data-code") === "reintentar_beneficiario_e") {
+                    if ($(this).is(":checked")) {
+                        $("#divMensajeBeneficiario").show();
+                    } else {
+                        $("#divMensajeBeneficiario").hide();
+                    }
+                }
+            }
+        );
     }
 });

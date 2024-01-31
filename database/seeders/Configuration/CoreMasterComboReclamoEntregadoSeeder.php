@@ -5,7 +5,7 @@ namespace Database\Seeders\Configuration;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CoreMasterComboReclamoSeeder extends Seeder
+class CoreMasterComboReclamoEntregadoSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,20 +15,28 @@ class CoreMasterComboReclamoSeeder extends Seeder
         $items = [
             [
                 'parent_id' => 1,
-                'name' => 'Modal Reclamo',
-                'code' => 'modal_reclamo',
+                'name' => 'Modal Reclamo Entregado',
+                'code' => 'm_reclamo_entregado',
                 'description' => "",
                 'is_father' => true,
                 'status' => true,
                 'childrens' => [
                     [
-                        'name' => 'llamado',
+                        'name' => 'reintentar',
+                        'code' => 'reintentar_e',
                         'orden' => 0,
-                        'valor1' => 'Llamado de atención para que se procese mi pedido',
+                        'valor1' => 'Procesar nuevamente en la misma cuenta',
+                    ],
+                    [
+                        'name' => 'reintentar_beneficiario',
+                        'code' => 'reintentar_beneficiario_e',
+                        'orden' => 1,
+                        'valor1' => 'Procesar en otra cuenta',
                     ],
                     [
                         'name' => 'reembolso',
-                        'orden' => 1,
+                        'code' => 'reembolso_e',
+                        'orden' => 2,
                         'valor1' => 'Solicitar reembolso',
                     ]
                 ],
@@ -50,6 +58,7 @@ class CoreMasterComboReclamoSeeder extends Seeder
                     DB::table('master_combos')->insert([
                         'parent_id' => $father_id,
                         'name' => $child['name'],
+                        'code' => $child['code'],
                         'orden' => $child['orden'],
                         'valor1' => $child['valor1'],
                         'status' => true

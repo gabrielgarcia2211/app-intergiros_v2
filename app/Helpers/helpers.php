@@ -28,6 +28,17 @@ function mapTipoTercero($data)
                 'pais_id' => $data['paypalPaisDepositante'],
             ];
             break;
+        case 'TAF':
+            return [
+                'alias' => $data['addAliasBeneficiario'],
+                'nombre' => $data['addNombreBeneficiario'],
+                'tipo_documento_id' => $data['addTipoDocumentoBeneficiario'],
+                'documento' => $data['addDocumentoBeneficiario'],
+                'banco' => $data['addBancoBeneficiario'],
+                'cuenta' => $data['addCuentaBeneficiario'],
+                'pago_movil' => $data['addPagoMovilBeneficiario'],
+            ];
+            break;
         default:
             break;
     }

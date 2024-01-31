@@ -85,9 +85,12 @@ class Solicitudes extends Model
     public function getImagenComprobanteAttribute()
     {
         $disk = 'comprobante_disk';
-        if (!Storage::disk($disk)->exists($this->attributes['imagen_comprobante']) || empty($this->attributes['imagen_comprobante'])) {
+        $imagen_comprobante = $this->attributes['imagen_comprobante'];
+
+        if (empty($imagen_comprobante) || !Storage::disk($disk)->exists($imagen_comprobante)) {
             return asset('img/no-image.png');
         }
-        return Storage::disk($disk)->url($this->attributes['imagen_comprobante']);
+
+        return Storage::disk($disk)->url($imagen_comprobante);
     }
 }

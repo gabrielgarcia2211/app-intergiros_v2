@@ -65,48 +65,17 @@
         </div>
     </div>
 
-    <!-- ver comprobante -->
-    <div id="myModal" class="modal">
+    <!-- Reclamo Por solucionar-->
+    <div id="popupPorSolucionar" class="modal">
         <!-- Contenido del modal -->
-        <div class="modal-content">
+        <div class="modal-content" style="width: 40%">
             <div class="text-center">
-                <span class="close">&times;</span>
-            </div>
-            <div class="text-center">
-                <img src="{{ asset('img/home/noticias.png') }}" alt="" class="img-fluid" width="500px">
-            </div>
-            <div class="text-center">
-                <a href="#" class="btn btn-primary">Descargar</a>
-                <a href="#" class="btn btn-primary">Imprimir</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Contactanos -->
-    <div id="myContacto" class="modal">
-        <!-- Contenido del modal -->
-        <div class="modal-content">
-            <div class="text-center">
-                <span class="closeContacto">&times;</span>
-            </div>
-            <div class="text-center">
-                <a href="#" class="btn btn-primary">Facebook</a>
-                <a href="#" class="btn btn-primary">Instagram</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Reclamo -->
-    <div id="myReclamo" class="modal">
-        <!-- Contenido del modal -->
-        <div class="modal-content">
-            <div class="text-center">
-                <span class="closeReclamo" onclick="closeReclamo()">&times;</span>
+                <span class="closeReclamo" onclick="closePopupPorSolucionar()">&times;</span>
             </div>
             <div class="modal-body">
                 <p id="idReclamo"></p>
                 <div class="form-group" style="text-align: center">
-                    <select class="form-control" id="motivoReclamo" style="width: 90%">
+                    <select class="form-control" id="motivoReclamo" style="width: 100%">
                         <option value="1">Motivos de reclamo</option>
                         <option value="2">Mi pedido no ha sido procesado</option>
                     </select>
@@ -123,11 +92,161 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <button class="btn btn-primary mt-3" id="botonEnviarReclamo" onclick="sendReclamo()" disabled>Enviar reclamo</button>
+                    <button class="btn btn-primary mt-3" id="botonEnviarReclamo" onclick="sendReclamo()" disabled>Enviar
+                        reclamo</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Reclamo Entrgado-->
+    <div id="popupEntregado" class="modal">
+        <!-- Contenido del modal -->
+        <div class="modal-content" style="width: 40%">
+            <div class="text-center">
+                <span class="closeReclamo" onclick="closePopupEntregado()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="idReclamoEntregado"></p>
+                <div class="form-group" style="text-align: center">
+                    <select class="form-control" id="motivoReclamoEntregado" style="width: 100%">
+                        <option value="1">Motivos de reclamo</option>
+                        <option value="2">Mi pedido no ha sido procesado</option>
+                    </select>
+                </div>
+                <div id="infoEntregado">
+                    <p>Para este tipo de reclamo posee tres opciones disponibles. Cuéntanos, ¿qué deseas hacer?</p>
+                </div>
+                <div id="divChecksEntregado">
+                </div>
+                <div class="mt-3" id="divMensajeBeneficiario">
+                    <div class="form-group mt-4" style="text-align: center">
+                        <div class="custom-file">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button" id="btnPreview03">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            </div>
+                            <input type="file" class="custom-file-input" id="adjuntarEstadoCuenta"
+                                name="adjuntarEstadoCuenta" onchange="uploadImageAfiliado()">
+                            <label class="custom-file-label input-registro" for="adjuntarEstadoCuenta" id="labelFile03"
+                                style="text-align: left;">Adjunta
+                                estado cuenta</label>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3" style="text-align: center">
+                        <select class="form-control" id="afiliadoEntregado" onchange="verificarAfiliado()"
+                            style="width: 100%">
+                            <option value="0" selected disabled>Beneficiarios afiliados</option>
+                        </select>
+                        <a href="#" onclick="openPopupBeneficiarioAfiliado()">Añadir Afiliado</a>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="aliasBeneficiario" placeholder="Alias"
+                                readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="nombreBeneficiario" placeholder="Nombre"
+                                readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="documentoBeneficiario"
+                                placeholder="Documento" readonly>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="bancoBeneficiario" placeholder="Banco"
+                                readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="cuentaBeneficiario" placeholder="Cuenta"
+                                readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="pagoMovilBeneficiario"
+                                placeholder="Pago Movil" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3" id="divMensajeEntregado">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Escribenos un mensaje (Opcional)</label>
+                        <textarea class="form-control" id="comentarioReclamoEntregado" rows="3" maxlength="255"></textarea>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary mt-3" id="botonEnviarReclamoEntregado"
+                        onclick="sendReclamoEntregado()" disabled>Enviar
+                        reclamo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reclamo Entrgado-->
+    <div id="popupBeneficiarioAfiliado" class="modal">
+        <!-- Contenido del modal -->
+        <div class="modal-content" style="width: 40%">
+            <div class="text-center">
+                <span class="closeReclamo" onclick="closePopupBeneficiarioAfiliado(event)">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="formBeneficiarioAfiliado">
+                    <div class="form-group">
+                        <label for="addAliasBeneficiario">Alias</label>
+                        <input type="text" class="form-control" id="addAliasBeneficiario"
+                            name="addAliasBeneficiario">
+                    </div>
+                    <div class="form-group">
+                        <label for="addNombreBeneficiario">Nombre</label>
+                        <input type="text" class="form-control" id="addNombreBeneficiario"
+                            name="addNombreBeneficiario">
+                    </div>
+                    <div class="form-group">
+                        <label for="addDocumentoBeneficiario">Documento</label>
+                        <input type="text" class="form-control" id="addDocumentoBeneficiario"
+                            name="addDocumentoBeneficiario">
+                    </div>
+                    <div class="form-group">
+                        <label for="addBancoBeneficiario">Banco</label>
+                        <input type="text" class="form-control" id="addBancoBeneficiario"
+                            name="addBancoBeneficiario">
+                    </div>
+                    <div class="form-group">
+                        <label for="addCuentaBeneficiario">Cuenta</label>
+                        <input type="text" class="form-control" id="addCuentaBeneficiario"
+                            name="addCuentaBeneficiario">
+                    </div>
+                    <div class="form-group">
+                        <label for="addPagoMovilBeneficiario">Pago Móvil</label>
+                        <input type="text" class="form-control" id="addPagoMovilBeneficiario"
+                            name="addPagoMovilBeneficiario">
+                    </div>
+                    <div class="form-group">
+                        <label for="addTipoDocumentoBeneficiario">Tipo de Documento</label>
+                        <select class="form-control" id="addTipoDocumentoBeneficiario"
+                            name="addTipoDocumentoBeneficiario">
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <button class="btn btn-primary mt-3" onclick="addTercero('TAF', event)">Guardar</button>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-secondary mt-3" style="border-radius: 25px"
+                                    onclick="closePopupBeneficiarioAfiliado(event)">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
     <br><br><br><br><br>
 
     <!-- FOOTER -->
