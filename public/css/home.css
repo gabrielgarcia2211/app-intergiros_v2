@@ -171,11 +171,11 @@
     font-family: 'Lato', sans-serif !important;
 }
 
-#paisesPaypal, #montoPaypalVenezuela, #paisesUsdt, #montoUsdtVenezuela, #paisesPeru, #montoPeru, #paisesZinli, #montoColombia, #paisesColombia, #montoVenezuela, #paisesVenezuela, #montoRecargaZinli, #paisesRecargaZinli, #montoRecargaPaypal, #paisesRecargaPaypal {
+#paisesPaypal, #montoPaypalVenezuela, #paisesUsdt, #montoUsdtVenezuela, #paisesPeru, #montoPeru, #paisesZinli, #montoZinli, #montoColombia, #paisesColombia, #montoVenezuela, #paisesVenezuela, #montoRecargaZinli, #paisesRecargaZinli, #montoRecargaPaypal, #paisesRecargaPaypal {
     font-size: 24px;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
-    width: 6.1ch;
+    width: 6.0ch;
     overflow: hidden;
 }
 /* FIN SELECT DE SERVICIOS */
