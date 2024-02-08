@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserRedes::class, 'user_id');
     }
+
+    public function hasAnyRole($roles)
+    {
+        return null !== $this->roles()->whereIn('name', $roles)->first();
+    }
 }

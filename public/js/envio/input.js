@@ -85,7 +85,7 @@ $(document).ready(async function () {
         return new Promise(async (resolve, reject) => {
             try {
                 const response = await axios.get(
-                    "/administracion/formularios/" + principal
+                    "/gestion/formularios/" + principal
                 );
                 resolve(response.data);
             } catch (error) {
@@ -98,7 +98,7 @@ $(document).ready(async function () {
     function getMonedas() {
         return new Promise(async (resolve, reject) => {
             try {
-                const response = await axios.get("/administracion/monedas");
+                const response = await axios.get("/gestion/monedas");
                 resolve(response.data);
             } catch (error) {
                 handleErrors(error);

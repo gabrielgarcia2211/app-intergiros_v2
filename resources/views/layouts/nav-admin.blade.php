@@ -35,7 +35,7 @@
 
     <!-- DevExtreme -->
     <link rel="stylesheet" href="{{ asset('libraries/css/dx.light.css') }}">
-
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body>

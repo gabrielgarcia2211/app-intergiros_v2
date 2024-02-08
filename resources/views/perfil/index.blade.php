@@ -6,7 +6,9 @@
     <div class="row">
         <div class="col-md-3 text-center">
             <img src="{{ asset('img/perfil/people.jpg') }}" alt="" width="200px">
-            <img src="{{ asset('img/perfil/verificado.png') }}" alt="" width="50px" class="verificado">
+            @if(Auth()->user()->verificado)
+                <img src="{{ asset('img/perfil/verificado.png') }}" alt="" width="50px" class="verificado">
+            @endif
         </div>
         <div class="col-md-9">
             <h4><strong>User ID #000-{{ Auth()->user()->id }}</strong></h4>

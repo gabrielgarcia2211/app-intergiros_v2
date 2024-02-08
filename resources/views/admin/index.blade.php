@@ -1,3 +1,5 @@
+@extends('layouts.nav-admin')
+
 @section('content')
 <div class="container-fluid">
 
@@ -7,6 +9,7 @@
     </div>
 
     <!-- Contenido principal -->
+    <example-component></example-component>
 
 </div>
 <!-- /.container-fluid -->
