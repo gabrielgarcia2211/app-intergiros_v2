@@ -134,13 +134,13 @@
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesPaypal">
                             <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
-                                value="venezuela">Bolívares</option>
-                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
+                                value="venezuela">VEF</option>
+                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">PEN
                             </option>
                             <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
-                                Dólares</option>
+                                USDT</option>
                             <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
-                                Pesos colombianos</option>
+                                COP</option>
                         </select>
                     </div>
                 </div>
@@ -240,7 +240,7 @@
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesZinli">
                             <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
-                                value="venezuela">Bolívares
+                                value="venezuela">VEF
                             </option>
                         </select>
                     </div>
@@ -341,14 +341,14 @@
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesUsdt">
                             <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
-                                value="venezuela">Bolívares
+                                value="venezuela">VEF
                             </option>
-                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
+                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">PEN
                             </option>
                             <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
-                                Dólares</option>
+                                USDT</option>
                             <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
-                                Pesos colombianos
+                                COP
                             </option>
                         </select>
                     </div>
@@ -441,10 +441,10 @@
                         <div id="imagenMontoPeru"><img src="{{ asset('img/home/peru.png') }}" alt=""
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="montoPeru">
-                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
+                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">PEN
                             </option>
                             <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
-                                Dólar
+                            USDT
                             </option>
                         </select>
                     </div>
@@ -462,10 +462,10 @@
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesPeru">
                             <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
-                                value="venezuela">Bolívares
+                                value="venezuela">VEF
                             </option>
                             <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
-                                Pesos colombianos
+                                COP
                             </option>
                         </select>
                     </div>
@@ -559,7 +559,7 @@
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="montoColombia">
                             <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
-                                Pesos colombianos
+                                COP
                             </option>
                         </select>
                     </div>
@@ -577,12 +577,12 @@
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesColombia">
                             <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
-                                value="venezuela">Bolívares
+                                value="venezuela">VEF
                             </option>
-                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
+                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">PEN
                             </option>
                             <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
-                                Dólares
+                                USDT
                             </option>
                         </select>
                     </div>
@@ -675,7 +675,7 @@
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="montoVenezuela">
                             <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
-                                value="venezuela">Bolívares
+                                value="venezuela">VEF
                             </option>
                         </select>
                     </div>
@@ -693,12 +693,12 @@
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesVenezuela">
                             <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
-                                Pesos colombianos
+                                COP
                             </option>
-                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
+                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">PEN
                             </option>
                             <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
-                                Dólares
+                                USDT
                             </option>
                         </select>
                     </div>
@@ -782,15 +782,15 @@
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesRecargaZinli">
                             <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
-                                value="venezuela">Bolívares
+                                value="venezuela">VEF
                             </option>
                             <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
-                                Pesos colombianos
+                                COP
                             </option>
-                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
+                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">PEN
                             </option>
                             <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
-                                Dólares
+                                USDT
                             </option>
                         </select>
                     </div>
@@ -893,15 +893,15 @@
                                 style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                         <select class="form-control" id="paisesRecargaPaypal">
                             <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
-                                value="venezuela">Bolívares
+                                value="venezuela">VEF
                             </option>
                             <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}" value="colombia">
-                                Pesos colombianos
+                                COP
                             </option>
-                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">Soles
+                            <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">PEN
                             </option>
                             <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}" value="peru-dolar">
-                                Dólares
+                                USDT
                             </option>
                         </select>
                     </div>
