@@ -18,6 +18,26 @@ class AdministracionController extends Controller
         return view('admin.index');
     }
 
+    public function tasas()
+    {
+        return view('admin.tasas');
+    }
+
+    public function verificar()
+    {
+        return view('admin.verificacion');
+    }
+
+    public function envios()
+    {
+        return view('admin.envios');
+    }
+
+    public function noticias()
+    {
+        return view('admin.noticias');
+    }
+
     public function getSolicitudes(Request $request)
     {
         try {
