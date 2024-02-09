@@ -23,8 +23,6 @@
     <!-- Custom styles for this page -->
     <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('css/admin/admin.css') }}" rel="stylesheet">
-
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -36,6 +34,7 @@
     <!-- DevExtreme -->
     <link rel="stylesheet" href="{{ asset('libraries/css/dx.light.css') }}">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <link href="{{ asset('css/admin/admin.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -57,7 +56,7 @@
 
                 <!-- Nav Item - Inicio -->
                 <li class="nav-item">
-                    <a class="nav-link" href="admin.html">
+                    <a class="nav-link" href="{{ route('administracion.index') }}">
                         <i class="fas fa-home"></i>
                         <span>Inicio</span></a>
                 </li>
@@ -66,28 +65,28 @@
 
                 <!-- Nav Item - Tasa de cambio -->
                 <li class="nav-item">
-                    <a class="nav-link" href="tasas.html">
+                    <a class="nav-link" href="{{ route('administracion.tasas') }}">
                         <i class="fas fa-money-bill-wave"></i>
                         <span>Tasas</span></a>
                 </li>
 
                 <!-- Nav Item - Verificacion de usuario -->
                 <li class="nav-item">
-                    <a class="nav-link" href="verificacion.html">
+                    <a class="nav-link" href="{{ route('administracion.verificar') }}">
                         <i class="fas fa-user-check"></i>
                         <span>Verificacion de usuarios</span></a>
                 </li>
 
                 <!-- Nav Item - Envios -->
                 <li class="nav-item">
-                    <a class="nav-link" href="enviosAdmin.html">
+                    <a class="nav-link" href="{{ route('administracion.envios') }}">
                         <i class="fas fa-paper-plane"></i>
                         <span>Envios</span></a>
                 </li>
 
                 <!-- Nav Item - Noticias -->
                 <li class="nav-item">
-                    <a class="nav-link" href="noticias.html">
+                    <a class="nav-link" href="{{ route('administracion.noticias') }}">
                         <i class="fas fa-newspaper"></i>
                         <span>Noticias</span></a>
                 </li>

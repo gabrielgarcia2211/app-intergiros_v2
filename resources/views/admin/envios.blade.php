@@ -1,3 +1,5 @@
+@extends('layouts.nav-admin')
+
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid">
@@ -17,6 +19,7 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th>Tipo de servicio</th>
                         <th>Cuenta Benefactor</th>
                         <th>Cuenta Depositante</th>
                         <th>Monto a Pagar</th>
@@ -27,6 +30,7 @@
                 </thead>
                 <tfoot>
                     <tr>
+                    <th>Tipo de servicio</th>
                         <th>Cuenta Benefactor</th>
                         <th>Cuenta Depositante</th>
                         <th>Monto a Pagar</th>
@@ -37,6 +41,7 @@
                 </tfoot>
                 <tbody>
                     <tr>
+                        <td>Paypal-Colombia</td>
                         <td><button class="btn btn-user btn-block" id="cuentaBeneficiario"><i class="fas fa-eye"></i></button></td>
                         <td><button class="btn btn-user btn-block" id="CuentaDepositante"><i class="fas fa-eye"></i></button></td>
                         <td>2165461564</td>
@@ -59,6 +64,7 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>Recarga zinli-Venezuela</td>
                         <td><button class="btn btn-user btn-block" id="cuentaBeneficiario"><i class="fas fa-eye"></i></button></td>
                         <td><button class="btn btn-user btn-block" id="CuentaDepositante"><i class="fas fa-eye"></i></button></td>
                         <td>23156423</td>
