@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Solicitudes;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Solicitudes\Producto;
@@ -69,5 +70,12 @@ class SolicitudesController extends Controller
             Log::debug($ex->getMessage());
             return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
         }
+    }
+
+    public function getUpdateEstado($id, Request $request)
+    {
+        return Solicitudes::where('id', $id)->update([
+            'estado_id' => $request->input('estado_id')
+        ]);
     }
 }

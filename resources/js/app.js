@@ -35,8 +35,8 @@ app.use(PrimeVue, {
 });
 
 // Impotacion de componentes
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+import SolicitudComponent from './components/solicitudes/SolicitudComponent.vue';
+app.component('solicitud-component', SolicitudComponent);
 
 // Anexo de componentes de vuejs
 app.component("InputText", InputText);

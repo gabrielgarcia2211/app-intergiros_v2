@@ -11,5 +11,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('/noticias', [AdministracionController::class, 'noticias'])->name('administracion.noticias')->middleware('role:admin');
     Route::group(['prefix' => 'solicitudes'], function () {
         Route::get('/list', [AdministracionController::class, 'getSolicitudes'])->name('solicitudes.list');
+        Route::post('/path/img', [AdministracionController::class, 'getPathReal'])->name('solicitudes.list');
     });
 });

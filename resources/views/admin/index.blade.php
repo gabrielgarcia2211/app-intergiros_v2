@@ -9,7 +9,7 @@
     </div>
 
     <!-- Contenido principal -->
-    <example-component></example-component>
+    <solicitud-component></solicitud-component>
 
 </div>
 <!-- /.container-fluid -->
