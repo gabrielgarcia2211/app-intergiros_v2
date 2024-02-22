@@ -12,5 +12,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::group(['prefix' => 'solicitudes'], function () {
         Route::get('/list', [AdministracionController::class, 'getSolicitudes'])->name('solicitudes.list');
         Route::post('/path/img', [AdministracionController::class, 'getPathReal'])->name('solicitudes.list');
+        Route::post('/up/voucher', [AdministracionController::class, 'createOrUpdateVoucher'])->name('solicitudes.list');
     });
 });

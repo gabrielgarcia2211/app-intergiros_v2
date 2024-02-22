@@ -3,16 +3,25 @@
 namespace App\Http\Controllers\Administracion;
 
 use Illuminate\Http\Request;
+use App\Services\FileService;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Solicitudes\Solicitudes;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Ignition\Contracts\Solution;
 use App\Models\Administracion\TipoMoneda;
 use App\Models\Administracion\TipoFormulario;
 use App\Http\Controllers\ResponseController as Response;
 
 class AdministracionController extends Controller
 {
+
+    protected $fileService;
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
 
     public function index()
     {
@@ -61,6 +70,7 @@ class AdministracionController extends Controller
                     'solicitudes.monto_a_recibir',
                     'solicitudes.revisiones',
                     'solicitudes.imagen_comprobante',
+                    'solicitudes.voucher_referencia',
                     'tipo_formulario.descripcion as tipo_formulario',
                     'tipo_moneda.tipo as tipo_moneda',
                     'tipo_moneda.descripcion as descripcion_moneda',
@@ -128,5 +138,26 @@ class AdministracionController extends Controller
         }
 
         return Storage::disk($disk)->url($path);
+    }
+
+    public function createOrUpdateVoucher(Request $request)
+    {
+        try {
+            $path = $request->all()['path'];
+            $action = $request->all()['action'];
+            $solicitud_id = $request->all()['solicitud_id'];
+            $solicitud = Solicitudes::find($solicitud_id);
+            if ($action == 'CREATE') {
+                $solicitud->voucher_referencia =  $this->fileService->saveFile($path, $solicitud->user_id, 'voucher_solicitud');
+            } else if ($action == 'DELETE') {
+                $this->fileService->deleteFile($solicitud->voucher_referencia);
+                $solicitud->voucher_referencia = null;
+            }
+            $solicitud->save();
+            return Response::sendResponse($solicitud, 'Registro actualizado con exito.');
+        } catch (\Exception $ex) {
+            Log::debug($ex->getMessage());
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
+        }
     }
 }

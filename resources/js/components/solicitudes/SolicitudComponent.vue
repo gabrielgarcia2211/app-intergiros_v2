@@ -126,6 +126,38 @@
                 </Column>
 
                 <Column
+                    field="voucher_referencia"
+                    header="Voucher Referencia"
+                    sortable
+                    :showClearButton="false"
+                    style="min-width: 150px"
+                >
+                    <template #body="{ data }">
+                        <button
+                            v-if="!data.voucher_referencia"
+                            @click="previewUploadComprobante(data.id)"
+                            class="preview p-voucher"
+                        >
+                            <i class="fa fa-upload"></i>
+                        </button>
+                        <button
+                            v-else
+                            @click="
+                                mostrarImagen(
+                                    data.voucher_referencia,
+                                    true,
+                                    true,
+                                    data.id
+                                )
+                            "
+                            class="preview p-voucher"
+                        >
+                            <i class="pi pi-eye"></i>
+                        </button>
+                    </template>
+                </Column>
+
+                <Column
                     field="path_selfie_user"
                     header="Selfie"
                     sortable
@@ -137,9 +169,6 @@
                             @click="mostrarImagen(data.path_selfie_user)"
                             class="preview"
                         >
-                            <i class="pi pi-eye"></i>
-                        </button>
-                        <button @click="mostrarCargaComprobante()">
                             <i class="pi pi-eye"></i>
                         </button>
                     </template>
@@ -630,7 +659,6 @@
                     <template #body="{ data }">
                         {{ data.path_documento_beneficiario }}
                     </template>
-                    <!-- No se incluye un campo de filtro para 'path_documento_beneficiario' ya que parece ser una URL de imagen -->
                 </Column>
 
                 <Column
@@ -722,7 +750,14 @@
                 >
                     <template #body="{ data }">
                         <span
-                            style="cursor: pointer"
+                            :style="getEstadoBackground(data.estado_actual)"
+                            style="
+                                cursor: pointer;
+                                display: block;
+                                padding: 5px;
+                                text-align: center;
+                                border-radius: 10px;
+                            "
                             @click="onRowAction(data)"
                         >
                             {{ data.estado_actual }}
@@ -810,6 +845,12 @@ export default {
                     ],
                 },
                 telefono_user: {
+                    clear: false,
+                    constraints: [
+                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                    ],
+                },
+                voucher_referencia: {
                     clear: false,
                     constraints: [
                         { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -1069,19 +1110,19 @@ export default {
                     this.$readStatusHttp(error);
                 });
         },
-        mostrarImagen(path, flagReal = true) {
+        mostrarImagen(path, flagReal = true, isDelete = false, solicitud_id) {
             if (flagReal) {
                 axios
                     .post("/admin/solicitudes/path/img", {
                         path: path,
                     })
                     .then((response) => {
-                        this.$swal.fire({
-                            imageUrl: response.data,
-                            imageAlt: "Selfie del usuario",
-                            showCloseButton: true,
-                            focusConfirm: false,
-                        });
+                        this.$viewModalImagen(
+                            response.data,
+                            "Imagen",
+                            isDelete,
+                            solicitud_id
+                        );
                     })
                     .catch((error) => {
                         console.error(
@@ -1098,7 +1139,7 @@ export default {
                 });
             }
         },
-        mostrarCargaComprobante() {
+        previewUploadComprobante(solicitud_id) {
             Swal.fire({
                 title: "Cargar comprobante",
                 html: `
@@ -1118,14 +1159,53 @@ export default {
                                 `Por favor seleccione un archivo`
                             );
                         } else {
-                            resolve(this.cargarComprobante(comprobante));
+                            resolve(
+                                this.uploadComprobante(
+                                    comprobante,
+                                    "CREATE",
+                                    solicitud_id
+                                )
+                            );
                         }
                     });
                 },
             });
         },
-        cargarComprobante(path) {
-            console.log(path);
+        uploadComprobante(path, action, solicitud_id) {
+            let formData = {
+                path: path,
+                action: action,
+                solicitud_id: solicitud_id,
+            };
+            this.$axios
+                .post("/admin/solicitudes/up/voucher", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then((response) => {
+                    this.$alertSuccess("Proceso completo");
+                    this.fetchSolicitudes();
+                })
+                .catch((error) => {
+                    this.$readStatusHttp(error);
+                });
+        },
+        getEstadoBackground(estado) {
+            switch (estado) {
+                case "INICIADO":
+                    return { backgroundColor: "blue", color: "white" }; // Fondo azul y texto blanco para "INICIADO"
+                case "PENDIENTE":
+                    return { backgroundColor: "orange", color: "white" }; // Fondo naranja y texto blanco para "PENDIENTE"
+                case "EN PROCESO":
+                    return { backgroundColor: "green", color: "white" }; // Fondo verde y texto blanco para "EN PROCESO"
+                case "ENTREGADO":
+                    return { backgroundColor: "purple", color: "white" }; // Fondo púrpura y texto blanco para "ENTREGADO"
+                case "CANCELADO":
+                    return { backgroundColor: "red", color: "white" }; // Fondo rojo y texto blanco para "CANCELADO"
+                default:
+                    return {}; // Para cualquier otro estado, no aplicar estilos adicionales
+            }
         },
     },
 };
@@ -1153,6 +1233,13 @@ window.previewImage = function () {
     border: 1px;
     border-radius: 10px;
     background-color: rgb(4, 155, 4);
+    color: white;
+}
+
+.p-voucher {
+    border: 1px;
+    border-radius: 10px;
+    background-color: rgb(4, 92, 155);
     color: white;
 }
 </style>

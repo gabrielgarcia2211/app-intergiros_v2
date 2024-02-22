@@ -27,7 +27,8 @@ class Solicitudes extends Model
         'notificacion',
         'user_id',
         'estado_id',
-        'imagen_comprobante'
+        'imagen_comprobante',
+        'voucher_referencia'
     ];
 
     const RELATIONS = ['tipo_formulario', 'tipo_moneda', 'depositante', 'beneficiario', 'producto', 'user', 'estado'];

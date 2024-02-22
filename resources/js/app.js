@@ -34,6 +34,12 @@ app.use(PrimeVue, {
     /* unstyled: true  */
 });
 
+// Registrar funciones compartidas
+app.mixin(shared.AlertsComponent);
+app.mixin(shared.ReadHttpStatusErrors);
+app.mixin(shared.HelperFunctions);
+app.mixin(shared.RelationsTables);
+
 // Impotacion de componentes
 import SolicitudComponent from './components/solicitudes/SolicitudComponent.vue';
 app.component('solicitud-component', SolicitudComponent);
@@ -60,10 +66,6 @@ app.config.globalProperties.$swal = Swal;
 // Localidad de PrimeVue
 app.config.globalProperties.$primevue.config.locale = esLocale;
 
-// Registrar funciones compartidas
-app.mixin(shared.AlertsComponent);
-app.mixin(shared.ReadHttpStatusErrors);
-app.mixin(shared.HelperFunctions);
-app.mixin(shared.RelationsTables);
+
 
 app.mount('#app');
