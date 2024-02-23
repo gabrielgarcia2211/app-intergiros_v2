@@ -54,11 +54,11 @@
                 <!-- Divider -->
                 <hr class="sidebar-divider my-0">
 
-                <!-- Nav Item - Inicio -->
+                <!-- Nav Item - Envio -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('administracion.index') }}">
-                        <i class="fas fa-home"></i>
-                        <span>Inicio</span></a>
+                    <a class="nav-link" href="{{ route('administracion.envios') }}">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Envios</span></a>
                 </li>
 
                 <!-- <hr class="sidebar-divider my-0"> -->
@@ -70,18 +70,11 @@
                         <span>Tasas</span></a>
                 </li>
 
-                <!-- Nav Item - Verificacion de usuario -->
+                <!-- Nav Item - vu -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('administracion.verificar') }}">
                         <i class="fas fa-user-check"></i>
                         <span>Verificacion de usuarios</span></a>
-                </li>
-
-                <!-- Nav Item - Envios -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('administracion.envios') }}">
-                        <i class="fas fa-paper-plane"></i>
-                        <span>Envios</span></a>
                 </li>
 
                 <!-- Nav Item - Noticias -->

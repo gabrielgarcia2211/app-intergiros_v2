@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\FileService;
 use Illuminate\Support\Facades\Log;
@@ -9,9 +10,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Solicitudes\Solicitudes;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Ignition\Contracts\Solution;
+use App\Models\Administracion\TasaCambio;
 use App\Models\Administracion\TipoMoneda;
 use App\Models\Administracion\TipoFormulario;
+use App\Http\Requests\Perfil\UpdateUserRequest;
 use App\Http\Controllers\ResponseController as Response;
+use App\Http\Requests\Administracion\UpdateTasaCambioRequest;
 
 class AdministracionController extends Controller
 {
@@ -23,24 +27,19 @@ class AdministracionController extends Controller
         $this->fileService = $fileService;
     }
 
-    public function index()
-    {
-        return view('admin.index');
-    }
-
     public function tasas()
     {
         return view('admin.tasas');
     }
 
-    public function verificar()
-    {
-        return view('admin.verificacion');
-    }
-
     public function envios()
     {
         return view('admin.envios');
+    }
+
+    public function verificar()
+    {
+        return view('admin.verificacion');
     }
 
     public function noticias()
@@ -100,7 +99,7 @@ class AdministracionController extends Controller
             );
         } catch (\Exception $e) {
             Log::debug($e->getMessage());
-            return Response::sendError("Ocurrio un error inesperado al intentar procesar la solicitud", 500);
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
         }
     }
 
@@ -159,5 +158,72 @@ class AdministracionController extends Controller
             Log::debug($ex->getMessage());
             return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
         }
+    }
+
+    public function getTasaCambio()
+    {
+        $tipo_formulario = TipoFormulario::select([
+            'tipo_formulario.id as tipo_formulario_id',
+            'tipo_formulario.descripcion',
+            'tipo_formulario.codigo',
+            'tasa_cambio.id as tasa_cambio_id',
+            'tasa_cambio.valor',
+        ])
+            ->join('tasa_cambio', 'tasa_cambio.tipo_formulario_id', 'tipo_formulario.id')
+            ->distinct()
+            ->get();
+
+        return $tipo_formulario;
+    }
+
+    public function updateTasaCambio(UpdateTasaCambioRequest $request)
+    {
+        try {
+            $tasa = TasaCambio::find($request->input('tasa_id'));
+            $tasa->valor = $request->input('new_value');
+            $tasa->save();
+            return Response::sendResponse($tasa, 'Registro guardado con exito.');
+        } catch (\Exception $ex) {
+            Log::debug($ex->getMessage());
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
+        }
+    }
+
+    public function getUsersVerificados(Request $request)
+    {
+        try {
+            $query = $this->setQueryUsersVerificados();
+            return renderDataTable(
+                $query,
+                $request,
+                [],
+                [
+                    'users.id',
+                    'users.name as user',
+                    'users.apellidos as apellidos_user',
+                    'users.email as email_user',
+                    'users.documento as documento_user',
+                    'users.telefono as telefono_user',
+                    'users.path_selfie as path_selfie_user',
+                    'users.path_documento as path_documento_user',
+                    'users.verificado',
+                ]
+            );
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
+        }
+    }
+
+    private function setQueryUsersVerificados()
+    {
+        return User::query();
+    }
+
+    public function updateUserVerificado(User $User, Request $request)
+    {
+        return $User->update([
+            'verificado' => $request->input('estado_id')
+        ]);
     }
 }

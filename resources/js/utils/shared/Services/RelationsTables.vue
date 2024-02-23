@@ -3,6 +3,8 @@ export default {
     methods: {
         $relationTableSolicitudes(selector) {
             switch (selector) {
+                case "user":
+                    return "users.name";
                 case "apellidos_user":
                     return "users.apellidos";
                 case "email_user":
@@ -73,6 +75,28 @@ export default {
                     return "productos.rango_max";
                 case "estado_actual":
                     return "mc_estado.name";
+                default:
+                    return selector;
+            }
+        },
+        $relationTableUsuariosVerificados(selector) {
+            switch (selector) {
+                case "user":
+                    return "users.name";
+                case "apellidos_user":
+                    return "users.apellidos";
+                case "email_user":
+                    return "users.email";
+                case "documento_user":
+                    return "users.documento";
+                case "telefono_user":
+                    return "users.telefono";
+                case "path_selfie_user":
+                    return "users.path_selfie";
+                case "path_documento_user":
+                    return "users.path_documento";
+                case "verificado":
+                    return "users.verificado";
                 default:
                     return selector;
             }

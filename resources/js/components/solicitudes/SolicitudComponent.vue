@@ -763,14 +763,6 @@
                             {{ data.estado_actual }}
                         </span>
                     </template>
-                    <template #filter="{ filterModel }">
-                        <InputText
-                            v-model="filterModel.value"
-                            type="text"
-                            class="p-column-filter"
-                            placeholder="Buscar por estado actual"
-                        />
-                    </template>
                 </Column>
             </DataTable>
         </div>
