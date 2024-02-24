@@ -4,7 +4,6 @@ $(document).ready(async function () {
     async function init() {
         var notificaciones = await getNotificaciones();
         var noticias = await getNoticias();
-        console.log(noticias)
         mostrarNotificaciones(notificaciones);
         mostrarNoticias(noticias);
     }

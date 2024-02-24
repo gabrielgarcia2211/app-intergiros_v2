@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Administracion;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\FileService;
+use App\Models\Noticias\Noticia;
+use Illuminate\Support\Facades\DB;
+use App\Models\Historial\Historial;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Noticias\UserNoticia;
 use App\Models\Solicitudes\Solicitudes;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Ignition\Contracts\Solution;
@@ -14,6 +18,7 @@ use App\Models\Administracion\TasaCambio;
 use App\Models\Administracion\TipoMoneda;
 use App\Models\Administracion\TipoFormulario;
 use App\Http\Requests\Perfil\UpdateUserRequest;
+use App\Http\Requests\Noticias\CreateNoticiaRequest;
 use App\Http\Controllers\ResponseController as Response;
 use App\Http\Requests\Administracion\UpdateTasaCambioRequest;
 
@@ -68,7 +73,6 @@ class AdministracionController extends Controller
                     'solicitudes.monto_a_pagar',
                     'solicitudes.monto_a_recibir',
                     'solicitudes.revisiones',
-                    'solicitudes.imagen_comprobante',
                     'solicitudes.voucher_referencia',
                     'tipo_formulario.descripcion as tipo_formulario',
                     'tipo_moneda.tipo as tipo_moneda',
@@ -95,6 +99,7 @@ class AdministracionController extends Controller
                     'productos.rango_max as rango_max_producto',
                     'mc_estado.name as estado_actual',
                     'mc_estado.id as estado_actual_id',
+                    DB::raw('CONCAT(historial.solicitud_id) AS historial_id')
                 ]
             );
         } catch (\Exception $e) {
@@ -118,13 +123,15 @@ class AdministracionController extends Controller
     private function setQuery()
     {
         return Solicitudes::query()
+            ->distinct()
             ->leftJoin('tipo_formulario', 'tipo_formulario.id', '=', 'solicitudes.tipo_formulario_id')
             ->leftJoin('tipo_moneda', 'tipo_moneda.id', '=', 'solicitudes.tipo_moneda_id')
             ->leftJoin('terceros as ter_b', 'ter_b.id', '=', 'solicitudes.beneficiario_id')
             ->leftJoin('terceros as ter_d', 'ter_d.id', '=', 'solicitudes.depositante_id')
             ->leftJoin('productos', 'productos.id', '=', 'solicitudes.producto_id')
             ->leftJoin('users', 'users.id', '=', 'solicitudes.user_id')
-            ->leftJoin('master_combos as mc_estado', 'mc_estado.id', '=', 'solicitudes.estado_id');
+            ->leftJoin('master_combos as mc_estado', 'mc_estado.id', '=', 'solicitudes.estado_id')
+            ->leftJoin('historial', 'historial.solicitud_id', '=', 'solicitudes.id');
     }
 
     public function getPathReal(Request $request)
@@ -225,5 +232,43 @@ class AdministracionController extends Controller
         return $User->update([
             'verificado' => $request->input('estado_id')
         ]);
+    }
+
+    public function createNoticia(CreateNoticiaRequest $request)
+    {
+        try {
+            $noticia = new Noticia();
+            $noticia->titulo = $request->input('titulo');
+            $noticia->referencia = $request->input('referencia');
+            $noticia->descripcion = $request->input('descripcion');
+            $noticia->save();
+            self::upUserNoticias($noticia);
+            return Response::sendResponse($noticia, 'Registro guardado con exito.');
+        } catch (\Exception $ex) {
+            Log::debug($ex->getMessage());
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
+        }
+    }
+
+    private static function upUserNoticias($noticia)
+    {
+        $listUsers = User::all()->pluck('id')->toArray();
+
+        $registros = [];
+        foreach ($listUsers as $userId) {
+            $registros[] = [
+                'user_id' => $userId,
+                'noticia_id' => $noticia->id,
+                'visible' => 0
+            ];
+        }
+        UserNoticia::insert($registros);
+    }
+
+    public function getHistorial($solicitud_id)
+    {
+        $response = Historial::where('solicitud_id', $solicitud_id)->get();
+        $opciones = $response->pluck('opciones');
+        return $opciones->toArray();
     }
 }

@@ -44,9 +44,11 @@ app.mixin(shared.RelationsTables);
 import SolicitudComponent from './components/solicitudes/SolicitudComponent.vue';
 import TasaComponent from './components/tasas/TasaComponent.vue';
 import VerificacionComponent from './components/verificacion/VerificacionComponent.vue';
+import NoticiaComponent from './components/noticias/NoticiaComponent.vue';
 app.component('solicitud-component', SolicitudComponent);
 app.component('tasas-component', TasaComponent);
 app.component('verificacion-component', VerificacionComponent);
+app.component('noticia-component', NoticiaComponent);
 
 // Anexo de componentes de vuejs
 app.component("InputText", InputText);

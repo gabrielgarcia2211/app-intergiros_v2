@@ -272,25 +272,6 @@
                 </Column>
 
                 <Column
-                    field="imagen_comprobante"
-                    header="Imagen Comprobante"
-                    sortable
-                    :showClearButton="false"
-                    style="min-width: 200px"
-                >
-                    <template #body="{ data }">
-                        <button
-                            @click="
-                                mostrarImagen(data.imagen_comprobante, false)
-                            "
-                            class="preview"
-                        >
-                            <i class="pi pi-eye"></i>
-                        </button>
-                    </template>
-                </Column>
-
-                <Column
                     field="tipo_formulario"
                     header="Tipo Formulario"
                     sortable
@@ -764,6 +745,31 @@
                         </span>
                     </template>
                 </Column>
+
+                <Column
+                    field="historial_id"
+                    header="Reclamos"
+                    sortable
+                    :showClearButton="false"
+                    style="min-width: 60px"
+                >
+                    <template #body="{ data }">
+                        <span
+                            :style="getReclamoBackground(data.historial_id)"
+                            style="
+                                cursor: pointer;
+                                display: block;
+                                padding: 1px;
+                                text-align: center;
+                                border-radius: 10px;
+                            "
+                            @click="onRowActionReclamo(data.historial_id)"
+                        >
+                        {{ data.historial_id }}
+                            {{ getReclamoSolicitud(data.historial_id) }}
+                        </span>
+                    </template>
+                </Column>
             </DataTable>
         </div>
     </div>
@@ -786,7 +792,7 @@ export default {
             filters: null,
             filtroInfo: [],
             loading: true,
-            manageModista: true,
+            manageSolicitud: null,
             dataForm: {},
             rpTipoModista: null,
             visibleModal: false,
@@ -879,12 +885,6 @@ export default {
                     ],
                 },
                 revisiones: {
-                    clear: false,
-                    constraints: [
-                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-                    ],
-                },
-                imagen_comprobante: {
                     clear: false,
                     constraints: [
                         { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -1186,18 +1186,45 @@ export default {
         getEstadoBackground(estado) {
             switch (estado) {
                 case "INICIADO":
-                    return { backgroundColor: "blue", color: "white" }; // Fondo azul y texto blanco para "INICIADO"
+                    return { backgroundColor: "blue", color: "white" };
                 case "PENDIENTE":
-                    return { backgroundColor: "orange", color: "white" }; // Fondo naranja y texto blanco para "PENDIENTE"
+                    return { backgroundColor: "orange", color: "white" };
                 case "EN PROCESO":
-                    return { backgroundColor: "green", color: "white" }; // Fondo verde y texto blanco para "EN PROCESO"
+                    return { backgroundColor: "green", color: "white" };
                 case "ENTREGADO":
-                    return { backgroundColor: "purple", color: "white" }; // Fondo púrpura y texto blanco para "ENTREGADO"
+                    return { backgroundColor: "purple", color: "white" };
                 case "CANCELADO":
-                    return { backgroundColor: "red", color: "white" }; // Fondo rojo y texto blanco para "CANCELADO"
+                    return { backgroundColor: "red", color: "white" };
                 default:
-                    return {}; // Para cualquier otro estado, no aplicar estilos adicionales
+                    return {};
             }
+        },
+        getReclamoBackground(reclamo) {
+            if (reclamo == undefined || reclamo == null) {
+                return { backgroundColor: "#7a7d7d", color: "white" };
+            } else {
+                return { backgroundColor: "#ca3c25", color: "white" };
+            }
+        },
+        getReclamoSolicitud(reclamo) {
+            if (reclamo == undefined || reclamo == null) {
+                return "N/A";
+            } else {
+                return "VER";
+            }
+        },
+        onRowActionReclamo(historial_id) {
+            if (historial_id == undefined || historial_id == null) {
+                return;
+            }
+            this.$axios
+                .get("/admin/solicitudes/historial/"+ historial_id)
+                .then((response) => {
+                    console.log(response.data)
+                })
+                .catch((error) => {
+                    this.$readStatusHttp(error);
+                });
         },
     },
 };

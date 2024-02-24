@@ -12,6 +12,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         Route::get('/list', [AdministracionController::class, 'getSolicitudes'])->name('solicitudes.list');
         Route::post('/path/img', [AdministracionController::class, 'getPathReal'])->name('solicitudes.list');
         Route::post('/up/voucher', [AdministracionController::class, 'createOrUpdateVoucher'])->name('solicitudes.list');
+        Route::get('/historial/{id}', [AdministracionController::class, 'getHistorial'])->name('historial.list');
     });
     Route::group(['prefix' => 'tasas'], function () {
         Route::get('/list', [AdministracionController::class, 'getTasaCambio'])->name('tasas.list');
@@ -20,5 +21,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::group(['prefix' => 'users'], function () {
         Route::get('/list', [AdministracionController::class, 'getUsersVerificados'])->name('tasas.list');
         Route::post('/update/{user}', [AdministracionController::class, 'updateUserVerificado'])->name('tasas.update');
+    });
+    Route::group(['prefix' => 'noticias'], function () {
+        Route::post('/create', [AdministracionController::class, 'createNoticia'])->name('noticias.create');
     });
 });

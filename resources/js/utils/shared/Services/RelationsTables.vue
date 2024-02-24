@@ -25,8 +25,6 @@ export default {
                     return "solicitudes.monto_a_recibir";
                 case "revisiones":
                     return "solicitudes.revisiones";
-                case "imagen_comprobante":
-                    return "solicitudes.imagen_comprobante";
                 case "tipo_formulario":
                     return "tipo_formulario.descripcion";
                 case "tipo_moneda":

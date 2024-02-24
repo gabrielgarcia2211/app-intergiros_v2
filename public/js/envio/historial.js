@@ -552,12 +552,14 @@ $(document).ready(function () {
     });
 
     window.viewComprobante = function (element, data) {
-        let path = data.imagen_comprobante;
+        let path = "comprobantes/" + data.voucher_referencia;
         let header = {
             id: data.id,
             fecha: data.created_at,
             correo: data.user.email,
         };
+
+        console.log(data)
 
         showImageAlert(path, header);
     };

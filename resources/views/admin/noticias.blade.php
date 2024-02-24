@@ -9,29 +9,7 @@
     </div>
     <hr>
     <!-- Contenido principal -->
-    <div class="row mt-5">
-        <div class="col-md-6">
-            <div class="form-group">
-                <input type="text" class="form-control form-control-user" id="asunto" aria-describedby="asuntoHelp"
-                    placeholder="Asunto">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <select id="tipoNoticia" class="form-control form-control-user">
-                    <option value="" selected>Tipo noticia</option>
-                    <option value="">Noticias</option>
-                    <option value="">Promiciones</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <textarea class="form-control form-control-user" id="mensaje" placeholder="Mensaje"></textarea>
-    </div>
-    <div class="text-center mt-3">
-        <button class="btn btn-primary btn-user btn-block">Enviar</button>
-    </div>
+    <noticia-component></noticia-component>
 
 </div>
 @endsection
