@@ -546,3 +546,94 @@ function toUpperCaseInput() {
 inputs.forEach(function (input) {
     input.addEventListener("input", toUpperCaseInput);
 });
+
+/* usdt */
+var usdtBeneficiario = document.getElementById('usdtBeneficiario');
+var usdtDepositante = document.getElementById('usdtDepositante');
+
+var selectUsdt1 = document.getElementsByClassName('selectUsdt1');
+var selectUsdt2 = document.getElementsByClassName('selectUsdt2');
+
+var selectBeneficiarioUsdt = document.getElementById('selectBeneficiarioUsdt');
+var selectDepositanteUsdt = document.getElementById('selectDepositanteUsdt');
+
+var elementosUsdt1 = document.getElementsByClassName('inputUsdt1');
+var elementosUsdt2 = document.getElementsByClassName('inputUsdt2');
+
+var usdtExistente1 = document.getElementById('usdtExistente1');
+var usdtExistente2 = document.getElementById('usdtExistente2');
+var usdtNueva1 = document.getElementById('usdtNueva1');
+var usdtNueva2 = document.getElementById('usdtNueva2');
+
+var adjuntarDocumentoUsdt = document.getElementById('adjuntarDocumentoUsdt');
+
+
+function activarBeneficiarioUsdt() {
+    for (var i = 0; i < elementosUsdt1.length; i++) {
+        elementosUsdt1[i].removeAttribute('disabled');
+        elementosUsdt1[i].value = '';
+    }
+    for (var j = 0; j < selectUsdt1 .length; j++) {
+        selectUsdt1[j].removeAttribute('disabled');
+    }
+    selectBeneficiarioUsdt.value = '0'
+    usdtExistente1.style.display = "none"
+    usdtNueva1.style.display = "block"
+    usdtBeneficiario.style.display = 'block';
+}
+
+function activarDepositanteUsdt() {
+    for (var i = 0; i < elementosUsdt2.length; i++) {
+        elementosUsdt2[i].removeAttribute('disabled');
+        elementosUsdt2[i].value = '';
+    }
+    for (var j = 0; j < selectUsdt2.length; j++) {
+        selectUsdt2[j].removeAttribute('disabled');
+    }
+    selectDepositanteUsdt.value = '0'
+    usdtExistente2.style.display = "none"
+    usdtNueva2.style.display = "block"
+    adjuntarDocumentoUsdt.removeAttribute('disabled');
+    adjuntarDocumentoUsdt.style.display = "block"
+    usdtDepositante.style.display = 'block';
+}
+
+function verificarSelectUsdt1() {
+    if (selectBeneficiarioUsdt.value !== '') {
+        // Muestra el div si la opción no es la por defecto
+        for (var i = 0; i < elementosUsdt1.length; i++) {
+            elementosUsdt1[i].setAttribute('disabled', 'disabled');
+            elementosUsdt1[i].value = '';
+        }
+        for (var j = 0; j < selectUsdt1.length; j++) {
+            selectUsdt1[j].setAttribute('disabled', 'disabled');
+        }
+        usdtNueva1.style.display = 'none';
+        usdtExistente1.style.display = 'block';
+        usdtBeneficiario.style.display = 'block';
+    } else {
+        // Oculta el div si la opción es la por defecto
+        usdtBeneficiario.style.display = 'none';
+    }
+}
+
+function verificarSelectUsdt2() {
+    if (selectDepositanteUsdt.value !== '') {
+        // Muestra el div si la opción no es la por defecto
+        for (var i = 0; i < elementosUsdt2.length; i++) {
+            elementosUsdt2[i].setAttribute('disabled', 'disabled');
+            elementosUsdt2[i].value = '';
+        }
+        for (var j = 0; j < selectUsdt2.length; j++) {
+            selectUsdt2[j].setAttribute('disabled', 'disabled');
+        }
+        usdtNueva2.style.display = 'none';
+        adjuntarDocumentoUsdt.setAttribute('disabled', 'disabled');
+        usdtExistente2.style.display = 'block';
+        usdtDepositante.style.display = 'block';
+    } else {
+        // Oculta el div si la opción es la por defecto
+        usdtDepositante.style.display = 'none';
+    }
+}
+/* usdt */

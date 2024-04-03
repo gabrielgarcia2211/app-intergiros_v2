@@ -179,7 +179,7 @@
             </div>
         </div>
     </div>
-
+    <!-- paypal -->
     <div class="panel container mt-5" id="panel-paypal" style="display: none;">
         <div class="text-center">
             <p><strong>Monto minimo:</strong> $5USD+comisión PayPal($5,60USD)</p>
@@ -412,6 +412,217 @@
                 disabled>Enviar</button>
         </div>
     </div>
+    <!-- paypal -->
+
+    <!-- usdt -->
+    <div class="container mt-5" id="panel-envios">
+        <div class="text-center">
+            <p><strong>Monto minimo:</strong> $5USD+comisión PayPal($5,60USD)</p>
+            <p><strong>Tiempo aproximado de espera:</strong> 8 horas laborales</p>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <select class="form-control input-registro" id="selectBeneficiarioUsdt" onchange="verificarSelectUsdt1()">
+                    <option value="0" selected disabled>Beneficiarios afiliados</option>
+                    <option value="1">Nombre 1</option>
+                    <option value="2">Nombre 2</option>
+                    <option value="3">Nombre 3</option>
+                </select>
+                <div class="text-center">
+                    <p onclick="activarBeneficiarioUsdt()" style="color: #0035aa; cursor: pointer; text-decoration: underline;"><i
+                            class="fas fa-plus"></i>
+                        Afiliar nuevo beneficiario</p>
+                </div>
+
+                <div class="text-center mt-4" id="usdtBeneficiario" style="display: none;">
+                    <div class="form-group">
+                        <input type="text" class="form-control input-registro inputUsdt1" placeholder="Alias" id="usdtAliasBeneficiario" name="usdtAliasBeneficiario">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-registro inputUsdt1"
+                            placeholder="Nombre y apellidos" id="usdtNombreBeneficiario" name="usdtNombreBeneficiario">
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select class="form-control input-indicativo selectUsdt1" id="usdtTipodocBeneficiario" name="usdtTipodocBeneficiario">
+                                    <option value="1">T</option>
+                                    <option value="2">CC</option>
+                                    <option value="3">A</option>
+                                    <!-- Agrega más opciones aquí -->
+                                </select>
+                            </div>
+                            <input type="number" class="form-control input-telefono inputUsdt1"
+                                placeholder="Número documento" id="usdtDocBeneficiario" name="usdtDocBeneficiario">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control input-registro selectUsdt1" id="usdtBancoBeneficiario" name="usdtBancoBeneficiario">
+                            <option value="0" selected disabled>Banco</option>
+                            <option value="1">Banco 1</option>
+                            <option value="2">Banco 2</option>
+                            <option value="3">Banco 3</option>
+                            <!-- Agrega más opciones aquí -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select class="form-control input-indicativo selectUsdt1" id="usdtTipocuentaBeneficiario" name="usdtTipocuentaBeneficiario">
+                                    <option value="1">T</option>
+                                    <option value="2">CC</option>
+                                    <option value="3">A</option>
+                                    <!-- Agrega más opciones aquí -->
+                                </select>
+                            </div>
+                            <input type="number" class="form-control input-telefono inputUsdt1"
+                                placeholder="Número cuenta" id="usdtCuentaBeneficiario" name="usdtCuentaBeneficiario">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-registro inputUsdt1" id="usdtMovilBeneficiario" name="usdtMovilBeneficiario"
+                            placeholder="Pago móvil">
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="#" style="color: #0035aa;" id="usdtNueva1">Guardar</a>
+                        <div id="usdtExistente1" style="display: none;">
+                            <div class="row">
+                                <div class="col-6">
+                                    <a href="#" style="color: #0035aa;">Editar</a>
+                                </div>
+                                <div class="col-6">
+                                    <i class="fas fa-trash-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <select class="form-control input-registro" id="selectDepositanteUsdt" onchange="verificarSelectUsdt2()">
+                    <option value="0" selected disabled>Depositantes afiliados</option>
+                    <option value="1">Nombre 1</option>
+                    <option value="2">Nombre 2</option>
+                    <option value="3">Nombre 3</option>
+                </select>
+                <div class="text-center">
+                    <p onclick="activarDepositanteUsdt()" style="color: #0035aa; cursor: pointer; text-decoration: underline;"><i
+                            class="fas fa-plus"></i>
+                        Afiliar nuevo depositante</p>
+                </div>
+
+                <div class="text-center mt-4" id="usdtDepositante" style="display: none;">
+                    <div class="form-group">
+                        <input type="text" class="form-control input-registro inputUsdt2" placeholder="Alias" id="usdtAliasDepositante" name="usdtAliasDepositante">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-registro inputUsdt2" id="usdtNombreDepositante" name="usdtNombreDepositante"
+                            placeholder="Nombre y apellidos">
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select class="form-control input-indicativo selectUsdt2" id="usdtTipodocDepositante" name="usdtTipodocDepositante">
+                                    <option value="1">T</option>
+                                    <option value="2">CC</option>
+                                    <option value="3">A</option>
+                                    <!-- Agrega más opciones aquí -->
+                                </select>
+                            </div>
+                            <input type="number" class="form-control input-telefono inputUsdt2"
+                                placeholder="Número documento" id="usdtDocDepositante" name="usdtDocDepositante">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control input-registro inputUsdt2" id="usdtEmailDepositante" name="usdtEmailDepositante"
+                            placeholder="Email Binance Pay de pago">
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select class="form-control input-indicativo selectUsdt2" id="usdtIndicativoDepositante" name="usdtIndicativoDepositante">
+                                    <option value="1">+57</option>
+                                    <option value="2">+58</option>
+                                    <option value="3">+51</option>
+                                    <!-- Agrega más opciones aquí -->
+                                </select>
+                            </div>
+                            <input type="number" class="form-control input-telefono inputUsdt2"
+                                placeholder="Número celular" id="usdtCelularDepositante" name="usdtCelularDepositante">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control input-registro selectUsdt2" id="usdtPaisDepositante" name="usdtPaisDepositante">
+                            <option value="0" selected disabled>País</option>
+                            <option value="1">Colombia</option>
+                            <option value="2">Venezuela</option>
+                            <option value="3">Perú</option>
+                            <!-- Agrega más opciones aquí -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-file text-left">
+                            <input type="file" class="custom-file-input" id="adjuntarDocumentoUsdt" name="adjuntarDocumentoUsdt">
+                            <label class="custom-file-label input-registro" for="inputGroupFile01"
+                                id="labelFile02">Adjuntar foto documento</label>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="#" style="color: #0035aa;" id="usdtNueva2">Guardar</a>
+                        <div id="usdtExistente2" style="display: none;">
+                            <div class="row">
+                                <div class="col-6">
+                                    <a href="#" style="color: #0035aa;">Editar</a>
+                                </div>
+                                <div class="col-6">
+                                    <i class="fas fa-trash-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- monto -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="text-center mt-4">
+                    <div class="form-group">
+                        <input type="number" class="form-control input-registro" id="nombre"
+                            placeholder="Monto a cambiar">
+                        <div class="mt-2">
+                            <p style="color: #0035aa;"><strong>Monto a pagar: $0.00 USD</strong></p>
+                            <p style="color: #0035aa;"><strong>Monto a recibir: 0.00 BS.</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary" type="button" id="realizarPago" style="width: 80%;"
+                        disabled>Realizar
+                        pago</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                    <p>Acepto los <a href="#" style="color: #0035aa;"><strong>Terminos y Condiciones</strong></a> del
+                        servicio de intergiros.</p>
+                </label>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            <button class="btn btn-primary" type="button" id="tasas-venezuela" style="width: 25%;"
+                disabled>Enviar</button>
+        </div>
+    </div>
+    <!-- usdt -->
     <br><br><br><br><br>
 
     <!-- FOOTER -->
