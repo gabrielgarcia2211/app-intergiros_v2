@@ -25,7 +25,7 @@ class UpdateVerificationRequest extends FormRequest
     {
         return [
             'formVerificacion' => 'required|array',
-            'formVerificacion.documento' => 'required',
+            'formVerificacion.documento' => 'required|max:12',
             'formVerificacion.tipoDocumento' => 'required',
             'formVerificacion.inputGroupFile01' => 'required',
             'formVerificacion.inputGroupFile02' => 'required',
@@ -42,6 +42,7 @@ class UpdateVerificationRequest extends FormRequest
         return [
             'formVerificacion.required' => 'Falta informacion en la actualización de verificación.',
             'formVerificacion.documento.required' => 'El campo documento es requerido.',
+            'formVerificacion.documento.max' => 'El campo documento no puede tener más de 12 caracteres.',
             'formVerificacion.tipoDocumento.required' => 'El campo tipo de documento es requerido.',
             'formVerificacion.inputGroupFile01.required' => 'El campo selfie es requerido.',
             'formVerificacion.inputGroupFile02.required' => 'El campo foto del documento es requerido.',

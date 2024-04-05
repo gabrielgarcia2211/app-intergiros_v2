@@ -304,6 +304,7 @@ function hasExpired(expiresAt) {
 /** verificacion de usuario */
 function setVerificationDataFields(details) {
     $("#documento").val(details.data.documento);
+    $("#tipoDocumento").val(details.data.tipo_documento_id);
     if (details.data.path_selfie) {
         loadImageFromURL(details.data.path_selfie, "#inputGroupFile01");
     }

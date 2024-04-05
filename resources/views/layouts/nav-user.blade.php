@@ -53,8 +53,10 @@
                         <li class="nav-item dropdown" id="child5">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                                 aria-expanded="false">
-                                {{ Auth::user()->name }} <img src="{{ asset('img/perfil/verificado.png') }}" alt=""
-                                    width="20px">
+                                {{ Auth::user()->name }} 
+                                 @if(Auth()->user()->verificado)
+                                    <img src="{{ asset('img/perfil/verificado.png') }}" alt="" width="20px">
+                                @endif
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ route('perfil') }}"><i class="fas fa-user"></i> Mi Perfil</a>

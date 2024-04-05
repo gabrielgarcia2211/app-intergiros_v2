@@ -14,7 +14,14 @@ $(document).ready(async function () {
 });
 
 var FILE_MAX_SIZE = 10097152;
-var URL_SITE = "http://127.0.0.1:80";
+var PRODUCTION = 1;
+
+if(PRODUCTION){
+    var URL_SITE = "https://app.intergiros.com";
+}else {
+    var URL_SITE = "http://127.0.0.1:80";
+}
+
 
 // funcion para controlar errores
 function handleErrors(error) {

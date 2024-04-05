@@ -112,15 +112,12 @@ class UserController extends Controller
 
     public function updateVerification(UpdateVerificationRequest $request)
     {
-
         DB::beginTransaction();
-
         try {
             $form_verificacion = $request->all()['formVerificacion'];
             $user = User::find(Auth()->user()->id);
-
             $user->documento = $form_verificacion['documento'];
-
+            $user->tipo_documento_id = $form_verificacion['tipoDocumento'];
             $this->fileService->deleteFile($user->path_selfie);
             $this->fileService->deleteFile($user->path_documento);
             $user->path_selfie = $this->fileService->saveFile($form_verificacion['inputGroupFile01'], Auth()->user()->id, 'verificacion');

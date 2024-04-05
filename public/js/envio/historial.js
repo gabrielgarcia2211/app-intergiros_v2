@@ -558,9 +558,6 @@ $(document).ready(function () {
             fecha: data.created_at,
             correo: data.user.email,
         };
-
-        console.log(data)
-
         showImageAlert(path, header);
     };
 
