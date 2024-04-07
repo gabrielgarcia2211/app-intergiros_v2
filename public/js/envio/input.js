@@ -58,10 +58,11 @@ $(document).ready(async function () {
             $("#inputGroupSelect01").val(savedSelection);
             switch (savedSelection) {
                 case "1":
+                    initServicePaypal();
                     $("#panel-paypal").show();
                     break;
-                case "2":
-                    //$("#panel-otro").show();
+                case "6":
+                    $("#panel-usdt").show();
                     break;
                 default:
                     break;

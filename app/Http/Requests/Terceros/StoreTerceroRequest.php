@@ -26,16 +26,31 @@ class StoreTerceroRequest extends FormRequest
     {
         switch (request('code')) {
             case 'TB':
-                return [
-                    'paypalAliasBeneficiario' => 'required',
-                    'paypalNombreBeneficiario' => 'required',
-                    'paypalTipoDocumentoBeneficiario' => 'required',
-                    'paypalDocumentoBeneficiario' => 'required|integer',
-                    'paypalBancoBeneficiario' => 'required',
-                    'paypalCuentaBeneficiario' => 'required',
-                    'paypalPagoMovilBeneficiario' => 'required',
-                ];
-                break;
+                switch (request('servicio')) {
+                    case 'TP-01':
+                        return [
+                            'paypalAliasBeneficiario' => 'required',
+                            'paypalNombreBeneficiario' => 'required',
+                            'paypalTipoDocumentoBeneficiario' => 'required',
+                            'paypalDocumentoBeneficiario' => 'required|integer',
+                            'paypalBancoBeneficiario' => 'required',
+                            'paypalCuentaBeneficiario' => 'required',
+                            'paypalPagoMovilBeneficiario' => 'required',
+                        ];
+                        break;
+                    case 'TP-02':
+                        return [
+                            'usdtAliasBeneficiario' => 'required',
+                            'usdtNombreBeneficiario' => 'required',
+                            'usdtTipodocBeneficiario' => 'required',
+                            'usdtDocBeneficiario' => 'required|integer',
+                            'usdtBancoBeneficiario' => 'required',
+                            'usdtCuentaBeneficiario' => 'required',
+                            'usdtMovilBeneficiario' => 'required',
+                        ];
+                        break;
+                }
+
             case 'TD':
                 return [
                     'paypalAliasDepositante' => 'required',

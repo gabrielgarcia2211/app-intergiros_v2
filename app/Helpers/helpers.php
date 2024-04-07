@@ -6,16 +6,30 @@ function mapTipoTercero($data)
 {
     switch ($data['code']) {
         case 'TB':
-            return [
-                'alias' => $data['paypalAliasBeneficiario'],
-                'nombre' => $data['paypalNombreBeneficiario'],
-                'tipo_documento_id' => $data['paypalTipoDocumentoBeneficiario'],
-                'documento' => $data['paypalDocumentoBeneficiario'],
-                'banco' => $data['paypalBancoBeneficiario'],
-                'cuenta' => $data['paypalCuentaBeneficiario'],
-                'pago_movil' => $data['paypalPagoMovilBeneficiario'],
-            ];
-            break;
+            switch (request('servicio')) {
+                case 'TP-01':
+                    return [
+                        'alias' => $data['paypalAliasBeneficiario'],
+                        'nombre' => $data['paypalNombreBeneficiario'],
+                        'tipo_documento_id' => $data['paypalTipoDocumentoBeneficiario'],
+                        'documento' => $data['paypalDocumentoBeneficiario'],
+                        'banco' => $data['paypalBancoBeneficiario'],
+                        'cuenta' => $data['paypalCuentaBeneficiario'],
+                        'pago_movil' => $data['paypalPagoMovilBeneficiario'],
+                    ];
+                    break;
+                case 'TP-02':
+                    return [
+                        'alias' => $data['usdtAliasBeneficiario'],
+                        'nombre' => $data['usdtNombreBeneficiario'],
+                        'tipo_documento_id' => $data['usdtTipodocBeneficiario'],
+                        'documento' => $data['usdtDocBeneficiario'],
+                        'banco' => $data['usdtBancoBeneficiario'],
+                        'cuenta' => $data['usdtCuentaBeneficiario'],
+                        'pago_movil' => $data['usdtMovilBeneficiario'],
+                    ];
+                    break;
+            }
         case 'TD':
             return [
                 'alias' => $data['paypalAliasDepositante'],
@@ -72,7 +86,7 @@ function getCostRange($monto)
     return null;
 }
 
-function renderDataTable($query, $request , $with = [], $select = false)
+function renderDataTable($query, $request, $with = [], $select = false)
 {
     # Ordenamiento
     if ($request->has('sort') && !empty($request->input('sort')) && !empty($request->input('sort')[0])) {
@@ -85,7 +99,7 @@ function renderDataTable($query, $request , $with = [], $select = false)
     # Filtros
     if ($request->has('filters') && !empty($request->input('filters'))) {
         $filters = $request->input('filters');
-        for ($i = 0; $i < count($filters); $i ++) {
+        for ($i = 0; $i < count($filters); $i++) {
             $operator = getSqlOperator($filters[$i][1]);
             $value = getQueryValue($filters[$i][1], $filters[$i][2]);
             $query->where($filters[$i][0], $operator, $value);
@@ -142,4 +156,3 @@ function getQueryValue($operator, $value)
             return $value;
     }
 }
-

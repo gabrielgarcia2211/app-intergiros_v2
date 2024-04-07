@@ -39,7 +39,7 @@ $(document).ready(function () {
             },
             addDocumentoBeneficiario: {
                 required: "El campo documento es obligatorio",
-                integer: "Por favor, ingresa solo números enteros." 
+                integer: "Por favor, ingresa solo números enteros.",
             },
             addBancoBeneficiario: {
                 required: "El campo banco es obligatorio",
@@ -690,10 +690,12 @@ $(document).ready(function () {
         );
     }
 
-    function getTerceros(code) {
+    function getTerceros(code, servicio) {
         return new Promise(async (resolve, reject) => {
             try {
-                const response = await axios.get("/terceros/list/" + code);
+                const response = await axios.get(
+                    "/terceros/list/" + code + "/" + servicio
+                );
                 resolve(response.data);
             } catch (error) {
                 handleErrors(error);
@@ -702,7 +704,7 @@ $(document).ready(function () {
         });
     }
 
-    async function loadTerceros(){
+    async function loadTerceros() {
         var beneficiarios = await getTerceros("TB");
         $("#afiliadoEntregado option").not('[value="0"]').remove();
         $.each(beneficiarios, function (key, value) {

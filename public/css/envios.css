@@ -51,6 +51,13 @@ h3 {
     border-radius: 25px;
 }
 
+#panel-usdt {
+    background-color: #ededed;
+    padding: 25px;
+    border-radius: 25px;
+}
+
+
 .input-group {
     width: 80%;
     margin-left: auto;

@@ -1,4 +1,3 @@
-/* PayPal */
 var beneficiario = document.getElementById("beneficiario");
 var depositante = document.getElementById("depositante");
 
@@ -19,13 +18,47 @@ var adjuntarFoto = document.getElementById("adjuntarFoto");
 var formDataBeneficiario;
 var formDataDepositante;
 var tipoFormularioCode;
+
 var calculoFormulario = {
     monto_a_pagar: null,
     monto_a_recibir: null,
 };
+var depositantesPaypal = null;
+var beneficiariosPaypal = null;
 
-/* inputs paypal*/
 $(document).ready(async function () {
+    $("#inputGroupSelect01").change(function () {
+        var selectedValue = $(this).val();
+        var selectedOption = $(this).find("option:selected");
+        tipoFormularioCode = selectedOption.data("code");
+        localStorage.setItem("selectedService", $("#inputGroupSelect01").val());
+        $(".panel").hide();
+        switch (selectedValue) {
+            case "1":
+                initServicePaypal();
+                $("#panel-paypal").show();
+                break;
+            case "6":
+                initServiceUsdt();
+                $("#panel-usdt").show();
+                break;
+            default:
+                break;
+        }
+    });
+});
+
+/* ---- INICIO PAYPAL*/
+async function initServicePaypal() {
+    beneficiariosPaypal = null;
+    depositantesPaypal = null;
+    $("#selectBeneficiario")
+        .empty()
+        .append('<option value="0" selected>Selecciona</option>');
+    $("#selectDepositante")
+        .empty()
+        .append('<option value="0" selected>Selecciona</option>');
+
     $("#formBeneficiario").validate({
         rules: {
             paypalAliasBeneficiario: {
@@ -60,7 +93,7 @@ $(document).ready(async function () {
             },
             paypalDocumentoBeneficiario: {
                 required: "El campo documento es obligatorio",
-                integer: "Por favor, ingresa solo números enteros." 
+                integer: "Por favor, ingresa solo números enteros.",
             },
             paypalBancoBeneficiario: {
                 required: "El campo banco es obligatorio",
@@ -131,7 +164,7 @@ $(document).ready(async function () {
             },
             paypalDocumentoDepositante: {
                 required: "El campo documento es obligatorio",
-                integer: "Por favor, ingresa solo números enteros." 
+                integer: "Por favor, ingresa solo números enteros.",
             },
             paypalCorreoDepositante: {
                 required: "El campo correo depositante es obligatorio",
@@ -163,16 +196,16 @@ $(document).ready(async function () {
         },
     });
 
-    var beneficiarios = await getTerceros("TB");
-    var depositantes = await getTerceros("TD");
+    beneficiariosPaypal = await getTerceros("TB", "TP-01");
+    depositantesPaypal = await getTerceros("TD", "TP-01");
 
-    $.each(beneficiarios, function (key, value) {
+    $.each(beneficiariosPaypal, function (key, value) {
         $("#selectBeneficiario").append(
             $("<option>", { value: value.id }).text(value.nombre)
         );
     });
 
-    $.each(depositantes, function (key, value) {
+    $.each(depositantesPaypal, function (key, value) {
         $("#selectDepositante").append(
             $("<option>", { value: value.id }).text(value.nombre)
         );
@@ -186,26 +219,7 @@ $(document).ready(async function () {
         calculoFormulario.monto_a_recibir = calculo.data.monto_a_recibir;
         checkRealizarPago();
     });
-
-    $("#inputGroupSelect01").change(function () {
-        var selectedValue = $(this).val();
-        var selectedOption = $(this).find("option:selected");
-        tipoFormularioCode = selectedOption.data("code");
-        localStorage.setItem("selectedService", $("#inputGroupSelect01").val());
-        $(".panel").hide();
-        switch (selectedValue) {
-            case "1":
-                $("#panel-paypal").show();
-                break;
-            case "2":
-                //$("#panel-otro").show();
-                break;
-            default:
-                break;
-        }
-    });
-});
-/* fin input paypal */
+}
 
 function activarBeneficiario() {
     var editBeneficiario = document.getElementById("editBeneficiario");
@@ -255,6 +269,7 @@ function activarDepositante() {
     adjuntarFoto.style.display = "block";
     cuentaNueva2.style.display = "block";
     depositante.style.display = "block";
+    $("#btnPreview01").prop("disabled", true);
 }
 
 function activarEditDepositante() {
@@ -286,7 +301,7 @@ async function verificarSelect1() {
         cuentaExistente1.style.display = "block";
         beneficiario.style.display = "block";
 
-        var details = await showTercero("TB");
+        var details = await showTercero("TB", "TP-01");
         setFieldsBeneficiario(details);
         checkRealizarPago();
     } else {
@@ -310,152 +325,12 @@ async function verificarSelect2() {
         cuentaExistente2.style.display = "block";
         depositante.style.display = "block";
 
-        var details = await showTercero("TD");
+        var details = await showTercero("TD", "TP-01");
         setFieldsDepositante(details);
         checkRealizarPago();
     } else {
         // Oculta el div si la opción es la por defecto
         depositante.style.display = "none";
-    }
-}
-/* Fin PayPal */
-
-function getTerceros(code) {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const response = await axios.get("/terceros/list/" + code);
-            resolve(response.data);
-        } catch (error) {
-            handleErrors(error);
-            reject(error);
-        }
-    });
-}
-
-function showTercero(code) {
-    var selectedValue = mapTercero(code, "select");
-    return new Promise(async (resolve, reject) => {
-        try {
-            const response = await axios.get(
-                "/terceros/show/" + selectedValue + "/" + code
-            );
-            resolve(response.data);
-        } catch (error) {
-            handleErrors(error);
-            reject(error);
-        }
-    });
-}
-
-function addTercero(code, e) {
-    e.preventDefault();
-    if (mapTercero(code, "validateForm")) {
-        localStorage.setItem("actionService", true);
-        var formData = mapTercero(code, "dataForm");
-        formData.append("code", code);
-        axios
-            .post("/terceros/store", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-            .then((response) => {
-                showSuccess(response.data.message);
-                setTimeout(function () {
-                    location.reload();
-                }, 1500);
-            })
-            .catch((error) => {
-                handleErrors(error);
-            });
-    }
-}
-
-function setTercero(code) {
-    if (mapTercero(code, "validateForm")) {
-        localStorage.setItem("actionService", true);
-        const id = mapTercero(code, "dataFormVariable").id;
-        var formData = mapTercero(code, "dataForm");
-        formData.append("code", code);
-        axios
-            .post("/terceros/update/" + id, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-            .then((response) => {
-                showSuccess(response.data.message);
-                setTimeout(function () {
-                    location.reload();
-                }, 1500);
-            })
-            .catch((error) => {
-                handleErrors(error);
-            });
-    }
-}
-
-function deleteTercero(code) {
-    const id = mapTercero(code, "dataFormVariable").id;
-
-    Swal.fire({
-        title: "Estas seguro de eliminar el registro?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Si, eliminar!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            axios
-                .post("/terceros/destroy/" + id + "/" + code)
-                .then((response) => {
-                    showSuccess(response.data.message);
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1500);
-                })
-                .catch((error) => {
-                    handleErrors(error);
-                });
-        }
-    });
-}
-
-function mapTercero(code, tipo) {
-    switch (tipo) {
-        case "select":
-            return code == "TB"
-                ? $("#selectBeneficiario").val()
-                : $("#selectDepositante").val();
-            break;
-        case "validateForm":
-            return code == "TB"
-                ? $("#formBeneficiario").valid()
-                : $("#formDepositante").valid();
-            break;
-        case "dataForm":
-            return code == "TB"
-                ? new FormData($("#formBeneficiario")[0])
-                : new FormData($("#formDepositante")[0]);
-            break;
-        case "dataFormVariable":
-            return code == "TB" ? formDataBeneficiario : formDataDepositante;
-            break;
-        default:
-            break;
-    }
-}
-
-function checkRealizarPago() {
-    if (
-        formDataBeneficiario != null &&
-        formDataDepositante != null &&
-        $("#montoCambiar").val().trim() !== ""
-    ) {
-        $("#realizarPago").prop("disabled", false);
-    } else {
-        $("#realizarPago").prop("disabled", true);
     }
 }
 
@@ -490,6 +365,423 @@ function setFieldsDepositante(depositante) {
             "btnPreview01",
             depositante.data.path_documento
         );
+    }
+}
+/* FIN PAYPAL */
+
+var usdtBeneficiario = document.getElementById("usdtBeneficiario");
+var usdtDepositante = document.getElementById("usdtDepositante");
+
+var selectUsdt1 = document.getElementsByClassName("selectUsdt1");
+var selectUsdt2 = document.getElementsByClassName("selectUsdt2");
+
+var selectBeneficiarioUsdt = document.getElementById("selectBeneficiarioUsdt");
+var selectDepositanteUsdt = document.getElementById("selectDepositanteUsdt");
+
+var elementosUsdt1 = document.getElementsByClassName("inputUsdt1");
+var elementosUsdt2 = document.getElementsByClassName("inputUsdt2");
+
+var usdtExistente1 = document.getElementById("usdtExistente1");
+var usdtExistente2 = document.getElementById("usdtExistente2");
+var usdtNueva1 = document.getElementById("usdtNueva1");
+var usdtNueva2 = document.getElementById("usdtNueva2");
+
+var adjuntarDocumentoUsdt = document.getElementById("adjuntarDocumentoUsdt");
+
+var depositantesUsdt = null;
+var beneficiariosUsdt = null;
+
+/* ------- INICIO USDT */
+async function initServiceUsdt() {
+    beneficiariosUsdt = null;
+    depositantesUsdt = null;
+    $("#selectBeneficiarioUsdt")
+        .empty()
+        .append('<option value="0" selected>Selecciona</option>');
+    $("#selectDepositanteUsdt")
+        .empty()
+        .append('<option value="0" selected>Selecciona</option>');
+
+    $("#formBeneficiarioUsdt").validate({
+        rules: {
+            usdtAliasBeneficiario: {
+                required: true,
+            },
+            usdtNombreBeneficiario: {
+                required: true,
+            },
+            usdtDocumentoBeneficiario: {
+                required: true,
+                integer: true,
+            },
+            usdtBancoBeneficiario: {
+                required: true,
+            },
+            usdtCuentaBeneficiario: {
+                required: true,
+            },
+            usdtPagoMovilBeneficiario: {
+                required: true,
+            },
+            usdtTipoDocumentoBeneficiario: {
+                required: true,
+            },
+        },
+        messages: {
+            usdtAliasBeneficiario: {
+                required: "El campo alias es obligatorio",
+            },
+            usdtNombreBeneficiario: {
+                required: "El campo de nombre es obligatorio",
+            },
+            usdtDocumentoBeneficiario: {
+                required: "El campo documento es obligatorio",
+                integer: "Por favor, ingresa solo números enteros.",
+            },
+            usdtBancoBeneficiario: {
+                required: "El campo banco es obligatorio",
+            },
+            usdtCuentaBeneficiario: {
+                required: "El campo cuenta es obligatorio",
+            },
+            usdtPagoMovilBeneficiario: {
+                required: "El campo pago movil es obligatorio",
+            },
+            usdtTipoDocumentoBeneficiario: {
+                required: "El campo tipo documento es obligatorio",
+            },
+        },
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            error.addClass("invalid-feedback text-center");
+            element.closest(".form-group").append(error);
+        },
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid");
+        },
+    });
+    $("#formDepositanteUsdt").validate({
+        rules: {
+            paypalAliasDepositante: {
+                required: true,
+            },
+            paypalNombreDepositante: {
+                required: true,
+            },
+            paypalTipoDocumentoDepositante: {
+                required: true,
+            },
+            paypalDocumentoDepositante: {
+                required: true,
+                integer: true,
+            },
+            paypalCorreoDepositante: {
+                required: true,
+            },
+            paypalIndicativoDepositante: {
+                required: true,
+            },
+            paypalCelularDepositante: {
+                required: true,
+            },
+            paypalPaisDepositante: {
+                required: true,
+            },
+            adjuntarDocumento: {
+                required: true,
+                filesize: FILE_MAX_SIZE,
+            },
+        },
+        messages: {
+            paypalAliasDepositante: {
+                required: "El campo alias es obligatorio",
+            },
+            paypalNombreDepositante: {
+                required: "El campo de nombre es obligatorio",
+            },
+            paypalTipoDocumentoDepositante: {
+                required: "El campo tipo documento es obligatorio",
+            },
+            paypalDocumentoDepositante: {
+                required: "El campo documento es obligatorio",
+                integer: "Por favor, ingresa solo números enteros.",
+            },
+            paypalCorreoDepositante: {
+                required: "El campo correo depositante es obligatorio",
+            },
+            paypalIndicativoDepositante: {
+                required: "El campo celular es obligatorio",
+            },
+            paypalCelularDepositante: {
+                required: "El campo celular es obligatorio",
+            },
+            paypalPaisDepositante: {
+                required: "El campo pais es obligatorio",
+            },
+            adjuntarDocumento: {
+                required: "La foto del documento es obligatoria",
+                filesize: "El tamaño del archivo debe ser menor a 2MB",
+            },
+        },
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            error.addClass("invalid-feedback text-center");
+            element.closest(".form-group").append(error);
+        },
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid");
+        },
+    });
+
+    beneficiariosUsdt = await getTerceros("TB", "TP-02");
+    depositantesUsdt = await getTerceros("TD", "TP-02");
+
+    $.each(beneficiariosUsdt, function (key, value) {
+        $("#selectBeneficiarioUsdt").append(
+            $("<option>", { value: value.id }).text(value.nombre)
+        );
+    });
+
+    $.each(depositantesUsdt, function (key, value) {
+        $("#selectDepositanteUsdt").append(
+            $("<option>", { value: value.id }).text(value.nombre)
+        );
+    });
+}
+
+function activarBeneficiarioUsdt() {
+    for (var i = 0; i < elementosUsdt1.length; i++) {
+        elementosUsdt1[i].removeAttribute("disabled");
+        elementosUsdt1[i].value = "";
+    }
+    for (var j = 0; j < selectUsdt1.length; j++) {
+        selectUsdt1[j].removeAttribute("disabled");
+    }
+    selectBeneficiarioUsdt.value = "0";
+    usdtExistente1.style.display = "none";
+    usdtNueva1.style.display = "block";
+    usdtBeneficiario.style.display = "block";
+}
+
+function activarDepositanteUsdt() {
+    for (var i = 0; i < elementosUsdt2.length; i++) {
+        elementosUsdt2[i].removeAttribute("disabled");
+        elementosUsdt2[i].value = "";
+    }
+    for (var j = 0; j < selectUsdt2.length; j++) {
+        selectUsdt2[j].removeAttribute("disabled");
+    }
+    selectDepositanteUsdt.value = "0";
+    usdtExistente2.style.display = "none";
+    usdtNueva2.style.display = "block";
+    adjuntarDocumentoUsdt.removeAttribute("disabled");
+    adjuntarDocumentoUsdt.style.display = "block";
+    usdtDepositante.style.display = "block";
+}
+
+function verificarSelectUsdt1() {
+    if (selectBeneficiarioUsdt.value !== "") {
+        // Muestra el div si la opción no es la por defecto
+        for (var i = 0; i < elementosUsdt1.length; i++) {
+            elementosUsdt1[i].setAttribute("disabled", "disabled");
+            elementosUsdt1[i].value = "";
+        }
+        for (var j = 0; j < selectUsdt1.length; j++) {
+            selectUsdt1[j].setAttribute("disabled", "disabled");
+        }
+        usdtNueva1.style.display = "none";
+        usdtExistente1.style.display = "block";
+        usdtBeneficiario.style.display = "block";
+    } else {
+        // Oculta el div si la opción es la por defecto
+        usdtBeneficiario.style.display = "none";
+    }
+}
+
+function verificarSelectUsdt2() {
+    if (selectDepositanteUsdt.value !== "") {
+        // Muestra el div si la opción no es la por defecto
+        for (var i = 0; i < elementosUsdt2.length; i++) {
+            elementosUsdt2[i].setAttribute("disabled", "disabled");
+            elementosUsdt2[i].value = "";
+        }
+        for (var j = 0; j < selectUsdt2.length; j++) {
+            selectUsdt2[j].setAttribute("disabled", "disabled");
+        }
+        usdtNueva2.style.display = "none";
+        adjuntarDocumentoUsdt.setAttribute("disabled", "disabled");
+        usdtExistente2.style.display = "block";
+        usdtDepositante.style.display = "block";
+    } else {
+        // Oculta el div si la opción es la por defecto
+        usdtDepositante.style.display = "none";
+    }
+}
+/* Fin Usdt */
+
+/** ----------------------------------------------------------------------------- */
+function getTerceros(code, servicio) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios.get(
+                "/terceros/list/" + code + "/" + servicio
+            );
+            resolve(response.data);
+        } catch (error) {
+            handleErrors(error);
+            reject(error);
+        }
+    });
+}
+
+function showTercero(code, servicio) {
+    var selectedValue = mapTercero(code, "select", servicio);
+    return new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios.get(
+                "/terceros/show/" + selectedValue + "/" + code + "/" + servicio
+            );
+            resolve(response.data);
+        } catch (error) {
+            handleErrors(error);
+            reject(error);
+        }
+    });
+}
+
+function addTercero(code, servicio, e) {
+    e.preventDefault();
+    if (mapTercero(code, "validateForm", servicio)) {
+        localStorage.setItem("actionService", true);
+        var formData = mapTercero(code, "dataForm", servicio);
+        formData.append("code", code);
+        formData.append("servicio", servicio);
+        axios
+            .post("/terceros/store", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((response) => {
+                showSuccess(response.data.message);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
+            })
+            .catch((error) => {
+                handleErrors(error);
+            });
+    }
+}
+
+function setTercero(code, servicio) {
+    if (mapTercero(code, "validateForm", servicio)) {
+        localStorage.setItem("actionService", true);
+        const id = mapTercero(code, "dataFormVariable", servicio).id;
+        var formData = mapTercero(code, "dataForm", servicio);
+        formData.append("code", code);
+        axios
+            .post("/terceros/update/" + id, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((response) => {
+                showSuccess(response.data.message);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
+            })
+            .catch((error) => {
+                handleErrors(error);
+            });
+    }
+}
+
+function deleteTercero(code, servicio) {
+    const id = mapTercero(code, "dataFormVariable", servicio).id;
+
+    Swal.fire({
+        title: "Estas seguro de eliminar el registro?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminar!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios
+                .post("/terceros/destroy/" + id + "/" + code)
+                .then((response) => {
+                    showSuccess(response.data.message);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
+                })
+                .catch((error) => {
+                    handleErrors(error);
+                });
+        }
+    });
+}
+
+function mapTercero(code, tipo, servicio) {
+    let tipoForm = mapServicio(servicio);
+    switch (tipo) {
+        case "select":
+            return code == "TB"
+                ? $("#selectBeneficiario" + tipoForm).val()
+                : $("#selectDepositante" + tipoForm).val();
+            break;
+        case "validateForm":
+            return code == "TB"
+                ? $("#formBeneficiario" + tipoForm).valid()
+                : $("#formDepositante" + tipoForm).valid();
+            break;
+        case "dataForm":
+            return code == "TB"
+                ? new FormData($("#formBeneficiario" + tipoForm)[0])
+                : new FormData($("#formDepositante" + tipoForm)[0]);
+            break;
+        case "dataFormVariable":
+            return code == "TB"
+                ? formDataBeneficiario
+                : formDataDepositante;
+            break;
+        default:
+            break;
+    }
+}
+
+function mapServicio(servicio) {
+    switch (servicio) {
+        case "TP-01":
+            return "";
+            break;
+        case "TP-02":
+            return "Usdt";
+            break;
+        default:
+            return "";
+            break;
+    }
+}
+
+function checkRealizarPago() {
+    if (
+        formDataBeneficiario != null &&
+        formDataDepositante != null &&
+        $("#montoCambiar").val().trim() !== ""
+    ) {
+        $("#realizarPago").prop("disabled", false);
+    } else {
+        $("#realizarPago").prop("disabled", true);
     }
 }
 
@@ -546,94 +838,3 @@ function toUpperCaseInput() {
 inputs.forEach(function (input) {
     input.addEventListener("input", toUpperCaseInput);
 });
-
-/* usdt */
-var usdtBeneficiario = document.getElementById('usdtBeneficiario');
-var usdtDepositante = document.getElementById('usdtDepositante');
-
-var selectUsdt1 = document.getElementsByClassName('selectUsdt1');
-var selectUsdt2 = document.getElementsByClassName('selectUsdt2');
-
-var selectBeneficiarioUsdt = document.getElementById('selectBeneficiarioUsdt');
-var selectDepositanteUsdt = document.getElementById('selectDepositanteUsdt');
-
-var elementosUsdt1 = document.getElementsByClassName('inputUsdt1');
-var elementosUsdt2 = document.getElementsByClassName('inputUsdt2');
-
-var usdtExistente1 = document.getElementById('usdtExistente1');
-var usdtExistente2 = document.getElementById('usdtExistente2');
-var usdtNueva1 = document.getElementById('usdtNueva1');
-var usdtNueva2 = document.getElementById('usdtNueva2');
-
-var adjuntarDocumentoUsdt = document.getElementById('adjuntarDocumentoUsdt');
-
-
-function activarBeneficiarioUsdt() {
-    for (var i = 0; i < elementosUsdt1.length; i++) {
-        elementosUsdt1[i].removeAttribute('disabled');
-        elementosUsdt1[i].value = '';
-    }
-    for (var j = 0; j < selectUsdt1 .length; j++) {
-        selectUsdt1[j].removeAttribute('disabled');
-    }
-    selectBeneficiarioUsdt.value = '0'
-    usdtExistente1.style.display = "none"
-    usdtNueva1.style.display = "block"
-    usdtBeneficiario.style.display = 'block';
-}
-
-function activarDepositanteUsdt() {
-    for (var i = 0; i < elementosUsdt2.length; i++) {
-        elementosUsdt2[i].removeAttribute('disabled');
-        elementosUsdt2[i].value = '';
-    }
-    for (var j = 0; j < selectUsdt2.length; j++) {
-        selectUsdt2[j].removeAttribute('disabled');
-    }
-    selectDepositanteUsdt.value = '0'
-    usdtExistente2.style.display = "none"
-    usdtNueva2.style.display = "block"
-    adjuntarDocumentoUsdt.removeAttribute('disabled');
-    adjuntarDocumentoUsdt.style.display = "block"
-    usdtDepositante.style.display = 'block';
-}
-
-function verificarSelectUsdt1() {
-    if (selectBeneficiarioUsdt.value !== '') {
-        // Muestra el div si la opción no es la por defecto
-        for (var i = 0; i < elementosUsdt1.length; i++) {
-            elementosUsdt1[i].setAttribute('disabled', 'disabled');
-            elementosUsdt1[i].value = '';
-        }
-        for (var j = 0; j < selectUsdt1.length; j++) {
-            selectUsdt1[j].setAttribute('disabled', 'disabled');
-        }
-        usdtNueva1.style.display = 'none';
-        usdtExistente1.style.display = 'block';
-        usdtBeneficiario.style.display = 'block';
-    } else {
-        // Oculta el div si la opción es la por defecto
-        usdtBeneficiario.style.display = 'none';
-    }
-}
-
-function verificarSelectUsdt2() {
-    if (selectDepositanteUsdt.value !== '') {
-        // Muestra el div si la opción no es la por defecto
-        for (var i = 0; i < elementosUsdt2.length; i++) {
-            elementosUsdt2[i].setAttribute('disabled', 'disabled');
-            elementosUsdt2[i].value = '';
-        }
-        for (var j = 0; j < selectUsdt2.length; j++) {
-            selectUsdt2[j].setAttribute('disabled', 'disabled');
-        }
-        usdtNueva2.style.display = 'none';
-        adjuntarDocumentoUsdt.setAttribute('disabled', 'disabled');
-        usdtExistente2.style.display = 'block';
-        usdtDepositante.style.display = 'block';
-    } else {
-        // Oculta el div si la opción es la por defecto
-        usdtDepositante.style.display = 'none';
-    }
-}
-/* usdt */

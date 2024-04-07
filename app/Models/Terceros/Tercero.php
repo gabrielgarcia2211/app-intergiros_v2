@@ -24,6 +24,7 @@ class Tercero extends Model
         'celular',
         'pais_id',
         'pais_telefono_id',
+        'tipo_formulario_id',
         'path_documento',
     ];
 
