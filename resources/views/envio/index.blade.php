@@ -498,7 +498,13 @@
                             <div id="usdtExistente1" style="display: none;">
                                 <div class="row">
                                     <div class="col-6">
-                                        <a href="#" style="color: #0035aa;">Editar</a>
+                                        <button type="button" class="btn btn-primary" id="editUsdt1"
+                                            onclick="editBeneficiarioUsdt()"
+                                            style="background-color: transparent; border: none; color: #0035aa; margin-left: 22%;">Editar</button>
+                                        <button type="button" class="btn btn-primary" id="guardarEditUsdt1"
+                                            onclick=""
+                                            style="display: none;background-color: transparent; border: none; color: #0035aa; margin-left: 22%;">Guardar
+                                            Edicion</button>
                                     </div>
                                     <div class="col-6">
                                         <i class="fas fa-trash-alt"></i>
@@ -578,12 +584,19 @@
                                 <!-- Agrega más opciones aquí -->
                             </select>
                         </div>
-                        <div class="form-group">
-                            <div class="custom-file text-left">
-                                <input type="file" class="custom-file-input" id="adjuntarDocumentoUsdt"
-                                    name="adjuntarDocumentoUsdt">
-                                <label class="custom-file-label input-registro" for="adjuntarDocumentoUsdt"
-                                    id="labelFile02">Adjuntar foto documento</label>
+                        <div class="form-group" id="adjuntarFotoUsdt" name="adjuntarFotoUsdt" style="display: none;">
+                            <div class="input-group">
+                                <div class="custom-file text-left">
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-outline-secondary" type="button" id="btnPreview01">
+                                            <i class="fas fa-eye-slash"></i>
+                                        </button>
+                                    </div>
+                                    <input type="file" class="custom-file-input" id="adjuntarDocumentoUsdt"
+                                        name="adjuntarDocumentoUsdt">
+                                    <label class="custom-file-label input-registro" for="adjuntarDocumentoUsdt"
+                                        id="labelFile02">Adjuntar foto documento</label>
+                                </div>
                             </div>
                         </div>
                         <div class="text-center mt-3">
@@ -591,7 +604,13 @@
                             <div id="usdtExistente2" style="display: none;">
                                 <div class="row">
                                     <div class="col-6">
-                                        <a href="#" style="color: #0035aa;">Editar</a>
+                                        <button type="button" class="btn btn-primary" id="editUsdt2"
+                                            onclick="editDepositanteUsdt()"
+                                            style="background-color: transparent; border: none; color: #0035aa; margin-left: 22%;">Editar</button>
+                                        <button type="button" class="btn btn-primary" id="guardarEditUsdt2"
+                                            onclick=""
+                                            style="display: none;background-color: transparent; border: none; color: #0035aa; margin-left: 22%;">Guardar
+                                            Edicion</button>
                                     </div>
                                     <div class="col-6">
                                         <i class="fas fa-trash-alt"></i>
