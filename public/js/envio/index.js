@@ -386,7 +386,7 @@ var usdtExistente2 = document.getElementById("usdtExistente2");
 var usdtNueva1 = document.getElementById("usdtNueva1");
 var usdtNueva2 = document.getElementById("usdtNueva2");
 
-var adjuntarDocumentoUsdt = document.getElementById("adjuntarDocumentoUsdt");
+var adjuntarDocumentoUsdt = document.getElementById("adjuntarFotoUsdt");
 
 var depositantesUsdt = null;
 var beneficiariosUsdt = null;
@@ -410,7 +410,7 @@ async function initServiceUsdt() {
             usdtNombreBeneficiario: {
                 required: true,
             },
-            usdtDocumentoBeneficiario: {
+            usdtDocBeneficiario: {
                 required: true,
                 integer: true,
             },
@@ -420,10 +420,13 @@ async function initServiceUsdt() {
             usdtCuentaBeneficiario: {
                 required: true,
             },
+            usdtTipocuentaBeneficiario: {
+                required: true,
+            },
             usdtPagoMovilBeneficiario: {
                 required: true,
             },
-            usdtTipoDocumentoBeneficiario: {
+            usdtTipodocBeneficiario: {
                 required: true,
             },
         },
@@ -434,7 +437,7 @@ async function initServiceUsdt() {
             usdtNombreBeneficiario: {
                 required: "El campo de nombre es obligatorio",
             },
-            usdtDocumentoBeneficiario: {
+            usdtDocBeneficiario: {
                 required: "El campo documento es obligatorio",
                 integer: "Por favor, ingresa solo números enteros.",
             },
@@ -444,10 +447,13 @@ async function initServiceUsdt() {
             usdtCuentaBeneficiario: {
                 required: "El campo cuenta es obligatorio",
             },
+            usdtTipocuentaBeneficiario: {
+                required: "El campo tipo cuenta es obligatorio",
+            },
             usdtPagoMovilBeneficiario: {
                 required: "El campo pago movil es obligatorio",
             },
-            usdtTipoDocumentoBeneficiario: {
+            usdtTipodocBeneficiario: {
                 required: "El campo tipo documento es obligatorio",
             },
         },
@@ -465,63 +471,63 @@ async function initServiceUsdt() {
     });
     $("#formDepositanteUsdt").validate({
         rules: {
-            paypalAliasDepositante: {
+            usdtAliasDepositante: {
                 required: true,
             },
-            paypalNombreDepositante: {
+            usdtNombreDepositante: {
                 required: true,
             },
-            paypalTipoDocumentoDepositante: {
+            usdtTipodocDepositante: {
                 required: true,
             },
-            paypalDocumentoDepositante: {
+            usdtDocDepositante: {
                 required: true,
                 integer: true,
             },
-            paypalCorreoDepositante: {
+            usdtEmailDepositante: {
                 required: true,
             },
-            paypalIndicativoDepositante: {
+            usdtIndicativoDepositante: {
                 required: true,
             },
-            paypalCelularDepositante: {
+            usdtCelularDepositante: {
                 required: true,
             },
-            paypalPaisDepositante: {
+            usdtPaisDepositante: {
                 required: true,
             },
-            adjuntarDocumento: {
+            adjuntarDocumentoUsdt: {
                 required: true,
                 filesize: FILE_MAX_SIZE,
             },
         },
         messages: {
-            paypalAliasDepositante: {
+            usdtAliasDepositante: {
                 required: "El campo alias es obligatorio",
             },
-            paypalNombreDepositante: {
+            usdtNombreDepositante: {
                 required: "El campo de nombre es obligatorio",
             },
-            paypalTipoDocumentoDepositante: {
+            usdtTipodocDepositante: {
                 required: "El campo tipo documento es obligatorio",
             },
-            paypalDocumentoDepositante: {
+            usdtDocDepositante: {
                 required: "El campo documento es obligatorio",
                 integer: "Por favor, ingresa solo números enteros.",
             },
-            paypalCorreoDepositante: {
+            usdtEmailDepositante: {
                 required: "El campo correo depositante es obligatorio",
             },
-            paypalIndicativoDepositante: {
+            usdtIndicativoDepositante: {
                 required: "El campo celular es obligatorio",
             },
-            paypalCelularDepositante: {
+            usdtCelularDepositante: {
                 required: "El campo celular es obligatorio",
             },
-            paypalPaisDepositante: {
+            usdtPaisDepositante: {
                 required: "El campo pais es obligatorio",
             },
-            adjuntarDocumento: {
+            adjuntarDocumentoUsdt: {
                 required: "La foto del documento es obligatoria",
                 filesize: "El tamaño del archivo debe ser menor a 2MB",
             },
@@ -569,6 +575,19 @@ function activarBeneficiarioUsdt() {
     usdtBeneficiario.style.display = "block";
 }
 
+function editBeneficiarioUsdt() {
+    var editUsdt1 = document.getElementById("editUsdt1");
+    var guardarEditUsdt1 = document.getElementById("guardarEditUsdt1");
+    editUsdt1.style.display = "none";
+    guardarEditUsdt1.style.display = "block";
+    for (var i = 0; i < elementosUsdt1.length; i++) {
+        elementosUsdt1[i].removeAttribute("disabled");
+    }
+    for (var j = 0; j < selectUsdt1.length; j++) {
+        selectUsdt1[j].removeAttribute("disabled");
+    }
+}
+
 function activarDepositanteUsdt() {
     for (var i = 0; i < elementosUsdt2.length; i++) {
         elementosUsdt2[i].removeAttribute("disabled");
@@ -583,6 +602,19 @@ function activarDepositanteUsdt() {
     adjuntarDocumentoUsdt.removeAttribute("disabled");
     adjuntarDocumentoUsdt.style.display = "block";
     usdtDepositante.style.display = "block";
+}
+
+function editDepositanteUsdt() {
+    var editUsdt2 = document.getElementById("editUsdt2");
+    var guardarEditUsdt2 = document.getElementById("guardarEditUsdt2");
+    editUsdt2.style.display = "none";
+    guardarEditUsdt2.style.display = "block";
+    for (var i = 0; i < elementosUsdt2.length; i++) {
+        elementosUsdt2[i].removeAttribute("disabled");
+    }
+    for (var j = 0; j < selectUsdt2.length; j++) {
+        selectUsdt2[j].removeAttribute("disabled");
+    }
 }
 
 function verificarSelectUsdt1() {
