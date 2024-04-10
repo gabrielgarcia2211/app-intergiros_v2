@@ -65,11 +65,9 @@ class TercerosController extends Controller
             $data = mapTipoTercero($request->all());
             $servicio = $request->input('servicio');
             $code = $request->input('code');
-
             if ($code == "TAF") {
                 $code = "TB";
             }
-
             $data['user_id'] = Auth()->user()->id;
             $data['tipo_tercero_id'] = MasterCombos::whereRaw("parent_id = (SELECT id FROM master_combos WHERE code = 'terceros')")
                 ->whereRaw("LOWER(code) = LOWER('$code')")
@@ -78,11 +76,9 @@ class TercerosController extends Controller
                 ->id;
 
             $data['tipo_formulario_id'] = TipoFormulario::where('codigo', $servicio)->first()->id;
-
             if (in_array($code, ['TD'])) {
-                $data['path_documento'] = $this->fileService->saveFile($request->file('adjuntarDocumento'), Auth()->user()->id, 'documento_tercero');
+                $data['path_documento'] = $this->fileService->saveFile($data['adjuntar_documento'], Auth()->user()->id, 'documento_tercero');
             }
-
             $tercero = Tercero::create($data);
             return Response::sendResponse($tercero, 'Registro guardado con exito.');
         } catch (\Exception $ex) {
@@ -100,7 +96,7 @@ class TercerosController extends Controller
 
             if (in_array($code, ['TD'])) {
                 $this->fileService->deleteFile($Tercero->path_documento);
-                $data['path_documento'] = $this->fileService->saveFile($request->file('adjuntarDocumento'), Auth()->user()->id, 'documento_tercero');
+                $data['path_documento'] = $this->fileService->saveFile($request->file('adjuntar_documento'), Auth()->user()->id, 'documento_tercero');
             }
 
             $tercero = $Tercero->update($data);

@@ -22,7 +22,8 @@ function mapTipoTercero($data)
                     return [
                         'alias' => $data['usdtAliasBeneficiario'],
                         'nombre' => $data['usdtNombreBeneficiario'],
-                        'tipo_documento_id' => $data['usdtTipodocBeneficiario'],
+                        'tipo_documento_id' => $data['usdtTipoDocBeneficiario'],
+                        'tipo_cuenta_id' => $data['usdtTipoCuentaBeneficiario'],
                         'documento' => $data['usdtDocBeneficiario'],
                         'banco' => $data['usdtBancoBeneficiario'],
                         'cuenta' => $data['usdtCuentaBeneficiario'],
@@ -31,17 +32,35 @@ function mapTipoTercero($data)
                     break;
             }
         case 'TD':
-            return [
-                'alias' => $data['paypalAliasDepositante'],
-                'nombre' => $data['paypalNombreDepositante'],
-                'tipo_documento_id' => $data['paypalTipoDocumentoDepositante'],
-                'documento' => $data['paypalDocumentoDepositante'],
-                'correo' => $data['paypalCorreoDepositante'],
-                'pais_telefono_id' => $data['paypalIndicativoDepositante'],
-                'celular' => $data['paypalCelularDepositante'],
-                'pais_id' => $data['paypalPaisDepositante'],
-            ];
-            break;
+            switch (request('servicio')) {
+                case 'TP-01':
+                    return [
+                        'alias' => $data['paypalAliasDepositante'],
+                        'nombre' => $data['paypalNombreDepositante'],
+                        'tipo_documento_id' => $data['paypalTipoDocumentoDepositante'],
+                        'documento' => $data['paypalDocumentoDepositante'],
+                        'correo' => $data['paypalCorreoDepositante'],
+                        'pais_telefono_id' => $data['paypalIndicativoDepositante'],
+                        'celular' => $data['paypalCelularDepositante'],
+                        'pais_id' => $data['paypalPaisDepositante'],
+                        'adjuntar_documento' => $data['adjuntarDocumento'],
+                    ];
+                    break;
+                case 'TP-02':
+                    return [
+                        'alias' => $data['usdtAliasDepositante'],
+                        'nombre' => $data['usdtNombreDepositante'],
+                        'tipo_documento_id' => $data['usdtTipoDocDepositante'],
+                        'documento' => $data['usdtDocDepositante'],
+                        'correo' => $data['usdtEmailDepositante'],
+                        'pais_telefono_id' => $data['usdtIndicativoDepositante'],
+                        'celular' => $data['usdtCelularDepositante'],
+                        'pais_id' => $data['usdtPaisDepositante'],
+                        'adjuntar_documento' => $data['adjuntarDocumentoUsdt'],
+                    ];
+                    break;
+            }
+
         case 'TAF':
             return [
                 'alias' => $data['addAliasBeneficiario'],

@@ -8,13 +8,14 @@ $(document).ready(async function () {
     modalReclamoEntregado();
 
     async function setLoadInputs() {
-        const comboNames = ["pais_telefono", "pais", "tipo_documento"];
+        const comboNames = ["pais_telefono", "pais", "tipo_documento", "tipo_cuenta"];
 
         const response = await getComboRelations(comboNames);
         const {
             pais_telefono: responsePaisTelefono,
             pais: responsePais,
             tipo_documento: responseTipoDocumento,
+            tipo_cuenta: responseTipoCuenta,
         } = response;
 
         $.each(responseTipoDocumento, function (key, value) {
@@ -22,6 +23,12 @@ $(document).ready(async function () {
                 $("<option>", { value: value.id }).text(value.name)
             );
             $("#paypalTipoDocumentoDepositante").append(
+                $("<option>", { value: value.id }).text(value.name)
+            );
+            $("#usdtTipoDocBeneficiario").append(
+                $("<option>", { value: value.id }).text(value.name)
+            );
+            $("#usdtTipoDocDepositante").append(
                 $("<option>", { value: value.id }).text(value.name)
             );
             $("#addTipoDocumentoBeneficiario").append(
@@ -37,6 +44,12 @@ $(document).ready(async function () {
 
         $.each(responsePais, function (key, value) {
             $("#paypalPaisDepositante").append(
+                $("<option>", { value: value.id }).text(value.name)
+            );
+        });
+
+        $.each(responseTipoCuenta, function (key, value) {
+            $("#usdtTipoCuentaBeneficiario").append(
                 $("<option>", { value: value.id }).text(value.name)
             );
         });
@@ -62,6 +75,7 @@ $(document).ready(async function () {
                     $("#panel-paypal").show();
                     break;
                 case "6":
+                    initServiceUsdt();
                     $("#panel-usdt").show();
                     break;
                 default:

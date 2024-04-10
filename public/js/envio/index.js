@@ -391,6 +391,9 @@ var adjuntarDocumentoUsdt = document.getElementById("adjuntarFotoUsdt");
 var depositantesUsdt = null;
 var beneficiariosUsdt = null;
 
+var formDataBeneficiarioUsdt;
+var formDataDepositanteUsdt;
+
 /* ------- INICIO USDT */
 async function initServiceUsdt() {
     beneficiariosUsdt = null;
@@ -420,13 +423,13 @@ async function initServiceUsdt() {
             usdtCuentaBeneficiario: {
                 required: true,
             },
-            usdtTipocuentaBeneficiario: {
+            usdtTipoCuentaBeneficiario: {
                 required: true,
             },
             usdtPagoMovilBeneficiario: {
                 required: true,
             },
-            usdtTipodocBeneficiario: {
+            usdtTipoDocBeneficiario: {
                 required: true,
             },
         },
@@ -447,13 +450,13 @@ async function initServiceUsdt() {
             usdtCuentaBeneficiario: {
                 required: "El campo cuenta es obligatorio",
             },
-            usdtTipocuentaBeneficiario: {
+            usdtTipoCuentaBeneficiario: {
                 required: "El campo tipo cuenta es obligatorio",
             },
             usdtPagoMovilBeneficiario: {
                 required: "El campo pago movil es obligatorio",
             },
-            usdtTipodocBeneficiario: {
+            usdtTipoDocBeneficiario: {
                 required: "El campo tipo documento es obligatorio",
             },
         },
@@ -477,7 +480,7 @@ async function initServiceUsdt() {
             usdtNombreDepositante: {
                 required: true,
             },
-            usdtTipodocDepositante: {
+            usdtTipoDocDepositante: {
                 required: true,
             },
             usdtDocDepositante: {
@@ -508,7 +511,7 @@ async function initServiceUsdt() {
             usdtNombreDepositante: {
                 required: "El campo de nombre es obligatorio",
             },
-            usdtTipodocDepositante: {
+            usdtTipoDocDepositante: {
                 required: "El campo tipo documento es obligatorio",
             },
             usdtDocDepositante: {
@@ -617,7 +620,7 @@ function editDepositanteUsdt() {
     }
 }
 
-function verificarSelectUsdt1() {
+async function verificarSelectUsdt1() {
     if (selectBeneficiarioUsdt.value !== "") {
         // Muestra el div si la opción no es la por defecto
         for (var i = 0; i < elementosUsdt1.length; i++) {
@@ -630,13 +633,16 @@ function verificarSelectUsdt1() {
         usdtNueva1.style.display = "none";
         usdtExistente1.style.display = "block";
         usdtBeneficiario.style.display = "block";
+
+        var details = await showTercero("TB", "TP-02");
+        setFieldsBeneficiarioUsdt(details);
     } else {
         // Oculta el div si la opción es la por defecto
         usdtBeneficiario.style.display = "none";
     }
 }
 
-function verificarSelectUsdt2() {
+async function verificarSelectUsdt2() {
     if (selectDepositanteUsdt.value !== "") {
         // Muestra el div si la opción no es la por defecto
         for (var i = 0; i < elementosUsdt2.length; i++) {
@@ -650,11 +656,49 @@ function verificarSelectUsdt2() {
         adjuntarDocumentoUsdt.setAttribute("disabled", "disabled");
         usdtExistente2.style.display = "block";
         usdtDepositante.style.display = "block";
+
+        var details = await showTercero("TD", "TP-02");
+        setFieldsDepositanteUsdt(details);
     } else {
         // Oculta el div si la opción es la por defecto
         usdtDepositante.style.display = "none";
     }
 }
+
+function setFieldsBeneficiarioUsdt(beneficiario) {
+    formDataBeneficiarioUsdt = beneficiario.data;
+    $("#usdtAliasBeneficiario").val(beneficiario.data.alias);
+    $("#usdtNombreBeneficiario").val(beneficiario.data.nombre);
+    $("#usdtDocBeneficiario").val(beneficiario.data.documento);
+    $("#usdtBancoBeneficiario").val(beneficiario.data.banco);
+    $("#usdtCuentaBeneficiario").val(beneficiario.data.cuenta);
+    $("#usdtTipoCuentaBeneficiario").val(beneficiario.data.tipo_cuenta_id);
+    $("#usdtPagoMovilBeneficiario").val(beneficiario.data.pago_movil);
+    $("#usdtTipoDocBeneficiario").val(beneficiario.data.tipo_documento_id);
+}
+
+function setFieldsDepositanteUsdt(depositante) {
+    formDataDepositanteUsdt = depositante.data;
+    $("#usdtAliasDepositante").val(depositante.data.alias);
+    $("#usdtNombreDepositante").val(depositante.data.nombre);
+    $("#usdtDocDepositante").val(depositante.data.documento);
+    $("#usdtTipoDocDepositante").val(depositante.data.tipo_documento_id);
+    $("#usdtEmailDepositante").val(depositante.data.correo);
+    $("#usdtCelularDepositante").val(depositante.data.celular);
+    $("#usdtIndicativoDepositante").val(depositante.data.pais_telefono_id);
+    $("#usdtPaisDepositante").val(depositante.data.pais_id);
+    if (depositante.data.path_documento) {
+        loadImageFromURL(
+            depositante.data.path_documento,
+            "#adjuntarDocumentoUsdt"
+        );
+        updateButtonAndBindClick(
+            "btnPreview02",
+            depositante.data.path_documento
+        );
+    }
+}
+
 /* Fin Usdt */
 
 /** ----------------------------------------------------------------------------- */
@@ -715,7 +759,7 @@ function addTercero(code, servicio, e) {
 function setTercero(code, servicio) {
     if (mapTercero(code, "validateForm", servicio)) {
         localStorage.setItem("actionService", true);
-        const id = mapTercero(code, "dataFormVariable", servicio).id;
+        const id = mapTerceroForm(code, servicio).id;
         var formData = mapTercero(code, "dataForm", servicio);
         formData.append("code", code);
         axios
@@ -737,8 +781,7 @@ function setTercero(code, servicio) {
 }
 
 function deleteTercero(code, servicio) {
-    const id = mapTercero(code, "dataFormVariable", servicio).id;
-
+    const id = mapTerceroForm(code, servicio).id;
     Swal.fire({
         title: "Estas seguro de eliminar el registro?",
         icon: "warning",
@@ -781,10 +824,20 @@ function mapTercero(code, tipo, servicio) {
                 ? new FormData($("#formBeneficiario" + tipoForm)[0])
                 : new FormData($("#formDepositante" + tipoForm)[0]);
             break;
-        case "dataFormVariable":
+        default:
+            break;
+    }
+}
+
+function mapTerceroForm(code, servicio) {
+    switch (servicio) {
+        case "TP-01":
+            return code == "TB" ? formDataBeneficiario : formDataDepositante;
+            break;
+        case "TP-02":
             return code == "TB"
-                ? formDataBeneficiario
-                : formDataDepositante;
+                ? formDataBeneficiarioUsdt
+                : formDataDepositanteUsdt;
             break;
         default:
             break;

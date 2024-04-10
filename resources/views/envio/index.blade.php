@@ -332,7 +332,7 @@
                             <div class="input-group">
                                 <div class="custom-file">
                                     <div class="input-group-prepend">
-                                        <button class="btn btn-outline-secondary" type="button" id="btnPreview01">
+                                        <button class="btn btn-outline-secondary" type="button" id="btnPreview02">
                                             <i class="fas fa-eye-slash"></i>
                                         </button>
                                     </div>
@@ -447,12 +447,8 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <select class="form-control input-indicativo selectUsdt1" id="usdtTipodocBeneficiario"
-                                        name="usdtTipodocBeneficiario">
-                                        <option value="1">T</option>
-                                        <option value="2">CC</option>
-                                        <option value="3">A</option>
-                                        <!-- Agrega más opciones aquí -->
+                                    <select class="form-control input-indicativo selectUsdt1" id="usdtTipoDocBeneficiario"
+                                        name="usdtTipoDocBeneficiario">
                                     </select>
                                 </div>
                                 <input type="number" class="form-control input-telefono inputUsdt1"
@@ -473,11 +469,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <select class="form-control input-indicativo selectUsdt1"
-                                        id="usdtTipocuentaBeneficiario" name="usdtTipocuentaBeneficiario">
-                                        <option value="1">T</option>
-                                        <option value="2">CC</option>
-                                        <option value="3">A</option>
-                                        <!-- Agrega más opciones aquí -->
+                                        id="usdtTipoCuentaBeneficiario" name="usdtTipoCuentaBeneficiario">
                                     </select>
                                 </div>
                                 <input type="number" class="form-control input-telefono inputUsdt1"
@@ -487,7 +479,7 @@
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control input-registro inputUsdt1"
-                                id="usdtMovilBeneficiario" name="usdtMovilBeneficiario" placeholder="Pago móvil">
+                                id="usdtPagoMovilBeneficiario" name="usdtPagoMovilBeneficiario" placeholder="Pago móvil">
                         </div>
                         <div class="text-center mt-3">
                             <div class="text-center" style="display: flex; justify-content: center;">
@@ -541,12 +533,8 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <select class="form-control input-indicativo selectUsdt2" id="usdtTipodocDepositante"
-                                        name="usdtTipodocDepositante">
-                                        <option value="1">T</option>
-                                        <option value="2">CC</option>
-                                        <option value="3">A</option>
-                                        <!-- Agrega más opciones aquí -->
+                                    <select class="form-control input-indicativo selectUsdt2" id="usdtTipoDocDepositante"
+                                        name="usdtTipoDocDepositante">
                                     </select>
                                 </div>
                                 <input type="number" class="form-control input-telefono inputUsdt2"
@@ -600,7 +588,11 @@
                             </div>
                         </div>
                         <div class="text-center mt-3">
-                            <a href="#" style="color: #0035aa;" id="usdtNueva2">Guardar</a>
+                            <div class="text-center" style="display: flex; justify-content: center;">
+                                <button type="button" class="btn btn-primary" onclick="addTercero('TD', 'TP-02', event)"
+                                    id="usdtNueva2"
+                                    style="display: none;background-color: transparent; border: none; color: #0035aa;">Guardar</button>
+                            </div>
                             <div id="usdtExistente2" style="display: none;">
                                 <div class="row">
                                     <div class="col-6">

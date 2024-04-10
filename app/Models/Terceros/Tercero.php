@@ -25,6 +25,7 @@ class Tercero extends Model
         'pais_id',
         'pais_telefono_id',
         'tipo_formulario_id',
+        'tipo_cuenta_id',
         'path_documento',
     ];
 
