@@ -522,10 +522,11 @@ async function initServiceUsdt() {
                 required: "El campo correo depositante es obligatorio",
             },
             usdtIndicativoDepositante: {
-                required: "El campo celular es obligatorio",
+                required: "El campo indicativo es obligatorio",
             },
             usdtCelularDepositante: {
                 required: "El campo celular es obligatorio",
+                integer: "Por favor, ingresa solo números enteros.",
             },
             usdtPaisDepositante: {
                 required: "El campo pais es obligatorio",
@@ -612,6 +613,7 @@ function editDepositanteUsdt() {
     var guardarEditUsdt2 = document.getElementById("guardarEditUsdt2");
     editUsdt2.style.display = "none";
     guardarEditUsdt2.style.display = "block";
+    adjuntarDocumentoUsdt.style.display = "block";
     for (var i = 0; i < elementosUsdt2.length; i++) {
         elementosUsdt2[i].removeAttribute("disabled");
     }
