@@ -20,6 +20,7 @@ import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Toolbar from "primevue/toolbar";
 import Textarea from "primevue/textarea";
+import InputGroup from "primevue/inputgroup";
 
 
 const app = createApp({});
@@ -40,27 +41,32 @@ app.mixin(shared.ReadHttpStatusErrors);
 app.mixin(shared.HelperFunctions);
 app.mixin(shared.RelationsTables);
 
-// Impotacion de componentes
-import SolicitudComponent from './components/solicitudes/SolicitudComponent.vue';
-import TasaComponent from './components/tasas/TasaComponent.vue';
-import VerificacionComponent from './components/verificacion/VerificacionComponent.vue';
-import NoticiaComponent from './components/noticias/NoticiaComponent.vue';
+// Impotacion de componentes admin
+import SolicitudComponent from './components/admin/solicitudes/SolicitudComponent.vue';
+import TasaComponent from './components/admin/tasas/TasaComponent.vue';
+import VerificacionComponent from './components/admin/verificacion/VerificacionComponent.vue';
+import NoticiaComponent from './components/admin/noticias/NoticiaComponent.vue';
 app.component('solicitud-component', SolicitudComponent);
 app.component('tasas-component', TasaComponent);
 app.component('verificacion-component', VerificacionComponent);
 app.component('noticia-component', NoticiaComponent);
 
+// Impotacion de componentes envio
+import ServicioComponent from './components/envio/servicios/ServicioComponent.vue';
+app.component('servicio-component', ServicioComponent);
+
 // Anexo de componentes de vuejs
+app.component("Dropdown", Dropdown);
 app.component("InputText", InputText);
 app.component("InputNumber", InputNumber);
 app.component("Calendar", Calendar);
-app.component("Dropdown", Dropdown);
 app.component("Button", Button);
 app.component("Dialog", Dialog);
 app.component("DataTable", DataTable);
 app.component("Column", Column);
 app.component("Toolbar", Toolbar);
 app.component("Textarea", Textarea);
+app.component("InputGroup", InputGroup);
 
 
 // Configura Axios globalmente

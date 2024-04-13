@@ -4,18 +4,19 @@ use App\Models\Solicitudes\Producto;
 
 function mapTipoTercero($data)
 {
+
     switch ($data['code']) {
         case 'TB':
-            switch (request('servicio')) {
+            switch ($data['servicio']) {
                 case 'TP-01':
                     return [
-                        'alias' => $data['paypalAliasBeneficiario'],
-                        'nombre' => $data['paypalNombreBeneficiario'],
-                        'tipo_documento_id' => $data['paypalTipoDocumentoBeneficiario'],
-                        'documento' => $data['paypalDocumentoBeneficiario'],
-                        'banco' => $data['paypalBancoBeneficiario'],
-                        'cuenta' => $data['paypalCuentaBeneficiario'],
-                        'pago_movil' => $data['paypalPagoMovilBeneficiario'],
+                        'alias' => $data['aliasBeneficiario'],
+                        'nombre' => $data['nombreBeneficiario'],
+                        'tipo_documento_id' => $data['tipoDocumentoBeneficiario'],
+                        'documento' => $data['documentoBeneficiario'],
+                        'banco' => $data['bancoBeneficiario'],
+                        'cuenta' => $data['cuentaBeneficiario'],
+                        'pago_movil' => $data['pagoMovilBeneficiario'],
                     ];
                     break;
                 case 'TP-02':
@@ -27,7 +28,7 @@ function mapTipoTercero($data)
                         'documento' => $data['usdtDocBeneficiario'],
                         'banco' => $data['usdtBancoBeneficiario'],
                         'cuenta' => $data['usdtCuentaBeneficiario'],
-                        'pago_movil' => $data['usdtMovilBeneficiario'],
+                        'pago_movil' => $data['usdtPagoMovilBeneficiario'],
                     ];
                     break;
             }

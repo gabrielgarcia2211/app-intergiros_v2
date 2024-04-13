@@ -260,6 +260,4 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('js/envio/input.js') }}"></script>
-    <script src="{{ asset('js/envio/historial.js') }}"></script>
 @endsection

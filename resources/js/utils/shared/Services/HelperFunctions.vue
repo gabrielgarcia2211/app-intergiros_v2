@@ -27,8 +27,8 @@ export default {
             if (isDelete) {
                 swalOptions.showCancelButton = true;
                 swalOptions.cancelButtonText = "Eliminar";
-                swalOptions.cancelButtonColor = "#d33",
-                swalOptions.focusCancel = true;
+                (swalOptions.cancelButtonColor = "#d33"),
+                    (swalOptions.focusCancel = true);
             }
 
             this.$swal.fire(swalOptions).then((result) => {
@@ -91,6 +91,19 @@ export default {
                 .catch((error) => {
                     this.$readStatusHttp(error);
                 });
+        },
+        $getComboRelations(gestor) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get(`/configuration/gestor/${gestor.join(",")}`)
+                    .then(function (response) {
+                        resolve(response.data);
+                    })
+                    .catch(function (error) {
+                        handleErrors(error);
+                        reject(error);
+                    });
+            });
         },
     },
 };

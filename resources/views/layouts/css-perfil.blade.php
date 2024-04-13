@@ -20,9 +20,6 @@
 
     <!-- Scripts -->
 
-    <!-- DevExtreme -->
-    <link rel="stylesheet" href="{{ asset('libraries/css/dx.light.css') }}">
-
 </head>
 
 <body>
@@ -32,7 +29,6 @@
         </main>
     </div>
 
-    <!-- DevExtreme -->
     <script type="text/javascript" src="{{ asset('libraries/js/axios.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('libraries/js/jquery.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -44,9 +40,6 @@
     </script>
 
     <script src="{{ asset('js/general/index.js') }}"></script>
-    <script src="{{ asset('js/envio/input.js') }}"></script>
-    <script src="{{ asset('js/envio/index.js') }}"></script>
-    <script src="{{ asset('js/envio/solicitud.js') }}"></script>
     @yield('script')
 
 </body>

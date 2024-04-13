@@ -29,13 +29,13 @@ class StoreTerceroRequest extends FormRequest
                 switch (request('servicio')) {
                     case 'TP-01':
                         return [
-                            'paypalAliasBeneficiario' => 'required',
-                            'paypalNombreBeneficiario' => 'required',
-                            'paypalTipoDocumentoBeneficiario' => 'required',
-                            'paypalDocumentoBeneficiario' => 'required|integer',
-                            'paypalBancoBeneficiario' => 'required',
-                            'paypalCuentaBeneficiario' => 'required',
-                            'paypalPagoMovilBeneficiario' => 'required',
+                            'aliasBeneficiario' => 'required',
+                            'nombreBeneficiario' => 'required',
+                            'tipoDocumentoBeneficiario' => 'required',
+                            'documentoBeneficiario' => 'required|integer',
+                            'bancoBeneficiario' => 'required',
+                            'cuentaBeneficiario' => 'required',
+                            'pagoMovilBeneficiario' => 'required',
                         ];
                         break;
                     case 'TP-02':
@@ -108,13 +108,13 @@ class StoreTerceroRequest extends FormRequest
                 switch (request('servicio')) {
                     case 'TP-01':
                         return [
-                            'paypalAliasBeneficiario.required' => 'El campo alias es obligatorio.',
-                            'paypalNombreBeneficiario.required' => 'El campo nombre es obligatorio.',
-                            'paypalTipoDocumentoBeneficiario.required' => 'El campo tipo documento es obligatorio.',
-                            'paypalDocumentoBeneficiario.required' => 'El campo documento es obligatorio.',
-                            'paypalBancoBeneficiario.required' => 'El campo banco es obligatorio.',
-                            'paypalCuentaBeneficiario.required' => 'El campo cuenta es obligatorio.',
-                            'paypalPagoMovilBeneficiario.required' => 'El campo pago movil es obligatorio.'
+                            'aliasBeneficiario.required' => 'El campo alias es obligatorio.',
+                            'nombreBeneficiario.required' => 'El campo nombre es obligatorio.',
+                            'tipoDocumentoBeneficiario.required' => 'El campo tipo documento es obligatorio.',
+                            'documentoBeneficiario.required' => 'El campo documento es obligatorio.',
+                            'bancoBeneficiario.required' => 'El campo banco es obligatorio.',
+                            'cuentaBeneficiario.required' => 'El campo cuenta es obligatorio.',
+                            'pagoMovilBeneficiario.required' => 'El campo pago movil es obligatorio.'
                         ];
                         break;
                     case 'TP-02':
@@ -184,13 +184,13 @@ class StoreTerceroRequest extends FormRequest
                 switch (request('servicio')) {
                     case 'TP-01':
                         return [
-                            'paypalAliasBeneficiario' => 'alias',
-                            'paypalNombreBeneficiario' => 'nombre',
-                            'paypalTipoDocumentoBeneficiario' => 'tipo documento',
-                            'paypalDocumentoBeneficiario' => 'documento',
-                            'paypalBancoBeneficiario' => 'banco',
-                            'paypalCuentaBeneficiario' => 'cuenta',
-                            'paypalPagoMovilBeneficiario' => 'pago movil'
+                            'aliasBeneficiario' => 'alias',
+                            'nombreBeneficiario' => 'nombre',
+                            'tipoDocumentoBeneficiario' => 'tipo documento',
+                            'documentoBeneficiario' => 'documento',
+                            'bancoBeneficiario' => 'banco',
+                            'cuentaBeneficiario' => 'cuenta',
+                            'pagoMovilBeneficiario' => 'pago movil'
                         ];
                         break;
                     case 'TP-02':

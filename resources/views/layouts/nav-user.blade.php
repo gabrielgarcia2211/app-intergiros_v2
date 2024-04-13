@@ -20,9 +20,6 @@
 
     <!-- Scripts -->
 
-    <!-- DevExtreme -->
-    <link rel="stylesheet" href="{{ asset('libraries/css/dx.light.css') }}">
-
 </head>
 
 <body>

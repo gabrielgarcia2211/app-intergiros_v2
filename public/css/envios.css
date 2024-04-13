@@ -1,16 +1,22 @@
-h1, strong, p, h3, a, h5 {
-    font-family: 'Lato', sans-serif !important;
+h1,
+strong,
+p,
+h3,
+a,
+h5 {
+    font-family: "Lato", sans-serif !important;
 }
 
 h3 {
     color: #0035aa;
 }
 
-#tasas-venezuela, #realizarPago {
+#tasas-venezuela,
+#realizarPago {
     font-size: 20px;
     background-color: #0035aa;
     border-radius: 25px;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
 #slide-tasas {
@@ -24,23 +30,44 @@ h3 {
 .input-group-text {
     color: white;
     background-color: #0035aa;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
     font-size: 25px;
 }
 
-#inputGroupSelect01, #inputGroupSelect02 {
+#inputGroupServicios,
+#inputGroupMoneda {
     font-size: 25px;
-    color: white;
     background-color: #0035aa;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
-#izquierda {
+#inputGroupServicios .p-dropdown-label,
+#inputGroupMoneda .p-dropdown-label {
+    color: white !important;
+}
+
+#inputGroupServicios .p-dropdown-trigger,
+#inputGroupMoneda .p-dropdown-trigger {
+    color: white !important;
+}
+
+#inputGroupServicios_list,
+#inputGroupMoneda_list,
+#selectBeneficiario_list,
+#tipoDocumentoBeneficiario_list {
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.izquierda {
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
+    background-color: #0035aa;
+    color: white !important;
+    font-weight: bold;
 }
 
-#inputGroupSelect02 {
+#inputGroupMoneda {
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
 }
@@ -57,7 +84,6 @@ h3 {
     border-radius: 25px;
 }
 
-
 .input-group {
     width: 80%;
     margin-left: auto;
@@ -67,7 +93,7 @@ h3 {
 
 .input-indicativo {
     font-size: 20px;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
 }
@@ -75,7 +101,7 @@ h3 {
 .input-telefono {
     width: 424px;
     font-size: 20px;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
 }
@@ -85,7 +111,7 @@ h3 {
     margin-left: auto;
     margin-right: auto;
     font-size: 20px;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
     border-radius: 25px;
 }
 
@@ -111,7 +137,6 @@ h3 {
 
 ul a {
     color: #949494 !important;
-    
 }
 
 ul.custom-list {
@@ -139,10 +164,10 @@ ul.custom-list > li:before {
     color: white;
     font-size: 20px;
     margin-bottom: 0px;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
-.col-sm>.row>.col-3>a i {
+.col-sm > .row > .col-3 > a i {
     background-color: #009d2c;
     color: white;
     border-radius: 45px;

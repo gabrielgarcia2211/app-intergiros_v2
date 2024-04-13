@@ -30,18 +30,13 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-
-    <!-- DevExtreme -->
-    <link rel="stylesheet" href="{{ asset('libraries/css/dx.light.css') }}">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link href="{{ asset('css/admin/admin.css') }}" rel="stylesheet">
 </head>
 
 <body>
     <div id="app">
-
         <div id="wrapper">
-
             <!-- Sidebar -->
             <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar"
                 style="background-color: #0035aa;">
@@ -168,20 +163,15 @@
             </div>
 
         </div>
-
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
     </div>
 
-    <!-- DevExtreme -->
     <script type="text/javascript" src="{{ asset('libraries/js/axios.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('libraries/js/jquery.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"></script>
 
-    <!-- <script src="{{ asset('js/general/index.js') }}"></script> -->
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

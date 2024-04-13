@@ -96,7 +96,7 @@ class TercerosController extends Controller
 
             if (in_array($code, ['TD'])) {
                 $this->fileService->deleteFile($Tercero->path_documento);
-                $data['path_documento'] = $this->fileService->saveFile($request->file('adjuntar_documento'), Auth()->user()->id, 'documento_tercero');
+                $data['path_documento'] = $this->fileService->saveFile($data['adjuntar_documento'], Auth()->user()->id, 'documento_tercero');
             }
 
             $tercero = $Tercero->update($data);
