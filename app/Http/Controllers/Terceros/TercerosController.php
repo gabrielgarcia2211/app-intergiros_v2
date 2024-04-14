@@ -76,7 +76,7 @@ class TercerosController extends Controller
 
             $data['tipo_formulario_id'] = TipoFormulario::where('codigo', $servicio)->first()->id;
             if (in_array($code, ['TD'])) {
-                $data['path_documento'] = null; //$this->fileService->saveFile($data['adjuntar_documento'], Auth()->user()->id, 'documento_tercero');
+                $data['path_documento'] = $this->fileService->saveFile($data['adjuntar_documento'], Auth()->user()->id, 'documento_tercero');
             }
             $tercero = Tercero::create($data);
             return Response::sendResponse($tercero, 'Registro guardado con exito.');
@@ -92,14 +92,14 @@ class TercerosController extends Controller
         try {
             $data = mapTipoTercero($request->all());
             $code = $request->input('code');
-
-            if (in_array($code, ['TD'])) {
+            if (in_array($code, ['TD']) && filter_var($data['adjuntar_documento'], FILTER_VALIDATE_URL) === false) {
                 $this->fileService->deleteFile($Tercero->path_documento);
-                $data['path_documento'] = null; //$this->fileService->saveFile($data['adjuntar_documento'], Auth()->user()->id, 'documento_tercero');
+                $data['path_documento'] = $this->fileService->saveFile($data['adjuntar_documento'], Auth()->user()->id, 'documento_tercero');
+                $data['adjuntar_documento'] = !empty($data['path_documento']) ? $this->fileService->getFileUrl($data['path_documento']) : null;
+                
             }
-
-            $tercero = $Tercero->update($data);
-            return Response::sendResponse($tercero, 'Registro actualizado con exito.');
+            $Tercero->update($data);
+            return Response::sendResponse($data, 'Registro actualizado con exito.');
         } catch (\Exception $ex) {
             Log::debug($ex->getLine());
             Log::debug($ex->getMessage());
@@ -113,5 +113,17 @@ class TercerosController extends Controller
             $this->fileService->deleteFile($Tercero->path_documento);
         }
         return Response::sendResponse($Tercero->delete(), "Recurso eliminado con exito");
+    }
+
+    public function destroyPathDocument(Request $request)
+    {
+        $id = $request->input('id');
+        $path_document = ltrim(parse_url($request->input('path_document'))['path'], '/comprobantes/');
+        if ($this->fileService->deleteFile($path_document)) {
+            Tercero::where('id', $id)->update([
+                'path_documento' => null,
+            ]);
+        }
+        return true;
     }
 }

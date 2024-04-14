@@ -44,7 +44,7 @@ function mapTipoTercero($data)
                         'pais_telefono_id' => $data['codigoIDepositante'],
                         'celular' => $data['celularDepositante'],
                         'pais_id' => $data['paisDepositante'],
-                        //'adjuntar_documento' => $data['adjuntarDocumento'],
+                        'adjuntar_documento' => $data['adjuntarDocumento'],
                     ];
                     break;
                 case 'TP-02':

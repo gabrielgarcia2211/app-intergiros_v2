@@ -9,5 +9,6 @@ Route::group(['prefix' => 'terceros', 'middleware' => ['auth']], function() {
     Route::post('/store', [TercerosController::class, 'storeTercero'])->name('terceros.store');
     Route::post('/update/{tercero}', [TercerosController::class, 'updateTercero'])->name('terceros.update');
     Route::post('/destroy/{tercero}/{code}', [TercerosController::class, 'destroyTercero'])->name('terceros.destroy');
+    Route::post('/destroy/path_document', [TercerosController::class, 'destroyPathDocument'])->name('terceros.destroy');
 });
 

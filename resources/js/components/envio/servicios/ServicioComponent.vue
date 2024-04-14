@@ -507,7 +507,56 @@
                         >
                     </div>
                     <div
-                        class="text-center"
+                        class="form-group"
+                        style="width: 80%; display: inline-block"
+                        v-if="isEditImage"
+                    >
+                        <FileUpload
+                            id="adjuntarDocumento"
+                            ref="fileUpload"
+                            accept="image/*"
+                            :multiple="false"
+                            :fileLimit="1"
+                            :class="{
+                                'p-invalid':
+                                    errorsDepositante.adjuntarDocumento,
+                                'input-readonly': isEditDepositante,
+                            }"
+                            @change="onFileUpload"
+                            :disabled="isEditDepositante"
+                        >
+                            <template #empty>
+                                <p>Adjuntar foto del documento.</p>
+                            </template>
+                        </FileUpload>
+                        <small
+                            v-if="errorsDepositante.adjuntarDocumento"
+                            style="display: block"
+                            class="p-error"
+                            >{{ errorsDepositante.adjuntarDocumento }}</small
+                        >
+                    </div>
+                    <div style="width: 80%; display: inline-block" v-else>
+                        <button
+                            @click.prevent="
+                                previewImagen(
+                                    depositanteForm.adjuntarDocumento,
+                                    true,
+                                    true,
+                                    depositanteForm.id
+                                )
+                            "
+                            :disabled="isEditDepositante"
+                            class="preview p-voucher"
+                            :class="{
+                                'button-readonly': isEditDepositante,
+                            }"
+                        >
+                            <i class="pi pi-eye"></i>
+                        </button>
+                    </div>
+                    <div
+                        class="text-center mt-5"
                         v-if="createOrUpdateDepositante == 'create'"
                     >
                         <div
@@ -636,6 +685,7 @@ export default {
                 codigoIDepositante: null,
                 celularDepositante: null,
                 paisDepositante: null,
+                adjuntarDocumento: null,
                 servicio: null,
                 code: null,
             },
@@ -647,6 +697,7 @@ export default {
                 servicio: null,
                 tipo: null,
             },
+            isEditImage: true,
         };
     },
     components: {},
@@ -717,6 +768,9 @@ export default {
                 ),
                 paisDepositante: Yup.string().required(
                     "El pago movil es obligatorio"
+                ),
+                adjuntarDocumento: Yup.string().required(
+                    "La foto es obligatoria"
                 ),
             });
             this.errorsDepositante = {};
@@ -862,6 +916,7 @@ export default {
             this.createOrUpdateDepositante = "create";
             this.formDepositanteVisible = true;
             this.isEditDepositante = false;
+            this.isEditImage = true;
             switch (this.checkService) {
                 case 1:
                     this.resetFormDepositante();
@@ -946,6 +1001,8 @@ export default {
                         this.$alertSuccess("Depositante Añadido");
                         this.initServicePaypal();
                         this.resetFormDepositante();
+                        this.isEditImage = true;
+                        this.$refs.fileUpload.clear();
                     })
                     .catch((error) => {
                         this.$readStatusHttp(error);
@@ -969,6 +1026,7 @@ export default {
                         this.$alertSuccess("Beneficiario Actualizado");
                         this.createOrUpdateBeneficiario = "edit";
                         this.isEditBeneficiario = true;
+                        this.isEditImage = false;
                     })
                     .catch((error) => {
                         this.$readStatusHttp(error);
@@ -992,6 +1050,9 @@ export default {
                         this.$alertSuccess("Depositante Actualizado");
                         this.createOrUpdateDepositante = "edit";
                         this.isEditDepositante = true;
+                        this.isEditImage = false;
+                        this.depositanteForm.adjuntarDocumento =
+                            response.data.data.adjuntar_documento;
                     })
                     .catch((error) => {
                         this.$readStatusHttp(error);
@@ -1058,12 +1119,15 @@ export default {
                                 "/terceros/destroy/" +
                                     this.depositanteForm.id +
                                     "/" +
-                                    "TB"
+                                    "TD"
                             )
                             .then((response) => {
                                 this.$alertSuccess("Beneficiario Eliminado");
                                 this.initServicePaypal();
                                 this.resetFormDepositante();
+                                this.createOrUpdateDepositante = "create";
+                                this.isEditDepositante = false;
+                                this.isEditImage = true;
                             })
                             .catch((error) => {
                                 handleErrors(error);
@@ -1100,8 +1164,12 @@ export default {
             this.depositanteForm.correoDepositante = depositante.correo;
             this.depositanteForm.codigoIDepositante =
                 depositante.pais_telefono_id;
-            this.depositanteForm.celularDepositante = parseInt(depositante.celular);
+            this.depositanteForm.adjuntarDocumento = depositante.path_documento;
+            this.depositanteForm.celularDepositante = parseInt(
+                depositante.celular
+            );
             this.depositanteForm.paisDepositante = depositante.pais_id;
+            this.isEditImage = depositante.path_documento ? false : true;
         },
         resetFormBeneficiario() {
             this.beneficiarioForm.id = null;
@@ -1125,8 +1193,78 @@ export default {
             this.depositanteForm.codigoIDepositante = null;
             this.depositanteForm.celularDepositante = null;
             this.depositanteForm.paisDepositante = null;
+            this.depositanteForm.adjuntarDocumento = null;
             this.depositanteForm.servicio = null;
             this.depositanteForm.code = null;
+        },
+        onFileUpload() {
+            const fileUploadComponent = this.$refs.fileUpload;
+            if (fileUploadComponent) {
+                const file = fileUploadComponent.files[0];
+                if (file) {
+                    if (file.type && file.type.startsWith("image/")) {
+                        this.depositanteForm.adjuntarDocumento = file;
+                    }
+                }
+            }
+        },
+        previewImagen(imageUrl, titulo, isDelete, solicitudId) {
+            let swalOptions = {
+                imageUrl: imageUrl,
+                imageAlt: titulo,
+                showCloseButton: true,
+                showConfirmButton: true,
+                confirmButtonText: "Descargar",
+                focusConfirm: false,
+            };
+            if (isDelete) {
+                swalOptions.showCancelButton = true;
+                swalOptions.cancelButtonText = "Eliminar";
+                (swalOptions.cancelButtonColor = "#d33"),
+                    (swalOptions.focusCancel = true);
+            }
+            this.$swal.fire(swalOptions).then((result) => {
+                if (result.isConfirmed) {
+                    this.$downloadImagen(imageUrl);
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    this.$swal
+                        .fire({
+                            title: "¿Estás seguro?",
+                            text: "Estás a punto de eliminar esta imagen. ¿Estás seguro de que deseas continuar?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Sí, eliminar",
+                            cancelButtonText: "Cancelar",
+                        })
+                        .then((result) => {
+                            if (result.isConfirmed) {
+                                this.deleteImagen(imageUrl, solicitudId);
+                            }
+                        });
+                }
+            });
+        },
+        deleteImagen(path, solicitud_id) {
+            let formData = {
+                path_document: path,
+                id: solicitud_id,
+            };
+            this.$axios
+                .post("/terceros/destroy/path_document", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then((response) => {
+                    this.$alertSuccess("Depositante Actualizado");
+                    this.depositanteForm.adjuntarDocumento = null;
+                    this.isEditImage = true;
+                })
+                .catch((error) => {
+                    this.$readStatusHttp(error);
+                });
         },
     },
 };
@@ -1136,5 +1274,26 @@ export default {
 .input-readonly {
     background-color: #f0f0f0;
     color: #999;
+}
+.button-readonly {
+    background-color: #f0f0f0 !important;
+    color: #000000 !important;
+}
+
+#adjuntarDocumento [data-pc-name="uploadbutton"],
+#adjuntarDocumento [data-pc-name="cancelbutton"] {
+    display: none;
+}
+.preview {
+    border: 1px;
+    border-radius: 10px;
+    background-color: rgb(4, 155, 4);
+    color: white;
+}
+.p-voucher {
+    border: 1px;
+    border-radius: 10px;
+    background-color: rgb(4, 92, 155);
+    color: white;
 }
 </style>

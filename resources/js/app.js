@@ -1,5 +1,5 @@
-import './bootstrap';
-import { createApp } from 'vue';
+import "./bootstrap";
+import { createApp } from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -21,8 +21,7 @@ import Column from "primevue/column";
 import Toolbar from "primevue/toolbar";
 import Textarea from "primevue/textarea";
 import InputGroup from "primevue/inputgroup";
-import FileUpload  from "primevue/fileupload";
-
+import FileUpload from "primevue/fileupload";
 
 const app = createApp({});
 
@@ -32,7 +31,7 @@ app.use(PrimeVue, {
         overlay: 9999, //dropdown, overlaypanel
         menu: 1000, //overlay menus
         tooltip: 1100, //tooltip
-    },
+    }
     /* unstyled: true  */
 });
 
@@ -43,18 +42,18 @@ app.mixin(shared.HelperFunctions);
 app.mixin(shared.RelationsTables);
 
 // Impotacion de componentes admin
-import SolicitudComponent from './components/admin/solicitudes/SolicitudComponent.vue';
-import TasaComponent from './components/admin/tasas/TasaComponent.vue';
-import VerificacionComponent from './components/admin/verificacion/VerificacionComponent.vue';
-import NoticiaComponent from './components/admin/noticias/NoticiaComponent.vue';
-app.component('solicitud-component', SolicitudComponent);
-app.component('tasas-component', TasaComponent);
-app.component('verificacion-component', VerificacionComponent);
-app.component('noticia-component', NoticiaComponent);
+import SolicitudComponent from "./components/admin/solicitudes/SolicitudComponent.vue";
+import TasaComponent from "./components/admin/tasas/TasaComponent.vue";
+import VerificacionComponent from "./components/admin/verificacion/VerificacionComponent.vue";
+import NoticiaComponent from "./components/admin/noticias/NoticiaComponent.vue";
+app.component("solicitud-component", SolicitudComponent);
+app.component("tasas-component", TasaComponent);
+app.component("verificacion-component", VerificacionComponent);
+app.component("noticia-component", NoticiaComponent);
 
 // Impotacion de componentes envio
-import ServicioComponent from './components/envio/servicios/ServicioComponent.vue';
-app.component('servicio-component', ServicioComponent);
+import ServicioComponent from "./components/envio/servicios/ServicioComponent.vue";
+app.component("servicio-component", ServicioComponent);
 
 // Anexo de componentes de vuejs
 app.component("Dropdown", Dropdown);
@@ -70,7 +69,6 @@ app.component("Textarea", Textarea);
 app.component("InputGroup", InputGroup);
 app.component("FileUpload", FileUpload);
 
-
 // Configura Axios globalmente
 app.config.globalProperties.$axios = axios;
 
@@ -80,6 +78,4 @@ app.config.globalProperties.$swal = Swal;
 // Localidad de PrimeVue
 app.config.globalProperties.$primevue.config.locale = esLocale;
 
-
-
-app.mount('#app');
+app.mount("#app");
