@@ -70,6 +70,8 @@ h3 {
     background-color: #0035aa;
     color: white !important;
     font-weight: bold;
+    font-family: "Lato", sans-serif !important;
+    font-size: 20px;
 }
 
 #inputGroupMoneda {
@@ -128,6 +130,14 @@ h3 {
     font-family: "Lato", sans-serif !important;
     border-radius: 25px;
     color: #afb4b8;
+}
+
+.derecha {
+    background-color: #0035aa;
+    color: white !important;
+    font-weight: bold;
+    font-family: "Lato", sans-serif !important;
+    font-size: 20px;
 }
 
 /* #adjuntarDocumento {

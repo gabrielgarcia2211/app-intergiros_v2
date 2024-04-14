@@ -32,7 +32,7 @@
             </div>
             <div class="col-md-5">
                 <InputGroup>
-                    <Button label="a" class="izquierda" />
+                    <Button label="a" class="derecha" />
                     <Dropdown
                         id="inputGroupMoneda"
                         v-model="selectedMoneda"
@@ -78,6 +78,7 @@
                             color: #0035aa;
                             cursor: pointer;
                             text-decoration: underline;
+                            font-size: 18px;
                         "
                     >
                         <i class="fas fa-plus"></i>
@@ -250,6 +251,7 @@
                                     background-color: transparent;
                                     border: none;
                                     color: #0035aa;
+                                    font-size: 18px;
                                 "
                                 >Guardar</Button
                             >
@@ -270,6 +272,7 @@
                                     background-color: transparent;
                                     border: none;
                                     color: #0035aa;
+                                    font-size: 18px;
                                 "
                                 >Habilitar Edición</Button
                             >
@@ -280,6 +283,7 @@
                                     background-color: transparent;
                                     border: none;
                                     color: #0035aa;
+                                    font-size: 18px;
                                 "
                                 >Eliminar</Button
                             >
@@ -300,6 +304,7 @@
                                     background-color: transparent;
                                     border: none;
                                     color: #0035aa;
+                                    font-size: 18px;
                                 "
                                 >Actualizar</Button
                             >
@@ -327,6 +332,7 @@
                             color: #0035aa;
                             cursor: pointer;
                             text-decoration: underline;
+                            font-size: 18px;
                         "
                     >
                         <i class="fas fa-plus"></i>
@@ -515,6 +521,7 @@
                                     background-color: transparent;
                                     border: none;
                                     color: #0035aa;
+                                    font-size: 18px;
                                 "
                                 >Guardar</Button
                             >
@@ -535,6 +542,7 @@
                                     background-color: transparent;
                                     border: none;
                                     color: #0035aa;
+                                    font-size: 18px;
                                 "
                                 >Habilitar Edición</Button
                             >
@@ -545,6 +553,7 @@
                                     background-color: transparent;
                                     border: none;
                                     color: #0035aa;
+                                    font-size: 18px;
                                 "
                                 >Eliminar</Button
                             >
@@ -565,6 +574,7 @@
                                     background-color: transparent;
                                     border: none;
                                     color: #0035aa;
+                                    font-size: 18px;
                                 "
                                 >Actualizar</Button
                             >
