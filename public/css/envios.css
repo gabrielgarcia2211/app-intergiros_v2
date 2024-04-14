@@ -98,7 +98,7 @@ h3 {
     border-bottom-left-radius: 25px;
 }
 
-.input-telefono {
+.input-telefono, .input-telefono>input {
     width: 424px;
     font-size: 20px;
     font-family: "Lato", sans-serif !important;
@@ -113,6 +113,16 @@ h3 {
     font-size: 20px;
     font-family: "Lato", sans-serif !important;
     border-radius: 25px;
+}
+
+.p-dropdown .p-dropdown-label, .input-registro>input {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    font-family: "Lato", sans-serif !important;
+    border-radius: 25px;
+    color: #afb4b8;
 }
 
 /* #adjuntarDocumento {

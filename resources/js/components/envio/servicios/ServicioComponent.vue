@@ -68,7 +68,7 @@
                     optionValue="id"
                     :placeholder="'Beneficiarios afiliados'"
                     class="w-full md:w-14rem input-registro"
-                    style="width: 80%"
+                    style="width: 80%; text-align: left;"
                 ></Dropdown>
                 <div class="text-center">
                     <p
@@ -129,15 +129,17 @@
                                 optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
+                                class="input-indicativo"
                                 :class="{
                                     'p-invalid':
                                         errors.tipoDocumentoBeneficiario,
                                 }"
                             ></Dropdown>
                             <InputNumber
+                                id=""
                                 v-model="beneficiarioForm.documentoBeneficiario"
                                 placeholder="Número documento"
-                                class="w-full md:w-14rem input-registro"
+                                class="w-full md:w-14rem input-telefono"
                                 style="width: 80%"
                                 :class="{
                                     'p-invalid': errors.documentoBeneficiario,
@@ -152,13 +154,13 @@
                         >
                     </div>
                     <div class="form-group">
-                        <InputText
+                        <Dropdown
                             v-model="beneficiarioForm.bancoBeneficiario"
                             placeholder="Banco"
                             class="w-full md:w-14rem input-registro"
-                            style="width: 80%"
+                            style="width: 80%; text-align: left;"
                             :class="{ 'p-invalid': errors.bancoBeneficiario }"
-                        />
+                        ></Dropdown>
                         <small
                             v-if="errors.bancoBeneficiario"
                             style="display: block"
@@ -170,8 +172,8 @@
                         <InputNumber
                             v-model="beneficiarioForm.cuentaBeneficiario"
                             placeholder="Número de cuenta"
-                            class="w-full md:w-14rem input-registro"
                             style="width: 80%"
+                            class="w-full md:w-14rem input-registro"
                             :class="{ 'p-invalid': errors.cuentaBeneficiario }"
                         />
                         <small
