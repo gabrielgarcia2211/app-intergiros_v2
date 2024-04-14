@@ -53,8 +53,13 @@ h3 {
 
 #inputGroupServicios_list,
 #inputGroupMoneda_list,
-#selectBeneficiario_list,
-#tipoDocumentoBeneficiario_list {
+#selectedBeneficiario_list,
+#selectedDepositante_list,
+#tipoDocumentoBeneficiario_list,
+#selectBanco_list,
+#codigoIDepositante_list,
+#selectPais_list,
+#tipoDocumentoDepositante_list {
     padding-left: 0 !important;
     margin-bottom: 0 !important;
 }

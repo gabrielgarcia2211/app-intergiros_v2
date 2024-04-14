@@ -21,6 +21,7 @@ import Column from "primevue/column";
 import Toolbar from "primevue/toolbar";
 import Textarea from "primevue/textarea";
 import InputGroup from "primevue/inputgroup";
+import FileUpload  from "primevue/fileupload";
 
 
 const app = createApp({});
@@ -67,6 +68,7 @@ app.component("Column", Column);
 app.component("Toolbar", Toolbar);
 app.component("Textarea", Textarea);
 app.component("InputGroup", InputGroup);
+app.component("FileUpload", FileUpload);
 
 
 // Configura Axios globalmente

@@ -29,13 +29,13 @@ class UpdateTerceroRequest extends FormRequest
                 switch (request('servicio')) {
                     case 'TP-01':
                         return [
-                            'paypalAliasBeneficiario' => 'required',
-                            'paypalNombreBeneficiario' => 'required',
-                            'paypalTipoDocumentoBeneficiario' => 'required',
-                            'paypalDocumentoBeneficiario' => 'required|integer',
-                            'paypalBancoBeneficiario' => 'required',
-                            'paypalCuentaBeneficiario' => 'required',
-                            'paypalPagoMovilBeneficiario' => 'required',
+                            'aliasBeneficiario' => 'required',
+                            'nombreBeneficiario' => 'required',
+                            'tipoDocumentoBeneficiario' => 'required',
+                            'documentoBeneficiario' => 'required|integer',
+                            'bancoBeneficiario' => 'required',
+                            'cuentaBeneficiario' => 'required',
+                            'pagoMovilBeneficiario' => 'required',
                         ];
                         break;
                     case 'TP-02':
@@ -47,7 +47,7 @@ class UpdateTerceroRequest extends FormRequest
                             'usdtDocBeneficiario' => 'required|integer',
                             'usdtBancoBeneficiario' => 'required',
                             'usdtCuentaBeneficiario' => 'required',
-                            'usdtPagoMovilBeneficiario' => 'required',
+                            'usdtMovilBeneficiario' => 'required',
                         ];
                         break;
                 }
@@ -55,15 +55,15 @@ class UpdateTerceroRequest extends FormRequest
                 switch (request('servicio')) {
                     case 'TP-01':
                         return [
-                            'paypalAliasDepositante' => 'required',
-                            'paypalNombreDepositante' => 'required',
-                            'paypalTipoDocumentoDepositante' => 'required',
-                            'paypalDocumentoDepositante' => 'required|integer',
-                            'paypalCorreoDepositante' => 'required',
-                            'paypalIndicativoDepositante' => 'required',
-                            'paypalCelularDepositante' => 'required',
-                            'paypalPaisDepositante' => 'required',
-                            'adjuntarDocumento' => 'required|file|max:' . env('UPLOAD_MAX_FILESIZE'),
+                            'aliasDepositante' => 'required',
+                            'nombreDepositante' => 'required',
+                            'tipoDocumentoDepositante' => 'required',
+                            'documentoDepositante' => 'required|integer',
+                            'correoDepositante' => 'required',
+                            'codigoIDepositante' => 'required',
+                            'celularDepositante' => 'required',
+                            'paisDepositante' => 'required',
+                            //'adjuntarDocumento' => 'required|file|max:' . env('UPLOAD_MAX_FILESIZE'),
                         ];
                         break;
                     case 'TP-02':
@@ -80,17 +80,6 @@ class UpdateTerceroRequest extends FormRequest
                         ];
                         break;
                 }
-            case 'TAF':
-                return [
-                    'addAliasBeneficiario' => 'required',
-                    'addNombreBeneficiario' => 'required',
-                    'addTipoDocumentoBeneficiario' => 'required',
-                    'addDocumentoBeneficiario' => 'required|integer',
-                    'addBancoBeneficiario' => 'required',
-                    'addCuentaBeneficiario' => 'required',
-                    'addPagoMovilBeneficiario' => 'required',
-                ];
-                break;
             default:
                 break;
         }
@@ -108,13 +97,13 @@ class UpdateTerceroRequest extends FormRequest
                 switch (request('servicio')) {
                     case 'TP-01':
                         return [
-                            'paypalAliasBeneficiario.required' => 'El campo alias es obligatorio.',
-                            'paypalNombreBeneficiario.required' => 'El campo nombre es obligatorio.',
-                            'paypalTipoDocumentoBeneficiario.required' => 'El campo tipo documento es obligatorio.',
-                            'paypalDocumentoBeneficiario.required' => 'El campo documento es obligatorio.',
-                            'paypalBancoBeneficiario.required' => 'El campo banco es obligatorio.',
-                            'paypalCuentaBeneficiario.required' => 'El campo cuenta es obligatorio.',
-                            'paypalPagoMovilBeneficiario.required' => 'El campo pago movil es obligatorio.'
+                            'aliasBeneficiario.required' => 'El campo alias es obligatorio.',
+                            'nombreBeneficiario.required' => 'El campo nombre es obligatorio.',
+                            'tipoDocumentoBeneficiario.required' => 'El campo tipo documento es obligatorio.',
+                            'documentoBeneficiario.required' => 'El campo documento es obligatorio.',
+                            'bancoBeneficiario.required' => 'El campo banco es obligatorio.',
+                            'cuentaBeneficiario.required' => 'El campo cuenta es obligatorio.',
+                            'pagoMovilBeneficiario.required' => 'El campo pago movil es obligatorio.'
                         ];
                         break;
                     case 'TP-02':
@@ -126,7 +115,7 @@ class UpdateTerceroRequest extends FormRequest
                             'usdtDocBeneficiario.required' => 'El campo documento es obligatorio.',
                             'usdtBancoBeneficiario.required' => 'El campo banco es obligatorio.',
                             'usdtCuentaBeneficiario.required' => 'El campo cuenta es obligatorio.',
-                            'usdtPagoMovilBeneficiario.required' => 'El campo pago movil es obligatorio.',
+                            'usdtMovilBeneficiario.required' => 'El campo pago movil es obligatorio.',
                         ];
                         break;
                 }
@@ -134,16 +123,16 @@ class UpdateTerceroRequest extends FormRequest
                 switch (request('servicio')) {
                     case 'TP-01':
                         return [
-                            'paypalAliasDepositante.required' => 'El campo alias es obligatorio.',
-                            'paypalNombreDepositante.required' => 'El campo nombre es obligatorio.',
-                            'paypalTipoDocumentoDepositante.required' => 'El campo tipo documento es obligatorio.',
-                            'paypalDocumentoDepositante.required' => 'El campo documento es obligatorio.',
-                            'paypalCorreoDepositante.required' => 'El campo correo  es obligatorio.',
-                            'paypalIndicativoDepositante.required' => 'El campo indicativo celular es obligatorio.',
-                            'paypalCelularDepositante.required' => 'El campo celular  es obligatorio.',
-                            'paypalPaisDepositante.required' => 'El campo pais es obligatorio.',
-                            'adjuntarDocumento.required' => 'La foto del documento es obligatoria.',
-                            'adjuntarDocumento.max' => 'El tamaño del archivo debe ser menor a ' . env('UPLOAD_MAX_FILESIZE') / 1024 . ' MB',
+                            'aliasDepositante.required' => 'El campo alias es obligatorio.',
+                            'nombreDepositante.required' => 'El campo nombre es obligatorio.',
+                            'tipoDocumentoDepositante.required' => 'El campo tipo documento es obligatorio.',
+                            'documentoDepositante.required' => 'El campo documento es obligatorio.',
+                            'correoDepositante.required' => 'El campo correo  es obligatorio.',
+                            'codigoIDepositante.required' => 'El campo indicativo celular es obligatorio.',
+                            'celularDepositante.required' => 'El campo celular  es obligatorio.',
+                            'paisDepositante.required' => 'El campo pais es obligatorio.',
+                            //'adjuntarDocumento.required' => 'La foto del documento es obligatoria.',
+                            //'adjuntarDocumento.max' => 'El tamaño del archivo debe ser menor a ' . env('UPLOAD_MAX_FILESIZE') / 1024 . ' MB',
                         ];
                         break;
                     case 'TP-02':
@@ -161,17 +150,6 @@ class UpdateTerceroRequest extends FormRequest
                         break;
                 }
 
-            case 'TAF':
-                return [
-                    'addAliasBeneficiario.required' => 'El campo alias es obligatorio.',
-                    'addNombreBeneficiario.required' => 'El campo nombre es obligatorio.',
-                    'addTipoDocumentoBeneficiario.required' => 'El campo tipo documento es obligatorio.',
-                    'addDocumentoBeneficiario.required' => 'El campo documento es obligatorio.',
-                    'addBancoBeneficiario.required' => 'El campo banco es obligatorio.',
-                    'addCuentaBeneficiario.required' => 'El campo cuenta es obligatorio.',
-                    'addPagoMovilBeneficiario.required' => 'El campo pago movil es obligatorio.'
-                ];
-                break;
             default:
                 break;
         }
@@ -184,13 +162,13 @@ class UpdateTerceroRequest extends FormRequest
                 switch (request('servicio')) {
                     case 'TP-01':
                         return [
-                            'paypalAliasBeneficiario' => 'alias',
-                            'paypalNombreBeneficiario' => 'nombre',
-                            'paypalTipoDocumentoBeneficiario' => 'tipo documento',
-                            'paypalDocumentoBeneficiario' => 'documento',
-                            'paypalBancoBeneficiario' => 'banco',
-                            'paypalCuentaBeneficiario' => 'cuenta',
-                            'paypalPagoMovilBeneficiario' => 'pago movil'
+                            'aliasBeneficiario' => 'alias',
+                            'nombreBeneficiario' => 'nombre',
+                            'tipoDocumentoBeneficiario' => 'tipo documento',
+                            'documentoBeneficiario' => 'documento',
+                            'bancoBeneficiario' => 'banco',
+                            'cuentaBeneficiario' => 'cuenta',
+                            'pagoMovilBeneficiario' => 'pago movil'
                         ];
                         break;
                     case 'TP-02':
@@ -201,7 +179,7 @@ class UpdateTerceroRequest extends FormRequest
                             'usdtDocBeneficiario' => 'documento',
                             'usdtBancoBeneficiario' => 'banco',
                             'usdtCuentaBeneficiario' => 'cuenta',
-                            'usdtPagoMovilBeneficiario' => 'pago movil'
+                            'usdtMovilBeneficiario' => 'pago movil'
                         ];
                         break;
                 }
@@ -209,15 +187,15 @@ class UpdateTerceroRequest extends FormRequest
                 switch (request('servicio')) {
                     case 'TP-01':
                         return [
-                            'paypalAliasDepositante' => 'alias',
-                            'paypalNombreDepositante' => 'nombre',
-                            'paypalTipoDocumentoDepositante' => 'tipo documento',
-                            'paypalDocumentoDepositante' => 'documento',
-                            'paypalCorreoDepositante' => 'correo',
-                            'paypalIndicativoDepositante' => 'indicativo celular',
-                            'paypalCelularDepositante' => 'celular',
-                            'paypalPaisDepositante' => 'pais',
-                            'adjuntarDocumento' => 'foto documento',
+                            'aliasDepositante' => 'alias',
+                            'nombreDepositante' => 'nombre',
+                            'tipoDocumentoDepositante' => 'tipo documento',
+                            'documentoDepositante' => 'documento',
+                            'correoDepositante' => 'correo',
+                            'codigoIDepositante' => 'indicativo celular',
+                            'celularDepositante' => 'celular',
+                            'paisDepositante' => 'pais',
+                            //'adjuntarDocumento' => 'foto documento',
                         ];
                         break;
                     case 'TP-02':
@@ -234,18 +212,6 @@ class UpdateTerceroRequest extends FormRequest
                         ];
                         break;
                 }
-
-            case 'TAF':
-                return [
-                    'addAliasBeneficiario' => 'alias.',
-                    'addNombreBeneficiario' => 'nombre.',
-                    'addTipoDocumentoBeneficiario' => 'tipo documento',
-                    'addDocumentoBeneficiario' => 'documento',
-                    'addBancoBeneficiario' => 'banco.',
-                    'addCuentaBeneficiario' => 'cuenta.',
-                    'addPagoMovilBeneficiario' => 'pago movil.'
-                ];
-                break;
             default:
                 break;
         }

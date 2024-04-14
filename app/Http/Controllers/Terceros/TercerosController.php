@@ -46,9 +46,10 @@ class TercerosController extends Controller
 
     public function showTercero($id, $code, $servicio)
     {
-        $response = Tercero::select('terceros.*')
+        $response = Tercero::select('terceros.*', 'mc_banco.id as banco_id')
             ->join('master_combos', 'master_combos.id', 'terceros.tipo_tercero_id')
             ->join('tipo_formulario', 'tipo_formulario.id', 'terceros.tipo_formulario_id')
+            ->leftJoin('master_combos as mc_banco', 'mc_banco.id', 'terceros.banco_id')
             ->where([
                 'terceros.id' => $id,
                 'master_combos.code' => $code,
@@ -65,9 +66,7 @@ class TercerosController extends Controller
             $data = mapTipoTercero($request->all());
             $servicio = $request->input('servicio');
             $code = $request->input('code');
-            if ($code == "TAF") {
-                $code = "TB";
-            }
+
             $data['user_id'] = Auth()->user()->id;
             $data['tipo_tercero_id'] = MasterCombos::whereRaw("parent_id = (SELECT id FROM master_combos WHERE code = 'terceros')")
                 ->whereRaw("LOWER(code) = LOWER('$code')")
@@ -77,7 +76,7 @@ class TercerosController extends Controller
 
             $data['tipo_formulario_id'] = TipoFormulario::where('codigo', $servicio)->first()->id;
             if (in_array($code, ['TD'])) {
-                $data['path_documento'] = $this->fileService->saveFile($data['adjuntar_documento'], Auth()->user()->id, 'documento_tercero');
+                $data['path_documento'] = null; //$this->fileService->saveFile($data['adjuntar_documento'], Auth()->user()->id, 'documento_tercero');
             }
             $tercero = Tercero::create($data);
             return Response::sendResponse($tercero, 'Registro guardado con exito.');
@@ -96,12 +95,14 @@ class TercerosController extends Controller
 
             if (in_array($code, ['TD'])) {
                 $this->fileService->deleteFile($Tercero->path_documento);
-                $data['path_documento'] = $this->fileService->saveFile($data['adjuntar_documento'], Auth()->user()->id, 'documento_tercero');
+                $data['path_documento'] = null; //$this->fileService->saveFile($data['adjuntar_documento'], Auth()->user()->id, 'documento_tercero');
             }
 
             $tercero = $Tercero->update($data);
             return Response::sendResponse($tercero, 'Registro actualizado con exito.');
         } catch (\Exception $ex) {
+            Log::debug($ex->getLine());
+            Log::debug($ex->getMessage());
             return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
         }
     }

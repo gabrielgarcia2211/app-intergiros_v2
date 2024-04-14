@@ -14,7 +14,7 @@ function mapTipoTercero($data)
                         'nombre' => $data['nombreBeneficiario'],
                         'tipo_documento_id' => $data['tipoDocumentoBeneficiario'],
                         'documento' => $data['documentoBeneficiario'],
-                        'banco' => $data['bancoBeneficiario'],
+                        'banco_id' => $data['bancoBeneficiario'],
                         'cuenta' => $data['cuentaBeneficiario'],
                         'pago_movil' => $data['pagoMovilBeneficiario'],
                     ];
@@ -26,7 +26,7 @@ function mapTipoTercero($data)
                         'tipo_documento_id' => $data['usdtTipoDocBeneficiario'],
                         'tipo_cuenta_id' => $data['usdtTipoCuentaBeneficiario'],
                         'documento' => $data['usdtDocBeneficiario'],
-                        'banco' => $data['usdtBancoBeneficiario'],
+                        'banco_id' => $data['usdtBancoBeneficiario'],
                         'cuenta' => $data['usdtCuentaBeneficiario'],
                         'pago_movil' => $data['usdtPagoMovilBeneficiario'],
                     ];
@@ -36,15 +36,15 @@ function mapTipoTercero($data)
             switch (request('servicio')) {
                 case 'TP-01':
                     return [
-                        'alias' => $data['paypalAliasDepositante'],
-                        'nombre' => $data['paypalNombreDepositante'],
-                        'tipo_documento_id' => $data['paypalTipoDocumentoDepositante'],
-                        'documento' => $data['paypalDocumentoDepositante'],
-                        'correo' => $data['paypalCorreoDepositante'],
-                        'pais_telefono_id' => $data['paypalIndicativoDepositante'],
-                        'celular' => $data['paypalCelularDepositante'],
-                        'pais_id' => $data['paypalPaisDepositante'],
-                        'adjuntar_documento' => $data['adjuntarDocumento'],
+                        'alias' => $data['aliasDepositante'],
+                        'nombre' => $data['nombreDepositante'],
+                        'tipo_documento_id' => $data['tipoDocumentoDepositante'],
+                        'documento' => $data['documentoDepositante'],
+                        'correo' => $data['correoDepositante'],
+                        'pais_telefono_id' => $data['codigoIDepositante'],
+                        'celular' => $data['celularDepositante'],
+                        'pais_id' => $data['paisDepositante'],
+                        //'adjuntar_documento' => $data['adjuntarDocumento'],
                     ];
                     break;
                 case 'TP-02':
@@ -61,18 +61,6 @@ function mapTipoTercero($data)
                     ];
                     break;
             }
-
-        case 'TAF':
-            return [
-                'alias' => $data['addAliasBeneficiario'],
-                'nombre' => $data['addNombreBeneficiario'],
-                'tipo_documento_id' => $data['addTipoDocumentoBeneficiario'],
-                'documento' => $data['addDocumentoBeneficiario'],
-                'banco' => $data['addBancoBeneficiario'],
-                'cuenta' => $data['addCuentaBeneficiario'],
-                'pago_movil' => $data['addPagoMovilBeneficiario'],
-            ];
-            break;
         default:
             break;
     }

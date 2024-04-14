@@ -17,7 +17,6 @@ class Tercero extends Model
         'tipo_documento_id',
         'user_id',
         'tipo_tercero_id',
-        'banco',
         'cuenta',
         'pago_movil',
         'correo',
@@ -26,6 +25,7 @@ class Tercero extends Model
         'pais_telefono_id',
         'tipo_formulario_id',
         'tipo_cuenta_id',
+        'banco_id',
         'path_documento',
     ];
 
