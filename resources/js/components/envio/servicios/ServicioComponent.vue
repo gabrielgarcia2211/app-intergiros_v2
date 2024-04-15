@@ -50,10 +50,14 @@
     <!-- paypal -->
     <div class="panel container mt-5" id="panel-paypal" v-if="checkService">
         <div class="text-center">
-            <p>
+            <p
+                style="font-size: 18px;"
+            >
                 <strong>Monto minimo:</strong> $5USD+comisión PayPal($5,60USD)
             </p>
-            <p>
+            <p
+                style="font-size: 18px;"
+            >
                 <strong>Tiempo aproximado de espera:</strong> 8 horas laborales
             </p>
         </div>
@@ -556,7 +560,7 @@
                         </button>
                     </div>
                     <div
-                        class="text-center mt-5"
+                        class="text-center"
                         v-if="createOrUpdateDepositante == 'create'"
                     >
                         <div
@@ -604,7 +608,7 @@
                                     color: #0035aa;
                                     font-size: 18px;
                                 "
-                                >Eliminar</Button
+                                ><i class="pi pi-trash"></i></Button
                             >
                         </div>
                     </div>

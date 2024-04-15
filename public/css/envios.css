@@ -106,11 +106,11 @@ h3 {
 }
 
 .input-telefono, .input-telefono>input {
-    width: 424px;
     font-size: 20px;
     font-family: "Lato", sans-serif !important;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
+    color: #afb4b8;
 }
 
 .input-registro {
@@ -120,6 +120,7 @@ h3 {
     font-size: 20px;
     font-family: "Lato", sans-serif !important;
     border-radius: 25px;
+    color: #afb4b8;
 }
 
 .p-dropdown .p-dropdown-label, .input-registro>input {
@@ -140,6 +141,36 @@ h3 {
     font-size: 20px;
 }
 
+.p-fileupload-content {
+    color: #afb4b8;
+    font-family: "Lato", sans-serif !important;
+}
+
+.p-fileupload-content {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.p-fileupload-choose {
+    background-color: #0035aa;
+}
+
+.p-fileupload-buttonbar {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: #FFFF;
+}
+
+.p-voucher {
+    width: 15%;
+    height: 35px;
+    padding-top: 6px;
+    background-color: #0035aa !important;
+}
+
+.p-dropdown-trigger-icon {
+    color: #afb4b8;
+}
 /* #adjuntarDocumento {
     background-color: #0035aa;
     color: white;
