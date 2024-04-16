@@ -583,7 +583,6 @@
                 </form>
             </div>
             <!-- monto -->
-            <div class="row">
                 <div class="col-md-6">
                     <div class="text-center mt-4">
                         <InputNumber
@@ -629,7 +628,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-md-6">
+                </div>
+
             <div class="text-center mt-3">
                 <div class="form-check">
                     <input
