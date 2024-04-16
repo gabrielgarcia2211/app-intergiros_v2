@@ -20,8 +20,14 @@
 
 @section('script')
     <script>
-        var STATUS_PAYMENT = "error";
-        var MESSAGE_PAYMENT = "¡Has cancelado el proceso de pago!";
+        const channel = new BroadcastChannel("completPayPaypal");
+        channel.postMessage({
+            STATUS_PAYMENT: "error",
+            MESSAGE_PAYMENT: "¡Has cancelado el proceso de pago!",
+        });
+        channel.close();
+        window.setTimeout(() => {
+            window.close();
+        }, 3000);
     </script>
-    <script src="{{ asset('js/payments/paypal/index.js') }}"></script>
 @endsection

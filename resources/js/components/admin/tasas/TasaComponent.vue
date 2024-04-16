@@ -7,12 +7,12 @@
                     <div class="row">
                         <div class="col-6">
                             <label
-                                for="tasa"
+                                for="selectTasa"
                                 style="display: block; float: left"
                                 >Tipo de Tasa:</label
                             >
                             <Dropdown
-                                id="tasa"
+                                id="selectTasa"
                                 :options="listTasas"
                                 v-model="setTasa.tasa_id"
                                 style="width: 100%"

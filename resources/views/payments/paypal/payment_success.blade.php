@@ -20,8 +20,14 @@
 
 @section('script')
     <script>
-        var STATUS_PAYMENT = "success";
-        var MESSAGE_PAYMENT = "¡Tu pago se ha realizado con éxito!";
+        const channel = new BroadcastChannel("completPayPaypal");
+        channel.postMessage({
+            STATUS_PAYMENT: "success",
+            MESSAGE_PAYMENT: "¡Tu pago se ha realizado con éxito!",
+        });
+        channel.close();
+        window.setTimeout(() => {
+            window.close();
+        }, 3000);
     </script>
-    <script src="{{ asset('js/payments/paypal/index.js') }}"></script>
 @endsection

@@ -176,7 +176,7 @@
 
                 <Column
                     field="path_documento_user"
-                    header="Documento Usuario"
+                    header="Documento Usuario (Archivo)"
                     sortable
                     :showClearButton="false"
                     style="min-width: 200px"
@@ -199,7 +199,18 @@
                     style="min-width: 100px"
                 >
                     <template #body="{ data }">
-                        {{ data.verificado }}
+                        <span
+                            :style="getVerificado(data.verificado)"
+                            style="
+                                cursor: pointer;
+                                display: block;
+                                padding: 5px;
+                                text-align: center;
+                                border-radius: 10px;
+                            "
+                        >
+                            {{ getEstadoVerificado(data.verificado) }}
+                        </span>
                     </template>
                     <template #filter="{ filterModel }">
                         <InputText
@@ -473,7 +484,7 @@
 
                 <Column
                     field="path_documento_depositante"
-                    header="Documento Depositante"
+                    header="Documento Depositante (Archivo)"
                     sortable
                     :showClearButton="false"
                     style="min-width: 200px"
@@ -632,7 +643,7 @@
 
                 <Column
                     field="path_documento_beneficiario"
-                    header="Documento Beneficiario"
+                    header="Documento Beneficiario (Archivo)"
                     sortable
                     :showClearButton="false"
                     style="min-width: 200px"
@@ -765,7 +776,7 @@
                             "
                             @click="onRowActionReclamo(data.historial_id)"
                         >
-                        {{ data.historial_id }}
+                            {{ data.historial_id }}
                             {{ getReclamoSolicitud(data.historial_id) }}
                         </span>
                     </template>
@@ -1218,13 +1229,33 @@ export default {
                 return;
             }
             this.$axios
-                .get("/admin/solicitudes/historial/"+ historial_id)
+                .get("/admin/solicitudes/historial/" + historial_id)
                 .then((response) => {
-                    console.log(response.data)
+                    console.log(response.data);
                 })
                 .catch((error) => {
                     this.$readStatusHttp(error);
                 });
+        },
+        getVerificado(estado) {
+            switch (estado) {
+                case 0:
+                    return { backgroundColor: "red", color: "white" };
+                case 1:
+                    return { backgroundColor: "green", color: "white" };
+                default:
+                    return {};
+            }
+        },
+        getEstadoVerificado(estado) {
+            switch (estado) {
+                case 0:
+                    return "SIN VERIFICAR";
+                case 1:
+                    return "VERIFICADO";
+                default:
+                    return {};
+            }
         },
     },
 };

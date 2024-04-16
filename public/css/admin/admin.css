@@ -1,7 +1,7 @@
 .form-control {
     border-radius: 25px;
     font-size: 20px;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
 .btn-primary {
@@ -13,7 +13,11 @@
     margin-right: auto;
 }
 
-#selfieFoto, #documentoFoto, #guardarEstado, #cuentaBeneficiario, #CuentaDepositante {
+#selfieFoto,
+#documentoFoto,
+#guardarEstado,
+#cuentaBeneficiario,
+#CuentaDepositante {
     width: 64px;
     margin-left: auto;
     margin-right: auto;
@@ -23,6 +27,17 @@
     font-size: 20px;
 }
 
-#selfieFoto:hover, #documentoFoto:hover, #guardarEstado:hover, #cuentaBeneficiario:hover, #CuentaDepositante:hover {
+#selfieFoto:hover,
+#documentoFoto:hover,
+#guardarEstado:hover,
+#cuentaBeneficiario:hover,
+#CuentaDepositante:hover {
     background-color: #215cda;
+}
+
+#selectEstado_list,
+#selectTasa_list,
+#selectVerificado_list {
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
 }

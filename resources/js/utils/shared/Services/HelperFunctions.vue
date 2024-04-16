@@ -94,13 +94,29 @@ export default {
         },
         $getComboRelations(gestor) {
             return new Promise((resolve, reject) => {
-                axios
+                this.$axios
                     .get(`/configuration/gestor/${gestor.join(",")}`)
                     .then(function (response) {
                         resolve(response.data);
                     })
                     .catch(function (error) {
-                        handleErrors(error);
+                        this.$readStatusHttp(error);
+                        reject(error);
+                    });
+            });
+        },
+        $devFormatoMoneda(key, value) {
+            return new Promise((resolve, reject) => {
+                var formData = new FormData();
+                formData.append("tasa", key);
+                formData.append("monto", value);
+                this.$axios
+                    .post("/convertidor/tasa", formData)
+                    .then((response) => {
+                        resolve(response.data);
+                    })
+                    .catch((error) => {
+                        this.$readStatusHttp(error);
                         reject(error);
                     });
             });

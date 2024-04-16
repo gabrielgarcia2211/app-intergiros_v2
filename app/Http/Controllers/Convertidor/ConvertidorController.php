@@ -12,7 +12,7 @@ class ConvertidorController extends Controller
 {
     public function getTasaConvert(Request $request)
     {
-        if (!empty($request->input('tasa'))  && !empty($request->input('monto'))) {
+        if (!empty($request->input('tasa'))  && (!empty($request->input('monto')) && $request->input('monto') != 'null')) {
             $codigo = $request->input('tasa');
             $monto = $request->input('monto');
             $response = TipoFormulario::with('tasa_cambios')->where('codigo', $codigo)->first();

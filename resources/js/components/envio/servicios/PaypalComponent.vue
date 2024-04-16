@@ -1,63 +1,10 @@
 <template>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-5">
-                <InputGroup>
-                    <Button label="de" class="izquierda" />
-                    <Dropdown
-                        :options="optionsServices"
-                        v-model="selectedService"
-                        id="inputGroupServicios"
-                        :placeholder="'Selecciona'"
-                        optionLabel="descripcion"
-                        optionValue="id"
-                        class="w-full md:w-14rem"
-                        style="width: 100%"
-                        @change="handleSelectService"
-                    ></Dropdown>
-                </InputGroup>
-            </div>
-            <div
-                class="col-md-2 text-center"
-                style="color: #0035aa; padding: 0px"
-            >
-                <i
-                    class="fas fa-exchange-alt fa-5x"
-                    style="
-                        border: 1px solid #0035aa;
-                        border-radius: 55px;
-                        padding: 10px;
-                    "
-                ></i>
-            </div>
-            <div class="col-md-5">
-                <InputGroup>
-                    <Button label="a" class="derecha" />
-                    <Dropdown
-                        id="inputGroupMoneda"
-                        v-model="selectedMoneda"
-                        :options="optionsMonedas"
-                        optionLabel="tipo"
-                        optionValue="id"
-                        :placeholder="'Selecciona'"
-                        class="w-full md:w-14rem"
-                        style="width: 100%"
-                    ></Dropdown>
-                </InputGroup>
-            </div>
-        </div>
-    </div>
-    <!-- paypal -->
-    <div class="panel container mt-5" id="panel-paypal" v-if="checkService">
+    <div class="panel container mt-5" id="panel-paypal">
         <div class="text-center">
-            <p
-                style="font-size: 18px;"
-            >
+            <p style="font-size: 18px">
                 <strong>Monto minimo:</strong> $5USD+comisión PayPal($5,60USD)
             </p>
-            <p
-                style="font-size: 18px;"
-            >
+            <p style="font-size: 18px">
                 <strong>Tiempo aproximado de espera:</strong> 8 horas laborales
             </p>
         </div>
@@ -608,8 +555,8 @@
                                     color: #0035aa;
                                     font-size: 18px;
                                 "
-                                ><i class="pi pi-trash"></i></Button
-                            >
+                                ><i class="pi pi-trash"></i
+                            ></Button>
                         </div>
                     </div>
                     <div
@@ -635,29 +582,106 @@
                     </div>
                 </form>
             </div>
+            <!-- monto -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="text-center mt-4">
+                        <InputNumber
+                            v-model="montoBruto"
+                            class="input-registro"
+                            placeholder="Monto a cambiar"
+                            @input="convertService"
+                        />
+                        <div class="mt-5">
+                            <p style="color: #0035aa">
+                                {{}}
+                                <strong
+                                    >Monto a pagar:
+                                    <p
+                                        v-if="montoCambiar"
+                                        style="display: inline-block"
+                                    >
+                                        {{
+                                            montoCambiar.monto_a_pagar.toFixed(
+                                                2
+                                            )
+                                        }}
+                                    </p>
+                                    $ USD</strong
+                                >
+                            </p>
+                            <p style="color: #0035aa">
+                                <strong
+                                    >Monto a recibir:
+                                    <p
+                                        v-if="montoCambiar"
+                                        style="display: inline-block"
+                                    >
+                                        {{
+                                            montoCambiar.monto_a_recibir.toFixed(
+                                                2
+                                            )
+                                        }}
+                                    </p>
+                                    BS.</strong
+                                >
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <div class="form-check">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        v-model="isTermins"
+                        id="defaultCheck1"
+                    />
+                    <label class="form-check-label" for="defaultCheck1">
+                        <p>
+                            Acepto los
+                            <a href="#" style="color: #0035aa"
+                                ><strong>Terminos y Condiciones</strong></a
+                            >
+                            del servicio de intergiros.
+                        </p>
+                    </label>
+                </div>
+            </div>
+            <div class="text-center mt-2">
+                <div class="text-center mt-4">
+                    <button
+                        class="btn btn-primary"
+                        type="button"
+                        id="realizarPago"
+                        style="width: 80%"
+                        :disabled="!isPay"
+                        @click="addSolicitudPago"
+                    >
+                        Realizar pago
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- paypal -->
 </template>
+
 <script>
 // Importar Librerias o Modulos
 import * as Yup from "yup";
 
 export default {
+    props: ["idService", "idMoneda"],
     data() {
         return {
             beneficiarios: [],
             depositantes: [],
-            selectedService: null,
-            selectedMoneda: null,
-            optionsServices: [],
-            optionsMonedas: [],
             optionsBeneficiarios: [],
             optionsDocument: [],
             optionsBancos: [],
             optionsCodigoI: [],
             optionsPais: [],
-            checkService: null,
             selectedBeneficiario: null,
             selectedDepositante: null,
             /** Formulario Beneficario*/
@@ -697,19 +721,72 @@ export default {
             isEditDepositante: true,
             errorsDepositante: {},
             /** Control de solicitud */
-            mapSolicitud: {
-                servicio: null,
-                tipo: null,
-            },
             isEditImage: true,
+            montoCambiar: {
+                monto_a_pagar: 0,
+                monto_a_recibir: 0,
+            },
+            montoBruto: null,
+            isTermins: false,
+            isPay: false,
+            channel: null,
         };
     },
     components: {},
+    computed: {},
     created() {
-        this.initSelects();
+        this.initServicePaypal();
     },
-    mounted() {},
+    watch: {
+        "beneficiarioForm.id": function (value) {
+            this.validateSendSolicitud();
+        },
+        "depositanteForm.id": function (value) {
+            this.validateSendSolicitud();
+        },
+        "montoCambiar.monto_a_pagar": function (value) {
+            this.validateSendSolicitud();
+        },
+        "montoCambiar.monto_a_recibir": function (value) {
+            this.validateSendSolicitud();
+        },
+        isTermins: function (value) {
+            this.validateSendSolicitud();
+        },
+    },
+    mounted() {
+        this.channel = new BroadcastChannel("completPayPaypal");
+        this.channel.onmessage = this.handleMessage;
+    },
+    beforeDestroy() {
+        if (this.channel) {
+            this.channel.close();
+        }
+    },
     methods: {
+        async initServicePaypal() {
+            this.beneficiarios = await this.getTerceros("TB", "TP-01");
+            this.depositantes = await this.getTerceros("TD", "TP-01");
+            const comboNames = [
+                "tipo_documento",
+                "pais_telefono",
+                "pais",
+                "banco",
+            ];
+
+            const response = await this.$getComboRelations(comboNames);
+            const {
+                tipo_documento: responseTipoDocumento,
+                pais_telefono: responsePaisTelefono,
+                pais: responsePais,
+                banco: responseBanco,
+            } = response;
+
+            this.optionsDocument = responseTipoDocumento;
+            this.optionsCodigoI = responsePaisTelefono;
+            this.optionsPais = responsePais;
+            this.optionsBancos = responseBanco;
+        },
         async validateFormBeneficiario() {
             const schema = Yup.object().shape({
                 aliasBeneficiario: Yup.string().required(
@@ -771,7 +848,7 @@ export default {
                     "El pago movil es obligatorio"
                 ),
                 paisDepositante: Yup.string().required(
-                    "El pago movil es obligatorio"
+                    "El pais es obligatorio"
                 ),
                 adjuntarDocumento: Yup.string().required(
                     "La foto es obligatoria"
@@ -790,146 +867,54 @@ export default {
                 return false;
             }
         },
-        async initSelects() {
-            this.optionsServices = await this.getForms();
-            this.optionsMonedas = await this.getMonedas();
-        },
-        handleSelectService(event) {
-            this.beneficiarios = [];
-            this.depositantes = [];
-            this.checkService = event.value;
-            switch (event.value) {
-                case 1:
-                    this.beneficiarioForm.servicio = "TP-01";
-                    this.initServicePaypal();
-                    break;
-                default:
-                    break;
-            }
-        },
         async handleSelectAfiliado(event) {
+            const code = "TB";
+            const servicio = "TP-01";
             this.errorsBeneficiario = {};
             this.createOrUpdateBeneficiario = "edit";
-            let tmpAfiliado = [];
-            switch (this.checkService) {
-                case 1:
-                    const code = "TB";
-                    const servicio = "TP-01";
-                    tmpAfiliado = await this.showTercero(
-                        event.value,
-                        code,
-                        servicio
-                    );
-                    this.isEditBeneficiario = true;
-                    this.formBeneficiarioVisible = true;
-                    this.setFormBeneficiario(tmpAfiliado.data);
-                    this.beneficiarioForm.servicio = servicio;
-                    this.beneficiarioForm.code = code;
-                    break;
-                default:
-                    tmpAfiliado = [];
-                    break;
-            }
+            let tmpAfiliado = await this.showTercero(
+                event.value,
+                code,
+                servicio
+            );
+            this.isEditBeneficiario = true;
+            this.formBeneficiarioVisible = true;
+            this.setFormBeneficiario(tmpAfiliado.data);
+            this.beneficiarioForm.servicio = servicio;
+            this.beneficiarioForm.code = code;
         },
         async handleSelectDepositante(event) {
+            const code = "TD";
+            const servicio = "TP-01";
             this.errorsDepositante = {};
             this.createOrUpdateDepositante = "edit";
-            let tmpAfiliado = [];
-            switch (this.checkService) {
-                case 1:
-                    const code = "TD";
-                    const servicio = "TP-01";
-                    tmpAfiliado = await this.showTercero(
-                        event.value,
-                        code,
-                        servicio
-                    );
-                    this.isEditDepositante = true;
-                    this.formDepositanteVisible = true;
-                    this.setFormDepositante(tmpAfiliado.data);
-                    this.depositanteForm.servicio = servicio;
-                    this.depositanteForm.code = code;
-                    break;
-                default:
-                    tmpAfiliado = [];
-                    break;
-            }
-        },
-        async initServicePaypal() {
-            this.beneficiarios = await this.getTerceros("TB", "TP-01");
-            this.depositantes = await this.getTerceros("TD", "TP-01");
-            const comboNames = [
-                "tipo_documento",
-                "pais_telefono",
-                "pais",
-                "banco",
-            ];
-
-            const response = await this.$getComboRelations(comboNames);
-            const {
-                tipo_documento: responseTipoDocumento,
-                pais_telefono: responsePaisTelefono,
-                pais: responsePais,
-                banco: responseBanco,
-            } = response;
-
-            this.optionsDocument = responseTipoDocumento;
-            this.optionsCodigoI = responsePaisTelefono;
-            this.optionsPais = responsePais;
-            this.optionsBancos = responseBanco;
-        },
-        async getForms(principal = 1) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const response = await axios.get(
-                        "/gestion/formularios/" + principal
-                    );
-                    resolve(response.data);
-                } catch (error) {
-                    handleErrors(error);
-                    reject(error);
-                }
-            });
-        },
-        async getMonedas() {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const response = await axios.get("/gestion/monedas");
-                    resolve(response.data);
-                } catch (error) {
-                    handleErrors(error);
-                    reject(error);
-                }
-            });
+            let tmpAfiliado = await this.showTercero(
+                event.value,
+                code,
+                servicio
+            );
+            this.isEditDepositante = true;
+            this.formDepositanteVisible = true;
+            this.setFormDepositante(tmpAfiliado.data);
+            this.depositanteForm.servicio = servicio;
+            this.depositanteForm.code = code;
         },
         initBeneficiario() {
             this.createOrUpdateBeneficiario = "create";
             this.formBeneficiarioVisible = true;
             this.isEditBeneficiario = false;
-            switch (this.checkService) {
-                case 1:
-                    this.resetFormBeneficiario();
-                    this.beneficiarioForm.servicio = "TP-01";
-                    this.beneficiarioForm.code = "TB";
-                    break;
-                default:
-                    break;
-            }
+            this.resetFormBeneficiario();
+            this.beneficiarioForm.servicio = "TP-01";
+            this.beneficiarioForm.code = "TB";
         },
         initDepositante() {
             this.createOrUpdateDepositante = "create";
             this.formDepositanteVisible = true;
             this.isEditDepositante = false;
             this.isEditImage = true;
-            switch (this.checkService) {
-                case 1:
-                    this.resetFormDepositante();
-                    this.depositanteForm.servicio = "TP-01";
-                    this.depositanteForm.code = "TD";
-                    break;
-                default:
-                    break;
-            }
+            this.resetFormDepositante();
+            this.depositanteForm.servicio = "TP-01";
+            this.depositanteForm.code = "TD";
         },
         habilitarEdicion(codigo) {
             switch (codigo) {
@@ -947,19 +932,6 @@ export default {
                     break;
             }
         },
-        mapTercero() {
-            const servicio = this.mapSolicitud.servicio;
-            const tipo = this.mapSolicitud.tipo;
-            switch (servicio) {
-                case "TP-01":
-                    if (tipo == "TB") {
-                    } else {
-                    }
-                    break;
-                default:
-                    break;
-            }
-        },
         async getTerceros(code, servicio) {
             return new Promise(async (resolve, reject) => {
                 try {
@@ -968,7 +940,7 @@ export default {
                     );
                     resolve(response.data);
                 } catch (error) {
-                    handleErrors(error);
+                    this.$readStatusHttp(error);
                     reject(error);
                 }
             });
@@ -1071,7 +1043,7 @@ export default {
                     );
                     resolve(response.data);
                 } catch (error) {
-                    handleErrors(error);
+                    this.$readStatusHttp(error);
                     reject(error);
                 }
             });
@@ -1101,7 +1073,7 @@ export default {
                                 this.resetFormBeneficiario();
                             })
                             .catch((error) => {
-                                handleErrors(error);
+                                this.$readStatusHttp(error);
                             });
                     }
                 });
@@ -1134,7 +1106,7 @@ export default {
                                 this.isEditImage = true;
                             })
                             .catch((error) => {
-                                handleErrors(error);
+                                this.$readStatusHttp(error);
                             });
                     }
                 });
@@ -1269,6 +1241,82 @@ export default {
                 .catch((error) => {
                     this.$readStatusHttp(error);
                 });
+        },
+        async convertService(event) {
+            const convertidor = await this.$devFormatoMoneda(
+                "TP-01",
+                event.value
+            );
+            if (convertidor.data) {
+                this.montoCambiar = convertidor.data;
+            } else {
+                this.montoCambiar.monto_a_pagar = 0;
+                this.montoCambiar.monto_a_recibir = 0;
+            }
+        },
+        validateSendSolicitud() {
+            if (
+                this.beneficiarioForm.id &&
+                this.depositanteForm.id &&
+                this.montoCambiar.monto_a_pagar != 0 &&
+                this.montoCambiar.monto_a_recibir != 0 &&
+                this.isTermins
+            ) {
+                this.isPay = true;
+            } else {
+                this.isPay = false;
+            }
+        },
+        addSolicitudPago() {
+            this.$swal
+                .fire({
+                    title: "Estas seguro que se desea continuar?",
+                    icon: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Si, Continuar!",
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        this.$axios
+                            .post("/solicitudes/pago", {
+                                beneficiario_id: this.beneficiarioForm.id,
+                                depositante_id: this.depositanteForm.id,
+                                tipo_formulario_id: this.idService,
+                                tipo_moneda_id: this.idMoneda,
+                                monto_a_pagar: this.montoCambiar.monto_a_pagar,
+                                monto_a_recibir:
+                                    this.montoCambiar.monto_a_recibir,
+                            })
+                            .then((response) => {
+                                const id = response.data.data.id;
+                                window.open(
+                                    `/solicitudes/proceso?solicitud=${id}`,
+                                    "_blank"
+                                );
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                this.$readStatusHttp(error);
+                            });
+                    }
+                });
+        },
+        handleMessage(event) {
+            if (event.data) {
+                if (event.data.STATUS_PAYMENT === "success") {
+                    this.$swal.fire({
+                        title: event.data.MESSAGE_PAYMENT,
+                        icon: event.data.STATUS_PAYMENT,
+                    });
+                } else {
+                    this.$swal.fire({
+                        title: event.data.MESSAGE_PAYMENT,
+                        icon: event.data.STATUS_PAYMENT,
+                    });
+                }
+            }
         },
     },
 };

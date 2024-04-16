@@ -15,6 +15,7 @@
                 >
                 <div class="p-col">
                     <Dropdown
+                    id="selectVerificado"
                         v-model="form.estado_id"
                         :options="rpEstadoVerificado"
                         optionLabel="name"

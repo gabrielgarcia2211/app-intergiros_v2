@@ -2,7 +2,6 @@ import "./bootstrap";
 import { createApp } from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
-
 // Importacion de funciones compartidas
 import shared from "./utils/shared";
 
@@ -10,6 +9,7 @@ import PrimeVue from "primevue/config";
 import esLocale from "./translations/primevue-es.json";
 import "primeicons/primeicons.css";
 import "primevue/resources/themes/bootstrap4-light-blue/theme.css";
+import Checkbox from "primevue/checkbox";
 import InputText from "primevue/inputtext";
 import InputNumber from "primevue/inputnumber";
 import Calendar from "primevue/calendar";
@@ -31,7 +31,7 @@ app.use(PrimeVue, {
         overlay: 9999, //dropdown, overlaypanel
         menu: 1000, //overlay menus
         tooltip: 1100, //tooltip
-    }
+    },
     /* unstyled: true  */
 });
 
@@ -52,8 +52,14 @@ app.component("verificacion-component", VerificacionComponent);
 app.component("noticia-component", NoticiaComponent);
 
 // Impotacion de componentes envio
-import ServicioComponent from "./components/envio/servicios/ServicioComponent.vue";
+import ServicioComponent from "./components/envio/ServicioComponent.vue";
+import PaypalComponent from "./components/envio/servicios/PaypalComponent.vue";
 app.component("servicio-component", ServicioComponent);
+app.component("servicio-paypal-component", PaypalComponent);
+
+// Impotacion de componentes pago
+import PagoPayPalComponent from "./components/pago/PagoPayPalComponent.vue";
+app.component("pago-paypal-component", PagoPayPalComponent);
 
 // Anexo de componentes de vuejs
 app.component("Dropdown", Dropdown);
@@ -68,6 +74,7 @@ app.component("Toolbar", Toolbar);
 app.component("Textarea", Textarea);
 app.component("InputGroup", InputGroup);
 app.component("FileUpload", FileUpload);
+app.component("Checkbox", Checkbox);
 
 // Configura Axios globalmente
 app.config.globalProperties.$axios = axios;

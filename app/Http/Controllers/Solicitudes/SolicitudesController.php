@@ -64,7 +64,7 @@ class SolicitudesController extends Controller
             $solicitud = Solicitudes::where([
                 'id' => $id,
                 'user_id' => Auth()->user()->id,
-            ])->with(Solicitudes::RELATIONS)->get()->first();
+            ])->with(Solicitudes::RELATIONS)->first();
             return Response::sendResponse($solicitud, 'Registro obtenido con exito.');
         } catch (\Exception $ex) {
             Log::debug($ex->getMessage());

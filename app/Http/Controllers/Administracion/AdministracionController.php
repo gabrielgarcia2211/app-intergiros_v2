@@ -79,7 +79,7 @@ class AdministracionController extends Controller
                     'tipo_moneda.descripcion as descripcion_moneda',
                     'ter_d.nombre as nombre_depositante',
                     'ter_d.documento as documento_depositante',
-                    'ter_d.banco as banco_depositante',
+                    'mc_banco_d.name as banco_depositante',
                     'ter_d.cuenta as cuenta_depositante',
                     'ter_d.pago_movil as pago_movil_depositante',
                     'ter_d.correo as correo_depositante',
@@ -87,7 +87,7 @@ class AdministracionController extends Controller
                     'ter_d.path_documento as path_documento_depositante',
                     'ter_b.nombre as nombre_beneficiario',
                     'ter_b.documento as documento_beneficiario',
-                    'ter_b.banco as banco_beneficiario',
+                    'mc_banco_b.name as banco_beneficiario',
                     'ter_b.cuenta as cuenta_beneficiario',
                     'ter_b.pago_movil as pago_movil_beneficiario',
                     'ter_b.correo as correo_beneficiario',
@@ -131,6 +131,8 @@ class AdministracionController extends Controller
             ->leftJoin('productos', 'productos.id', '=', 'solicitudes.producto_id')
             ->leftJoin('users', 'users.id', '=', 'solicitudes.user_id')
             ->leftJoin('master_combos as mc_estado', 'mc_estado.id', '=', 'solicitudes.estado_id')
+            ->leftJoin('master_combos as mc_banco_b', 'mc_banco_b.id', '=', 'ter_b.banco_id')
+            ->leftJoin('master_combos as mc_banco_d', 'mc_banco_d.id', '=', 'ter_d.banco_id')
             ->leftJoin('historial', 'historial.solicitud_id', '=', 'solicitudes.id');
     }
 

@@ -18,7 +18,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <style>
         th {
             font-size: 20px;

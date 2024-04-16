@@ -15,6 +15,7 @@
                 >
                 <div class="p-col">
                     <Dropdown
+                        id="selectEstado"
                         v-model="form.estado_id"
                         :options="rpTipoEstado"
                         optionLabel="name"

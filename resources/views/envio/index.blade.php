@@ -1,4 +1,5 @@
 @extends('layouts.css-envios')
+{{-- @include('layouts.nav-user') --}}
 
 @section('content')
     <div class="text-center mt-5">
