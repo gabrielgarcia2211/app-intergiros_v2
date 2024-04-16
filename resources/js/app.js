@@ -22,6 +22,11 @@ import Toolbar from "primevue/toolbar";
 import Textarea from "primevue/textarea";
 import InputGroup from "primevue/inputgroup";
 import FileUpload from "primevue/fileupload";
+import TabView from 'primevue/tabview';
+import TabPanel from 'primevue/tabpanel';
+import ProgressSpinner from 'primevue/progressspinner';
+import Menubar from 'primevue/menubar';
+
 
 const app = createApp({});
 
@@ -61,6 +66,14 @@ app.component("servicio-paypal-component", PaypalComponent);
 import PagoPayPalComponent from "./components/pago/PagoPayPalComponent.vue";
 app.component("pago-paypal-component", PagoPayPalComponent);
 
+// Impotacion de componentes historial
+import HistorialComponent from "./components/historial/HistorialComponent.vue";
+app.component("historial-component", HistorialComponent);
+
+// Impotacion de componentes menu
+import MenuComponent from "./components/menu/MenuComponent.vue";
+app.component("menu-component", MenuComponent);
+
 // Anexo de componentes de vuejs
 app.component("Dropdown", Dropdown);
 app.component("InputText", InputText);
@@ -75,6 +88,10 @@ app.component("Textarea", Textarea);
 app.component("InputGroup", InputGroup);
 app.component("FileUpload", FileUpload);
 app.component("Checkbox", Checkbox);
+app.component("TabView", TabView);
+app.component("TabPanel", TabPanel);
+app.component("ProgressSpinner", ProgressSpinner);
+app.component("Menubar", Menubar);
 
 // Configura Axios globalmente
 app.config.globalProperties.$axios = axios;

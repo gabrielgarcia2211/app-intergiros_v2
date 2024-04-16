@@ -1331,7 +1331,6 @@ export default {
     background-color: #f0f0f0 !important;
     color: #000000 !important;
 }
-
 #adjuntarDocumento [data-pc-name="uploadbutton"],
 #adjuntarDocumento [data-pc-name="cancelbutton"] {
     display: none;
