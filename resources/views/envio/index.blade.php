@@ -135,16 +135,6 @@
                         </div>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev"
-                    style="margin-left: -100px; color: black; margin-top: -65px;">
-                    <i class="fas fa-chevron-left fa-2x"></i>
-                    <span class="sr-only">Anterior</span>
-                </a>
-                <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next"
-                    style="margin-right: -100px; color: black; margin-top: -65px;">
-                    <i class="fas fa-chevron-right fa-2x"></i>
-                    <span class="sr-only">Siguiente</span>
-                </a>
             </div>
         </div>
     </div>
