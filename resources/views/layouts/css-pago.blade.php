@@ -34,6 +34,8 @@
             border-radius: 25px;
             font-size: 20px;
             font-family: 'Lato', sans-serif !important;
+            color: #afb4b8 !important;
+            background-color: #f0f0f0;
         }
 
         .input-indicativo {
@@ -41,13 +43,27 @@
             border-top-left-radius: 25px;
             font-size: 20px;
             font-family: 'Lato', sans-serif !important;
+            color: #afb4b8;
+            background-color: #f0f0f0;
         }
 
-        .input-telefono {
+        .p-dropdown .p-dropdown-label {
+            font-size: 20px;
+            font-family: 'Lato', sans-serif !important;
+            color: #afb4b8;
+        }
+
+        .input-telefono, .input-telefono>input {
             border-bottom-right-radius: 25px;
             border-top-right-radius: 25px;
             font-size: 20px;
             font-family: 'Lato', sans-serif !important;
+            color: #afb4b8;
+            background-color: #f0f0f0;
+        }
+
+        .p-dropdown-trigger-icon {
+            color: #afb4b8;
         }
 
         p,h3,h4 {

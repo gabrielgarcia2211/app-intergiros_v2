@@ -8,7 +8,7 @@
     <div class="text-center mt-5">
         <button class="btn btn-primary" type="button" id="tasas-venezuela">Tasas para cambios a Venezuela</button>
     </div>
-    <div class="text-center mt-5" id="slide-tasas">
+    <!-- <div class="text-center mt-5" id="slide-tasas">
         <div class="container">
             <div id="myCarousel" class="carousel slide" data-ride="carousel" style="padding-top: 45px; padding-bottom: 30px;">
                 <div class="carousel-inner">
@@ -24,7 +24,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Repite este bloque para cada tarjeta -->
                             <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
                                     <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid"
@@ -37,7 +36,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Repite este bloque para cada tarjeta -->
                             <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
                                     <img src="{{ asset('img/home/TDC Intergiros - Bitcoin.png') }}" class="img-fluid"
@@ -48,11 +46,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Repite este bloque para cada grupo de 3 tarjetas -->
-                            <!-- Puedes añadir más tarjetas según sea necesario -->
                         </div>
                     </div>
-                    <!-- Repite este bloque para cada grupo de 3 tarjetas -->
                     <div class="carousel-item">
                         <div class="row">
                             <div class="col-12 col-md-4">
@@ -65,7 +60,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Repite este bloque para cada tarjeta -->
                             <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
                                     <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid"
@@ -78,7 +72,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Repite este bloque para cada tarjeta -->
                             <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
                                     <img src="{{ asset('img/home/TDC Intergiros - Bitcoin.png') }}" class="img-fluid"
@@ -89,11 +82,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Repite este bloque para cada grupo de 3 tarjetas -->
-                            <!-- Puedes añadir más tarjetas según sea necesario -->
                         </div>
                     </div>
-                    <!-- Repite este bloque para cada grupo de 3 tarjetas -->
                     <div class="carousel-item">
                         <div class="row">
                             <div class="col-12 col-md-4">
@@ -106,7 +96,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Repite este bloque para cada tarjeta -->
                             <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
                                     <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid"
@@ -119,7 +108,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Repite este bloque para cada tarjeta -->
                             <div class="col-12 col-md-4">
                                 <div class="card bg-transparent">
                                     <img src="{{ asset('img/home/TDC Intergiros - Bitcoin.png') }}" class="img-fluid"
@@ -130,17 +118,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Repite este bloque para cada grupo de 3 tarjetas -->
-                            <!-- Puedes añadir más tarjetas según sea necesario -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+    <carousel-component></carousel-component>
+
     <div class="text-center mt-5">
         <h3><strong>¡Solicita tu pedido aquí!</strong></h3>
     </div>
+    
     <servicio-component></servicio-component>
     <!-- FOOTER -->
     @include('layouts.footer')
