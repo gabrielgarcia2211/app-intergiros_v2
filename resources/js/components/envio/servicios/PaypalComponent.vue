@@ -595,6 +595,7 @@
                             <p style="color: #0035aa">
                                 {{}}
                                 <strong
+                                    style="font-size: 18px;"
                                     >Monto a pagar:
                                     <p
                                         v-if="montoCambiar"
@@ -611,6 +612,7 @@
                             </p>
                             <p style="color: #0035aa">
                                 <strong
+                                    style="font-size: 18px;"
                                     >Monto a recibir:
                                     <p
                                         v-if="montoCambiar"
@@ -640,7 +642,7 @@
                         id="defaultCheck1"
                     />
                     <label class="form-check-label" for="defaultCheck1">
-                        <p>
+                        <p style="font-size: 18px;">
                             Acepto los
                             <a href="#" style="color: #0035aa"
                                 ><strong>Terminos y Condiciones</strong></a

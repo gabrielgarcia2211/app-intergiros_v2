@@ -26,6 +26,8 @@ import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import ProgressSpinner from 'primevue/progressspinner';
 import Menubar from 'primevue/menubar';
+import Carousel from 'primevue/carousel';
+
 
 
 const app = createApp({});
@@ -62,6 +64,10 @@ import PaypalComponent from "./components/envio/servicios/PaypalComponent.vue";
 app.component("servicio-component", ServicioComponent);
 app.component("servicio-paypal-component", PaypalComponent);
 
+//import carrusel
+import CarouselComponent from "./components/envio/servicios/CarouselComponent.vue";
+app.component("carousel-component", CarouselComponent);
+
 // Impotacion de componentes pago
 import PagoPayPalComponent from "./components/pago/PagoPayPalComponent.vue";
 app.component("pago-paypal-component", PagoPayPalComponent);
@@ -92,6 +98,7 @@ app.component("TabView", TabView);
 app.component("TabPanel", TabPanel);
 app.component("ProgressSpinner", ProgressSpinner);
 app.component("Menubar", Menubar);
+app.component("Carousel", Carousel);
 
 // Configura Axios globalmente
 app.config.globalProperties.$axios = axios;
