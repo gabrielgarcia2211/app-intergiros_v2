@@ -109,7 +109,8 @@ h3 {
     border-bottom-left-radius: 25px;
 }
 
-.input-telefono, .input-telefono>input {
+.input-telefono,
+.input-telefono > input {
     font-size: 20px;
     font-family: "Lato", sans-serif !important;
     border-top-right-radius: 25px;
@@ -127,7 +128,8 @@ h3 {
     color: #afb4b8;
 }
 
-.p-dropdown .p-dropdown-label, .input-registro>input {
+.p-dropdown .p-dropdown-label,
+.input-registro > input {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -162,7 +164,7 @@ h3 {
 .p-fileupload-buttonbar {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    background-color: #FFFF;
+    background-color: #ffff;
 }
 
 .p-voucher {
@@ -195,7 +197,7 @@ h3 {
     padding-top: 25px;
 }
 
-ul a {
+.footer ul a {
     color: #949494 !important;
 }
 

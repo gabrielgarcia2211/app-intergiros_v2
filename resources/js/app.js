@@ -22,13 +22,11 @@ import Toolbar from "primevue/toolbar";
 import Textarea from "primevue/textarea";
 import InputGroup from "primevue/inputgroup";
 import FileUpload from "primevue/fileupload";
-import TabView from 'primevue/tabview';
-import TabPanel from 'primevue/tabpanel';
-import ProgressSpinner from 'primevue/progressspinner';
-import Menubar from 'primevue/menubar';
-import Carousel from 'primevue/carousel';
-
-
+import TabView from "primevue/tabview";
+import TabPanel from "primevue/tabpanel";
+import ProgressSpinner from "primevue/progressspinner";
+import Menubar from "primevue/menubar";
+import Carousel from "primevue/carousel";
 
 const app = createApp({});
 
@@ -58,25 +56,25 @@ app.component("tasas-component", TasaComponent);
 app.component("verificacion-component", VerificacionComponent);
 app.component("noticia-component", NoticiaComponent);
 
-// Impotacion de componentes envio
+// Importacion de componentes envio
 import ServicioComponent from "./components/envio/ServicioComponent.vue";
 import PaypalComponent from "./components/envio/servicios/PaypalComponent.vue";
 app.component("servicio-component", ServicioComponent);
 app.component("servicio-paypal-component", PaypalComponent);
 
-//import carrusel
-import CarouselComponent from "./components/envio/servicios/CarouselComponent.vue";
+// Importacion de componentes carrusel
+import CarouselComponent from "./components/envio/CarouselComponent.vue";
 app.component("carousel-component", CarouselComponent);
 
-// Impotacion de componentes pago
+// Importacion de componentes pago
 import PagoPayPalComponent from "./components/pago/PagoPayPalComponent.vue";
 app.component("pago-paypal-component", PagoPayPalComponent);
 
-// Impotacion de componentes historial
+// Importacion de componentes historial
 import HistorialComponent from "./components/historial/HistorialComponent.vue";
 app.component("historial-component", HistorialComponent);
 
-// Impotacion de componentes menu
+// Importacion de componentes menu
 import MenuComponent from "./components/menu/MenuComponent.vue";
 app.component("menu-component", MenuComponent);
 
