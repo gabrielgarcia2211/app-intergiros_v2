@@ -1,8 +1,9 @@
 <template>
+    <div style="height: 10px;"></div>
     <div class="card">
-        <Menubar class="custom-menubar">
+        <Menubar class="custom-menubar" style="height: 60px; padding-bottom: 0px; padding-top: 18px;">
             <template #start>
-                <img src="img/Logo3-5.png" alt="Logo" class="navbar-logo" />
+                <img src="img/Logo3-5.png" alt="Logo" class="navbar-logo" width="130px"/>
             </template>
             <template #end>
                 <div class="menu-items">

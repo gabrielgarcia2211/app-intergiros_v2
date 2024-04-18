@@ -177,6 +177,34 @@ h3 {
 .p-dropdown-trigger-icon {
     color: #afb4b8;
 }
+
+.p-carousel-indicator>button {
+    background-color: #afb4b8;
+}
+
+.p-highlight>button {
+    background-color: #0035aa;
+}
+
+#pv_id_1_4, #pv_id_1_4>div {
+    background-color: #009d2c;
+    border-radius: 25px;
+    color: white;
+}
+
+#pv_id_1_4_label {
+    color: white;
+}
+
+.p-submenu-icon {
+    color: white;
+}
+
+
+/* .p-menuitem-link>span {
+    font-size: 18px !important;
+} */
+
 /* #adjuntarDocumento {
     background-color: #0035aa;
     color: white;
