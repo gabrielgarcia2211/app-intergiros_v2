@@ -1,7 +1,18 @@
-@include('layouts.nav-user')
 @extends('layouts.css-perfil')
 
 @section('content')
+    @if (Auth::check())
+        <menu-component :home="'{{ route('home') }}'" :servicio="'{{ route('servicios.index') }}'"
+            :usuario="'{{ Auth::user()->name }}'" :verificado="{{ !Auth::user()->verificado }}"
+            :notificacion="'{{ route('notificaciones.index') }}'" :perfil="'{{ route('perfil') }}'"
+            :historial="'{{ route('historial') }}'" :logout="'{{ route('logout') }}'">
+        </menu-component>
+    @else
+        <menu-component :home="'{{ route('home') }}'" :servicio="'{{ route('servicios.index') }}'"
+            :notificacion="'{{ route('notificaciones.index') }}'" :registro="'{{ route('registro') }}'"
+            :login="'{{ route('login') }}'">
+        </menu-component>
+    @endif
     <div class="container mt-5 contenedor-perfil">
         <div class="row">
             <div class="col-md-3 text-center">

@@ -1,17 +1,14 @@
 <template>
-    <div style="height: 10px;"></div>
-    <div class="card">
-        <Menubar class="custom-menubar" style="height: 60px; padding-bottom: 0px; padding-top: 18px;">
-            <template #start>
-                <img src="img/Logo3-5.png" alt="Logo" class="navbar-logo" width="130px"/>
-            </template>
-            <template #end>
-                <div class="menu-items">
-                    <Menubar :model="menuItems" />
-                </div>
-            </template>
-        </Menubar>
-    </div>
+    <Menubar class="custom-menubar">
+        <template #start>
+            <img src="img/Logo3-5.png" alt="Logo" class="navbar-logo" />
+        </template>
+        <template #end>
+            <div class="menu-items">
+                <Menubar :model="menuItems" />
+            </div>
+        </template>
+    </Menubar>
 </template>
 
 <script>
@@ -25,83 +22,128 @@ export default {
         "perfil",
         "historial",
         "logout",
+        "registro",
+        "login",
     ],
     data() {
         return {
-            menuItems: [
-                {
-                    label: "Inicio",
-                    url: this.home,
-                },
-                {
-                    label: "Servicios",
-                    url: this.servicio,
-                },
-                { label: "Tasas", url: "#" },
-                { label: "Noticias", url: "#" },
-                {
-                    label: this.usuario,
-                    icon: "pi pi-check",
-                    items: [
-                        {
-                            label: "Mi Perfil",
-                            icon: "pi pi-user",
-                            url: this.perfil,
-                        },
-                        {
-                            label: "Panel de envíos",
-                            icon: "pi pi-money-bill",
-                            url: this.historial,
-                        },
-                        {
-                            label: "Cerrar sesión",
-                            icon: "pi pi-sign-out",
-                            url: this.logout,
-                        },
-                    ],
-                },
-                {
-                    icon: "pi pi-comment",
-                    url: this.notificacion,
-                },
-                {
-                    icon: "pi pi-instagram",
-                    url: "#",
-                },
-                {
-                    icon: "pi pi-facebook",
-                    url: "#",
-                },
-            ],
+            menuItems: [],
         };
     },
     mounted() {
         this.$nextTick(() => {
-            if (this.verificado) {
-                this.addClassesToElement("pv_id_1_4", ["user-verificado"]);
+            if (this.usuario) {
+                this.menuItems = [
+                    {
+                        label: "Inicio",
+                        url: this.home,
+                    },
+                    {
+                        label: "Servicios",
+                        url: this.servicio,
+                    },
+                    { label: "Tasas", url: "#" },
+                    { label: "Noticias", url: "#" },
+                    {
+                        label: this.usuario,
+                        icon: "pi pi-check",
+                        style: this.verificado
+                            ? {
+                                  color: "#ffffff",
+                                  padding: "5px",
+                                  borderRadius: "10px",
+                                  backgroundColor: "#009d2c",
+                              }
+                            : {},
+                        items: [
+                            {
+                                label: "Mi Perfil",
+                                icon: "pi pi-user",
+                                url: this.perfil,
+                                style: {
+                                    paddingLeft: "0 !important",
+                                    marginBottom: "0 !important",
+                                },
+                            },
+                            {
+                                label: "Panel de envíos",
+                                icon: "pi pi-money-bill",
+                                url: this.historial,
+                                style: {
+                                    paddingLeft: "0 !important",
+                                    marginBottom: "0 !important",
+                                },
+                            },
+                            {
+                                label: "Cerrar sesión",
+                                icon: "pi pi-sign-out",
+                                url: this.logout,
+                                style: {
+                                    paddingLeft: "0 !important",
+                                    marginBottom: "0 !important",
+                                },
+                            },
+                        ],
+                    },
+                    {
+                        icon: "pi pi-comment",
+                        url: this.notificacion,
+                    },
+                    {
+                        icon: "pi pi-instagram",
+                        url: "#",
+                    },
+                    {
+                        icon: "pi pi-facebook",
+                        url: "#",
+                    },
+                ];
             } else {
-                this.removeClassesFromElement("pv_id_1_4", ["user-verificado"]);
+                this.menuItems = [
+                    {
+                        label: "Inicio",
+                        url: this.home,
+                    },
+                    {
+                        label: "Servicios",
+                        url: this.servicio,
+                    },
+                    { label: "Tasas", url: "#" },
+                    { label: "Noticias", url: "#" },
+                    {
+                        label: "Iniciar Sesion",
+                        url: this.login,
+                        style: {
+                            color: "white",
+                        },
+                    },
+                    {
+                        label: "Regístrate",
+                        url: this.registro,
+                        style: {
+                            color: "#fffff",
+                            padding: "5px",
+                            borderRadius: "10px",
+                            backgroundColor: "#009d2c",
+                        },
+                    },
+                    {
+                        icon: "pi pi-comment",
+                        url: this.notificacion,
+                    },
+                    {
+                        icon: "pi pi-instagram",
+                        url: "#",
+                    },
+                    {
+                        icon: "pi pi-facebook",
+                        url: "#",
+                    },
+                ];
             }
         });
     },
-    methods: {
-        addClassesToElement(id, classes) {
-            const element = document.getElementById(id);
-            if (element) {
-                classes.forEach((className) => {
-                    element.classList.add(className);
-                });
-            }
-        },
-        removeClassesFromElement(id, classes) {
-            const element = document.getElementById(id);
-            if (element) {
-                classes.forEach((className) => {
-                    element.classList.remove(className);
-                });
-            }
-        },
-    },
+    methods: {},
 };
 </script>
 
@@ -137,11 +179,6 @@ export default {
     font-weight: bold;
 }
 
-[aria-labelledby="pv_id_1_4_label"] {
-    padding-left: 0 !important;
-    margin-bottom: 0 !important;
-}
-
 .p-menubar .p-menuitem-link .p-menuitem-icon {
     color: black;
     font-size: 28px;
@@ -152,8 +189,19 @@ export default {
     font-size: 20px !important;
 }
 
-.user-verificado {
-    border-radius: 10px !important;
-    background-color: rgb(43, 211, 13) !important;
+.menu-items {
+    position: relative;
+}
+
+.menu-items .p-menubar-mobile .p-menubar-root-list {
+    position: absolute !important;
+    left: -200px !important;
+    width: 400% !important;
+    padding: 10px 20px !important;
+}
+
+[aria-labelledby="pv_id_1_4_label"] {
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
 }
 </style>

@@ -1,14 +1,18 @@
 @extends('layouts.css-envios')
-{{-- @include('layouts.nav-user') --}}
 
 @section('content')
-    <menu-component :home="'{{ route('home') }}'" :servicio="'{{ route('servicios.index') }}'"
-        :usuario="'{{ Auth::user()->name }}'" :verificado="{{ Auth::user()->verificado }}"
-        :notificacion="'{{ route('notificaciones.index') }}'"
-        :perfil="'{{ route('perfil') }}'"
-        :historial="'{{ route('historial') }}'"
-        :logout="'{{ route('logout') }}'">
-    </menu-component>
+    @if (Auth::check())
+        <menu-component :home="'{{ route('home') }}'" :servicio="'{{ route('servicios.index') }}'"
+            :usuario="'{{ Auth::user()->name }}'" :verificado="{{ !Auth::user()->verificado }}"
+            :notificacion="'{{ route('notificaciones.index') }}'" :perfil="'{{ route('perfil') }}'"
+            :historial="'{{ route('historial') }}'" :logout="'{{ route('logout') }}'">
+        </menu-component>
+    @else
+        <menu-component :home="'{{ route('home') }}'" :servicio="'{{ route('servicios.index') }}'"
+            :notificacion="'{{ route('notificaciones.index') }}'" :registro="'{{ route('registro') }}'"
+            :login="'{{ route('login') }}'">
+        </menu-component>
+    @endif
     <div class="text-center mt-5">
         <h1><strong>¡Hola {{ Auth::user()->name }}!</strong></h1>
     </div>
