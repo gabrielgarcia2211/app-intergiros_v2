@@ -49,11 +49,11 @@ export default {
                         icon: "pi pi-check",
                         style: this.verificado
                             ? {
-                                  color: "#ffffff",
-                                  padding: "5px",
-                                  borderRadius: "10px",
-                                  backgroundColor: "#009d2c",
-                              }
+                                color: "#ffffff",
+                                padding: "5px",
+                                borderRadius: "35px",
+                                backgroundColor: "#009d2c",
+                            }
                             : {},
                         items: [
                             {
@@ -204,4 +204,5 @@ export default {
     padding-left: 0 !important;
     margin-bottom: 0 !important;
 }
+
 </style>
