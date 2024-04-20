@@ -5,7 +5,7 @@ namespace Database\Seeders\Configuration;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CoreMasterComboReclamoEntregadoSeeder extends Seeder
+class CoreMasterComboReclamoPorSolucionarSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -23,19 +23,19 @@ class CoreMasterComboReclamoEntregadoSeeder extends Seeder
                 'childrens' => [
                     [
                         'name' => 'reintentar',
-                        'code' => 'reintentar_e',
+                        'code' => 'reintentar_pr',
                         'orden' => 0,
                         'valor1' => 'Procesar nuevamente en la misma cuenta',
                     ],
                     [
                         'name' => 'reintentar_beneficiario',
-                        'code' => 'reintentar_beneficiario_e',
+                        'code' => 'reintentar_beneficiario_pr',
                         'orden' => 1,
                         'valor1' => 'Procesar en otra cuenta',
                     ],
                     [
                         'name' => 'reembolso',
-                        'code' => 'reembolso_e',
+                        'code' => 'reembolso_pr',
                         'orden' => 2,
                         'valor1' => 'Solicitar reembolso',
                     ]
