@@ -325,20 +325,22 @@
     </div>
 
 
-    <style>
-        .error {
-            color: red;
-        }
-
-        .invalid-feedback {
-            display: block;
-            width: 100%;
-            margin-top: .25rem;
-        }
-    </style>
+  
 @endsection
 
 @section('script')
     <script src="{{ asset('js/registro/inputs.js') }}"></script>
     <script src="{{ asset('js/registro/index.js') }}"></script>
 @endsection
+
+<style>
+    .error {
+        color: red;
+    }
+
+    .invalid-feedback {
+        display: block;
+        width: 100%;
+        margin-top: .25rem;
+    }
+</style>
