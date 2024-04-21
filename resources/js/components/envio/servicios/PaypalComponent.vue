@@ -138,6 +138,7 @@
                                 'input-readonly': isEditBeneficiario,
                             }"
                             :readOnly="isEditBeneficiario"
+                            @change="handleSelectBanco"
                         />
                         <small
                             v-if="errorsBeneficiario.bancoBeneficiario"
@@ -149,7 +150,7 @@
                     <div class="form-group">
                         <InputNumber
                             v-model="beneficiarioForm.cuentaBeneficiario"
-                            placeholder="Número de cuenta"
+                            :placeholder="placeholderCuenta"
                             style="width: 80%"
                             class="w-full md:w-14rem input-registro"
                             :class="{
@@ -583,55 +584,46 @@
                 </form>
             </div>
             <!-- monto -->
-                <div class="col-md-6">
-                    <div class="text-center mt-4">
-                        <InputNumber
-                            v-model="montoBruto"
-                            class="input-registro"
-                            placeholder="Monto a cambiar"
-                            @input="convertService"
-                        />
-                        <div class="mt-5">
-                            <p style="color: #0035aa">
-                                {{}}
-                                <strong
-                                    style="font-size: 18px;"
-                                    >Monto a pagar:
-                                    <p
-                                        v-if="montoCambiar"
-                                        style="display: inline-block"
-                                    >
-                                        {{
-                                            montoCambiar.monto_a_pagar.toFixed(
-                                                2
-                                            )
-                                        }}
-                                    </p>
-                                    $ USD</strong
+            <div class="col-md-6">
+                <div class="text-center mt-4">
+                    <InputNumber
+                        v-model="montoBruto"
+                        class="input-registro"
+                        placeholder="Monto a cambiar"
+                        @input="convertService"
+                    />
+                    <div class="mt-5">
+                        <p style="color: #0035aa">
+                            {{}}
+                            <strong style="font-size: 18px"
+                                >Monto a pagar:
+                                <p
+                                    v-if="montoCambiar"
+                                    style="display: inline-block"
                                 >
-                            </p>
-                            <p style="color: #0035aa">
-                                <strong
-                                    style="font-size: 18px;"
-                                    >Monto a recibir:
-                                    <p
-                                        v-if="montoCambiar"
-                                        style="display: inline-block"
-                                    >
-                                        {{
-                                            montoCambiar.monto_a_recibir.toFixed(
-                                                2
-                                            )
-                                        }}
-                                    </p>
-                                    BS.</strong
+                                    {{ montoCambiar.monto_a_pagar.toFixed(2) }}
+                                </p>
+                                $ USD</strong
+                            >
+                        </p>
+                        <p style="color: #0035aa">
+                            <strong style="font-size: 18px"
+                                >Monto a recibir:
+                                <p
+                                    v-if="montoCambiar"
+                                    style="display: inline-block"
                                 >
-                            </p>
-                        </div>
+                                    {{
+                                        montoCambiar.monto_a_recibir.toFixed(2)
+                                    }}
+                                </p>
+                                BS.</strong
+                            >
+                        </p>
                     </div>
                 </div>
-                <div class="col-md-6">
-                </div>
+            </div>
+            <div class="col-md-6"></div>
 
             <div class="text-center mt-3">
                 <div class="form-check">
@@ -642,7 +634,7 @@
                         id="defaultCheck1"
                     />
                     <label class="form-check-label" for="defaultCheck1">
-                        <p style="font-size: 18px;">
+                        <p style="font-size: 18px">
                             Acepto los
                             <a href="#" style="color: #0035aa"
                                 ><strong>Terminos y Condiciones</strong></a
@@ -675,7 +667,7 @@
 import * as Yup from "yup";
 
 export default {
-    props: ["idService", "idMoneda"],
+    props: ["idService", "monedaId"],
     data() {
         return {
             beneficiarios: [],
@@ -733,6 +725,7 @@ export default {
             isTermins: false,
             isPay: false,
             channel: null,
+            placeholderCuenta: "Número de cuenta",
         };
     },
     components: {},
@@ -756,6 +749,12 @@ export default {
         isTermins: function (value) {
             this.validateSendSolicitud();
         },
+        monedaId: async function (value) {
+            if (!this.isEditBeneficiario) {
+                this.beneficiarioForm.bancoBeneficiario = null;
+                this.optionsBancos = await this.$getBancoByMoneda(this.monedaId);
+            }
+        },
     },
     mounted() {
         this.channel = new BroadcastChannel("completPayPaypal");
@@ -776,19 +775,17 @@ export default {
                 "pais",
                 "banco",
             ];
-
             const response = await this.$getComboRelations(comboNames);
+            this.optionsBancos = await this.$getBancoByMoneda(this.monedaId);
             const {
                 tipo_documento: responseTipoDocumento,
                 pais_telefono: responsePaisTelefono,
                 pais: responsePais,
-                banco: responseBanco,
             } = response;
 
             this.optionsDocument = responseTipoDocumento;
             this.optionsCodigoI = responsePaisTelefono;
             this.optionsPais = responsePais;
-            this.optionsBancos = responseBanco;
         },
         async validateFormBeneficiario() {
             const schema = Yup.object().shape({
@@ -882,6 +879,9 @@ export default {
             );
             this.isEditBeneficiario = true;
             this.formBeneficiarioVisible = true;
+            const response = await this.$getComboRelations(["banco"]);
+            const { banco: responseBanco } = response;
+            this.optionsBancos = responseBanco;
             this.setFormBeneficiario(tmpAfiliado.data);
             this.beneficiarioForm.servicio = servicio;
             this.beneficiarioForm.code = code;
@@ -902,13 +902,24 @@ export default {
             this.depositanteForm.servicio = servicio;
             this.depositanteForm.code = code;
         },
-        initBeneficiario() {
+        handleSelectBanco(event) {
+            this.placeholderCuenta = "Número de cuenta";
+            var bancosPeru = ["bcp", "interbank", "bbva"];
+            let banco = this.optionsBancos.find((item) => {
+                return item.id == event.value;
+            });
+            if (bancosPeru.includes(banco.code)) {
+                this.placeholderCuenta = "Código de cuenta interbancario";
+            }
+        },
+        async initBeneficiario() {
             this.createOrUpdateBeneficiario = "create";
             this.formBeneficiarioVisible = true;
             this.isEditBeneficiario = false;
             this.resetFormBeneficiario();
             this.beneficiarioForm.servicio = "TP-01";
             this.beneficiarioForm.code = "TB";
+            this.optionsBancos = await this.$getBancoByMoneda(this.monedaId);
         },
         initDepositante() {
             this.createOrUpdateDepositante = "create";
@@ -919,12 +930,13 @@ export default {
             this.depositanteForm.servicio = "TP-01";
             this.depositanteForm.code = "TD";
         },
-        habilitarEdicion(codigo) {
+        async habilitarEdicion(codigo) {
             switch (codigo) {
                 case "TB":
                     this.errorsBeneficiario = {};
                     this.createOrUpdateBeneficiario = "update";
                     this.isEditBeneficiario = false;
+                    this.optionsBancos = await this.$getBancoByMoneda(this.monedaId);
                     break;
                 case "TD":
                     this.errorsDepositante = {};
@@ -1287,7 +1299,7 @@ export default {
                                 beneficiario_id: this.beneficiarioForm.id,
                                 depositante_id: this.depositanteForm.id,
                                 tipo_formulario_id: this.idService,
-                                tipo_moneda_id: this.idMoneda,
+                                tipo_moneda_id: this.monedaId,
                                 monto_a_pagar: this.montoCambiar.monto_a_pagar,
                                 monto_a_recibir:
                                     this.montoCambiar.monto_a_recibir,

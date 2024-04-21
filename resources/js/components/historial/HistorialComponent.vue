@@ -587,7 +587,10 @@
                                     <p>Enviado por:</p>
                                     <p>Enviado a:</p>
                                     <br /><br />
-                                    <a href="#" class="btn btn-primary" id="openContacto"
+                                    <a
+                                        href="#"
+                                        class="btn btn-primary"
+                                        id="openContacto"
                                         >Contáctanos</a
                                     >
                                 </div>
@@ -617,7 +620,162 @@
                     <hr v-if="index !== solicitudes.length - 1" />
                 </div>
             </TabPanel>
-         
+            <TabPanel>
+                <template #header>
+                    <div class="flex align-items-center gap-2">
+                        <span class="font-bold white-space-nowrap"
+                            >REEMBOLSO</span
+                        >
+                    </div>
+                </template>
+                <ProgressSpinner
+                    v-if="loading"
+                    style="
+                        width: 180px;
+                        height: 180px;
+                        justify-content: center;
+                        display: block;
+                    "
+                />
+                <div v-else-if="solicitudes.length == 0">
+                    <div
+                        class="d-flex align-items-center justify-content-center mt-4"
+                    >
+                        <img
+                            src="img/notificaciones/Sin mensajes.png"
+                            class="img-fluid"
+                            alt="not found"
+                            width="400px"
+                        />
+                    </div>
+                </div>
+                <div
+                    v-else
+                    v-for="(item, index) in solicitudes"
+                    :key="index"
+                    class="m-0"
+                >
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="text-center">
+                                    <img
+                                        src="img/notificaciones/reembolsado.png"
+                                        class="img-fluid"
+                                        alt=""
+                                        width="100px"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="text-left">
+                                            <p style="margin-bottom: 0px">
+                                                ID#{{ item.id }}
+                                            </p>
+                                            <p style="color: #0035aa">
+                                                Procesado
+                                            </p>
+                                            <p
+                                                style="
+                                                    margin-bottom: 0px;
+                                                    color: #009d2c;
+                                                "
+                                            >
+                                                Monto pagado
+                                            </p>
+                                            <p style="color: #009d2c">
+                                                USD {{ item.monto_a_pagar }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-right">
+                                            <p>{{ item.created_at }}</p>
+                                            <p style="color: #009d2c">
+                                                {{ item.monto_a_recibir }}
+                                                BS.
+                                            </p>
+                                            <p style="color: #009d2c">
+                                                301,20 BS.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <a
+                                :href="'#reembolsado' + index"
+                                @click="
+                                    toggleCollapse(
+                                        'iconoProcesado',
+                                        'reembolsado',
+                                        index
+                                    )
+                                "
+                                style="color: #818181"
+                            >
+                                <i
+                                    class="fas fa-chevron-down"
+                                    :id="'iconoProcesado' + index"
+                                ></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div :id="'reembolsado' + index" class="collapse container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="text-left">
+                                    <p>Tasa de cambio:</p>
+                                    <p>Pagado desde:</p>
+                                    <p>Enviado por:</p>
+                                    <p>Enviado a:</p>
+                                    <br /><br />
+                                    <a
+                                        href="#"
+                                        style="color: #0035aa"
+                                        :id="'openModal' + index"
+                                        :class="{
+                                            'disabled-link':
+                                                item.voucher_referencia == null,
+                                        }"
+                                        @click="
+                                            previewImagen(item, 'Comprobante')
+                                        "
+                                    >
+                                        Ver comprobante
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-right">
+                                    <p>
+                                        USD 1 =
+                                        {{
+                                            item.tipo_formulario.tasa_cambios
+                                                .valor
+                                        }}
+                                        Bs.
+                                    </p>
+                                    <p>
+                                        {{ item.tipo_formulario.descripcion }}
+                                    </p>
+                                    <p>{{ item.depositante.alias }}</p>
+                                    <p>{{ item.beneficiario.alias }}</p>
+                                    <p>{{ item.beneficiario.banco }}</p>
+                                    <p>V {{ item.beneficiario.cuenta }}</p>
+                                    <p>
+                                        {{ item.beneficiario?.pago_movil }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr v-if="index !== solicitudes.length - 1" />
+                </div>
+            </TabPanel>
         </TabView>
     </div>
 
@@ -1029,6 +1187,9 @@ export default {
                     break;
                 case 3:
                     tipo = "cancelado";
+                    break;
+                case 4:
+                    tipo = "reembolsado";
                     break;
                 default:
                     break;

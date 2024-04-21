@@ -48,9 +48,9 @@
             </div>
         </div>
         <servicio-paypal-component
-            v-if="checkService == 'TP-01' && idMoneda"
+            v-if="checkService == 'TP-01' && monedaId"
             :idService="idService"
-            :idMoneda="idMoneda"
+            :monedaId="monedaId"
         ></servicio-paypal-component>
     </div>
 </template>
@@ -62,7 +62,7 @@ export default {
     data() {
         return {
             idService: null,
-            idMoneda: null,
+            monedaId: null,
             checkService: null,
             optionsServices: [],
             optionsMonedas: [],
@@ -90,7 +90,7 @@ export default {
             }
         },
         handleSelectMoneda(event) {
-            this.idMoneda = event.value;
+            this.monedaId = event.value;
         },
         async initSelects() {
             this.optionsServices = await this.getForms();

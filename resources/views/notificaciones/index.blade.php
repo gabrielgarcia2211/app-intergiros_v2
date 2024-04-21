@@ -4,7 +4,7 @@
 
 @if (Auth::check())
         <menu-component :home="'{{ route('home') }}'" :servicio="'{{ route('servicios.index') }}'"
-            :usuario="'{{ Auth::user()->name }}'" :verificado="{{ !Auth::user()->verificado }}"
+            :usuario="'{{ Auth::user()->name }}'" :verificado="{{ Auth::user()->verificado }}"
             :notificacion="'{{ route('notificaciones.index') }}'" :perfil="'{{ route('perfil') }}'"
             :historial="'{{ route('historial') }}'" :logout="'{{ route('logout') }}'">
         </menu-component>

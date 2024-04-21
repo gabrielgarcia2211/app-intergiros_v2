@@ -55,7 +55,14 @@ class CoreMasterComboEstadosSeeder extends Seeder
                         'orden' => 4,
                         'valor1' => 'Cancelado: "Aviso Importante: Tu Solicitud ha sido Cancelada"',
                         'valor2' => 'Lamentamos informarte que tu solicitud ha sido cancelada. Para más detalles sobre las razones de esta decisión y posibles pasos a seguir, por favor consulta el panel de usuario o ponte en contacto con nuestro equipo de soporte. Estamos aquí para ayudarte.',
-                    ]
+                    ],
+                    [
+                        'name' => 'REEMBOLSADO',
+                        'code' => 'reembolsado',
+                        'orden' => 5,
+                        'valor1' => 'Reembolsado: "¡Éxito! Tu Reembolso ha sido Procesado"',
+                        'valor2' => '¡Felicidades! Tu solicitud de reembolso ha sido procesada exitosamente. Los fondos correspondientes han sido devueltos según lo acordado. Por favor, verifica tu cuenta bancaria o método de pago asociado para confirmar la recepción del reembolso. Si tienes alguna pregunta adicional, no dudes en contactarnos. Gracias por tu comprensión.',
+                    ],
                 ],
             ],
         ];

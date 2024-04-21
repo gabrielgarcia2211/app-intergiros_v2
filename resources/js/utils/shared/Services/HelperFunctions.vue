@@ -121,6 +121,19 @@ export default {
                     });
             });
         },
+        $getBancoByMoneda(key) {
+            return new Promise((resolve, reject) => {
+                this.$axios
+                    .get(`/configuration/moneda/${key}`)
+                    .then(function (response) {
+                        resolve(response.data);
+                    })
+                    .catch(function (error) {
+                        this.$readStatusHttp(error);
+                        reject(error);
+                    });
+            });
+        },
     },
 };
 </script>

@@ -35,5 +35,8 @@ class DatabaseSeeder extends Seeder
 
         // Temporales
         $this->call(Solicitudes\ProductSeeder::class);
+
+        // Bancos
+        $this->call(Configuration\CoreMasterComboBancosSeeder::class);
     }
 }

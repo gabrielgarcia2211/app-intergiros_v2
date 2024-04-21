@@ -1206,6 +1206,8 @@ export default {
                     return { backgroundColor: "purple", color: "white" };
                 case "CANCELADO":
                     return { backgroundColor: "red", color: "white" };
+                case "REEMBOLSADO":
+                    return { backgroundColor: "orange", color: "white" };
                 default:
                     return {};
             }
