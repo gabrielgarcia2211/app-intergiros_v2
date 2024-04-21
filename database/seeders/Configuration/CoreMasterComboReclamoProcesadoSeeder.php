@@ -5,7 +5,7 @@ namespace Database\Seeders\Configuration;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CoreMasterComboReclamoEntregadoSeeder extends Seeder
+class CoreMasterComboReclamoProcesadoSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,22 +15,28 @@ class CoreMasterComboReclamoEntregadoSeeder extends Seeder
         $items = [
             [
                 'parent_id' => 1,
-                'name' => 'Modal Reclamo Entregado',
-                'code' => 'm_reclamo_entregado',
+                'name' => 'Modal Reclamo Procesado',
+                'code' => 'm_reclamo_procesado',
                 'description' => "",
                 'is_father' => true,
                 'status' => true,
                 'childrens' => [
                     [
-                        'name' => 'llamado',
-                        'code' => 'llamado_e',
+                        'name' => 'reintentar',
+                        'code' => 'reintentar_p',
                         'orden' => 0,
-                        'valor1' => 'Llamado de atención para que se procese mi pedido',
+                        'valor1' => 'Procesar nuevamente en la misma cuenta',
+                    ],
+                    [
+                        'name' => 'reintentar_beneficiario',
+                        'code' => 'reintentar_beneficiario_p',
+                        'orden' => 1,
+                        'valor1' => 'Procesar en otra cuenta',
                     ],
                     [
                         'name' => 'reembolso',
-                        'code' => 'reembolso_e',
-                        'orden' => 1,
+                        'code' => 'reembolso_p',
+                        'orden' => 2,
                         'valor1' => 'Solicitar reembolso',
                     ]
                 ],

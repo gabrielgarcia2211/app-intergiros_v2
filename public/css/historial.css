@@ -12,7 +12,7 @@ h5 {
     margin-top: 100px;
     padding: 35px;
     font-family: "Lato", sans-serif !important;
-    height: 600px;
+    height: 650px;
 }
 
 #opcion1-tab,
@@ -146,10 +146,12 @@ h5 {
 
 #selectedOptionEnProceso_list,
 #selectedOptionPorSolucionar_list,
+#selectedOptionProcesado_list,
 #selectedDepositanteReclamo_list,
-#tipoDocumentoDepositanteReclamo_list,
+#tipoDocumentoReclamo_list,
 #selectPaisReclamo_list,
-#codigoIDepositanteReclamo_list {
+#codigoIReclamo_list,
+#inputGroupServiciosReclamo_list {
     padding-left: 0 !important;
     margin-bottom: 0 !important;
 }

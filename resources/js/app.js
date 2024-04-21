@@ -72,7 +72,9 @@ app.component("pago-paypal-component", PagoPayPalComponent);
 
 // Importacion de componentes historial
 import HistorialComponent from "./components/historial/HistorialComponent.vue";
+import DepositanteComponent from "./components/historial/terceros/DepositanteComponent.vue";
 app.component("historial-component", HistorialComponent);
+app.component("historial-terceros-component", DepositanteComponent);
 
 // Importacion de componentes menu
 import MenuComponent from "./components/menu/MenuComponent.vue";

@@ -35,11 +35,11 @@ class StoreHistorialRequest extends FormRequest
         ];
 
         $masterCombos = MasterCombos::whereIn('id', $opciones)->get();
-        $tieneReintentarBeneficiarioE = $masterCombos->contains(function ($value, $key) {
-            return $value->code == 'reintentar_beneficiario_e';
+       
+        $tieneReintentarBeneficiarioPs = $masterCombos->contains(function ($value, $key) {
+            return $value->code == 'reintentar_beneficiario_pr';
         });
-
-        if ($tieneReintentarBeneficiarioE) {
+        if ($tieneReintentarBeneficiarioPs) {
             $rules['beneficiario_id'] = 'required';
         }
 
@@ -56,6 +56,7 @@ class StoreHistorialRequest extends FormRequest
         return [
             'solicitud_id.required' => 'El campo solicitud es obligatorio.',
             'afiliado_id.required' => 'El campo afiliado es obligatorio.',
+            'beneficiario_id.required' => 'El campo beneficiario es obligatorio.',
         ];
     }
 

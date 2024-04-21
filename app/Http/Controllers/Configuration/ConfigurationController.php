@@ -23,10 +23,10 @@ class ConfigurationController extends Controller
         try {
             $key = explode(',', $key);
             $values = MasterCombos::select(
-                'master_combos.name'
+                'master_combos.code'
             )->whereIn('id', $key);
 
-            return $values->pluck('name');
+            return $values->pluck('code');
         } catch (\Exception $ex) {
             return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
         }

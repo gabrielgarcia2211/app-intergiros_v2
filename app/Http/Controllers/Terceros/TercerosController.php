@@ -31,13 +31,11 @@ class TercerosController extends Controller
             return Tercero::select('terceros.id', 'terceros.nombre')
                 ->join('master_combos', 'master_combos.id', 'terceros.tipo_tercero_id')
                 ->join('tipo_formulario', 'tipo_formulario.id', 'terceros.tipo_formulario_id')
-                ->where('terceros.user_id', Auth()->user()->id)
-                ->where(function ($query) use ($code, $servicio) {
-                    $query->where('master_combos.code', $code);
-                    if ($servicio !== "ALL") {
-                        $query->where('tipo_formulario.codigo', $servicio);
-                    }
-                })
+                ->where([
+                    'terceros.user_id' => Auth()->user()->id,
+                    'master_combos.code' => $code,
+                    'tipo_formulario.codigo' => $servicio
+                ])
                 ->get();
         } catch (\Exception $ex) {
             Log::debug($ex->getLine());

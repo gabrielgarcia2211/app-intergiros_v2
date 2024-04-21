@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Configuration\CoreMasterComboEstadosSeeder::class);
         $this->call(Configuration\CoreMasterComboTercerosSeeder::class);
         $this->call(Configuration\CoreMasterComboReclamoPorSolucionarSeeder::class);
-        $this->call(Configuration\CoreMasterComboReclamoEntregadoSeeder::class);
+        $this->call(Configuration\CoreMasterComboReclamoProcesadoSeeder::class);
         $this->call(Configuration\CoreMasterComboTipoCuentaSeeder::class);
         $this->call(Configuration\CoreMasterComboReclamoEnProcesoSeeder::class);
 
