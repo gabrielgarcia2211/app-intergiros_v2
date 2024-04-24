@@ -37,7 +37,7 @@
                         id="inputGroupMoneda"
                         v-model="selectedMoneda"
                         :options="optionsMonedas"
-                        optionLabel="tipo"
+                        optionLabel="descripcion"
                         optionValue="id"
                         :placeholder="'Selecciona'"
                         class="w-full md:w-14rem"

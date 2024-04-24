@@ -211,7 +211,7 @@ export default {
     components: {
         FilterMatchMode,
         FilterOperator,
-        EditVerificadoModal
+        EditVerificadoModal,
     },
     created() {
         this.initFilters();
@@ -362,9 +362,11 @@ export default {
         getEstadoBackground(estado) {
             switch (estado) {
                 case 0:
-                    return { backgroundColor: "red", color: "white" };
+                    return { backgroundColor: "#ECE731", color: "black" };
                 case 1:
                     return { backgroundColor: "green", color: "white" };
+                case 2:
+                    return { backgroundColor: "red", color: "white" };
                 default:
                     return {};
             }
@@ -374,7 +376,9 @@ export default {
                 case 0:
                     return "SIN VERIFICAR";
                 case 1:
-                    return "VERIFICAR";
+                    return "VERIFICADO";
+                case 2:
+                    return "RECHAZADO";
                 default:
                     return {};
             }

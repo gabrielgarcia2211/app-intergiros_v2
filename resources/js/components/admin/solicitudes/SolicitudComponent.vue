@@ -200,7 +200,7 @@
                 >
                     <template #body="{ data }">
                         <span
-                            :style="getVerificado(data.verificado)"
+                            :style="getEstadoBackground(data.verificado)"
                             style="
                                 cursor: pointer;
                                 display: block;
@@ -1239,12 +1239,14 @@ export default {
                     this.$readStatusHttp(error);
                 });
         },
-        getVerificado(estado) {
+        getEstadoBackground(estado) {
             switch (estado) {
                 case 0:
-                    return { backgroundColor: "red", color: "white" };
+                    return { backgroundColor: "#ECE731", color: "black" };
                 case 1:
                     return { backgroundColor: "green", color: "white" };
+                case 2:
+                    return { backgroundColor: "red", color: "white" };
                 default:
                     return {};
             }
@@ -1255,6 +1257,8 @@ export default {
                     return "SIN VERIFICAR";
                 case 1:
                     return "VERIFICADO";
+                case 2:
+                    return "RECHAZADO";
                 default:
                     return {};
             }

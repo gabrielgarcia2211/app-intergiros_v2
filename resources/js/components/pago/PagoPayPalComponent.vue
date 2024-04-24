@@ -79,7 +79,7 @@
                             optionValue="id"
                             style="width: 30%"
                             class="input-indicativo input-readonly"
-                            :readOnly="true"
+                            :disabled="true"
                         ></Dropdown>
                         <InputNumber
                             v-model="depositante.documentoDepositante"
@@ -112,7 +112,7 @@
                             optionValue="id"
                             style="width: 30%"
                             class="input-indicativo input-readonly"
-                            :readOnly="true"
+                            :disabled="true"
                         ></Dropdown>
                         <InputNumber
                             v-model="depositante.celularDepositante"
@@ -133,7 +133,7 @@
                         optionValue="id"
                         class="w-full md:w-14rem input-registro input-readonly"
                         style="width: 100%"
-                        :readOnly="true"
+                        :disabled="true"
                     />
                 </div>
             </div>
@@ -230,12 +230,15 @@ export default {
             this.products = dataTable;
         },
         initMonto(monto) {
-            this.montoCambiar.monto_a_pagar =
-                Math.round(monto.monto_a_pagar * 100) / 100;
-            this.montoCambiar.monto_comision =
+            const montoTotal = monto.monto_a_pagar;
+            const montoComision =
                 Math.round(
                     parseFloat(monto.monto_a_pagar) + parseFloat(0.89) * 100
                 ) / 100;
+            this.montoCambiar.monto_a_pagar = montoTotal - montoComision;
+            this.montoCambiar.monto_comision =
+                Math.round(parseFloat(montoTotal) + parseFloat(0.89) * 100) /
+                100;
             this.montoCambiar.monto_total =
                 this.montoCambiar.monto_a_pagar +
                 this.montoCambiar.monto_comision;

@@ -22,20 +22,94 @@ class CoreMasterComboTipoDocumentoSeeder extends Seeder
                 'status' => true,
                 'childrens' => [
                     [
-                        'name' => 'T',
-                        'orden' => 0,
+                        'name' => 'CI-V',
+                        'valor1' => 'VES',
+                        'valor2' => 'Cédula Venezolana',
+                    ],
+                    [
+                        'name' => 'CI-E',
+                        'valor1' => 'VES',
+                        'valor2' => 'Cédula Extranjera',
+                    ],
+                    [
+                        'name' => 'J',
+                        'valor1' => 'VES',
+                        'valor2' => 'Jurídico',
+                    ],
+                    [
+                        'name' => 'P',
+                        'valor1' => 'VES',
+                        'valor2' => 'Pasaporte',
                     ],
                     [
                         'name' => 'CC',
-                        'orden' => 1,
+                        'valor1' => 'COP',
+                        'valor2' => 'Cédula de ciudadanía',
                     ],
                     [
-                        'name' => 'A',
-                        'orden' => 2,
-                    ]
+                        'name' => 'CE',
+                        'valor1' => 'COP',
+                        'valor2' => 'Carnet de extranjería',
+                    ],
+                    [
+                        'name' => 'P',
+                        'valor1' => 'COP',
+                        'valor2' => 'Pasaporte',
+                    ],
+                    [
+                        'name' => 'CE',
+                        'valor1' => 'PEN',
+                        'valor2' => 'Carnet de extranjería',
+                    ],
+                    [
+                        'name' => 'CPP',
+                        'valor1' => 'PEN',
+                        'valor2' => 'Carnet de permiso temporal de permanencia',
+                    ],
+                    [
+                        'name' => 'P',
+                        'valor1' => 'PEN',
+                        'valor2' => 'Pasaporte',
+                    ],
+                    [
+                        'name' => 'CI',
+                        'valor1' => 'PEN',
+                        'valor2' => 'Cédula de identidad',
+                    ],
+                    [
+                        'name' => 'DNI',
+                        'valor1' => 'PEN',
+                        'valor2' => 'Documento de Identidad',
+                    ],
+                    [
+                        'name' => 'CE',
+                        'valor1' => 'USD',
+                        'valor2' => 'Carnet de extranjería',
+                    ],
+                    [
+                        'name' => 'CPP',
+                        'valor1' => 'USD',
+                        'valor2' => 'Carnet de permiso temporal de permanencia',
+                    ],
+                    [
+                        'name' => 'P',
+                        'valor1' => 'USD',
+                        'valor2' => 'Pasaporte',
+                    ],
+                    [
+                        'name' => 'CI',
+                        'valor1' => 'USD',
+                        'valor2' => 'Cédula de identidad',
+                    ],
+                    [
+                        'name' => 'DNI',
+                        'valor1' => 'USD',
+                        'valor2' => 'Documento de Identidad',
+                    ],
                 ],
             ],
         ];
+
 
         foreach ($items as $key => $item) {
             $temp_children = null;
@@ -52,11 +126,22 @@ class CoreMasterComboTipoDocumentoSeeder extends Seeder
                     DB::table('master_combos')->insert([
                         'parent_id' => $father_id,
                         'name' => $child['name'],
-                        'orden' => $child['orden'],
+                        'code' => strtolower(str_replace(' ', '_',  $this->removeAccents($child['name']))) . "_" . strtolower($child['valor1']),
+                        'valor1' => $child['valor1'],
+                        'valor2' => $child['valor2'],
                         'status' => true
                     ]);
                 }
             }
         }
+    }
+
+    function removeAccents($cadena)
+    {
+        $originales = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿŔŕ';
+        $modificadas = 'aaaaaaaceeeeiiiidnoooooouuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr';
+        $cadena = utf8_decode($cadena);
+        $cadena = strtr($cadena, utf8_decode($originales), $modificadas);
+        return utf8_encode($cadena);
     }
 }

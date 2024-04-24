@@ -118,7 +118,7 @@
                                     <p>Enviado por:</p>
                                     <p>Enviado a:</p>
                                     <br />
-                                    <button
+                                    <button v-if="$isNextDay(item.created_at)"
                                         class="btn btn-primary"
                                         @click="openModalEnProceso(item)"
                                     >

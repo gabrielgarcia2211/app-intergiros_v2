@@ -87,7 +87,7 @@
                                 v-model="
                                     beneficiarioForm.tipoDocumentoBeneficiario
                                 "
-                                :options="optionsDocument"
+                                :options="optionsDocumentBenficiario"
                                 placeholder="TD"
                                 optionLabel="name"
                                 optionValue="id"
@@ -98,7 +98,7 @@
                                         errorsBeneficiario.tipoDocumentoBeneficiario,
                                     'input-readonly': isEditBeneficiario,
                                 }"
-                                :readOnly="isEditBeneficiario"
+                                :disabled="isEditBeneficiario"
                             ></Dropdown>
                             <InputNumber
                                 id=""
@@ -137,7 +137,7 @@
                                     errorsBeneficiario.bancoBeneficiario,
                                 'input-readonly': isEditBeneficiario,
                             }"
-                            :readOnly="isEditBeneficiario"
+                            :disabled="isEditBeneficiario"
                             @change="handleSelectBanco"
                         />
                         <small
@@ -341,7 +341,7 @@
                                 v-model="
                                     depositanteForm.tipoDocumentoDepositante
                                 "
-                                :options="optionsDocument"
+                                :options="optionsDocumentDepositante"
                                 placeholder="TD"
                                 optionLabel="name"
                                 optionValue="id"
@@ -352,7 +352,7 @@
                                         errorsDepositante.tipoDocumentoDepositante,
                                     'input-readonly': isEditDepositante,
                                 }"
-                                :readOnly="isEditDepositante"
+                                :disabled="isEditDepositante"
                             ></Dropdown>
                             <InputNumber
                                 id=""
@@ -413,7 +413,7 @@
                                         errorsDepositante.codigoIDepositante,
                                     'input-readonly': isEditDepositante,
                                 }"
-                                :readOnly="isEditDepositante"
+                                :disabled="isEditDepositante"
                             ></Dropdown>
                             <InputNumber
                                 id=""
@@ -449,7 +449,7 @@
                                 'p-invalid': errorsDepositante.paisDepositante,
                                 'input-readonly': isEditDepositante,
                             }"
-                            :readOnly="isEditDepositante"
+                            :disabled="isEditDepositante"
                         />
                         <small
                             v-if="errorsDepositante.paisDepositante"
@@ -673,7 +673,8 @@ export default {
             beneficiarios: [],
             depositantes: [],
             optionsBeneficiarios: [],
-            optionsDocument: [],
+            optionsDocumentBenficiario: [],
+            optionsDocumentDepositante: [],
             optionsBancos: [],
             optionsCodigoI: [],
             optionsPais: [],
@@ -752,7 +753,17 @@ export default {
         monedaId: async function (value) {
             if (!this.isEditBeneficiario) {
                 this.beneficiarioForm.bancoBeneficiario = null;
-                this.optionsBancos = await this.$getBancoByMoneda(this.monedaId);
+                this.optionsBancos = await this.$getBancoByMoneda(
+                    this.monedaId
+                );
+                this.optionsDocumentBenficiario = await this.$getTDByMoneda(
+                    this.monedaId
+                );
+            }
+            if (!this.isEditDepositante) {
+                this.optionsDocumentDepositante = await this.$getTDByMoneda(
+                    this.monedaId
+                );
             }
         },
     },
@@ -769,21 +780,16 @@ export default {
         async initServicePaypal() {
             this.beneficiarios = await this.getTerceros("TB", "TP-01");
             this.depositantes = await this.getTerceros("TD", "TP-01");
-            const comboNames = [
-                "tipo_documento",
-                "pais_telefono",
-                "pais",
-                "banco",
-            ];
+            const comboNames = ["pais_telefono", "pais"];
+            // solicitudes a combos
+            const listTd = await this.$getTDByMoneda(this.monedaId);
             const response = await this.$getComboRelations(comboNames);
             this.optionsBancos = await this.$getBancoByMoneda(this.monedaId);
-            const {
-                tipo_documento: responseTipoDocumento,
-                pais_telefono: responsePaisTelefono,
-                pais: responsePais,
-            } = response;
+            this.optionsDocumentBenficiario = listTd;
+            this.optionsDocumentDepositante = listTd;
+            const { pais_telefono: responsePaisTelefono, pais: responsePais } =
+                response;
 
-            this.optionsDocument = responseTipoDocumento;
             this.optionsCodigoI = responsePaisTelefono;
             this.optionsPais = responsePais;
         },
@@ -879,9 +885,17 @@ export default {
             );
             this.isEditBeneficiario = true;
             this.formBeneficiarioVisible = true;
-            const response = await this.$getComboRelations(["banco"]);
-            const { banco: responseBanco } = response;
+            const response = await this.$getComboRelations([
+                "banco",
+                "tipo_documento",
+            ]);
+            const {
+                banco: responseBanco,
+                tipo_documento: responseTipoDocumento,
+            } = response;
             this.optionsBancos = responseBanco;
+            this.optionsDocumentBenficiario = responseTipoDocumento;
+            this.optionsDocumentDepositante = responseTipoDocumento;
             this.setFormBeneficiario(tmpAfiliado.data);
             this.beneficiarioForm.servicio = servicio;
             this.beneficiarioForm.code = code;
@@ -920,8 +934,9 @@ export default {
             this.beneficiarioForm.servicio = "TP-01";
             this.beneficiarioForm.code = "TB";
             this.optionsBancos = await this.$getBancoByMoneda(this.monedaId);
+            this.optionsDocumentBenficiario = await this.$getTDByMoneda(this.monedaId);
         },
-        initDepositante() {
+        async initDepositante() {
             this.createOrUpdateDepositante = "create";
             this.formDepositanteVisible = true;
             this.isEditDepositante = false;
@@ -929,6 +944,7 @@ export default {
             this.resetFormDepositante();
             this.depositanteForm.servicio = "TP-01";
             this.depositanteForm.code = "TD";
+            this.optionsDocumentDepositante = await this.$getTDByMoneda(this.monedaId);
         },
         async habilitarEdicion(codigo) {
             switch (codigo) {
@@ -936,12 +952,20 @@ export default {
                     this.errorsBeneficiario = {};
                     this.createOrUpdateBeneficiario = "update";
                     this.isEditBeneficiario = false;
-                    this.optionsBancos = await this.$getBancoByMoneda(this.monedaId);
+                    this.optionsBancos = await this.$getBancoByMoneda(
+                        this.monedaId
+                    );
+                    this.optionsDocumentBenficiario = await this.$getTDByMoneda(
+                        this.monedaId
+                    );
                     break;
                 case "TD":
                     this.errorsDepositante = {};
                     this.createOrUpdateDepositante = "update";
                     this.isEditDepositante = false;
+                    this.optionsDocumentDepositante = await this.$getTDByMoneda(
+                        this.monedaId
+                    );
                     break;
                 default:
                     break;

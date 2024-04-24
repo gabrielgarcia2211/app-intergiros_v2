@@ -147,10 +147,13 @@
                     <form action="" id="formVerificacion">
                         <div class="text-center mt-5">
                             <p class="estado">Estado de la verificación:
-                                @if (Auth()->user()->verificado)
-                                    <strong>Verificado</strong>
-                                @else
+                                @if (Auth()->user()->verificado == 0)
                                     <strong>Sin verificar</strong>
+                                @elseif(Auth()->user()->verificado == 1)
+                                    <strong>Verificado</strong>
+                                @elseif(Auth()->user()->verificado == 2)
+                                    <strong>Rechazado</strong>
+                                    <p style="color: red">Los documentos cargados no cumplen con los requisitos solicitados</p>
                                 @endif
                             </p>
                         </div>

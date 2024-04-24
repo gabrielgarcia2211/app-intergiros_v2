@@ -13,7 +13,7 @@ class TipoMonedaSeeder extends Seeder
         $tiposMoneda = [
             ['codigo' => 'VES', 'tipo' => 'Bolivar', 'descripcion' => 'Moneda de Venezuela'],
             ['codigo' => 'PEN', 'tipo' => 'Sol', 'descripcion' => 'Moneda de Perú'],
-            ['codigo' => 'USD', 'tipo' => 'Dolar', 'descripcion' => 'Moneda de EEUU'],
+            ['codigo' => 'USD', 'tipo' => 'Dolar - Peru', 'descripcion' => 'Moneda de EEUU'],
             ['codigo' => 'COP', 'tipo' => 'Peso', 'descripcion' => 'Moneda de Colombia'],
         ];
 

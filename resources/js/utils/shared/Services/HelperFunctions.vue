@@ -124,7 +124,7 @@ export default {
         $getBancoByMoneda(key) {
             return new Promise((resolve, reject) => {
                 this.$axios
-                    .get(`/configuration/moneda/${key}`)
+                    .get(`/configuration/banco_moneda/${key}`)
                     .then(function (response) {
                         resolve(response.data);
                     })
@@ -133,6 +133,28 @@ export default {
                         reject(error);
                     });
             });
+        },
+        // codigos de documento por moneda
+        $getTDByMoneda(key) {
+            return new Promise((resolve, reject) => {
+                this.$axios
+                    .get(`/configuration/ci_moneda/${key}`)
+                    .then(function (response) {
+                        resolve(response.data);
+                    })
+                    .catch(function (error) {
+                        this.$readStatusHttp(error);
+                        reject(error);
+                    });
+            });
+        },
+        $isNextDay(created_at) {
+            const createdAtDate = new Date(created_at);
+            const nextDayDate = new Date(createdAtDate);
+            nextDayDate.setDate(createdAtDate.getDate() + 1);
+            const currentDate = new Date();
+            console.log(currentDate, nextDayDate)
+            return currentDate > nextDayDate;
         },
     },
 };

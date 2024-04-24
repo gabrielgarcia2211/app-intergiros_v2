@@ -54,6 +54,7 @@ export default {
             rpEstadoVerificado: [
                 { id: 0, name: "SIN VERIFICAR" },
                 { id: 1, name: "VERIFICAR" },
+                { id: 2, name: "RECHAZADO" },
             ],
             visible: false,
             form: {

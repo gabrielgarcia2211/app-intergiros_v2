@@ -34,13 +34,34 @@ class ConfigurationController extends Controller
         }
     }
 
-    public function getMoneda(TipoMoneda $TipoMoneda)
+    public function getBancoByMoneda(TipoMoneda $TipoMoneda)
     {
         try {
             $response = MasterCombos::whereIn('parent_id', function ($query) {
                 $query->select('id')
                     ->from('master_combos')
                     ->where('code', 'banco');
+            })
+                ->where([
+                    ['status', '=', true],
+                    ['valor1', '=', $TipoMoneda->codigo]
+                ])
+                ->orderBy('orden', 'asc')
+                ->get();
+
+            return $response;
+        } catch (\Exception $ex) {
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
+        }
+    }
+
+    public function getTDByMoneda(TipoMoneda $TipoMoneda)
+    {
+        try {
+            $response = MasterCombos::whereIn('parent_id', function ($query) {
+                $query->select('id')
+                    ->from('master_combos')
+                    ->where('code', 'tipo_documento');
             })
                 ->where([
                     ['status', '=', true],

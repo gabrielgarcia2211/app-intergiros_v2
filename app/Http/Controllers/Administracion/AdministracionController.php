@@ -117,7 +117,11 @@ class AdministracionController extends Controller
 
     public function getMonedas()
     {
-        return TipoMoneda::all();
+        return TipoMoneda::select(
+            'id',
+            'tipo',
+            DB::raw("CONCAT(tipo, ',', codigo) as descripcion")
+        )->get();
     }
 
     private function setQuery()
