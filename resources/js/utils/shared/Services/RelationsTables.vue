@@ -52,9 +52,9 @@ export default {
                 case "documento_beneficiario":
                     return "ter_b.documento";
                 case "banco_beneficiario":
-                    return "ter_b.banco";
+                    return "mc_banco_b.name";
                 case "tipo_cuenta":
-                    return "ter_b.banco";
+                    return "mc_tipo_banco.name";
                 case "cuenta_beneficiario":
                     return "ter_b.cuenta";
                 case "pago_movil_beneficiario":

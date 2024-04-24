@@ -5,7 +5,7 @@
         </template>
         <template #end>
             <div class="menu-items">
-                <Menubar :model="menuItems" />
+                <Menubar :model="menuItems" class="custom-menubar"  />
             </div>
         </template>
     </Menubar>
@@ -46,14 +46,14 @@ export default {
                     { label: "Noticias", url: "#" },
                     {
                         label: this.usuario,
-                        icon: "pi pi-check",
+                        icon: "pi pi-check-circle",
                         style: this.verificado
                             ? {
-                                color: "#ffffff",
-                                padding: "5px",
-                                borderRadius: "35px",
-                                backgroundColor: "#009d2c",
-                            }
+                                  color: "#ffffff",
+                                  padding: "5px",
+                                  borderRadius: "35px",
+                                  backgroundColor: "#009d2c",
+                              }
                             : {},
                         items: [
                             {
@@ -184,9 +184,8 @@ export default {
     font-size: 28px;
 }
 
-.p-menubar .p-menuitem-link .p-menuitem-icon.pi.pi-check {
-    color: rgb(255, 255, 255) !important;
-    font-size: 20px !important;
+.menu-items .custom-menubar .pi.pi-check-circle {
+  color: #f3d40a; 
 }
 
 .menu-items {
@@ -204,5 +203,4 @@ export default {
     padding-left: 0 !important;
     margin-bottom: 0 !important;
 }
-
 </style>
