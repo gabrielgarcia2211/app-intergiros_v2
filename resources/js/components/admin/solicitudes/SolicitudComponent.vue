@@ -540,7 +540,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="banco_beneficiario"
                     header="Banco Beneficiario"
@@ -560,7 +559,25 @@
                         />
                     </template>
                 </Column>
-
+                <Column
+                    field="tipo_cuenta"
+                    header="Tipo Cuenta"
+                    sortable
+                    :showClearButton="false"
+                    style="min-width: 150px"
+                >
+                    <template #body="{ data }">
+                        {{ data.tipo_cuenta }}
+                    </template>
+                    <template #filter="{ filterModel }">
+                        <InputText
+                            v-model="filterModel.value"
+                            type="text"
+                            class="p-column-filter"
+                            placeholder="Buscar por tipo cuenta"
+                        />
+                    </template>
+                </Column>
                 <Column
                     field="cuenta_beneficiario"
                     header="Cuenta Beneficiario"
@@ -974,6 +991,12 @@ export default {
                     ],
                 },
                 banco_beneficiario: {
+                    clear: false,
+                    constraints: [
+                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                    ],
+                },
+                tipo_cuenta: {
                     clear: false,
                     constraints: [
                         { value: null, matchMode: FilterMatchMode.STARTS_WITH },

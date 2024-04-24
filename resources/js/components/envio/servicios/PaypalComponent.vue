@@ -147,18 +147,41 @@
                             >{{ errorsBeneficiario.bancoBeneficiario }}</small
                         >
                     </div>
-                    <div class="form-group">
-                        <InputNumber
-                            v-model="beneficiarioForm.cuentaBeneficiario"
-                            :placeholder="placeholderCuenta"
-                            style="width: 80%"
-                            class="w-full md:w-14rem input-registro"
-                            :class="{
-                                'p-invalid':
-                                    errorsBeneficiario.cuentaBeneficiario,
-                            }"
-                            :disabled="isEditBeneficiario"
-                        />
+                    <div
+                        class="form-group"
+                        style="width: 80%; display: inline-block"
+                    >
+                        <InputGroup>
+                            <Dropdown
+                                id="tipoCuentaBeneficiario"
+                                v-model="
+                                    beneficiarioForm.tipoCuentaBeneficiario
+                                "
+                                :options="optionsTipoCuenta"
+                                placeholder="Cuenta"
+                                optionLabel="name"
+                                optionValue="id"
+                                style="width: 30%"
+                                class="input-indicativo"
+                                :class="{
+                                    'p-invalid':
+                                        errorsBeneficiario.tipoCuentaBeneficiario,
+                                    'input-readonly': isEditBeneficiario,
+                                }"
+                                :disabled="isEditBeneficiario"
+                            ></Dropdown>
+                            <InputNumber
+                                v-model="beneficiarioForm.cuentaBeneficiario"
+                                :placeholder="placeholderCuenta"
+                                style="width: 80%"
+                                class="w-full md:w-14rem input-telefono"
+                                :class="{
+                                    'p-invalid':
+                                        errorsBeneficiario.cuentaBeneficiario,
+                                }"
+                                :disabled="isEditBeneficiario"
+                            />
+                        </InputGroup>
                         <small
                             v-if="errorsBeneficiario.cuentaBeneficiario"
                             style="display: block"
@@ -678,6 +701,7 @@ export default {
             optionsBancos: [],
             optionsCodigoI: [],
             optionsPais: [],
+            optionsTipoCuenta: [],
             selectedBeneficiario: null,
             selectedDepositante: null,
             /** Formulario Beneficario*/
@@ -688,6 +712,7 @@ export default {
                 nombreBeneficiario: "",
                 tipoDocumentoBeneficiario: null,
                 documentoBeneficiario: null,
+                tipoCuentaBeneficiario: null,
                 bancoBeneficiario: "",
                 cuentaBeneficiario: null,
                 pagoMovilBeneficiario: "",
@@ -780,16 +805,17 @@ export default {
         async initServicePaypal() {
             this.beneficiarios = await this.getTerceros("TB", "TP-01");
             this.depositantes = await this.getTerceros("TD", "TP-01");
-            const comboNames = ["pais_telefono", "pais"];
+            const comboNames = ["pais_telefono", "pais", "tipo_cuenta"];
             // solicitudes a combos
             const listTd = await this.$getTDByMoneda(this.monedaId);
             const response = await this.$getComboRelations(comboNames);
             this.optionsBancos = await this.$getBancoByMoneda(this.monedaId);
             this.optionsDocumentBenficiario = listTd;
             this.optionsDocumentDepositante = listTd;
-            const { pais_telefono: responsePaisTelefono, pais: responsePais } =
+            const { pais_telefono: responsePaisTelefono, pais: responsePais, tipo_cuenta : responseTipoCuenta } =
                 response;
-
+            
+            this.optionsTipoCuenta = responseTipoCuenta;
             this.optionsCodigoI = responsePaisTelefono;
             this.optionsPais = responsePais;
         },
@@ -807,8 +833,11 @@ export default {
                 documentoBeneficiario: Yup.string().required(
                     "El documento es obligatorio"
                 ),
+                tipoCuentaBeneficiario: Yup.string().required(
+                    "El tipo banco es obligatorio"
+                ),
                 bancoBeneficiario: Yup.string().required(
-                    "El beneficiario es obligatorio"
+                    "El banco es obligatorio"
                 ),
                 cuentaBeneficiario: Yup.string().required(
                     "La cuenta es obligatoria"
@@ -934,7 +963,9 @@ export default {
             this.beneficiarioForm.servicio = "TP-01";
             this.beneficiarioForm.code = "TB";
             this.optionsBancos = await this.$getBancoByMoneda(this.monedaId);
-            this.optionsDocumentBenficiario = await this.$getTDByMoneda(this.monedaId);
+            this.optionsDocumentBenficiario = await this.$getTDByMoneda(
+                this.monedaId
+            );
         },
         async initDepositante() {
             this.createOrUpdateDepositante = "create";
@@ -944,7 +975,9 @@ export default {
             this.resetFormDepositante();
             this.depositanteForm.servicio = "TP-01";
             this.depositanteForm.code = "TD";
-            this.optionsDocumentDepositante = await this.$getTDByMoneda(this.monedaId);
+            this.optionsDocumentDepositante = await this.$getTDByMoneda(
+                this.monedaId
+            );
         },
         async habilitarEdicion(codigo) {
             switch (codigo) {
@@ -1160,6 +1193,9 @@ export default {
             this.beneficiarioForm.documentoBeneficiario = parseInt(
                 beneficiario.documento
             );
+            this.beneficiarioForm.tipoCuentaBeneficiario = parseInt(
+                beneficiario.tipo_cuenta_id
+            );
             this.beneficiarioForm.bancoBeneficiario = parseInt(
                 beneficiario.banco_id
             );
@@ -1192,6 +1228,7 @@ export default {
             this.beneficiarioForm.nombreBeneficiario = null;
             this.beneficiarioForm.tipoDocumentoBeneficiario = null;
             this.beneficiarioForm.documentoBeneficiario = null;
+            this.beneficiarioForm.tipoCuentaBeneficiario = null;
             this.beneficiarioForm.bancoBeneficiario = null;
             this.beneficiarioForm.cuentaBeneficiario = null;
             this.beneficiarioForm.pagoMovilBeneficiario = null;

@@ -63,7 +63,8 @@ h3 {
 #selectBanco_list,
 #codigoIDepositante_list,
 #selectPais_list,
-#tipoDocumentoDepositante_list {
+#tipoDocumentoDepositante_list,
+#tipoCuentaBeneficiario_list {
     padding-left: 0 !important;
     margin-bottom: 0 !important;
 }

@@ -88,6 +88,7 @@ class AdministracionController extends Controller
                     'ter_b.nombre as nombre_beneficiario',
                     'ter_b.documento as documento_beneficiario',
                     'mc_banco_b.name as banco_beneficiario',
+                    'mc_tipo_banco.name as tipo_cuenta',
                     'ter_b.cuenta as cuenta_beneficiario',
                     'ter_b.pago_movil as pago_movil_beneficiario',
                     'ter_b.correo as correo_beneficiario',
@@ -137,6 +138,7 @@ class AdministracionController extends Controller
             ->leftJoin('master_combos as mc_estado', 'mc_estado.id', '=', 'solicitudes.estado_id')
             ->leftJoin('master_combos as mc_banco_b', 'mc_banco_b.id', '=', 'ter_b.banco_id')
             ->leftJoin('master_combos as mc_banco_d', 'mc_banco_d.id', '=', 'ter_d.banco_id')
+            ->leftJoin('master_combos as mc_tipo_banco', 'mc_tipo_banco.id', '=', 'ter_b.tipo_cuenta_id')
             ->leftJoin('historial', 'historial.solicitud_id', '=', 'solicitudes.id');
     }
 

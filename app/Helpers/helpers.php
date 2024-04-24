@@ -17,6 +17,7 @@ function mapTipoTercero($data)
                         'banco_id' => $data['bancoBeneficiario'],
                         'cuenta' => $data['cuentaBeneficiario'],
                         'pago_movil' => $data['pagoMovilBeneficiario'],
+                        'tipo_cuenta_id' => $data['tipoCuentaBeneficiario'],
                     ];
                     break;
                 case 'TP-02':
@@ -45,6 +46,7 @@ function mapTipoTercero($data)
                         'celular' => $data['celularDepositante'],
                         'pais_id' => $data['paisDepositante'],
                         'adjuntar_documento' => $data['adjuntarDocumento'],
+                        'tipo_cuenta_id' => $data['tipoCuentaBeneficiario'],
                     ];
                     break;
                 case 'TP-02':
