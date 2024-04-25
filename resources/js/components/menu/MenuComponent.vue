@@ -5,7 +5,7 @@
         </template>
         <template #end>
             <div class="menu-items">
-                <Menubar :model="menuItems" class="custom-menubar"  />
+                <Menubar :model="menuItems" class="custom-check" />
             </div>
         </template>
     </Menubar>
@@ -46,20 +46,20 @@ export default {
                     { label: "Noticias", url: "#" },
                     {
                         label: this.usuario,
-                        icon: "pi pi-check-circle",
-                        style: this.verificado
-                            ? {
-                                  color: "#ffffff",
-                                  padding: "5px",
-                                  borderRadius: "35px",
-                                  backgroundColor: "#009d2c",
-                              }
-                            : {},
+                        icon:
+                            this.verificado == 1
+                                ? "pi pi-check-circle"
+                                : "pi pi-check",
+                        class:
+                            this.verificado == 1
+                                ? "user-verificado"
+                                : "user-not-verificado",
                         items: [
                             {
                                 label: "Mi Perfil",
                                 icon: "pi pi-user",
                                 url: this.perfil,
+                                class: "user-child-verificado",
                                 style: {
                                     paddingLeft: "0 !important",
                                     marginBottom: "0 !important",
@@ -69,6 +69,7 @@ export default {
                                 label: "Panel de envíos",
                                 icon: "pi pi-money-bill",
                                 url: this.historial,
+                                class: "user-child-verificado",
                                 style: {
                                     paddingLeft: "0 !important",
                                     marginBottom: "0 !important",
@@ -78,6 +79,7 @@ export default {
                                 label: "Cerrar sesión",
                                 icon: "pi pi-sign-out",
                                 url: this.logout,
+                                class: "user-child-verificado",
                                 style: {
                                     paddingLeft: "0 !important",
                                     marginBottom: "0 !important",
@@ -113,19 +115,11 @@ export default {
                     {
                         label: "Iniciar Sesion",
                         url: this.login,
-                        style: {
-                            color: "white",
-                        },
                     },
                     {
                         label: "Regístrate",
                         url: this.registro,
-                        style: {
-                            color: "#fffff",
-                            padding: "5px",
-                            borderRadius: "10px",
-                            backgroundColor: "#009d2c",
-                        },
+                        class: "registro",
                     },
                     {
                         icon: "pi pi-comment",
@@ -148,14 +142,14 @@ export default {
 </script>
 
 <style>
-.custom-menubar {
-    background-color: #ffffff;
-    font-family: "Lato", sans-serif;
-}
-
 .navbar-logo {
     max-width: 250px !important;
     margin-left: 20px !important;
+}
+
+.custom-menubar {
+    background-color: #ffffff;
+    font-family: "Lato", sans-serif;
 }
 
 .menu-items {
@@ -184,8 +178,53 @@ export default {
     font-size: 28px;
 }
 
-.menu-items .custom-menubar .pi.pi-check-circle {
-  color: #f3d40a; 
+/** Nuevos estilos */
+.user-verificado {
+    background-color: #5fbc4a;
+    border-radius: 35px;
+}
+
+.user-verificado:hover {
+    background-color: #5fbc4a;
+    border-radius: 35px;
+}
+
+.user-verificado:hover .p-menuitem-text {
+    color: black;
+}
+
+.user-verificado .p-menuitem-text {
+    color: white;
+}
+
+.user-verificado .p-menuitem-link .p-menuitem-icon {
+    color: #ffbf00;
+}
+
+[aria-labelledby="pv_id_1_4_label"] {
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.user-child-verificado .p-menuitem-text {
+    color: rgb(0, 0, 0);
+}
+
+.user-child-verificado .p-menuitem-link .p-menuitem-icon {
+    color: rgb(0, 0, 0);
+}
+
+.registro {
+    background-color: #5fbc4a;
+    border-radius: 35px;
+}
+
+.registro:hover .p-menuitem-text {
+    color: black;
+}
+
+.registro .p-menuitem-text {
+    color: white;
 }
 
 .menu-items {
@@ -197,10 +236,5 @@ export default {
     left: -200px !important;
     width: 400% !important;
     padding: 10px 20px !important;
-}
-
-[aria-labelledby="pv_id_1_4_label"] {
-    padding-left: 0 !important;
-    margin-bottom: 0 !important;
 }
 </style>
