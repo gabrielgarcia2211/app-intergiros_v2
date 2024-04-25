@@ -125,6 +125,18 @@ class AdministracionController extends Controller
         )->get();
     }
 
+    public function getMonedaByCodigo($codigo)
+    {
+        return TipoMoneda::select(
+            'id',
+            'tipo',
+            DB::raw("CONCAT(tipo, ',', codigo) as descripcion")
+        )
+            ->where('codigo', $codigo)
+            ->get();
+    }
+
+
     private function setQuery()
     {
         return Solicitudes::query()
@@ -261,7 +273,6 @@ class AdministracionController extends Controller
     private static function upUserNoticias($noticia)
     {
         $listUsers = User::all()->pluck('id')->toArray();
-
         $registros = [];
         foreach ($listUsers as $userId) {
             $registros[] = [

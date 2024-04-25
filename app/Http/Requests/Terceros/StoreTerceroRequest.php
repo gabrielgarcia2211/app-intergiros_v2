@@ -28,17 +28,8 @@ class StoreTerceroRequest extends FormRequest
             case 'TB':
                 switch (request('servicio')) {
                     case 'TP-01':
-                        return [
-                            'aliasBeneficiario' => 'required',
-                            'nombreBeneficiario' => 'required',
-                            'tipoDocumentoBeneficiario' => 'required',
-                            'documentoBeneficiario' => 'required|integer',
-                            'bancoBeneficiario' => 'required',
-                            'cuentaBeneficiario' => 'required',
-                            'pagoMovilBeneficiario' => 'required',
-                        ];
-                        break;
                     case 'TP-02':
+                    case 'TP-03':
                         return [
                             'aliasBeneficiario' => 'required',
                             'nombreBeneficiario' => 'required',
@@ -53,19 +44,8 @@ class StoreTerceroRequest extends FormRequest
             case 'TD':
                 switch (request('servicio')) {
                     case 'TP-01':
-                        return [
-                            'aliasDepositante' => 'required',
-                            'nombreDepositante' => 'required',
-                            'tipoDocumentoDepositante' => 'required',
-                            'documentoDepositante' => 'required|integer',
-                            'correoDepositante' => 'required',
-                            'codigoIDepositante' => 'required',
-                            'celularDepositante' => 'required',
-                            'paisDepositante' => 'required',
-                            'adjuntarDocumento' => 'required|file|max:' . env('UPLOAD_MAX_FILESIZE'),
-                        ];
-                        break;
                     case 'TP-02':
+                    case 'TP-03':
                         return [
                             'aliasDepositante' => 'required',
                             'nombreDepositante' => 'required',
@@ -95,17 +75,8 @@ class StoreTerceroRequest extends FormRequest
             case 'TB':
                 switch (request('servicio')) {
                     case 'TP-01':
-                        return [
-                            'aliasBeneficiario.required' => 'El campo alias es obligatorio.',
-                            'nombreBeneficiario.required' => 'El campo nombre es obligatorio.',
-                            'tipoDocumentoBeneficiario.required' => 'El campo tipo documento es obligatorio.',
-                            'documentoBeneficiario.required' => 'El campo documento es obligatorio.',
-                            'bancoBeneficiario.required' => 'El campo banco es obligatorio.',
-                            'cuentaBeneficiario.required' => 'El campo cuenta es obligatorio.',
-                            'pagoMovilBeneficiario.required' => 'El campo pago movil es obligatorio.'
-                        ];
-                        break;
                     case 'TP-02':
+                    case 'TP-03':
                         return [
                             'aliasBeneficiario.required' => 'El campo alias es obligatorio.',
                             'nombreBeneficiario.required' => 'El campo nombre es obligatorio.',
@@ -120,20 +91,8 @@ class StoreTerceroRequest extends FormRequest
             case 'TD':
                 switch (request('servicio')) {
                     case 'TP-01':
-                        return [
-                            'aliasDepositante.required' => 'El campo alias es obligatorio.',
-                            'nombreDepositante.required' => 'El campo nombre es obligatorio.',
-                            'tipoDocumentoDepositante.required' => 'El campo tipo documento es obligatorio.',
-                            'documentoDepositante.required' => 'El campo documento es obligatorio.',
-                            'correoDepositante.required' => 'El campo correo  es obligatorio.',
-                            'codigoIDepositante.required' => 'El campo indicativo celular es obligatorio.',
-                            'celularDepositante.required' => 'El campo celular  es obligatorio.',
-                            'paisDepositante.required' => 'El campo pais es obligatorio.',
-                            'adjuntarDocumento.required' => 'La foto del documento es obligatoria.',
-                            'adjuntarDocumento.max' => 'El tamaño del archivo debe ser menor a ' . env('UPLOAD_MAX_FILESIZE') / 1024 . ' MB',
-                        ];
-                        break;
                     case 'TP-02':
+                    case 'TP-03':
                         return [
                             'aliasDepositante.required' => 'El campo alias es obligatorio.',
                             'nombreDepositante.required' => 'El campo nombre es obligatorio.',
@@ -160,17 +119,8 @@ class StoreTerceroRequest extends FormRequest
             case 'TB':
                 switch (request('servicio')) {
                     case 'TP-01':
-                        return [
-                            'aliasBeneficiario' => 'alias',
-                            'nombreBeneficiario' => 'nombre',
-                            'tipoDocumentoBeneficiario' => 'tipo documento',
-                            'documentoBeneficiario' => 'documento',
-                            'bancoBeneficiario' => 'banco',
-                            'cuentaBeneficiario' => 'cuenta',
-                            'pagoMovilBeneficiario' => 'pago movil'
-                        ];
-                        break;
                     case 'TP-02':
+                    case 'TP-03':
                         return [
                             'aliasBeneficiario' => 'alias',
                             'nombreBeneficiario' => 'nombre',
@@ -185,19 +135,8 @@ class StoreTerceroRequest extends FormRequest
             case 'TD':
                 switch (request('servicio')) {
                     case 'TP-01':
-                        return [
-                            'aliasDepositante' => 'alias',
-                            'nombreDepositante' => 'nombre',
-                            'tipoDocumentoDepositante' => 'tipo documento',
-                            'documentoDepositante' => 'documento',
-                            'correoDepositante' => 'correo',
-                            'codigoIDepositante' => 'indicativo celular',
-                            'celularDepositante' => 'celular',
-                            'paisDepositante' => 'pais',
-                            'adjuntarDocumento' => 'foto documento',
-                        ];
-                        break;
                     case 'TP-02':
+                    case 'TP-03':
                         return [
                             'aliasDepositante' => 'alias',
                             'nombreDepositante' => 'nombre',

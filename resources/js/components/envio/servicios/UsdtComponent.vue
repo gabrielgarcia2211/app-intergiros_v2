@@ -2,6 +2,9 @@
     <div class="panel container mt-5" id="panel-paypal">
         <div class="text-center">
             <p style="font-size: 18px">
+                <strong>Usdt</strong>
+            </p>
+            <p style="font-size: 18px">
                 <strong>Tiempo aproximado de espera:</strong> 8 horas laborales
             </p>
         </div>
@@ -643,8 +646,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6"></div>
-
             <div class="text-center mt-3">
                 <div class="form-check">
                     <input
@@ -1373,21 +1374,6 @@ export default {
                             });
                     }
                 });
-        },
-        handleMessage(event) {
-            if (event.data) {
-                if (event.data.STATUS_PAYMENT === "success") {
-                    this.$swal.fire({
-                        title: event.data.MESSAGE_PAYMENT,
-                        icon: event.data.STATUS_PAYMENT,
-                    });
-                } else {
-                    this.$swal.fire({
-                        title: event.data.MESSAGE_PAYMENT,
-                        icon: event.data.STATUS_PAYMENT,
-                    });
-                }
-            }
         },
     },
 };

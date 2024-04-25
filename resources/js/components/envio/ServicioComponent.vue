@@ -43,6 +43,7 @@
                         class="w-full md:w-14rem"
                         style="width: 100%"
                         @change="handleSelectMoneda"
+                        emptyMessage="Desbes seleccionar un formulario"
                     ></Dropdown>
                 </InputGroup>
             </div>
@@ -57,12 +58,18 @@
             :idService="idService"
             :monedaId="monedaId"
         ></servicio-usdt-component>
+        <servicio-zinli-component
+            v-if="checkService == 'TP-03' && monedaId"
+            :idService="idService"
+            :monedaId="monedaId"
+        ></servicio-zinli-component>
     </div>
 </template>
 <script>
 // Importar Librerias o Modulos
 import PaypalComponent from "./servicios/PaypalComponent.vue";
 import UsdtComponent from "./servicios/UsdtComponent.vue";
+import ZinliComponent from "./servicios/ZinliComponent.vue";
 
 export default {
     data() {
@@ -79,22 +86,30 @@ export default {
     components: {
         PaypalComponent,
         UsdtComponent,
+        ZinliComponent,
     },
     created() {
         this.initSelects();
     },
     mounted() {},
     methods: {
-        handleSelectService(event) {
+        async handleSelectService(event) {
             this.checkService = null;
             switch (event.value) {
                 case 1:
                     this.idService = 1;
                     this.checkService = "TP-01";
+                    this.optionsMonedas = await this.getMonedas();
                     break;
                 case 6:
                     this.idService = 6;
                     this.checkService = "TP-02";
+                    this.optionsMonedas = await this.getMonedas();
+                    break;
+                case 11:
+                    this.idService = 11;
+                    this.checkService = "TP-03";
+                    this.optionsMonedas = await this.getMonedaByCodigo("VES");
                     break;
                 default:
                     break;
@@ -105,7 +120,6 @@ export default {
         },
         async initSelects() {
             this.optionsServices = await this.getForms();
-            this.optionsMonedas = await this.getMonedas();
         },
         async getForms(principal = 1) {
             return new Promise(async (resolve, reject) => {
@@ -124,6 +138,19 @@ export default {
             return new Promise(async (resolve, reject) => {
                 try {
                     const response = await axios.get("/gestion/monedas");
+                    resolve(response.data);
+                } catch (error) {
+                    this.$readStatusHttp(error);
+                    reject(error);
+                }
+            });
+        },
+        async getMonedaByCodigo(codigo) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const response = await axios.get(
+                        "/gestion/monedas/" + codigo
+                    );
                     resolve(response.data);
                 } catch (error) {
                     this.$readStatusHttp(error);

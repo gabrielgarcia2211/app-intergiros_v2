@@ -9,6 +9,7 @@ function mapTipoTercero($data)
             switch ($data['servicio']) {
                 case 'TP-01':
                 case 'TP-02':
+                case 'TP-03':
                     return [
                         'alias' => $data['aliasBeneficiario'],
                         'nombre' => $data['nombreBeneficiario'],
@@ -25,6 +26,7 @@ function mapTipoTercero($data)
             switch (request('servicio')) {
                 case 'TP-01':
                 case 'TP-02':
+                case 'TP-03':
                     return [
                         'alias' => $data['aliasDepositante'],
                         'nombre' => $data['nombreDepositante'],
