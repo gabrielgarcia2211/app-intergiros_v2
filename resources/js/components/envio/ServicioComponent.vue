@@ -52,11 +52,17 @@
             :idService="idService"
             :monedaId="monedaId"
         ></servicio-paypal-component>
+        <servicio-usdt-component
+            v-if="checkService == 'TP-02' && monedaId"
+            :idService="idService"
+            :monedaId="monedaId"
+        ></servicio-usdt-component>
     </div>
 </template>
 <script>
 // Importar Librerias o Modulos
 import PaypalComponent from "./servicios/PaypalComponent.vue";
+import UsdtComponent from "./servicios/UsdtComponent.vue";
 
 export default {
     data() {
@@ -72,6 +78,7 @@ export default {
     },
     components: {
         PaypalComponent,
+        UsdtComponent,
     },
     created() {
         this.initSelects();
@@ -84,6 +91,10 @@ export default {
                 case 1:
                     this.idService = 1;
                     this.checkService = "TP-01";
+                    break;
+                case 6:
+                    this.idService = 6;
+                    this.checkService = "TP-02";
                     break;
                 default:
                     break;

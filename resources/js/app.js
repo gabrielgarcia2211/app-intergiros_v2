@@ -59,8 +59,10 @@ app.component("noticia-component", NoticiaComponent);
 // Importacion de componentes envio
 import ServicioComponent from "./components/envio/ServicioComponent.vue";
 import PaypalComponent from "./components/envio/servicios/PaypalComponent.vue";
+import UsdtComponent from "./components/envio/servicios/UsdtComponent.vue";
 app.component("servicio-component", ServicioComponent);
 app.component("servicio-paypal-component", PaypalComponent);
+app.component("servicio-usdt-component", UsdtComponent);
 
 // Importacion de componentes carrusel
 import CarouselComponent from "./components/envio/CarouselComponent.vue";

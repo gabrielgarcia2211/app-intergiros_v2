@@ -2,9 +2,6 @@
     <div class="panel container mt-5" id="panel-paypal">
         <div class="text-center">
             <p style="font-size: 18px">
-                <strong>Monto minimo:</strong> $5USD+comisión PayPal($5,60USD)
-            </p>
-            <p style="font-size: 18px">
                 <strong>Tiempo aproximado de espera:</strong> 8 horas laborales
             </p>
         </div>
@@ -400,7 +397,7 @@
                     <div class="form-group">
                         <InputText
                             v-model="depositanteForm.correoDepositante"
-                            placeholder="Correo Electronico"
+                            placeholder="Correo Electronico Binance Pay de pago"
                             class="w-full md:w-14rem input-registro"
                             style="width: 80%"
                             :class="{
@@ -757,7 +754,7 @@ export default {
     components: {},
     computed: {},
     created() {
-        this.initServicePaypal();
+        this.initServiceUsdt();
     },
     watch: {
         "beneficiarioForm.id": function (value) {
@@ -792,19 +789,11 @@ export default {
             }
         },
     },
-    mounted() {
-        this.channel = new BroadcastChannel("completPayPaypal");
-        this.channel.onmessage = this.handleMessage;
-    },
-    beforeDestroy() {
-        if (this.channel) {
-            this.channel.close();
-        }
-    },
+    mounted() {},
     methods: {
-        async initServicePaypal() {
-            this.beneficiarios = await this.getTerceros("TB", "TP-01");
-            this.depositantes = await this.getTerceros("TD", "TP-01");
+        async initServiceUsdt() {
+            this.beneficiarios = await this.getTerceros("TB", "TP-02");
+            this.depositantes = await this.getTerceros("TD", "TP-02");
             const comboNames = ["pais_telefono", "pais", "tipo_cuenta"];
             // solicitudes a combos
             const listTd = await this.$getTDByMoneda(this.monedaId);
@@ -907,7 +896,7 @@ export default {
         },
         async handleSelectAfiliado(event) {
             const code = "TB";
-            const servicio = "TP-01";
+            const servicio = "TP-02";
             this.errorsBeneficiario = {};
             this.createOrUpdateBeneficiario = "edit";
             let tmpAfiliado = await this.showTercero(
@@ -934,7 +923,7 @@ export default {
         },
         async handleSelectDepositante(event) {
             const code = "TD";
-            const servicio = "TP-01";
+            const servicio = "TP-02";
             this.errorsDepositante = {};
             this.createOrUpdateDepositante = "edit";
             let tmpAfiliado = await this.showTercero(
@@ -963,7 +952,7 @@ export default {
             this.formBeneficiarioVisible = true;
             this.isEditBeneficiario = false;
             this.resetFormBeneficiario();
-            this.beneficiarioForm.servicio = "TP-01";
+            this.beneficiarioForm.servicio = "TP-02";
             this.beneficiarioForm.code = "TB";
             this.optionsBancos = await this.$getBancoByMoneda(this.monedaId);
             this.optionsDocumentBenficiario = await this.$getTDByMoneda(
@@ -976,7 +965,7 @@ export default {
             this.isEditDepositante = false;
             this.isEditImage = true;
             this.resetFormDepositante();
-            this.depositanteForm.servicio = "TP-01";
+            this.depositanteForm.servicio = "TP-02";
             this.depositanteForm.code = "TD";
             this.optionsDocumentDepositante = await this.$getTDByMoneda(
                 this.monedaId
@@ -1031,7 +1020,7 @@ export default {
                     })
                     .then((response) => {
                         this.$alertSuccess("Beneficiario Añadido");
-                        this.initServicePaypal();
+                        this.initServiceUsdt();
                         this.resetFormBeneficiario();
                     })
                     .catch((error) => {
@@ -1050,7 +1039,7 @@ export default {
                     })
                     .then((response) => {
                         this.$alertSuccess("Depositante Añadido");
-                        this.initServicePaypal();
+                        this.initServiceUsdt();
                         this.resetFormDepositante();
                         this.isEditImage = true;
                         this.$refs.fileUpload.clear();
@@ -1144,9 +1133,9 @@ export default {
                             )
                             .then((response) => {
                                 this.$alertSuccess("Beneficiario Eliminado");
-                                this.initServicePaypal();
+                                this.initServiceUsdt();
                                 this.resetFormBeneficiario();
-                                this.beneficiarioForm.servicio = "TP-01";
+                                this.beneficiarioForm.servicio = "TP-02";
                                 this.beneficiarioForm.code = "TB";
                                 this.createOrUpdateBeneficiario = "create";
                                 this.isEditBeneficiario = false;
@@ -1178,9 +1167,9 @@ export default {
                             )
                             .then((response) => {
                                 this.$alertSuccess("Beneficiario Eliminado");
-                                this.initServicePaypal();
+                                this.initServiceUsdt();
                                 this.resetFormDepositante();
-                                this.depositanteForm.servicio = "TP-01";
+                                this.depositanteForm.servicio = "TP-02";
                                 this.depositanteForm.code = "TD";
                                 this.createOrUpdateDepositante = "create";
                                 this.isEditDepositante = false;
@@ -1329,7 +1318,7 @@ export default {
         },
         async convertService(event) {
             const convertidor = await this.$devFormatoMoneda(
-                "TP-01",
+                "TP-02",
                 event.value
             );
             if (convertidor.data) {
@@ -1375,14 +1364,11 @@ export default {
                                     this.montoCambiar.monto_a_recibir,
                             })
                             .then((response) => {
-                                const id = response.data.data.id;
-                                window.open(
-                                    `/solicitudes/proceso?solicitud=${id}`,
-                                    "_blank"
+                                this.$alertSuccess(
+                                    "¡Tu solicitud se ha realizado con éxito!"
                                 );
                             })
                             .catch((error) => {
-                                console.log(error);
                                 this.$readStatusHttp(error);
                             });
                     }

@@ -14,6 +14,7 @@ use App\Http\Requests\Terceros\StoreTerceroRequest;
 use App\Http\Requests\Terceros\UpdateTerceroRequest;
 use App\Http\Controllers\ResponseController as Response;
 use App\Models\Administracion\TipoFormulario;
+use App\Models\Solicitudes\Solicitudes;
 
 class TercerosController extends Controller
 {
@@ -108,10 +109,19 @@ class TercerosController extends Controller
 
     public function destroyTercero(Tercero $Tercero, $code)
     {
-        if (in_array($code, ['TD'])) {
-            $this->fileService->deleteFile($Tercero->path_documento);
+        $solicitudes = Solicitudes::where('beneficiario_id', $Tercero->id)
+            ->orWhere('depositante_id', $Tercero->id)
+            ->exists();
+
+        if ($solicitudes) {
+            return Response::sendError('El depositante/beneficiario cuenta con una solicitud en el sistema', 400);
         }
-        return Response::sendResponse($Tercero->delete(), "Recurso eliminado con exito");
+        if ($Tercero->delete()) {
+            if (in_array($code, ['TD'])) {
+                $this->fileService->deleteFile($Tercero->path_documento);
+            }
+        }
+        return Response::sendResponse(true, "Recurso eliminado con exito");
     }
 
     public function destroyPathDocument(Request $request)

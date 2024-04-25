@@ -153,7 +153,6 @@ export default {
             const nextDayDate = new Date(createdAtDate);
             nextDayDate.setDate(createdAtDate.getDate() + 1);
             const currentDate = new Date();
-            console.log(currentDate, nextDayDate)
             return currentDate > nextDayDate;
         },
     },

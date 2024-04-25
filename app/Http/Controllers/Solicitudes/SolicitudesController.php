@@ -32,11 +32,12 @@ class SolicitudesController extends Controller
             $monto_a_pagar = $request->input('monto_a_pagar');
             $monto_a_recibir = $request->input('monto_a_recibir');
 
-            $estado_id = MasterCombos::getEstadoSolicitud('iniciado');
+            $estado_iniciado_id = MasterCombos::getEstadoSolicitud('iniciado');
+            $estado_pendiente_id = MasterCombos::getEstadoSolicitud('pendiente');
 
             $producto = getCostRange($monto_a_pagar);
             if (empty($producto)) {
-                return Response::sendError('No se encontro un producto en este rango de costo', 422);
+                return Response::sendError('No se encontro un producto en este rango de costo', 400);
             }
             $solicitud = Solicitudes::create([
                 'tipo_formulario_id' => $tipo_formulario_id,
@@ -46,13 +47,14 @@ class SolicitudesController extends Controller
                 'monto_a_pagar' => $monto_a_pagar,
                 'monto_a_recibir' => $monto_a_recibir,
                 'user_id' => Auth()->user()->id,
-                'estado_id' => $estado_id,
+                'estado_id' => ($tipo_formulario_id == 1) ? $estado_iniciado_id : $estado_pendiente_id,
                 'producto_id' => $producto['id'],
                 'revisiones' => $producto['revisiones'],
             ]);
 
             return Response::sendResponse($solicitud, 'Registro creado con exito.');
         } catch (\Exception $ex) {
+            Log::debug($ex);
             Log::debug($ex->getMessage());
             return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
         }

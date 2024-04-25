@@ -32,7 +32,7 @@ export default {
 
             switch (response.status) {
                 case 400:
-                    this.$alertDanger('Solicitud Incorrecta');
+                    this.$alertDanger('Solicitud Incorrecta', response.data.message);
                     break;
                 case 401:
                     this.$alertDanger('Tu sesión expiró', "");

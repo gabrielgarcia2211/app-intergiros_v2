@@ -4,11 +4,11 @@ use App\Models\Solicitudes\Producto;
 
 function mapTipoTercero($data)
 {
-
     switch ($data['code']) {
         case 'TB':
             switch ($data['servicio']) {
                 case 'TP-01':
+                case 'TP-02':
                     return [
                         'alias' => $data['aliasBeneficiario'],
                         'nombre' => $data['nombreBeneficiario'],
@@ -20,22 +20,11 @@ function mapTipoTercero($data)
                         'tipo_cuenta_id' => $data['tipoCuentaBeneficiario'],
                     ];
                     break;
-                case 'TP-02':
-                    return [
-                        'alias' => $data['usdtAliasBeneficiario'],
-                        'nombre' => $data['usdtNombreBeneficiario'],
-                        'tipo_documento_id' => $data['usdtTipoDocBeneficiario'],
-                        'tipo_cuenta_id' => $data['usdtTipoCuentaBeneficiario'],
-                        'documento' => $data['usdtDocBeneficiario'],
-                        'banco_id' => $data['usdtBancoBeneficiario'],
-                        'cuenta' => $data['usdtCuentaBeneficiario'],
-                        'pago_movil' => $data['usdtPagoMovilBeneficiario'],
-                    ];
-                    break;
             }
         case 'TD':
             switch (request('servicio')) {
                 case 'TP-01':
+                case 'TP-02':
                     return [
                         'alias' => $data['aliasDepositante'],
                         'nombre' => $data['nombreDepositante'],
@@ -45,21 +34,7 @@ function mapTipoTercero($data)
                         'pais_telefono_id' => $data['codigoIDepositante'],
                         'celular' => $data['celularDepositante'],
                         'pais_id' => $data['paisDepositante'],
-                        'adjuntar_documento' => $data['adjuntarDocumento'],
-                        'tipo_cuenta_id' => $data['tipoCuentaBeneficiario'],
-                    ];
-                    break;
-                case 'TP-02':
-                    return [
-                        'alias' => $data['usdtAliasDepositante'],
-                        'nombre' => $data['usdtNombreDepositante'],
-                        'tipo_documento_id' => $data['usdtTipoDocDepositante'],
-                        'documento' => $data['usdtDocDepositante'],
-                        'correo' => $data['usdtEmailDepositante'],
-                        'pais_telefono_id' => $data['usdtIndicativoDepositante'],
-                        'celular' => $data['usdtCelularDepositante'],
-                        'pais_id' => $data['usdtPaisDepositante'],
-                        'adjuntar_documento' => $data['adjuntarDocumentoUsdt'],
+                        'adjuntar_documento' => $data['adjuntarDocumento']
                     ];
                     break;
             }

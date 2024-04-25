@@ -759,7 +759,7 @@
                 >
                     <template #body="{ data }">
                         <span
-                            :style="getEstadoBackground(data.estado_actual)"
+                            :style="getEstadoBackgroundSolicitud(data.estado_actual)"
                             style="
                                 cursor: pointer;
                                 display: block;
@@ -1217,7 +1217,7 @@ export default {
                     this.$readStatusHttp(error);
                 });
         },
-        getEstadoBackground(estado) {
+        getEstadoBackgroundSolicitud(estado) {
             switch (estado) {
                 case "INICIADO":
                     return { backgroundColor: "blue", color: "white" };

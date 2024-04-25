@@ -98,7 +98,7 @@
                                 "
                                 :options="optionsDocument"
                                 placeholder="TD"
-                                optionLabel="name"
+                                :optionLabel="optionLabelFunction"
                                 optionValue="id"
                                 style="width: 30%"
                                 class="input-indicativo"
@@ -108,6 +108,7 @@
                                     'input-readonly': isEdit,
                                 }"
                                 :readOnly="isEdit"
+                                filter
                             ></Dropdown>
                             <InputNumber
                                 id=""
@@ -334,7 +335,7 @@
 import * as Yup from "yup";
 
 export default {
-    emits: ['formId'], 
+    emits: ["formId"],
     data() {
         return {
             optionsServices: [],
@@ -366,6 +367,7 @@ export default {
     components: {},
     watch: {
         selectedService: async function (value) {
+            this.resetForm();
             this.selectVisible = value ? true : false;
             if (value) {
                 this.list();
@@ -424,37 +426,41 @@ export default {
             this.isEdit = false;
             this.isEditImage = true;
             this.resetForm();
-            this.depositanteForm.servicio = this.getService().codigo;
+            this.depositanteForm.servicio = this.getService(
+                this.selectedService
+            ).codigo;
             this.depositanteForm.code = "TD";
         },
         async list() {
             this.depositantes = await this.getTerceros(
                 "TD",
-                this.getService().codigo
+                this.getService(this.selectedService).codigo
             );
-            const comboNames = [
-                "tipo_documento",
-                "pais_telefono",
-                "pais",
-                "banco",
-            ];
-            const response = await this.$getComboRelations(comboNames);
-            const {
-                tipo_documento: responseTipoDocumento,
-                pais_telefono: responsePaisTelefono,
-                pais: responsePais,
-                banco: responseBanco,
-            } = response;
+            if (this.depositantes) {
+                const comboNames = [
+                    "tipo_documento",
+                    "pais_telefono",
+                    "pais",
+                    "banco",
+                ];
+                const response = await this.$getComboRelations(comboNames);
+                const {
+                    tipo_documento: responseTipoDocumento,
+                    pais_telefono: responsePaisTelefono,
+                    pais: responsePais,
+                    banco: responseBanco,
+                } = response;
 
-            this.optionsDocument = responseTipoDocumento;
-            this.optionsCodigoI = responsePaisTelefono;
-            this.optionsPais = responsePais;
-            this.optionsBancos = responseBanco;
+                this.optionsDocument = responseTipoDocumento;
+                this.optionsCodigoI = responsePaisTelefono;
+                this.optionsPais = responsePais;
+                this.optionsBancos = responseBanco;
+            }
         },
         async handleSelect(event) {
             this.errors = {};
             const code = "TD";
-            const servicio = this.getService().codigo;
+            const servicio = this.getService(this.selectedService).codigo;
             this.createOrUpdate = "edit";
             this.formDepositanteVisible = true;
             let tmpAfiliado = await this.showTercero(
@@ -680,9 +686,9 @@ export default {
                     this.$readStatusHttp(error);
                 });
         },
-        getService() {
+        getService(selectedService) {
             return this.optionsServices.find((item) => {
-                return item.id == 1;
+                return item.id == selectedService;
             });
         },
         async checkValidateProceso(service, others) {
@@ -694,6 +700,10 @@ export default {
             this.selectedService = null;
             this.servicioDepositanteVisible = others;
             this.resetForm();
+        },
+        optionLabelFunction(option) {
+            // Construir la etiqueta combinada para cada opción
+            return `${option.name} - ${option.valor1}`;
         },
     },
 };

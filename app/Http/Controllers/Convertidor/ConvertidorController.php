@@ -31,7 +31,7 @@ class ConvertidorController extends Controller
                 return Response::sendResponse(['monto_a_pagar' => round($comision, 2), 'monto_a_recibir' => $monto_a_recibir]);
             } else {
                 $total = $monto * $response->tasa_cambios->valor;
-                return Response::sendResponse(['monto_a_pagar' => number_format($total, 2, '.'), 'monto_a_recibir' => number_format($total, 2, '.')]);
+                return Response::sendResponse(['monto_a_pagar' => round($total, 2), 'monto_a_recibir' => round($total, 2)]);
             }
         }
         return Response::sendResponse(false, 'No hay informacion');
