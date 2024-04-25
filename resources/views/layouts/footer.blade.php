@@ -22,10 +22,10 @@
                 <h5><strong>COMUNIDAD</strong></h5>
                 <div class="row">
                     <div class="col-3">
-                        <a class="nav-link" href="#"><i class="fab fa-instagram fa-3x"></i></a>
+                        <a class="nav-link" target="_blank" href="https://www.instagram.com/intergiros.oficial"><i class="fab fa-instagram fa-3x"></i></a>
                     </div>
                     <div class="col-3">
-                        <a class="nav-link" href="#"><i class="fab fa-facebook fa-3x"></i></a>
+                        <a class="nav-link" target="_blank" href="https://www.facebook.com/intergiros.oficial"><i class="fab fa-facebook fa-3x"></i></a>
                     </div>
                 </div>
             </div>
