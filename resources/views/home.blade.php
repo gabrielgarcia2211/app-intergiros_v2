@@ -638,7 +638,7 @@
     <div class="container cambios" style="display: none;" id="ven_col">
         <div class="row">
             <div class="col-md-5 info">
-                <img src="{{ asset('') }}" class="img-fluid" alt="">
+                <img src="{{ asset('img/home/TDC Intergiros - Venezuela.png') }}" class="img-fluid" alt="">
                 <div class="row mt-5">
                     <div class="col-3 icon">
                         <img src="{{ asset('img/home/Ícono de Monto mínimo.png') }}" class="img-fluid" alt="">
@@ -1114,7 +1114,7 @@
         <button class="btn btn-primary btn-reseña" type="button">Escribe una reseña</button>
     </div>
     <br>
-    <div class="container">
+    <div class="container" id="noticias">
         <img src="{{ asset('img/home/noticias.png') }}" alt="" width="100%">
     </div>
 
