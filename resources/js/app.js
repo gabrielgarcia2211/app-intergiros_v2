@@ -27,6 +27,7 @@ import TabPanel from "primevue/tabpanel";
 import ProgressSpinner from "primevue/progressspinner";
 import Menubar from "primevue/menubar";
 import Carousel from "primevue/carousel";
+import InputGroupAddon from 'primevue/inputgroupaddon';
 
 const app = createApp({});
 
@@ -84,6 +85,10 @@ app.component("historial-terceros-component", DepositanteComponent);
 import MenuComponent from "./components/menu/MenuComponent.vue";
 app.component("menu-component", MenuComponent);
 
+// Importacion de componentes login
+import LoginComponent from "./components/login/LoginComponent.vue";
+app.component("login-component", LoginComponent);
+
 // Anexo de componentes de vuejs
 app.component("Dropdown", Dropdown);
 app.component("InputText", InputText);
@@ -103,6 +108,7 @@ app.component("TabPanel", TabPanel);
 app.component("ProgressSpinner", ProgressSpinner);
 app.component("Menubar", Menubar);
 app.component("Carousel", Carousel);
+app.component("InputGroupAddon", InputGroupAddon);
 
 // Configura Axios globalmente
 app.config.globalProperties.$axios = axios;

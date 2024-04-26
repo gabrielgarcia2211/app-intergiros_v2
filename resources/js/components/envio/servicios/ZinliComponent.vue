@@ -427,7 +427,7 @@
                                 v-model="depositanteForm.codigoIDepositante"
                                 :options="optionsCodigoI"
                                 placeholder="CI"
-                                optionLabel="name"
+                                :optionLabel="optionLabelFunction"
                                 optionValue="id"
                                 style="width: 30%"
                                 class="input-indicativo"
@@ -437,6 +437,7 @@
                                     'input-readonly': isEditDepositante,
                                 }"
                                 :disabled="isEditDepositante"
+                                filter
                             ></Dropdown>
                             <InputNumber
                                 id=""
@@ -1374,7 +1375,10 @@ export default {
                             });
                     }
                 });
-        }
+        },
+        optionLabelFunction(option) {
+            return `${option.name} - ${option.valor1}`;
+        },
     },
 };
 </script>

@@ -107,7 +107,7 @@
                                         errors.tipoDocumentoDepositante,
                                     'input-readonly': isEdit,
                                 }"
-                                :readOnly="isEdit"
+                                :disabled="isEdit"
                                 filter
                             ></Dropdown>
                             <InputNumber
@@ -164,7 +164,7 @@
                                 v-model="depositanteForm.codigoIDepositante"
                                 :options="optionsCodigoI"
                                 placeholder="CI"
-                                optionLabel="name"
+                                :optionLabel="optionLabelFunction"
                                 optionValue="id"
                                 style="width: 30%"
                                 class="input-indicativo"
@@ -172,7 +172,8 @@
                                     'p-invalid': errors.codigoIDepositante,
                                     'input-readonly': isEdit,
                                 }"
-                                :readOnly="isEdit"
+                                :disabled="isEdit"
+                                filter
                             ></Dropdown>
                             <InputNumber
                                 id=""
@@ -209,7 +210,7 @@
                                 'p-invalid': errors.paisDepositante,
                                 'input-readonly': isEdit,
                             }"
-                            :readOnly="isEdit"
+                            :disabled="isEdit"
                         />
                         <small
                             v-if="errors.paisDepositante"
@@ -702,7 +703,6 @@ export default {
             this.resetForm();
         },
         optionLabelFunction(option) {
-            // Construir la etiqueta combinada para cada opción
             return `${option.name} - ${option.valor1}`;
         },
     },

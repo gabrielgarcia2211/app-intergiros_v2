@@ -83,12 +83,6 @@
     <!-- FOOTER -->
     @include('layouts.footer')
 
-
-    <style>
-        .error {
-            color: red;
-        }
-    </style>
 @endsection
 
 @section('script')

@@ -55,7 +55,7 @@ class StoreTerceroRequest extends FormRequest
                             'codigoIDepositante' => 'required',
                             'celularDepositante' => 'required',
                             'paisDepositante' => 'required',
-                            'adjuntarDocumento' => 'required|file|max:' . env('UPLOAD_MAX_FILESIZE'),
+                            'adjuntarDocumento' => 'required|max:' . env('UPLOAD_MAX_FILESIZE'),
                         ];
                         break;
                 }

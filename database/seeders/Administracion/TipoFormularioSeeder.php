@@ -18,13 +18,13 @@ class TipoFormularioSeeder extends Seeder
             ['descripcion' => 'Paypal-EEUU', 'codigo' => 'TP-01-paypal-peru-dolar', 'principal' => 0],
             ['descripcion' => 'Paypal-Colombia', 'codigo' => 'TP-01-paypal-colombia', 'principal' => 0],
             // TP-02
-            ['descripcion' => 'USDT', 'codigo' => 'TP-02', 'principal' => 2],
+            ['descripcion' => 'USDT', 'codigo' => 'TP-02', 'principal' => 1],
             ['descripcion' => 'USDT-Venezuela', 'codigo' => 'TP-02-usdt-venezuela', 'principal' => 0],
             ['descripcion' => 'USDT-Peru', 'codigo' => 'TP-02-usdt-peru', 'principal' => 0],
             ['descripcion' => 'USDT-EEUU', 'codigo' => 'TP-02-usdt-peru-dolar', 'principal' => 0],
             ['descripcion' => 'USDT-Colombia', 'codigo' => 'TP-02-usdt-colombia', 'principal' => 0],
             // TP-03
-            ['descripcion' => 'Zinli', 'codigo' => 'TP-03', 'principal' => 2],
+            ['descripcion' => 'Zinli', 'codigo' => 'TP-03', 'principal' => 1],
             ['descripcion' => 'Zinli-Venezuela', 'codigo' => 'TP-03-zinli-venezuela', 'principal' => 0],
             // TP-04
             ['descripcion' => 'Peru', 'codigo' => 'TP-04', 'principal' => 2],

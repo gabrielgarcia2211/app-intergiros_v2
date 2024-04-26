@@ -33,7 +33,7 @@ class SolicitudesController extends Controller
             $monto_a_recibir = $request->input('monto_a_recibir');
 
             $estado_iniciado_id = MasterCombos::getEstadoSolicitud('iniciado');
-            $estado_pendiente_id = MasterCombos::getEstadoSolicitud('pendiente');
+            $estado_en_proceso_id = MasterCombos::getEstadoSolicitud('en_proceso');
 
             $producto = getCostRange($monto_a_pagar);
             if (empty($producto)) {
@@ -47,7 +47,7 @@ class SolicitudesController extends Controller
                 'monto_a_pagar' => $monto_a_pagar,
                 'monto_a_recibir' => $monto_a_recibir,
                 'user_id' => Auth()->user()->id,
-                'estado_id' => ($tipo_formulario_id == 1) ? $estado_iniciado_id : $estado_pendiente_id,
+                'estado_id' => ($tipo_formulario_id == 1) ? $estado_iniciado_id : $estado_en_proceso_id,
                 'producto_id' => $producto['id'],
                 'revisiones' => $producto['revisiones'],
             ]);

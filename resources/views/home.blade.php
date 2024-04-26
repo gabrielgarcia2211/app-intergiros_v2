@@ -39,7 +39,7 @@
         </div>
     </div>
 
-    <div class="container py-5">
+    <div class="container py-5" id="calculadora">
         <p class="text-center">
             <strong>Únete alafamilia Intergiros</strong> y disfruta de cambiar y recargar tu saldo PayPal, Skrill,
             Bitcoin, USDT y Zinli

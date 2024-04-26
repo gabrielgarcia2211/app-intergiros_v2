@@ -40,10 +40,24 @@ export default {
                     },
                     {
                         label: "Servicios",
-                        url: this.servicio,
+                        command: () => {
+                            this.redirectUrl("calculadora");
+                        },
                     },
-                    { label: "Tasas", url: "#" },
-                    { label: "Noticias", url: "#" },
+                    {
+                        label: "Tasas",
+                        url: "#",
+                        command: () => {
+                            this.redirectUrl("calculadora");
+                        },
+                    },
+                    {
+                        label: "Noticias",
+                        url: "#",
+                        command: () => {
+                            this.redirectUrl("noticias");
+                        },
+                    },
                     {
                         label: this.usuario,
                         icon:
@@ -68,6 +82,16 @@ export default {
                             {
                                 label: "Panel de envíos",
                                 icon: "pi pi-money-bill",
+                                url: this.servicio,
+                                class: "user-child-verificado",
+                                style: {
+                                    paddingLeft: "0 !important",
+                                    marginBottom: "0 !important",
+                                },
+                            },
+                            {
+                                label: "Historial de envíos",
+                                icon: "pi pi-history",
                                 url: this.historial,
                                 class: "user-child-verificado",
                                 style: {
@@ -93,11 +117,13 @@ export default {
                     },
                     {
                         icon: "pi pi-instagram",
-                        url: "#",
+                        url: "https://www.instagram.com/intergiros.oficial",
+                        target: "_blank",
                     },
                     {
                         icon: "pi pi-facebook",
-                        url: "#",
+                        url: "https://www.facebook.com/intergiros.oficial",
+                        target: "_blank",
                     },
                 ];
             } else {
@@ -108,13 +134,28 @@ export default {
                     },
                     {
                         label: "Servicios",
-                        url: this.servicio,
+                        command: () => {
+                            this.redirectUrl("calculadora");
+                        },
                     },
-                    { label: "Tasas", url: "#" },
-                    { label: "Noticias", url: "#" },
+                    {
+                        label: "Tasas",
+                        url: "#",
+                        command: () => {
+                            this.redirectUrl("calculadora");
+                        },
+                    },
+                    {
+                        label: "Noticias",
+                        url: "#",
+                        command: () => {
+                            this.redirectUrl("noticias");
+                        },
+                    },
                     {
                         label: "Iniciar Sesion",
                         url: this.login,
+                        class: "sesion",
                     },
                     {
                         label: "Regístrate",
@@ -127,17 +168,53 @@ export default {
                     },
                     {
                         icon: "pi pi-instagram",
-                        url: "#",
+                        url: "https://www.instagram.com/intergiros.oficial",
+                        target: "_blank",
                     },
                     {
                         icon: "pi pi-facebook",
-                        url: "#",
+                        url: "https://www.facebook.com/intergiros.oficial",
+                        target: "_blank",
                     },
                 ];
             }
+            this.loadPanelUrl();
         });
     },
-    methods: {},
+    methods: {
+        loadPanelUrl() {
+            setTimeout(function () {
+                const search = localStorage.getItem("search");
+                if (search) {
+                    const etiquetaObjetivo =
+                        document.getElementById(search);
+                    if (etiquetaObjetivo) {
+                        etiquetaObjetivo.scrollIntoView({
+                            behavior: "smooth",
+                        });
+                    }
+                    localStorage.removeItem("search");
+                }
+            }, 2000);
+        },
+        redirectUrl(key) {
+            const str = window.location.pathname;
+            const substring = "/home";
+            const position = str.includes(substring);
+
+            if (!position) {
+                localStorage.setItem("search", key);
+                window.location.href = "/home";
+            }
+
+            const etiquetaObjetivo = document.getElementById(key);
+            if (etiquetaObjetivo) {
+                etiquetaObjetivo.scrollIntoView({
+                    behavior: "smooth",
+                });
+            }
+        },
+    },
 };
 </script>
 
@@ -179,13 +256,17 @@ export default {
 }
 
 /** Nuevos estilos */
+.sesion .p-menuitem-text {
+    color: #009d2c;
+}
+
 .user-verificado {
-    background-color: #5fbc4a;
+    background-color: #009d2c;
     border-radius: 35px;
 }
 
 .user-verificado:hover {
-    background-color: #5fbc4a;
+    background-color: #009d2c;
     border-radius: 35px;
 }
 
@@ -215,7 +296,7 @@ export default {
 }
 
 .registro {
-    background-color: #5fbc4a;
+    background-color: #009d2c;
     border-radius: 35px;
 }
 

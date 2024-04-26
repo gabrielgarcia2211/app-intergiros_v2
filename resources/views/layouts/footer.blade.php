@@ -32,6 +32,6 @@
         </div>
     </div>
     <div class="text-center ruc">
-        <p>RUC:20611172509 © 2023 Intergiros • todos los derechos reservados.</p>
+        <p>RUC:20611172509 © <?php echo date('Y') ?> Intergiros • todos los derechos reservados.</p>
     </div>
 </div>

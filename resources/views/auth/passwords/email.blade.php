@@ -20,7 +20,7 @@
         <div class="form-row mt-5">
             <div class="form-group col-md-6">
                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                    value="{{ old('email') }}" placeholder="Email" autocomplete="email" autofocus>
+                    value="{{ old('email') }}" placeholder="Correo Electronico" autocomplete="email" autofocus>
 
                 @error('email')
                 <span class="invalid-feedback text-center" role="alert">
