@@ -9,6 +9,7 @@
                             class="font-bold white-space-nowrap"
                             >Solicitudes</span
                         >
+                        <span v-if="pointStatus">🔴</span>
                     </div>
                 </template>
                 <div class="seccion">
@@ -145,6 +146,7 @@ export default {
                 anteriores: {},
             },
             loading: true,
+            pointStatus: false,
         };
     },
     components: {
@@ -154,6 +156,7 @@ export default {
     watch: {},
     created() {
         this.handleTabStatus({ index: 0 });
+        this.showNotificaciones();
     },
     mounted() {},
     methods: {
@@ -180,6 +183,7 @@ export default {
             const reponse = await this.getNotificaciones();
             this.notificaciones.nuevas = reponse.data.nuevas;
             this.notificaciones.anteriores = reponse.data.anteriores;
+            this.showNotificaciones();
         },
         async loadNoticias() {
             const reponse = await this.getNoticias();
@@ -211,6 +215,23 @@ export default {
                         reject(error);
                     });
             });
+        },
+        getStatusNotificaciones() {
+            return new Promise((resolve, reject) => {
+                this.$axios
+                    .get(`/notificaciones/status`)
+                    .then(function (response) {
+                        resolve(response.data);
+                    })
+                    .catch(function (error) {
+                        this.$readStatusHttp(error);
+                        reject(error);
+                    });
+            });
+        },
+        async showNotificaciones() {
+            let details = await this.getStatusNotificaciones();
+            this.pointStatus = details.data.nuevas ? true : false;
         },
     },
 };

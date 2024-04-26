@@ -1,18 +1,3 @@
-$(document).ready(async function () {
-    $.validator.addMethod(
-        "filesize",
-        function (value, element, param) {
-            // Check if file is selected
-            if (element.files && element.files.length) {
-                // Check file size
-                return this.optional(element) || element.files[0].size <= param;
-            }
-            return true; // If no file is selected, validation passes by default
-        },
-        "El tamaño del archivo debe ser menor a {0} bytes"
-    );
-});
-
 var FILE_MAX_SIZE = 10097152;
 var PRODUCTION = 1;
 

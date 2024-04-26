@@ -28,6 +28,7 @@ export default {
     data() {
         return {
             menuItems: [],
+            pointIcon: false,
         };
     },
     mounted() {
@@ -179,6 +180,7 @@ export default {
                 ];
             }
             this.loadPanelUrl();
+            this.showNotificaciones();
         });
     },
     methods: {
@@ -186,8 +188,7 @@ export default {
             setTimeout(function () {
                 const search = localStorage.getItem("search");
                 if (search) {
-                    const etiquetaObjetivo =
-                        document.getElementById(search);
+                    const etiquetaObjetivo = document.getElementById(search);
                     if (etiquetaObjetivo) {
                         etiquetaObjetivo.scrollIntoView({
                             behavior: "smooth",
@@ -213,6 +214,23 @@ export default {
                     behavior: "smooth",
                 });
             }
+        },
+        getNotificaciones() {
+            return new Promise((resolve, reject) => {
+                this.$axios
+                    .get(`/notificaciones/status`)
+                    .then(function (response) {
+                        resolve(response.data);
+                    })
+                    .catch(function (error) {
+                        this.$readStatusHttp(error);
+                        reject(error);
+                    });
+            });
+        },
+        async showNotificaciones() {
+            let details = await this.getNotificaciones();
+            this.menuItems[5].class = details.data.nuevas ? "status-icon" : "";
         },
     },
 };
@@ -317,5 +335,10 @@ export default {
     left: -200px !important;
     width: 400% !important;
     padding: 10px 20px !important;
+}
+
+/** icon de status notificacion */
+.status-icon .p-menuitem-link .p-menuitem-icon {
+    color: red;
 }
 </style>
