@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-5">
+    <div class="container mt-5" style="margin-bottom: 150px;">
         <div class="row">
             <div class="col-md-5">
                 <InputGroup>

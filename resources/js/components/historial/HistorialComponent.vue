@@ -1,786 +1,854 @@
 <template>
-    <div class="container notificaciones" style="overflow-y: auto">
+    <div class="container notificaciones">
         <TabView class="tabview-custom" @tab-change="handleTabStatus">
             <TabPanel>
                 <template #header>
                     <div class="flex align-items-center gap-2">
-                        <span class="font-bold white-space-nowrap"
+                        <span
+                            id="opcion1-tab"
+                            class="font-bold white-space-nowrap"
                             >EN PROCESO</span
                         >
                     </div>
                 </template>
-                <ProgressSpinner
-                    v-if="loading"
-                    style="
-                        width: 180px;
-                        height: 180px;
-                        justify-content: center;
-                        display: block;
-                    "
-                />
-                <div v-else-if="solicitudes.length == 0">
+                <div class="seccion">
+                    <ProgressSpinner
+                        v-if="loading"
+                        style="
+                            width: 180px;
+                            height: 180px;
+                            justify-content: center;
+                            display: block;
+                        "
+                    />
+                    <div v-else-if="solicitudes.length == 0">
+                        <div
+                            class="d-flex align-items-center justify-content-center mt-4"
+                        >
+                            <img
+                                src="img/notificaciones/Sin mensajes.png"
+                                class="img-fluid"
+                                alt="not found"
+                                width="400px"
+                            />
+                        </div>
+                    </div>
                     <div
-                        class="d-flex align-items-center justify-content-center mt-4"
+                        v-else
+                        v-for="(item, index) in solicitudes"
+                        :key="index"
+                        class="m-0 seccion-historial"
                     >
-                        <img
-                            src="img/notificaciones/Sin mensajes.png"
-                            class="img-fluid"
-                            alt="not found"
-                            width="400px"
-                        />
-                    </div>
-                </div>
-                <div
-                    v-else
-                    v-for="(item, index) in solicitudes"
-                    :key="index"
-                    class="m-0"
-                >
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="text-center">
-                                    <img
-                                        src="img/notificaciones/proceso.png"
-                                        class="img-fluid"
-                                        alt=""
-                                        width="100px"
-                                    />
-                                </div>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="text-left">
-                                            <p style="margin-bottom: 0px">
-                                                ID#{{ item.id }}
-                                            </p>
-                                            <p style="color: #0035aa">
-                                                Pedido en proceso
-                                            </p>
-                                            <p
-                                                style="
-                                                    margin-bottom: 0px;
-                                                    color: #009d2c;
-                                                "
-                                            >
-                                                Monto pagado
-                                            </p>
-                                            <p style="color: #009d2c">
-                                                USD {{ item.monto_a_pagar }}
-                                            </p>
-                                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="text-center">
+                                        <img
+                                            src="img/notificaciones/proceso.png"
+                                            class="img-fluid"
+                                            alt=""
+                                            width="100px"
+                                        />
                                     </div>
-                                    <div class="col-6">
-                                        <div class="text-right">
-                                            <p>{{ item.created_at }}</p>
-                                            <p
-                                                style="
-                                                    margin-bottom: 0px;
-                                                    color: #009d2c;
-                                                "
-                                            >
-                                                Monto a recibir
-                                            </p>
-                                            <p style="color: #009d2c">
-                                                {{ item.monto_a_recibir }} BS.
-                                            </p>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="text-left">
+                                                <p style="margin-bottom: 0px">
+                                                    ID#{{ item.id }}
+                                                </p>
+                                                <p style="color: #0035aa">
+                                                    Pedido en proceso
+                                                </p>
+                                                <p
+                                                    style="
+                                                        margin-bottom: 0px;
+                                                        color: #009d2c;
+                                                    "
+                                                >
+                                                    Monto pagado
+                                                </p>
+                                                <p style="color: #009d2c">
+                                                    USD {{ item.monto_a_pagar }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-right">
+                                                <p>{{ item.created_at }}</p>
+                                                <p
+                                                    style="
+                                                        margin-bottom: 0px;
+                                                        color: #009d2c;
+                                                    "
+                                                >
+                                                    Monto a recibir
+                                                </p>
+                                                <p style="color: #009d2c">
+                                                    {{ item.monto_a_recibir }}
+                                                    BS.
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="text-center">
-                            <a
-                                href="#"
-                                @click="
-                                    toggleCollapse(
-                                        'iconoProceso',
-                                        'proceso',
-                                        index
-                                    )
-                                "
-                                style="color: #818181"
-                            >
-                                <i
-                                    class="fas fa-chevron-down"
-                                    :id="'iconoProceso' + index"
-                                ></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div :id="'proceso' + index" class="collapse container">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="text-left">
-                                    <p>Tasa de cambio:</p>
-                                    <p>Pagado desde:</p>
-                                    <p>Enviado por:</p>
-                                    <p>Enviado a:</p>
-                                    <br />
-                                    <button v-if="$isNextDay(item.created_at)"
-                                        class="btn btn-primary"
-                                        @click="openModalEnProceso(item)"
-                                    >
-                                        Reclamar
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="text-right">
-                                    <p>
-                                        USD 1 =
-                                        {{
-                                            item.tipo_formulario.tasa_cambios
-                                                .valor
-                                        }}
-                                        Bs.
-                                    </p>
-                                    <p>
-                                        {{ item.tipo_formulario.descripcion }}
-                                    </p>
-                                    <p>{{ item.depositante.alias }}</p>
-                                    <p>{{ item.beneficiario.alias }}</p>
-                                    <p>{{ item.beneficiario.banco }}</p>
-                                    <p>V {{ item.beneficiario.cuenta }}</p>
-                                    <p>{{ item.beneficiario?.pago_movil }}</p>
-                                </div>
+                            <div class="text-center">
+                                <a
+                                    href="#"
+                                    @click="
+                                        toggleCollapse(
+                                            'iconoProceso',
+                                            'proceso',
+                                            index
+                                        )
+                                    "
+                                    style="color: #818181"
+                                >
+                                    <i
+                                        class="fas fa-chevron-down"
+                                        :id="'iconoProceso' + index"
+                                    ></i>
+                                </a>
                             </div>
                         </div>
+                        <div :id="'proceso' + index" class="collapse container">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="text-left">
+                                        <p>Tasa de cambio:</p>
+                                        <p>Pagado desde:</p>
+                                        <p>Enviado por:</p>
+                                        <p>Enviado a:</p>
+                                        <br />
+                                        <button
+                                            v-if="$isNextDay(item.created_at)"
+                                            class="btn btn-primary"
+                                            @click="openModalEnProceso(item)"
+                                        >
+                                            Reclamar
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-right">
+                                        <p>
+                                            USD 1 =
+                                            {{
+                                                item.tipo_formulario
+                                                    .tasa_cambios.valor
+                                            }}
+                                            Bs.
+                                        </p>
+                                        <p>
+                                            {{
+                                                item.tipo_formulario.descripcion
+                                            }}
+                                        </p>
+                                        <p>{{ item.depositante.alias }}</p>
+                                        <p>{{ item.beneficiario.alias }}</p>
+                                        <p>{{ item.beneficiario.banco }}</p>
+                                        <p>V {{ item.beneficiario.cuenta }}</p>
+                                        <p>
+                                            {{ item.beneficiario?.pago_movil }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr v-if="index !== solicitudes.length - 1" />
                     </div>
-                    <hr v-if="index !== solicitudes.length - 1" />
                 </div>
             </TabPanel>
             <TabPanel>
                 <template #header>
                     <div class="flex align-items-center gap-2">
-                        <span class="font-bold white-space-nowrap"
+                        <span
+                            id="opcion1-tab"
+                            class="font-bold white-space-nowrap"
                             >POR SOLUCIONAR</span
                         >
                     </div>
                 </template>
-                <ProgressSpinner
-                    v-if="loading"
-                    style="
-                        width: 180px;
-                        height: 180px;
-                        justify-content: center;
-                        display: block;
-                    "
-                />
-                <div v-else-if="solicitudes.length == 0">
+                <div class="seccion">
+                    <ProgressSpinner
+                        v-if="loading"
+                        style="
+                            width: 180px;
+                            height: 180px;
+                            justify-content: center;
+                            display: block;
+                        "
+                    />
+                    <div v-else-if="solicitudes.length == 0">
+                        <div
+                            class="d-flex align-items-center justify-content-center mt-4"
+                        >
+                            <img
+                                src="img/notificaciones/Sin mensajes.png"
+                                class="img-fluid"
+                                alt="not found"
+                                width="400px"
+                            />
+                        </div>
+                    </div>
                     <div
-                        class="d-flex align-items-center justify-content-center mt-4"
+                        v-else
+                        v-for="(item, index) in solicitudes"
+                        :key="index"
+                        class="m-0 seccion-historial"
                     >
-                        <img
-                            src="img/notificaciones/Sin mensajes.png"
-                            class="img-fluid"
-                            alt="not found"
-                            width="400px"
-                        />
-                    </div>
-                </div>
-                <div
-                    v-else
-                    v-for="(item, index) in solicitudes"
-                    :key="index"
-                    class="m-0"
-                >
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="text-center">
-                                    <img
-                                        src="img/notificaciones/solucionar.png"
-                                        class="img-fluid"
-                                        alt=""
-                                        width="100px"
-                                    />
-                                </div>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="text-left">
-                                            <p style="margin-bottom: 0px">
-                                                ID#{{ item.id }}
-                                            </p>
-                                            <p style="color: #cf0000">
-                                                Datos erróneos del beneficiario
-                                            </p>
-                                            <p
-                                                style="
-                                                    margin-bottom: 0px;
-                                                    color: #009d2c;
-                                                "
-                                            >
-                                                Monto pagado
-                                            </p>
-                                            <p style="color: #009d2c">
-                                                USD {{ item.monto_a_pagar }}
-                                            </p>
-                                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="text-center">
+                                        <img
+                                            src="img/notificaciones/solucionar.png"
+                                            class="img-fluid"
+                                            alt=""
+                                            width="100px"
+                                        />
                                     </div>
-                                    <div class="col-6">
-                                        <div class="text-right">
-                                            <p>{{ item.created_at }}</p>
-                                            <p
-                                                style="
-                                                    margin-bottom: 0px;
-                                                    color: #009d2c;
-                                                "
-                                            >
-                                                Monto a recibir
-                                            </p>
-                                            <p style="color: #009d2c">
-                                                {{ item.monto_a_recibir }}
-                                                BS.
-                                            </p>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="text-left">
+                                                <p style="margin-bottom: 0px">
+                                                    ID#{{ item.id }}
+                                                </p>
+                                                <p style="color: #cf0000">
+                                                    Datos erróneos del
+                                                    beneficiario
+                                                </p>
+                                                <p
+                                                    style="
+                                                        margin-bottom: 0px;
+                                                        color: #009d2c;
+                                                    "
+                                                >
+                                                    Monto pagado
+                                                </p>
+                                                <p style="color: #009d2c">
+                                                    USD {{ item.monto_a_pagar }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-right">
+                                                <p>{{ item.created_at }}</p>
+                                                <p
+                                                    style="
+                                                        margin-bottom: 0px;
+                                                        color: #009d2c;
+                                                    "
+                                                >
+                                                    Monto a recibir
+                                                </p>
+                                                <p style="color: #009d2c">
+                                                    {{ item.monto_a_recibir }}
+                                                    BS.
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="text-center">
-                            <a
-                                :href="'#solucionar' + index"
-                                @click="
-                                    toggleCollapse(
-                                        'iconoSolucionar2',
-                                        'solucionar',
-                                        index
-                                    )
-                                "
-                                style="color: #818181"
-                            >
-                                <i
-                                    class="fas fa-chevron-down"
-                                    :id="'iconoSolucionar2' + index"
-                                ></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div :id="'solucionar' + index" class="collapse container">
-                        <div class="text-center">
-                            <p>
-                                <strong
-                                    >Su solicitud ha sido rechazada debido a que
-                                    el pago realizado no figura en nuestra
-                                    cuenta.</strong
+                            <div class="text-center">
+                                <a
+                                    :href="'#solucionar' + index"
+                                    @click="
+                                        toggleCollapse(
+                                            'iconoSolucionar2',
+                                            'solucionar',
+                                            index
+                                        )
+                                    "
+                                    style="color: #818181"
                                 >
-                            </p>
+                                    <i
+                                        class="fas fa-chevron-down"
+                                        :id="'iconoSolucionar2' + index"
+                                    ></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="text-left">
-                                    <p>Tasa de cambio:</p>
-                                    <p>Pagado desde:</p>
-                                    <p>Enviado por:</p>
-                                    <p>Enviado a:</p>
-                                    <br />
-                                    <button
-                                        class="btn btn-primary"
-                                        @click="openModalPorSolucionar(item)"
+                        <div
+                            :id="'solucionar' + index"
+                            class="collapse container"
+                        >
+                            <div class="text-center">
+                                <p>
+                                    <strong
+                                        >Su solicitud ha sido rechazada debido a
+                                        que el pago realizado no figura en
+                                        nuestra cuenta.</strong
                                     >
-                                        Reclamar
-                                    </button>
-                                </div>
+                                </p>
                             </div>
-                            <div class="col-6">
-                                <div class="text-right">
-                                    <p>
-                                        USD 1 =
-                                        {{
-                                            item.tipo_formulario.tasa_cambios
-                                                .valor
-                                        }}
-                                        Bs.
-                                    </p>
-                                    <p>
-                                        {{ item.tipo_formulario.descripcion }}
-                                    </p>
-                                    <p>{{ item.depositante.alias }}</p>
-                                    <p>{{ item.beneficiario.alias }}</p>
-                                    <p>{{ item.beneficiario.banco }}</p>
-                                    <p>V {{ item.beneficiario.cuenta }}</p>
-                                    <p>
-                                        {{ item.beneficiario?.pago_movil }}
-                                    </p>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="text-left">
+                                        <p>Tasa de cambio:</p>
+                                        <p>Pagado desde:</p>
+                                        <p>Enviado por:</p>
+                                        <p>Enviado a:</p>
+                                        <br />
+                                        <button
+                                            class="btn btn-primary"
+                                            @click="
+                                                openModalPorSolucionar(item)
+                                            "
+                                        >
+                                            Reclamar
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-right">
+                                        <p>
+                                            USD 1 =
+                                            {{
+                                                item.tipo_formulario
+                                                    .tasa_cambios.valor
+                                            }}
+                                            Bs.
+                                        </p>
+                                        <p>
+                                            {{
+                                                item.tipo_formulario.descripcion
+                                            }}
+                                        </p>
+                                        <p>{{ item.depositante.alias }}</p>
+                                        <p>{{ item.beneficiario.alias }}</p>
+                                        <p>{{ item.beneficiario.banco }}</p>
+                                        <p>V {{ item.beneficiario.cuenta }}</p>
+                                        <p>
+                                            {{ item.beneficiario?.pago_movil }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <hr v-if="index !== solicitudes.length - 1" />
                     </div>
-                    <hr v-if="index !== solicitudes.length - 1" />
                 </div>
             </TabPanel>
             <TabPanel>
                 <template #header>
                     <div class="flex align-items-center gap-2">
-                        <span class="font-bold white-space-nowrap"
+                        <span
+                            id="opcion1-tab"
+                            class="font-bold white-space-nowrap"
                             >PROCESADOS</span
                         >
                     </div>
                 </template>
-                <ProgressSpinner
-                    v-if="loading"
-                    style="
-                        width: 180px;
-                        height: 180px;
-                        justify-content: center;
-                        display: block;
-                    "
-                />
-                <div v-else-if="solicitudes.length == 0">
+                <div class="seccion">
+                    <ProgressSpinner
+                        v-if="loading"
+                        style="
+                            width: 180px;
+                            height: 180px;
+                            justify-content: center;
+                            display: block;
+                        "
+                    />
+                    <div v-else-if="solicitudes.length == 0">
+                        <div
+                            class="d-flex align-items-center justify-content-center mt-4"
+                        >
+                            <img
+                                src="img/notificaciones/Sin mensajes.png"
+                                class="img-fluid"
+                                alt="not found"
+                                width="400px"
+                            />
+                        </div>
+                    </div>
                     <div
-                        class="d-flex align-items-center justify-content-center mt-4"
+                        v-else
+                        v-for="(item, index) in solicitudes"
+                        :key="index"
+                        class="m-0 seccion-historial"
                     >
-                        <img
-                            src="img/notificaciones/Sin mensajes.png"
-                            class="img-fluid"
-                            alt="not found"
-                            width="400px"
-                        />
-                    </div>
-                </div>
-                <div
-                    v-else
-                    v-for="(item, index) in solicitudes"
-                    :key="index"
-                    class="m-0"
-                >
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="text-center">
-                                    <img
-                                        src="img/notificaciones/aprobados.png"
-                                        class="img-fluid"
-                                        alt=""
-                                        width="100px"
-                                    />
-                                </div>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="text-left">
-                                            <p style="margin-bottom: 0px">
-                                                ID#{{ item.id }}
-                                            </p>
-                                            <p style="color: #0035aa">
-                                                Procesado
-                                            </p>
-                                            <p
-                                                style="
-                                                    margin-bottom: 0px;
-                                                    color: #009d2c;
-                                                "
-                                            >
-                                                Monto pagado
-                                            </p>
-                                            <p style="color: #009d2c">
-                                                USD {{ item.monto_a_pagar }}
-                                            </p>
-                                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="text-center">
+                                        <img
+                                            src="img/notificaciones/aprobados.png"
+                                            class="img-fluid"
+                                            alt=""
+                                            width="100px"
+                                        />
                                     </div>
-                                    <div class="col-6">
-                                        <div class="text-right">
-                                            <p>{{ item.created_at }}</p>
-                                            <p style="color: #009d2c">
-                                                {{ item.monto_a_recibir }}
-                                                BS.
-                                            </p>
-                                            <p style="color: #009d2c">
-                                                301,20 BS.
-                                            </p>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="text-left">
+                                                <p style="margin-bottom: 0px">
+                                                    ID#{{ item.id }}
+                                                </p>
+                                                <p style="color: #0035aa">
+                                                    Procesado
+                                                </p>
+                                                <p
+                                                    style="
+                                                        margin-bottom: 0px;
+                                                        color: #009d2c;
+                                                    "
+                                                >
+                                                    Monto pagado
+                                                </p>
+                                                <p style="color: #009d2c">
+                                                    USD {{ item.monto_a_pagar }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-right">
+                                                <p>{{ item.created_at }}</p>
+                                                <p style="color: #009d2c">
+                                                    {{ item.monto_a_recibir }}
+                                                    BS.
+                                                </p>
+                                                <p style="color: #009d2c">
+                                                    301,20 BS.
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="text-center">
-                            <a
-                                :href="'#procesados' + index"
-                                @click="
-                                    toggleCollapse(
-                                        'iconoProcesado',
-                                        'procesados',
-                                        index
-                                    )
-                                "
-                                style="color: #818181"
-                            >
-                                <i
-                                    class="fas fa-chevron-down"
-                                    :id="'iconoProcesado' + index"
-                                ></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div :id="'procesados' + index" class="collapse container">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="text-left">
-                                    <p>Tasa de cambio:</p>
-                                    <p>Pagado desde:</p>
-                                    <p>Enviado por:</p>
-                                    <p>Enviado a:</p>
-                                    <br /><br />
-                                    <a
-                                        href="#"
-                                        style="color: #0035aa"
-                                        :id="'openModal' + index"
-                                        :class="{
-                                            'disabled-link':
-                                                item.voucher_referencia == null,
-                                        }"
-                                        @click="
-                                            previewImagen(item, 'Comprobante')
-                                        "
-                                    >
-                                        Ver comprobante
-                                    </a>
-                                    <br /><br />
-                                    <a
-                                        class="btn btn-primary"
-                                        @click="opennModalProcesado(item)"
-                                        >Reclamar</a
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="text-right">
-                                    <p>
-                                        USD 1 =
-                                        {{
-                                            item.tipo_formulario.tasa_cambios
-                                                .valor
-                                        }}
-                                        Bs.
-                                    </p>
-                                    <p>
-                                        {{ item.tipo_formulario.descripcion }}
-                                    </p>
-                                    <p>{{ item.depositante.alias }}</p>
-                                    <p>{{ item.beneficiario.alias }}</p>
-                                    <p>{{ item.beneficiario.banco }}</p>
-                                    <p>V {{ item.beneficiario.cuenta }}</p>
-                                    <p>
-                                        {{ item.beneficiario?.pago_movil }}
-                                    </p>
-                                </div>
+                            <div class="text-center">
+                                <a
+                                    :href="'#procesados' + index"
+                                    @click="
+                                        toggleCollapse(
+                                            'iconoProcesado',
+                                            'procesados',
+                                            index
+                                        )
+                                    "
+                                    style="color: #818181"
+                                >
+                                    <i
+                                        class="fas fa-chevron-down"
+                                        :id="'iconoProcesado' + index"
+                                    ></i>
+                                </a>
                             </div>
                         </div>
+                        <div
+                            :id="'procesados' + index"
+                            class="collapse container"
+                        >
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="text-left">
+                                        <p>Tasa de cambio:</p>
+                                        <p>Pagado desde:</p>
+                                        <p>Enviado por:</p>
+                                        <p>Enviado a:</p>
+                                        <br /><br />
+                                        <a
+                                            href="#"
+                                            style="color: #0035aa"
+                                            :id="'openModal' + index"
+                                            :class="{
+                                                'disabled-link':
+                                                    item.voucher_referencia ==
+                                                    null,
+                                            }"
+                                            @click="
+                                                previewImagen(
+                                                    item,
+                                                    'Comprobante'
+                                                )
+                                            "
+                                        >
+                                            Ver comprobante
+                                        </a>
+                                        <br /><br />
+                                        <a
+                                            class="btn btn-primary"
+                                            @click="opennModalProcesado(item)"
+                                            >Reclamar</a
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-right">
+                                        <p>
+                                            USD 1 =
+                                            {{
+                                                item.tipo_formulario
+                                                    .tasa_cambios.valor
+                                            }}
+                                            Bs.
+                                        </p>
+                                        <p>
+                                            {{
+                                                item.tipo_formulario.descripcion
+                                            }}
+                                        </p>
+                                        <p>{{ item.depositante.alias }}</p>
+                                        <p>{{ item.beneficiario.alias }}</p>
+                                        <p>{{ item.beneficiario.banco }}</p>
+                                        <p>V {{ item.beneficiario.cuenta }}</p>
+                                        <p>
+                                            {{ item.beneficiario?.pago_movil }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr v-if="index !== solicitudes.length - 1" />
                     </div>
-                    <hr v-if="index !== solicitudes.length - 1" />
                 </div>
             </TabPanel>
             <TabPanel>
                 <template #header>
                     <div class="flex align-items-center gap-2">
-                        <span class="font-bold white-space-nowrap"
+                        <span
+                            id="opcion1-tab"
+                            class="font-bold white-space-nowrap"
                             >RECHAZADOS</span
                         >
                     </div>
                 </template>
-                <ProgressSpinner
-                    v-if="loading"
-                    style="
-                        width: 180px;
-                        height: 180px;
-                        justify-content: center;
-                        display: block;
-                    "
-                />
-                <div v-else-if="solicitudes.length == 0">
+                <div class="seccion">
+                    <ProgressSpinner
+                        v-if="loading"
+                        style="
+                            width: 180px;
+                            height: 180px;
+                            justify-content: center;
+                            display: block;
+                        "
+                    />
+                    <div v-else-if="solicitudes.length == 0">
+                        <div
+                            class="d-flex align-items-center justify-content-center mt-4"
+                        >
+                            <img
+                                src="img/notificaciones/Sin mensajes.png"
+                                class="img-fluid"
+                                alt="not found"
+                                width="400px"
+                            />
+                        </div>
+                    </div>
                     <div
-                        class="d-flex align-items-center justify-content-center mt-4"
+                        v-else
+                        v-for="(item, index) in solicitudes"
+                        :key="index"
+                        class="m-0 seccion-historial"
                     >
-                        <img
-                            src="img/notificaciones/Sin mensajes.png"
-                            class="img-fluid"
-                            alt="not found"
-                            width="400px"
-                        />
-                    </div>
-                </div>
-                <div
-                    v-else
-                    v-for="(item, index) in solicitudes"
-                    :key="index"
-                    class="m-0"
-                >
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="text-center">
-                                    <img
-                                        src="img/notificaciones/rechazados.png"
-                                        class="img-fluid"
-                                        alt=""
-                                        width="100px"
-                                    />
-                                </div>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="text-left">
-                                            <p style="margin-bottom: 0px">
-                                                ID#{{ item.id }}
-                                            </p>
-                                            <p>Rechazado</p>
-                                            <p style="margin-bottom: 0px">
-                                                Monto pagado
-                                            </p>
-                                            <p>USD {{ item.monto_a_pagar }}</p>
-                                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="text-center">
+                                        <img
+                                            src="img/notificaciones/rechazados.png"
+                                            class="img-fluid"
+                                            alt=""
+                                            width="100px"
+                                        />
                                     </div>
-                                    <div class="col-6">
-                                        <div class="text-right">
-                                            <p>{{ item.created_at }}</p>
-                                            <p style="margin-bottom: 0px">
-                                                Monto a recibir
-                                            </p>
-                                            <p>
-                                                {{ item.monto_a_recibir }} BS.
-                                            </p>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="text-left">
+                                                <p style="margin-bottom: 0px">
+                                                    ID#{{ item.id }}
+                                                </p>
+                                                <p>Rechazado</p>
+                                                <p style="margin-bottom: 0px">
+                                                    Monto pagado
+                                                </p>
+                                                <p>
+                                                    USD {{ item.monto_a_pagar }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-right">
+                                                <p>{{ item.created_at }}</p>
+                                                <p style="margin-bottom: 0px">
+                                                    Monto a recibir
+                                                </p>
+                                                <p>
+                                                    {{
+                                                        item.monto_a_recibir
+                                                    }}
+                                                    BS.
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="text-center">
-                            <a
-                                :href="'#rechazados' + index"
-                                @click="
-                                    toggleCollapse(
-                                        'iconoRechazado1',
-                                        'rechazados',
-                                        index
-                                    )
-                                "
-                                style="color: #818181"
-                            >
-                                <i
-                                    class="fas fa-chevron-down"
-                                    :id="'iconoRechazado1' + index"
-                                ></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div :id="'rechazados' + index" class="collapse container">
-                        <div class="text-center">
-                            <p>
-                                <strong
-                                    >Su solicitud ha sido rechazada debido a que
-                                    el pago realizado no figura en nuestra
-                                    cuenta.</strong
+                            <div class="text-center">
+                                <a
+                                    :href="'#rechazados' + index"
+                                    @click="
+                                        toggleCollapse(
+                                            'iconoRechazado1',
+                                            'rechazados',
+                                            index
+                                        )
+                                    "
+                                    style="color: #818181"
                                 >
-                            </p>
+                                    <i
+                                        class="fas fa-chevron-down"
+                                        :id="'iconoRechazado1' + index"
+                                    ></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="text-left">
-                                    <p>Tasa de cambio:</p>
-                                    <p>Pagado desde:</p>
-                                    <p>Enviado por:</p>
-                                    <p>Enviado a:</p>
-                                    <br /><br />
-                                    <a
-                                        href="#"
-                                        class="btn btn-primary"
-                                        id="openContacto"
-                                        >Contáctanos</a
+                        <div
+                            :id="'rechazados' + index"
+                            class="collapse container"
+                        >
+                            <div class="text-center">
+                                <p>
+                                    <strong
+                                        >Su solicitud ha sido rechazada debido a
+                                        que el pago realizado no figura en
+                                        nuestra cuenta.</strong
                                     >
-                                </div>
+                                </p>
                             </div>
-                            <div class="col-6">
-                                <div class="text-right">
-                                    <p>
-                                        USD 1 =
-                                        {{
-                                            item.tipo_formulario.tasa_cambios
-                                                .valor
-                                        }}
-                                        Bs.
-                                    </p>
-                                    <p>
-                                        {{ item.tipo_formulario.descripcion }}
-                                    </p>
-                                    <p>{{ item.depositante.alias }}</p>
-                                    <p>{{ item.beneficiario.alias }}</p>
-                                    <p>{{ item.beneficiario.banco }}</p>
-                                    <p>V {{ item.beneficiario.cuenta }}</p>
-                                    <p>{{ item.beneficiario?.pago_movil }}</p>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="text-left">
+                                        <p>Tasa de cambio:</p>
+                                        <p>Pagado desde:</p>
+                                        <p>Enviado por:</p>
+                                        <p>Enviado a:</p>
+                                        <br /><br />
+                                        <a
+                                            href="#"
+                                            class="btn btn-primary"
+                                            id="openContacto"
+                                            >Contáctanos</a
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-right">
+                                        <p>
+                                            USD 1 =
+                                            {{
+                                                item.tipo_formulario
+                                                    .tasa_cambios.valor
+                                            }}
+                                            Bs.
+                                        </p>
+                                        <p>
+                                            {{
+                                                item.tipo_formulario.descripcion
+                                            }}
+                                        </p>
+                                        <p>{{ item.depositante.alias }}</p>
+                                        <p>{{ item.beneficiario.alias }}</p>
+                                        <p>{{ item.beneficiario.banco }}</p>
+                                        <p>V {{ item.beneficiario.cuenta }}</p>
+                                        <p>
+                                            {{ item.beneficiario?.pago_movil }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <hr v-if="index !== solicitudes.length - 1" />
                     </div>
-                    <hr v-if="index !== solicitudes.length - 1" />
                 </div>
             </TabPanel>
             <TabPanel>
                 <template #header>
                     <div class="flex align-items-center gap-2">
-                        <span class="font-bold white-space-nowrap"
+                        <span
+                            id="opcion1-tab"
+                            class="font-bold white-space-nowrap"
                             >REEMBOLSO</span
                         >
                     </div>
                 </template>
-                <ProgressSpinner
-                    v-if="loading"
-                    style="
-                        width: 180px;
-                        height: 180px;
-                        justify-content: center;
-                        display: block;
-                    "
-                />
-                <div v-else-if="solicitudes.length == 0">
+                <div class="seccion">
+                    <ProgressSpinner
+                        v-if="loading"
+                        style="
+                            width: 180px;
+                            height: 180px;
+                            justify-content: center;
+                            display: block;
+                        "
+                    />
+                    <div v-else-if="solicitudes.length == 0">
+                        <div
+                            class="d-flex align-items-center justify-content-center mt-4"
+                        >
+                            <img
+                                src="img/notificaciones/Sin mensajes.png"
+                                class="img-fluid"
+                                alt="not found"
+                                width="400px"
+                            />
+                        </div>
+                    </div>
                     <div
-                        class="d-flex align-items-center justify-content-center mt-4"
+                        v-else
+                        v-for="(item, index) in solicitudes"
+                        :key="index"
+                        class="m-0 seccion-historial"
                     >
-                        <img
-                            src="img/notificaciones/Sin mensajes.png"
-                            class="img-fluid"
-                            alt="not found"
-                            width="400px"
-                        />
-                    </div>
-                </div>
-                <div
-                    v-else
-                    v-for="(item, index) in solicitudes"
-                    :key="index"
-                    class="m-0"
-                >
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="text-center">
-                                    <img
-                                        src="img/notificaciones/reembolsado.png"
-                                        class="img-fluid"
-                                        alt=""
-                                        width="100px"
-                                    />
-                                </div>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="text-left">
-                                            <p style="margin-bottom: 0px">
-                                                ID#{{ item.id }}
-                                            </p>
-                                            <p style="color: #0035aa">
-                                                Procesado
-                                            </p>
-                                            <p
-                                                style="
-                                                    margin-bottom: 0px;
-                                                    color: #009d2c;
-                                                "
-                                            >
-                                                Monto pagado
-                                            </p>
-                                            <p style="color: #009d2c">
-                                                USD {{ item.monto_a_pagar }}
-                                            </p>
-                                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="text-center">
+                                        <img
+                                            src="img/notificaciones/reembolsado.png"
+                                            class="img-fluid"
+                                            alt=""
+                                            width="100px"
+                                        />
                                     </div>
-                                    <div class="col-6">
-                                        <div class="text-right">
-                                            <p>{{ item.created_at }}</p>
-                                            <p style="color: #009d2c">
-                                                {{ item.monto_a_recibir }}
-                                                BS.
-                                            </p>
-                                            <p style="color: #009d2c">
-                                                301,20 BS.
-                                            </p>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="text-left">
+                                                <p style="margin-bottom: 0px">
+                                                    ID#{{ item.id }}
+                                                </p>
+                                                <p style="color: #0035aa">
+                                                    Procesado
+                                                </p>
+                                                <p
+                                                    style="
+                                                        margin-bottom: 0px;
+                                                        color: #009d2c;
+                                                    "
+                                                >
+                                                    Monto pagado
+                                                </p>
+                                                <p style="color: #009d2c">
+                                                    USD {{ item.monto_a_pagar }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-right">
+                                                <p>{{ item.created_at }}</p>
+                                                <p style="color: #009d2c">
+                                                    {{ item.monto_a_recibir }}
+                                                    BS.
+                                                </p>
+                                                <p style="color: #009d2c">
+                                                    301,20 BS.
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="text-center">
-                            <a
-                                :href="'#reembolsado' + index"
-                                @click="
-                                    toggleCollapse(
-                                        'iconoProcesado',
-                                        'reembolsado',
-                                        index
-                                    )
-                                "
-                                style="color: #818181"
-                            >
-                                <i
-                                    class="fas fa-chevron-down"
-                                    :id="'iconoProcesado' + index"
-                                ></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div :id="'reembolsado' + index" class="collapse container">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="text-left">
-                                    <p>Tasa de cambio:</p>
-                                    <p>Pagado desde:</p>
-                                    <p>Enviado por:</p>
-                                    <p>Enviado a:</p>
-                                    <br /><br />
-                                    <a
-                                        href="#"
-                                        style="color: #0035aa"
-                                        :id="'openModal' + index"
-                                        :class="{
-                                            'disabled-link':
-                                                item.voucher_referencia == null,
-                                        }"
-                                        @click="
-                                            previewImagen(item, 'Comprobante')
-                                        "
-                                    >
-                                        Ver comprobante
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="text-right">
-                                    <p>
-                                        USD 1 =
-                                        {{
-                                            item.tipo_formulario.tasa_cambios
-                                                .valor
-                                        }}
-                                        Bs.
-                                    </p>
-                                    <p>
-                                        {{ item.tipo_formulario.descripcion }}
-                                    </p>
-                                    <p>{{ item.depositante.alias }}</p>
-                                    <p>{{ item.beneficiario.alias }}</p>
-                                    <p>{{ item.beneficiario.banco }}</p>
-                                    <p>V {{ item.beneficiario.cuenta }}</p>
-                                    <p>
-                                        {{ item.beneficiario?.pago_movil }}
-                                    </p>
-                                </div>
+                            <div class="text-center">
+                                <a
+                                    :href="'#reembolsado' + index"
+                                    @click="
+                                        toggleCollapse(
+                                            'iconoProcesado',
+                                            'reembolsado',
+                                            index
+                                        )
+                                    "
+                                    style="color: #818181"
+                                >
+                                    <i
+                                        class="fas fa-chevron-down"
+                                        :id="'iconoProcesado' + index"
+                                    ></i>
+                                </a>
                             </div>
                         </div>
+                        <div
+                            :id="'reembolsado' + index"
+                            class="collapse container"
+                        >
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="text-left">
+                                        <p>Tasa de cambio:</p>
+                                        <p>Pagado desde:</p>
+                                        <p>Enviado por:</p>
+                                        <p>Enviado a:</p>
+                                        <br /><br />
+                                        <a
+                                            href="#"
+                                            style="color: #0035aa"
+                                            :id="'openModal' + index"
+                                            :class="{
+                                                'disabled-link':
+                                                    item.voucher_referencia ==
+                                                    null,
+                                            }"
+                                            @click="
+                                                previewImagen(
+                                                    item,
+                                                    'Comprobante'
+                                                )
+                                            "
+                                        >
+                                            Ver comprobante
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-right">
+                                        <p>
+                                            USD 1 =
+                                            {{
+                                                item.tipo_formulario
+                                                    .tasa_cambios.valor
+                                            }}
+                                            Bs.
+                                        </p>
+                                        <p>
+                                            {{
+                                                item.tipo_formulario.descripcion
+                                            }}
+                                        </p>
+                                        <p>{{ item.depositante.alias }}</p>
+                                        <p>{{ item.beneficiario.alias }}</p>
+                                        <p>{{ item.beneficiario.banco }}</p>
+                                        <p>V {{ item.beneficiario.cuenta }}</p>
+                                        <p>
+                                            {{ item.beneficiario?.pago_movil }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr v-if="index !== solicitudes.length - 1" />
                     </div>
-                    <hr v-if="index !== solicitudes.length - 1" />
                 </div>
             </TabPanel>
         </TabView>
     </div>
 
     <!-- openEnProceso -->
-    <Dialog v-model:visible="visibleEnProceso" style="width: 500px">
+    <Dialog
+        header="Realizar Reclamo"
+        v-model:visible="visibleEnProceso"
+        style="width: 500px"
+    >
         <div class="flex align-items-center mb-5">
             <Dropdown
                 id="selectedOptionEnProceso"
@@ -839,6 +907,7 @@
 
     <!-- openPorSolucionar -->
     <Dialog
+        header="Realizar Reclamo"
         v-model:visible="visiblePorSolucionar"
         style="width: 800px; top: 20%"
     >
@@ -874,11 +943,11 @@
                     item.valor1
                 }}</label>
             </div>
-            <historial-terceros-component
+            <depositante-component
                 ref="historialTerceros"
                 @formId="capFormId"
                 v-if="visiblePorSolucionar"
-            ></historial-terceros-component>
+            ></depositante-component>
             <div class="form-group mt-5">
                 <label>Escribenos un mensaje (Opcional)</label>
                 <Textarea
@@ -904,7 +973,11 @@
     </Dialog>
 
     <!-- openProcesado -->
-    <Dialog v-model:visible="visibleProcesado" style="width: 800px; top: 20%">
+    <Dialog
+        header="Realizar Reclamo"
+        v-model:visible="visibleProcesado"
+        style="width: 800px; top: 20%"
+    >
         <div class="flex align-items-center mb-5">
             <Dropdown
                 id="selectedOptionProcesado"
@@ -937,11 +1010,11 @@
                     item.valor1
                 }}</label>
             </div>
-            <historial-terceros-component
+            <depositante-component
                 ref="historialTerceros"
                 @formId="capFormId"
                 v-if="visibleProcesado"
-            ></historial-terceros-component>
+            ></depositante-component>
             <div class="form-group mt-5">
                 <label>Escribenos un mensaje (Opcional)</label>
                 <Textarea
@@ -1315,5 +1388,14 @@ export default {
     color: gray;
     cursor: not-allowed;
     pointer-events: none;
+}
+
+.p-tabview-panels{
+    background: none;
+}
+
+.seccion-historial{
+    padding: 10px 0;
+    background-color: #ffffff
 }
 </style>

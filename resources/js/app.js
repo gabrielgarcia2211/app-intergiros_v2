@@ -27,7 +27,7 @@ import TabPanel from "primevue/tabpanel";
 import ProgressSpinner from "primevue/progressspinner";
 import Menubar from "primevue/menubar";
 import Carousel from "primevue/carousel";
-import InputGroupAddon from 'primevue/inputgroupaddon';
+import InputGroupAddon from "primevue/inputgroupaddon";
 
 const app = createApp({});
 
@@ -77,9 +77,7 @@ app.component("pago-paypal-component", PagoPayPalComponent);
 
 // Importacion de componentes historial
 import HistorialComponent from "./components/historial/HistorialComponent.vue";
-import DepositanteComponent from "./components/historial/terceros/DepositanteComponent.vue";
 app.component("historial-component", HistorialComponent);
-app.component("historial-terceros-component", DepositanteComponent);
 
 // Importacion de componentes menu
 import MenuComponent from "./components/menu/MenuComponent.vue";
@@ -88,6 +86,10 @@ app.component("menu-component", MenuComponent);
 // Importacion de componentes login
 import LoginComponent from "./components/login/LoginComponent.vue";
 app.component("login-component", LoginComponent);
+
+// Importacion de componentes notificacion
+import NotificacionComponent from "./components/notificacion/NotificacionComponent.vue";
+app.component("notificacion-component", NotificacionComponent);
 
 // Anexo de componentes de vuejs
 app.component("Dropdown", Dropdown);

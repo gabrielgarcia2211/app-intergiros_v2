@@ -12,7 +12,7 @@ h5 {
     margin-top: 100px;
     padding: 35px;
     font-family: "Lato", sans-serif !important;
-    height: 650px;
+    max-width: 1500px !important;
 }
 
 #opcion1-tab,
@@ -39,8 +39,9 @@ h5 {
 }
 
 .seccion {
+    margin-right: -20px;
     overflow-y: scroll;
-    max-height: 400px;
+    height: 500px;
 }
 
 .seccion::-webkit-scrollbar {

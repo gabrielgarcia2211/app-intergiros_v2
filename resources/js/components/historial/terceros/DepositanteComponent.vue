@@ -486,7 +486,7 @@ export default {
                     })
                     .then(async (response) => {
                         this.selectedDepositante = null;
-                        this.$alertSuccess(" Añadido");
+                        this.$alertSuccess("Añadido");
                         this.list();
                         this.resetForm();
                         this.isEditImage = true;

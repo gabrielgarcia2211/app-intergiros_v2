@@ -158,7 +158,7 @@ export default {
                                     }
                                 });
                         } else {
-                            handleErrors(error);
+                            this.$readStatusHttp(error);
                         }
                     });
             }

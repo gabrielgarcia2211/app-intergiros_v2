@@ -136,7 +136,6 @@ class AdministracionController extends Controller
             ->get();
     }
 
-
     private function setQuery()
     {
         return Solicitudes::query()
@@ -278,7 +277,9 @@ class AdministracionController extends Controller
             $registros[] = [
                 'user_id' => $userId,
                 'noticia_id' => $noticia->id,
-                'visible' => 0
+                'visible' => 1,
+                'created_at' => now(),
+                'updated_at' => now()
             ];
         }
         UserNoticia::insert($registros);
