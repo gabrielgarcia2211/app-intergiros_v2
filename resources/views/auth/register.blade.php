@@ -171,19 +171,27 @@
                         <select class="form-control input-registro" name="redes1" id="redes1">
                         </select>
                     </div>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group">
                         <input type="text" class="form-control input-registro" name="nombreUsuario1" id="nombreUsuario1"
                             placeholder="Nombre de usuario">
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group" id="otroP" style="display: none;">
-                        <select class="form-control input-registro" name="redes2" id="redes2">
-                        </select>
+            </div>
+            <div id="otroP" style="display: none;">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <select class="form-control input-registro" name="redes2" id="redes2">
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group" id="otroN" style="display: none;">
-                        <input type="text" class="form-control input-registro" name="nombreUsuario2" id="nombreUsuario2"
-                            placeholder="Nombre de usuario">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control input-registro" name="nombreUsuario2" id="nombreUsuario2"
+                                placeholder="Nombre de usuario">
+                        </div>
                     </div>
                 </div>
             </div>
