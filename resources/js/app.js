@@ -28,6 +28,7 @@ import ProgressSpinner from "primevue/progressspinner";
 import Menubar from "primevue/menubar";
 import Carousel from "primevue/carousel";
 import InputGroupAddon from "primevue/inputgroupaddon";
+import Image from "primevue/image";
 
 const app = createApp({});
 
@@ -38,7 +39,6 @@ app.use(PrimeVue, {
         menu: 1000, //overlay menus
         tooltip: 1100, //tooltip
     },
-    /* unstyled: true  */
 });
 
 // Registrar funciones compartidas
@@ -56,6 +56,28 @@ app.component("solicitud-component", SolicitudComponent);
 app.component("tasas-component", TasaComponent);
 app.component("verificacion-component", VerificacionComponent);
 app.component("noticia-component", NoticiaComponent);
+
+// Anexo de componentes de vuejs
+app.component("Dropdown", Dropdown);
+app.component("InputText", InputText);
+app.component("InputNumber", InputNumber);
+app.component("Calendar", Calendar);
+app.component("Button", Button);
+app.component("Dialog", Dialog);
+app.component("DataTable", DataTable);
+app.component("Column", Column);
+app.component("Toolbar", Toolbar);
+app.component("Textarea", Textarea);
+app.component("InputGroup", InputGroup);
+app.component("FileUpload", FileUpload);
+app.component("Checkbox", Checkbox);
+app.component("TabView", TabView);
+app.component("TabPanel", TabPanel);
+app.component("ProgressSpinner", ProgressSpinner);
+app.component("Menubar", Menubar);
+app.component("Carousel", Carousel);
+app.component("InputGroupAddon", InputGroupAddon);
+app.component("Image", Image);
 
 // Importacion de componentes envio
 import ServicioComponent from "./components/envio/ServicioComponent.vue";
@@ -90,27 +112,6 @@ app.component("login-component", LoginComponent);
 // Importacion de componentes notificacion
 import NotificacionComponent from "./components/notificacion/NotificacionComponent.vue";
 app.component("notificacion-component", NotificacionComponent);
-
-// Anexo de componentes de vuejs
-app.component("Dropdown", Dropdown);
-app.component("InputText", InputText);
-app.component("InputNumber", InputNumber);
-app.component("Calendar", Calendar);
-app.component("Button", Button);
-app.component("Dialog", Dialog);
-app.component("DataTable", DataTable);
-app.component("Column", Column);
-app.component("Toolbar", Toolbar);
-app.component("Textarea", Textarea);
-app.component("InputGroup", InputGroup);
-app.component("FileUpload", FileUpload);
-app.component("Checkbox", Checkbox);
-app.component("TabView", TabView);
-app.component("TabPanel", TabPanel);
-app.component("ProgressSpinner", ProgressSpinner);
-app.component("Menubar", Menubar);
-app.component("Carousel", Carousel);
-app.component("InputGroupAddon", InputGroupAddon);
 
 // Configura Axios globalmente
 app.config.globalProperties.$axios = axios;

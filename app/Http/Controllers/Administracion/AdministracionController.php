@@ -74,6 +74,7 @@ class AdministracionController extends Controller
                     'solicitudes.monto_a_recibir',
                     'solicitudes.revisiones',
                     'solicitudes.voucher_referencia',
+                    'solicitudes.voucher_referencia_cliente',
                     'tipo_formulario.descripcion as tipo_formulario',
                     'tipo_moneda.tipo as tipo_moneda',
                     'tipo_moneda.descripcion as descripcion_moneda',

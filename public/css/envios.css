@@ -64,7 +64,8 @@ h3 {
 #codigoIDepositante_list,
 #selectPais_list,
 #tipoDocumentoDepositante_list,
-#tipoCuentaBeneficiario_list {
+#tipoCuentaBeneficiario_list,
+#selectedOptionPago_list {
     padding-left: 0 !important;
     margin-bottom: 0 !important;
 }
@@ -112,6 +113,15 @@ h3 {
 
 .input-telefono,
 .input-telefono > input {
+    font-size: 20px;
+    font-family: "Lato", sans-serif !important;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    color: #afb4b8;
+}
+
+.input-telefono-right,
+.input-telefono-right > input {
     font-size: 20px;
     font-family: "Lato", sans-serif !important;
     border-top-right-radius: 25px;

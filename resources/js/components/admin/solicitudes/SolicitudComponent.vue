@@ -126,8 +126,25 @@
                 </Column>
 
                 <Column
+                    field="voucher_referencia_cliente"
+                    header="Voucher Referencia Cliente"
+                    sortable
+                    :showClearButton="false"
+                    style="min-width: 150px"
+                >
+                    <template #body="{ data }">
+                        <button
+                            @click="mostrarImagen(data.voucher_referencia_cliente)"
+                            class="preview"
+                        >
+                            <i class="pi pi-eye"></i>
+                        </button>
+                    </template>
+                </Column>
+
+                <Column
                     field="voucher_referencia"
-                    header="Voucher Referencia"
+                    header="Voucher Referencia Admin"
                     sortable
                     :showClearButton="false"
                     style="min-width: 150px"
@@ -759,7 +776,9 @@
                 >
                     <template #body="{ data }">
                         <span
-                            :style="getEstadoBackgroundSolicitud(data.estado_actual)"
+                            :style="
+                                getEstadoBackgroundSolicitud(data.estado_actual)
+                            "
                             style="
                                 cursor: pointer;
                                 display: block;
@@ -871,6 +890,12 @@ export default {
                     ],
                 },
                 telefono_user: {
+                    clear: false,
+                    constraints: [
+                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                    ],
+                },
+                voucher_referencia_cliente: {
                     clear: false,
                     constraints: [
                         { value: null, matchMode: FilterMatchMode.STARTS_WITH },

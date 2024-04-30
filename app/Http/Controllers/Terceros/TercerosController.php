@@ -8,13 +8,13 @@ use App\Models\Terceros\Tercero;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Solicitudes\Solicitudes;
 use App\Models\Beneficiario\Beneficiario;
 use App\Models\Configuration\MasterCombos;
+use App\Models\Administracion\TipoFormulario;
 use App\Http\Requests\Terceros\StoreTerceroRequest;
 use App\Http\Requests\Terceros\UpdateTerceroRequest;
 use App\Http\Controllers\ResponseController as Response;
-use App\Models\Administracion\TipoFormulario;
-use App\Models\Solicitudes\Solicitudes;
 
 class TercerosController extends Controller
 {
@@ -92,8 +92,10 @@ class TercerosController extends Controller
     {
         try {
             $data = mapTipoTercero($request->all());
+            $pattern = '/\bhttps?:\/\/\S+\b/';
             $code = $request->input('code');
-            if (in_array($code, ['TD']) && filter_var($data['adjuntar_documento'], FILTER_VALIDATE_URL) === false) {
+
+            if (in_array($code, ['TD']) && !preg_match($pattern, $data['adjuntar_documento'])) {
                 $this->fileService->deleteFile($Tercero->path_documento);
                 $data['path_documento'] = $this->fileService->saveFile($data['adjuntar_documento'], Auth()->user()->id, 'documento_tercero');
                 $data['adjuntar_documento'] = !empty($data['path_documento']) ? $this->fileService->getFileUrl($data['path_documento']) : null;
@@ -128,6 +130,7 @@ class TercerosController extends Controller
     {
         $id = $request->input('id');
         $path_document = ltrim(parse_url($request->input('path_document'))['path'], '/comprobantes/');
+        Log::debug($path_document);
         if ($this->fileService->deleteFile($path_document)) {
             Tercero::where('id', $id)->update([
                 'path_documento' => null,

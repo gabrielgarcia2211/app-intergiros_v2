@@ -647,6 +647,20 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="text-center mt-4">
+                    <button
+                        class="btn btn-primary"
+                        type="button"
+                        id="realizarPago"
+                        style="width: 80%"
+                        :disabled="!isPay"
+                        @click="realizarPago"
+                    >
+                        Realizar pago
+                    </button>
+                </div>
+            </div>
             <div class="text-center mt-3">
                 <div class="form-check">
                     <input
@@ -673,20 +687,31 @@
                         type="button"
                         id="realizarPago"
                         style="width: 80%"
-                        :disabled="!isPay"
+                        :disabled="!isPayTotal"
                         @click="addSolicitudPago"
                     >
-                        Realizar pago
+                        Enviar
                     </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <realizar-pago-component
+        v-if="idService && monedaId"
+        :isRealizarPago="isRealizarPago"
+        :idService="idService"
+        :monedaId="monedaId"
+        @savePago="saveReferenciaPago"
+        @hidden="hiddenModalPago"
+    >
+    </realizar-pago-component>
 </template>
 
 <script>
 // Importar Librerias o Modulos
 import * as Yup from "yup";
+import RealizarPagoComponent from "../pago/RealizarPagoComponent.vue";
 
 export default {
     props: ["idService", "monedaId"],
@@ -751,9 +776,14 @@ export default {
             isPay: false,
             channel: null,
             placeholderCuenta: "Número de cuenta",
+            isRealizarPago: false,
+            pathReferenciaPago: null,
+            isPayTotal: false,
         };
     },
-    components: {},
+    components: {
+        RealizarPagoComponent,
+    },
     computed: {},
     created() {
         this.initServiceUsdt();
@@ -773,6 +803,9 @@ export default {
         },
         isTermins: function (value) {
             this.validateSendSolicitud();
+        },
+        pathReferenciaPago: function (value) {
+            this.validatePago();
         },
         monedaId: async function (value) {
             if (!this.isEditBeneficiario) {
@@ -1078,6 +1111,7 @@ export default {
         async updateDepositante() {
             const isValid = await this.validateFormDepositante();
             if (isValid) {
+                this.onFileUpload();
                 this.$axios
                     .post(
                         "/terceros/update/" + this.depositanteForm.id,
@@ -1343,6 +1377,13 @@ export default {
                 this.isPay = false;
             }
         },
+        validatePago() {
+            if (this.isPay && this.pathReferenciaPago) {
+                this.isPayTotal = true;
+            } else {
+                this.isPayTotal = false;
+            }
+        },
         addSolicitudPago() {
             this.$swal
                 .fire({
@@ -1356,15 +1397,25 @@ export default {
                 .then((result) => {
                     if (result.isConfirmed) {
                         this.$axios
-                            .post("/solicitudes/pago", {
-                                beneficiario_id: this.beneficiarioForm.id,
-                                depositante_id: this.depositanteForm.id,
-                                tipo_formulario_id: this.idService,
-                                tipo_moneda_id: this.monedaId,
-                                monto_a_pagar: this.montoCambiar.monto_a_pagar,
-                                monto_a_recibir:
-                                    this.montoCambiar.monto_a_recibir,
-                            })
+                            .post(
+                                "/solicitudes/pago",
+                                {
+                                    beneficiario_id: this.beneficiarioForm.id,
+                                    depositante_id: this.depositanteForm.id,
+                                    tipo_formulario_id: this.idService,
+                                    tipo_moneda_id: this.monedaId,
+                                    monto_a_pagar:
+                                        this.montoCambiar.monto_a_pagar,
+                                    monto_a_recibir:
+                                        this.montoCambiar.monto_a_recibir,
+                                    referencia_pago: this.pathReferenciaPago,
+                                },
+                                {
+                                    headers: {
+                                        "Content-Type": "multipart/form-data",
+                                    },
+                                }
+                            )
                             .then((response) => {
                                 this.$alertSuccess(
                                     "¡Tu solicitud se ha realizado con éxito!"
@@ -1378,6 +1429,15 @@ export default {
         },
         optionLabelFunction(option) {
             return `${option.name} - ${option.valor1}`;
+        },
+        realizarPago() {
+            this.isRealizarPago = true;
+        },
+        hiddenModalPago(status) {
+            this.isRealizarPago = status;
+        },
+        saveReferenciaPago(value) {
+            this.pathReferenciaPago = value;
         },
     },
 };

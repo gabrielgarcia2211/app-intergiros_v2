@@ -32,11 +32,13 @@ class DatabaseSeeder extends Seeder
         $this->call(Administracion\TipoMonedaSeeder::class);
         $this->call(Administracion\TipoFormularioSeeder::class);
         $this->call(Administracion\TasaCambioSeeder::class);
+        $this->call(Administracion\ReferenciaBancariaSeeder::class);
 
         // Temporales
         $this->call(Solicitudes\ProductSeeder::class);
 
         // Bancos
         $this->call(Configuration\CoreMasterComboBancosSeeder::class);
+      
     }
 }

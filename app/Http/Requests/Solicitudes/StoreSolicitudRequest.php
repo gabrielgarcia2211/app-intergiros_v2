@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Solicitudes;
 
+use App\Models\Administracion\TipoFormulario;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -24,7 +25,7 @@ class StoreSolicitudRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules =  [
             'depositante_id' => 'required',
             'beneficiario_id' => 'required',
             'tipo_formulario_id' => 'required',
@@ -32,6 +33,15 @@ class StoreSolicitudRequest extends FormRequest
             'monto_a_pagar' => 'required',
             'monto_a_recibir' => 'required',
         ];
+
+        $tipo_formulario = TipoFormulario::where('id', request('tipo_formulario_id'))->first();
+        if(in_array($tipo_formulario->codigo, ['TP-02', 'TP-03'])){
+            $rules = $rules + ['referencia_pago' => 'required|max:' . env('UPLOAD_MAX_FILESIZE')];
+        }
+
+
+
+        return $rules;
     }
 
     /**
@@ -46,8 +56,10 @@ class StoreSolicitudRequest extends FormRequest
             'beneficiario_id.required' => 'El campo beneficiario es obligatorio.',
             'tipo_formulario_id.required' => 'El campo tipo formulario es obligatorio.',
             'tipo_moneda_id.required' => 'El campo tipo moneda es obligatorio.',
-            'monto_a_pagar' => 'El campo monto a pagar es obligatorio.',
-            'monto_a_recibir' => 'El campo monto a recibir es obligatorio.',
+            'monto_a_pagar.required' => 'El campo monto a pagar es obligatorio.',
+            'monto_a_recibir.required' => 'El campo monto a recibir es obligatorio.',
+            'referencia_pago.required' => 'La foro de referencia de pago es obligatoria.',
+            'referencia_pago.max' => 'El tamaño del archivo debe ser menor a ' . env('UPLOAD_MAX_FILESIZE') / 1024 . ' MB',
         ];
     }
 
@@ -58,6 +70,7 @@ class StoreSolicitudRequest extends FormRequest
             'beneficiario_id' => 'beneficiario',
             'tipo_formulario_id' => 'tipo formulario',
             'tipo_moneda_id' => 'tipo moneda',
+            'referencia_pago' => 'referencia de pago',
         ];
     }
 

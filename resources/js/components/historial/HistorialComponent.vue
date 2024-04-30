@@ -583,9 +583,7 @@
                                                     Monto a recibir
                                                 </p>
                                                 <p>
-                                                    {{
-                                                        item.monto_a_recibir
-                                                    }}
+                                                    {{ item.monto_a_recibir }}
                                                     BS.
                                                 </p>
                                             </div>
@@ -844,11 +842,10 @@
     </div>
 
     <!-- openEnProceso -->
-    <Dialog
-        header="Realizar Reclamo"
-        v-model:visible="visibleEnProceso"
-        style="width: 500px"
-    >
+    <Dialog v-model:visible="visibleEnProceso" style="width: 500px">
+        <template #header>
+            <h1>Realizar Reclamo - EnProceso</h1>
+        </template>
         <div class="flex align-items-center mb-5">
             <Dropdown
                 id="selectedOptionEnProceso"
@@ -891,26 +888,30 @@
                 />
             </div>
         </div>
-        <Button
-            class="btn-primary"
-            :disabled="formData.opciones.length == 0"
-            @click="sendReclamo"
-            style="
-                background-color: transparent;
-                border: none;
-                font-size: 18px;
-                text-align: center;
-            "
-            >Enviar Reclamo</Button
+        <template #footer
+            ><Button
+                class="btn-primary"
+                :disabled="formData.opciones.length == 0"
+                @click="sendReclamo"
+                style="
+                    background-color: transparent;
+                    border: none;
+                    font-size: 18px;
+                    text-align: center;
+                "
+                >Enviar Reclamo</Button
+            ></template
         >
     </Dialog>
 
     <!-- openPorSolucionar -->
     <Dialog
-        header="Realizar Reclamo"
         v-model:visible="visiblePorSolucionar"
         style="width: 800px; top: 20%"
     >
+        <template #header>
+            <h1>Realizar Reclamo - PorSolucionar</h1>
+        </template>
         <div class="flex align-items-center mb-5">
             <Dropdown
                 id="selectedOptionPorSolucionar"
@@ -958,26 +959,27 @@
                 />
             </div>
         </div>
-        <Button
-            class="btn-primary"
-            :disabled="!isReclamo"
-            @click="sendReclamo"
-            style="
-                background-color: transparent;
-                border: none;
-                font-size: 18px;
-                text-align: center;
-            "
-            >Enviar Reclamo</Button
+        <template #footer
+            ><Button
+                class="btn-primary"
+                :disabled="!isReclamo"
+                @click="sendReclamo"
+                style="
+                    background-color: transparent;
+                    border: none;
+                    font-size: 18px;
+                    text-align: center;
+                "
+                >Enviar Reclamo</Button
+            ></template
         >
     </Dialog>
 
     <!-- openProcesado -->
-    <Dialog
-        header="Realizar Reclamo"
-        v-model:visible="visibleProcesado"
-        style="width: 800px; top: 20%"
-    >
+    <Dialog v-model:visible="visibleProcesado" style="width: 800px; top: 20%">
+        <template #header>
+            <h1>Realizar Reclamo - Procesado</h1>
+        </template>
         <div class="flex align-items-center mb-5">
             <Dropdown
                 id="selectedOptionProcesado"
@@ -1025,18 +1027,20 @@
                 />
             </div>
         </div>
-        <Button
-            class="btn-primary"
-            :disabled="!isReclamo"
-            @click="sendReclamo"
-            style="
-                background-color: transparent;
-                border: none;
-                font-size: 18px;
-                text-align: center;
-            "
-            >Enviar Reclamo</Button
-        >
+        <template #footer>
+            <Button
+                class="btn-primary"
+                :disabled="!isReclamo"
+                @click="sendReclamo"
+                style="
+                    background-color: transparent;
+                    border: none;
+                    font-size: 18px;
+                    text-align: center;
+                "
+                >Enviar Reclamo</Button
+            >
+        </template>
     </Dialog>
 </template>
 
@@ -1228,7 +1232,9 @@ export default {
                 })
                 .then((response) => {
                     this.$alertSuccess("Solicitud realizada correctamente");
+                    this.visiblePorSolucionar = false;
                     this.visibleEnProceso = false;
+                    this.visibleProcesado = false;
                 })
                 .catch((error) => {
                     this.$readStatusHttp(error);
@@ -1390,12 +1396,12 @@ export default {
     pointer-events: none;
 }
 
-.p-tabview-panels{
+.p-tabview-panels {
     background: none;
 }
 
-.seccion-historial{
+.seccion-historial {
     padding: 10px 0;
-    background-color: #ffffff
+    background-color: #ffffff;
 }
 </style>
