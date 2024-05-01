@@ -1,10 +1,10 @@
 <template>
-    <Dialog class="pago" v-model:visible="visible" style="width: 50%">
+    <Dialog class="pago" v-model:visible="visible">
         <template #header>
             <h1>Realizar Pago</h1>
         </template>
         <div class="d-flex">
-            <div class="col-5" style="margin-left: 20px">
+            <div class="col-5" style="">
                 <Dropdown
                     id="selectedOptionPago"
                     v-model="isPagoComplet"
@@ -126,6 +126,10 @@
                     chooseLabel="Adjuntar Documento"
                     mode="basic"
                     accept="image/*"
+                    style="
+                        border-radius: 25px;
+                        width: 40%;
+                    "
                     @change="onFileUpload"
                 />
                 <i
@@ -301,16 +305,32 @@ export default {
 </script>
 
 <style>
+.pago {
+    width: 50%;
+}
+
+@media (max-width: 760px) {
+    .pago {
+        width: 100%;
+    }
+}
+
 .pago .p-dialog-content {
     background-color: #e9e6e6 !important;
 }
 
 .pago > .p-dialog-header [data-pc-section="closebuttonicon"] {
     display: none !important;
+    
 }
 
 .pago > .p-dialog-header {
     justify-content: center !important;
+    background-color: #e9e6e6;
+}
+
+.pago > .p-dialog-footer {
+    background-color: #e9e6e6;
 }
 
 .content-imagen {
@@ -344,6 +364,6 @@ export default {
 }
 
 .small-popup {
-  font-size: 10px !important;
+    font-size: 10px !important;
 }
 </style>
