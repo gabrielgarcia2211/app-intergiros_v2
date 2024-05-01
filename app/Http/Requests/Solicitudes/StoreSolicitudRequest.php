@@ -58,7 +58,7 @@ class StoreSolicitudRequest extends FormRequest
             'tipo_moneda_id.required' => 'El campo tipo moneda es obligatorio.',
             'monto_a_pagar.required' => 'El campo monto a pagar es obligatorio.',
             'monto_a_recibir.required' => 'El campo monto a recibir es obligatorio.',
-            'referencia_pago.required' => 'La foro de referencia de pago es obligatoria.',
+            'referencia_pago.required' => 'La foto de referencia de pago es obligatoria.',
             'referencia_pago.max' => 'El tamaño del archivo debe ser menor a ' . env('UPLOAD_MAX_FILESIZE') / 1024 . ' MB',
         ];
     }

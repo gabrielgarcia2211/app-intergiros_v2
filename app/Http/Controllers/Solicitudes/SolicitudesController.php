@@ -33,6 +33,11 @@ class SolicitudesController extends Controller
     public function create(StoreSolicitudRequest $request)
     {
         try {
+
+            if (Auth::user()->verificado != 1) {
+                return Response::sendError('El usuario no se encuentra verificado', 400);
+            }
+
             $depositante_id = $request->input('depositante_id');
             $beneficiario_id = $request->input('beneficiario_id');
             $tipo_formulario_id = $request->input('tipo_formulario_id');

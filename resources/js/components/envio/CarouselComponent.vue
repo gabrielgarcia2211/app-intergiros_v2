@@ -82,8 +82,6 @@ export default {
 
 <style scoped>
 .carousel-container {
-    display: flex;
-    justify-content: center;
     padding-top: 45px;
     background-color: #ededed;
     text-align: center;
@@ -105,7 +103,7 @@ export default {
 
 .carousel-descriptions {
     margin-top: 10px;
-    font-size: 18px;
+    font-size: 2rm;
     font-family: "Lato", sans-serif !important;
     font-weight: bold;
 }

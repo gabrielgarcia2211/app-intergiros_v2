@@ -148,6 +148,7 @@
                 <Button
                     type="button"
                     class="btn-pago btn btn-primary mr-4"
+                    style="background-color: #0035aa !important"
                     :disabled="!this.pathComprobante"
                     @click="savePago"
                     >Guardar</Button

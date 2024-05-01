@@ -22,10 +22,16 @@
     <carousel-component class="mt-5 mb-5"></carousel-component>
 
     <div class="text-center mt-5">
-        <h3><strong>¡Solicita tu pedido aquí!</strong></h3>
+        @if (Auth::user()->verificado == 1)
+            <h3><strong>¡Solicita tu pedido aquí!</strong></h3>
+        @else
+            <h3 style="color: red; margin-bottom: 200px"><strong>¡Debes verificarte primero para acceder a los paneles de
+                    envio!</strong></h3>
+        @endif
     </div>
-
-    <servicio-component></servicio-component>
+    @if (Auth::user()->verificado == 1)
+        <servicio-component></servicio-component>
+    @endif
     <!-- FOOTER -->
     @include('layouts.footer')
 @endsection
