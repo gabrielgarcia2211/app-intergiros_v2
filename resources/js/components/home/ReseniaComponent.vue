@@ -8,6 +8,7 @@
             :autoplay="true"
             :autoplayInterval="5000"
             :responsiveOptions="responsiveOptions"
+            class="carousel-resenia"
         >
             <template #item="{ data, index }">
                 <div class="card-container">
@@ -94,14 +95,14 @@ export default {
     text-align: center;
 }
 
-.card-img-top {
+.carousel-resenia .card-img-top {
     width: 30%;
     border-radius: 50%;
     padding-top: 15px;
     padding-left: 15px;
 }
 
-.card {
+.carousel-resenia .card {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 10px;
     width: 70%;
@@ -111,26 +112,26 @@ export default {
     margin-right: auto !important;
 }
 
-.card:hover {
+.carousel-resenia .card:hover {
     cursor: pointer;
     transform: scale(1.1);
 }
 
-.card-body {
+.carousel-resenia .card-body {
     padding: 1rem;
 }
 
-.card-title {
+.carousel-resenia .card-title {
     margin-bottom: 0.5rem;
 }
 
-.estrellas {
+.carousel-resenia .estrellas {
     color: gold;
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
 }
 
-.card-text {
+.carousel-resenia .card-text {
     font-size: 1rem;
     line-height: 1.5;
 }
