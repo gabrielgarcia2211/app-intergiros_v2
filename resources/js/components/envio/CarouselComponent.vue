@@ -2,11 +2,12 @@
     <div class="carousel-container">
         <Carousel
             :value="images"
-            :numVisible="3"
-            :numScroll="3"
+            :numVisible="numVisible"
+            :numScroll="numVisible"
             :circular="true"
             :autoplay="true"
             :autoplayInterval="5000"
+            :responsiveOptions="responsiveOptions"
         >
             <template #item="slotProps">
                 <div class="carousel-data">
@@ -73,6 +74,24 @@ export default {
                     src: "img/home/TDC Intergiros - Zinli.png",
                     alt: "Zinli",
                     descriptions: ["Todos los bancos - 1 USD=31,00 BS."],
+                },
+            ],
+            numVisible: 4,
+            responsiveOptions: [
+                {
+                    breakpoint: "1600px",
+                    numVisible: 3,
+                    numScroll: 3,
+                },
+                {
+                    breakpoint: "1400px",
+                    numVisible: 2,
+                    numScroll: 2,
+                },
+                {
+                    breakpoint: "900px",
+                    numVisible: 1,
+                    numScroll: 1,
                 },
             ],
         };

@@ -113,6 +113,10 @@ app.component("login-component", LoginComponent);
 import NotificacionComponent from "./components/notificacion/NotificacionComponent.vue";
 app.component("notificacion-component", NotificacionComponent);
 
+// Importacion de componentes home
+import ReseniaComponent from "./components/home/ReseniaComponent.vue";
+app.component("home-resenia-component", ReseniaComponent);
+
 // Configura Axios globalmente
 app.config.globalProperties.$axios = axios;
 
