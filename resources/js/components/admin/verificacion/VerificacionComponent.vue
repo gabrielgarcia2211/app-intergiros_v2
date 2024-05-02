@@ -367,6 +367,8 @@ export default {
                     return { backgroundColor: "green", color: "white" };
                 case 2:
                     return { backgroundColor: "red", color: "white" };
+                case 3:
+                    return { backgroundColor: "#2B93E7", color: "white" };
                 default:
                     return {};
             }
@@ -379,6 +381,8 @@ export default {
                     return "VERIFICADO";
                 case 2:
                     return "RECHAZADO";
+                case 3:
+                    return "SOLICITUD VERIFICACION";
                 default:
                     return {};
             }

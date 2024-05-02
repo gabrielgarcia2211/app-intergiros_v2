@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('tipo_documento_id')->unsigned()->nullable();
             $table->string('path_selfie')->nullable();
             $table->string('path_documento')->nullable();
-            $table->boolean('verificado')->default(false);
+            $table->boolean('verificado')->default(false)->comment('verificado - 1, sin verificar - 0, rechazado - 2, solicitud de verificación - 4');;
             $table->foreign('pais_id')->references('id')->on('master_combos');
             $table->foreign('pais_telefono_id')->references('id')->on('master_combos');
             $table->foreign('tipo_documento_id')->references('id')->on('master_combos');

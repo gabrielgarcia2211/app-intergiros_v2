@@ -153,7 +153,11 @@
                                     <strong>Verificado</strong>
                                 @elseif(Auth()->user()->verificado == 2)
                                     <strong>Rechazado</strong>
-                                    <p style="color: red">Los documentos cargados no cumplen con los requisitos solicitados</p>
+                                    <p style="color: red">Los documentos cargados no cumplen con los requisitos solicitados
+                                    </p>
+                                @elseif(Auth()->user()->verificado == 3)
+                                    <strong>Solicitud en verificación</strong>
+                                    <p style="color: #2B93E7"><b>En proceso de verificación<b></p>
                                 @endif
                             </p>
                         </div>
@@ -215,8 +219,11 @@
                         </div>
                         <br>
                         <div class="text-center mt-5 button">
-                            <button type="button" class="btn btn-primary mb-2" onclick="updateVerification()">Solicitar
-                                verificación</button>
+                            <button type="button" class="btn btn-primary mb-2" onclick="updateVerification()"
+                                style="background-color: #0035aa"
+                                @if (auth()->user()->verificado === 3) disabled @endif>
+                                Solicitar verificación
+                            </button>
                         </div>
                     </form>
                 </div>

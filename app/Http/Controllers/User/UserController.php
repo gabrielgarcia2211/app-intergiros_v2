@@ -114,6 +114,11 @@ class UserController extends Controller
     {
         DB::beginTransaction();
         try {
+
+            if (Auth()->user()->verificado == 3) {
+                return Response::sendError('El usuario esta en proceso de verificacion', 422);
+            }
+
             $form_verificacion = $request->all()['formVerificacion'];
             $user = User::find(Auth()->user()->id);
             $user->documento = $form_verificacion['documento'];
@@ -122,7 +127,7 @@ class UserController extends Controller
             $this->fileService->deleteFile($user->path_documento);
             $user->path_selfie = $this->fileService->saveFile($form_verificacion['inputGroupFile01'], Auth()->user()->id, 'verificacion');
             $user->path_documento = $this->fileService->saveFile($form_verificacion['inputGroupFile02'], Auth()->user()->id, 'verificacion');
-
+            $user->verificado = 3;
             $user->save();
             DB::commit();
             return Response::sendResponse($user, 'Perfil actualizado con exito.');

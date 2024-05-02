@@ -55,6 +55,7 @@ export default {
                 { id: 0, name: "SIN VERIFICAR" },
                 { id: 1, name: "VERIFICAR" },
                 { id: 2, name: "RECHAZADO" },
+                { id: 3, name: "SOLICITUD VERIFICACION" },
             ],
             visible: false,
             form: {

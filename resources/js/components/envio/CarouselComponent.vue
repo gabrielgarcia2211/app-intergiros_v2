@@ -35,45 +35,46 @@ export default {
         return {
             images: [
                 {
+                    codigo: "N/A",
                     src: "img/home/TDC Intergiros - Bitcoin.png",
                     alt: "Bitcoin",
-                    descriptions: ["Todos los bancos - 1 USD=31,00 BS."],
+                    descriptions: ["Todos los bancos - 1 USD = 00.00 BS."],
                 },
                 {
+                    codigo: "TP-05",
                     src: "img/home/TDC Intergiros - Colombia.png",
                     alt: "Colombia",
-                    descriptions: [
-                        "Banesco - 1 USD=31,03 BS.",
-                        "Otros bancos - 1 USD=31,00 BS.",
-                    ],
+                    descriptions: null,
                 },
                 {
+                    codigo: "TP-01",
                     src: "img/home/TDC Intergiros - PayPal.png",
                     alt: "PayPal",
-                    descriptions: ["Todos los bancos - 1 USD=31,00 BS."],
+                    descriptions: null,
                 },
                 {
+                    codigo: "N/A",
                     src: "img/home/TDC Intergiros - Skrill.png",
                     alt: "Skrill",
-                    descriptions: ["Todos los bancos - 1 USD=31,00 BS."],
+                    descriptions: ["Todos los bancos - 1 USD = 00.00 BS."],
                 },
                 {
+                    codigo: "TP-04",
                     src: "img/home/TDC Intergiros - Perú.png",
                     alt: "Perú",
-                    descriptions: [
-                        "Banesco - 1 USD=31,03 BS.",
-                        "Otros bancos - 1 USD=31,00 BS.",
-                    ],
+                    descriptions: null,
                 },
                 {
+                    codigo: "TP-02",
                     src: "img/home/TDC Intergiros - USDT.png",
                     alt: "USDT",
-                    descriptions: ["Todos los bancos - 1 USD=31,00 BS."],
+                    descriptions: null,
                 },
                 {
+                    codigo: "TP-03",
                     src: "img/home/TDC Intergiros - Zinli.png",
                     alt: "Zinli",
-                    descriptions: ["Todos los bancos - 1 USD=31,00 BS."],
+                    descriptions: null,
                 },
             ],
             numVisible: 4,
@@ -95,6 +96,35 @@ export default {
                 },
             ],
         };
+    },
+    created() {
+        this.setValueTasas();
+    },
+    mounted() {},
+    methods: {
+        async setValueTasas() {
+            let tasas = await this.getTasas();
+            tasas.data.forEach((element) => {
+                this.images.find((item) => {
+                    if (item.codigo == element.codigo) {
+                        item.descriptions = [
+                            `Todos los bancos - 1 USD = ${element.valor} BS.`,
+                        ];
+                    }
+                });
+            });
+        },
+        async getTasas() {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const response = await axios.get("/tasa-cambio/list");
+                    resolve(response.data);
+                } catch (error) {
+                    this.$readStatusHttp(error);
+                    reject(error);
+                }
+            });
+        },
     },
 };
 </script>

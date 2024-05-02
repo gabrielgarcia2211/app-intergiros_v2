@@ -164,10 +164,6 @@ export default {
                         class: "registro",
                     },
                     {
-                        icon: "pi pi-comment",
-                        url: this.notificacion,
-                    },
-                    {
                         icon: "pi pi-instagram",
                         url: "https://www.instagram.com/intergiros.oficial",
                         target: "_blank",
