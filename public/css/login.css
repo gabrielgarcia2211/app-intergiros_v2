@@ -261,7 +261,7 @@ ul.custom-list > li:before {
     font-family: "Lato", sans-serif !important;
 }
 
-.input-registro {
+.input-registro, .input-registro>span, .input-registro>input {
     width: 80% !important;
     margin-left: auto;
     margin-right: auto;
@@ -276,7 +276,7 @@ ul.custom-list > li:before {
     border-bottom-right-radius: 25px !important;
 }
 
-.input-indicativo {
+.input-indicativo, .input-indicativo>span {
     font-size: 20px !important;
     font-family: "Lato", sans-serif !important;
     border-top-left-radius: 25px !important;
@@ -284,7 +284,7 @@ ul.custom-list > li:before {
     color: #999999 !important;
 }
 
-.input-telefono {
+.input-telefono, .input-telefono>input {
     font-size: 20px !important;
     font-family: "Lato", sans-serif !important;
     border-top-right-radius: 25px !important;
