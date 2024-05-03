@@ -117,6 +117,10 @@ app.component("notificacion-component", NotificacionComponent);
 import ReseniaComponent from "./components/home/ReseniaComponent.vue";
 app.component("home-resenia-component", ReseniaComponent);
 
+// Importacion de componentes registro
+import RegistroComponent from "./components/registro/RegistroComponent.vue";
+app.component("registro-component", RegistroComponent);
+
 // Configura Axios globalmente
 app.config.globalProperties.$axios = axios;
 

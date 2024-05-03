@@ -265,7 +265,7 @@ export default {
                     .then(function (response) {
                         resolve(response.data);
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
                         this.$readStatusHttp(error);
                         reject(error);
                     });

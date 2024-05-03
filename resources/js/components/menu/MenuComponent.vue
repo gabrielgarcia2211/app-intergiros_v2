@@ -176,7 +176,9 @@ export default {
                 ];
             }
             this.loadPanelUrl();
-            this.showNotificaciones();
+            if (this.usuario) {
+                this.showNotificaciones();
+            }
         });
     },
     methods: {
@@ -218,7 +220,7 @@ export default {
                     .then(function (response) {
                         resolve(response.data);
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
                         this.$readStatusHttp(error);
                         reject(error);
                     });

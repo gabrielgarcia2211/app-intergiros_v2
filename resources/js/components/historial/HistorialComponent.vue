@@ -1144,7 +1144,7 @@ export default {
                     .then(function (response) {
                         resolve(response.data.data);
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
                         this.loading = false;
                         this.$readStatusHttp(error);
                         reject(error);
@@ -1216,7 +1216,7 @@ export default {
                     .then(function (response) {
                         resolve(response.data);
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
                         this.$readStatusHttp(error);
                         reject(error);
                     });

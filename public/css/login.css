@@ -1,13 +1,16 @@
-h4,p,h5 {
-    font-family: 'Lato', sans-serif !important;
+h4,
+p,
+h5 {
+    font-family: "Lato", sans-serif !important;
 }
 
-h5,a {
+h5,
+a {
     color: #0035aa !important;
 }
 
 h2 {
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
 .fa-check {
@@ -34,14 +37,15 @@ hr {
 
 .navbar-nav .nav-link {
     color: black !important;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
 .navbar-nav .nav-link:hover {
     color: #414141 !important;
 }
 
-.navbar-nav .nav-item:nth-child(5) .nav-link, .navbar-nav .nav-item:nth-child(6) .nav-link {
+.navbar-nav .nav-item:nth-child(5) .nav-link,
+.navbar-nav .nav-item:nth-child(6) .nav-link {
     font-size: 24px !important;
 }
 /* FIN CSS MENU */
@@ -54,7 +58,8 @@ hr {
     padding: 25px;
 }
 
-.login h4,h5 {
+.login h4,
+h5 {
     color: #0035aa;
 }
 
@@ -91,7 +96,7 @@ hr {
     font-size: 20px;
     border-radius: 25px;
     width: 220px;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
 .button a {
@@ -100,7 +105,7 @@ hr {
     border-radius: 25px;
     width: 220px;
     color: white !important;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 /* FIN FORM LOGIN */
 
@@ -112,7 +117,6 @@ hr {
 
 ul a {
     color: #949494 !important;
-    
 }
 
 ul.custom-list {
@@ -140,10 +144,10 @@ ul.custom-list > li:before {
     color: white;
     font-size: 20px;
     margin-bottom: 0px;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
-.col-sm>.row>.col-3>a i {
+.col-sm > .row > .col-3 > a i {
     background-color: #009d2c;
     color: white;
     border-radius: 45px;
@@ -166,7 +170,7 @@ ul.custom-list > li:before {
 }
 
 .button-codigo {
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
     color: white !important;
     border-radius: 25px !important;
     font-size: 25px !important;
@@ -175,7 +179,7 @@ ul.custom-list > li:before {
 
 .modal-body {
     font-size: 25px;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
 .modal-footer {
@@ -188,7 +192,7 @@ ul.custom-list > li:before {
     background-color: #0035aa;
     font-size: 20px;
     border-radius: 25px;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
 .new-password {
@@ -196,20 +200,20 @@ ul.custom-list > li:before {
     font-size: 20px;
     border-radius: 25px;
     color: white !important;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
 .button-codigo {
     background-color: #0035aa;
     font-size: 20px;
     border-radius: 25px;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
-.input-codigo{
+.input-codigo {
     border-radius: 25px !important;
     font-size: 20px !important;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
 .cancel a {
@@ -254,7 +258,7 @@ ul.custom-list > li:before {
     border-radius: 25px !important;
     width: 220px !important;
     color: white !important;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
 .input-registro {
@@ -262,7 +266,7 @@ ul.custom-list > li:before {
     margin-left: auto;
     margin-right: auto;
     font-size: 20px !important;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
     border-radius: 25px !important;
     color: #999999 !important;
 }
@@ -274,7 +278,7 @@ ul.custom-list > li:before {
 
 .input-indicativo {
     font-size: 20px !important;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
     border-top-left-radius: 25px !important;
     border-bottom-left-radius: 25px !important;
     color: #999999 !important;
@@ -282,7 +286,7 @@ ul.custom-list > li:before {
 
 .input-telefono {
     font-size: 20px !important;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
     border-top-right-radius: 25px !important;
     border-bottom-right-radius: 25px !important;
     color: #999999 !important;
@@ -296,24 +300,37 @@ ul.custom-list > li:before {
     padding-right: 10px;
 }
 
+#selectedOptionRedes_list,
+#selectPais_list,
+#tipoDocumento_list,
+#tipoIndicativo_list {
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+}
+
 .dx-button-text {
     font-size: 20px;
 }
 
-.dx-fileuploader-button{
+.dx-fileuploader-button {
     background-color: #0035aa !important;
     color: white !important;
     border-radius: 25px !important;
-    font-family: 'Lato', sans-serif !important;
+    font-family: "Lato", sans-serif !important;
 }
 
-#atrasDiv1.dx-button,#atrasDiv2.dx-button,#atrasDiv3.dx-button:hover {
+#atrasDiv1.dx-button,
+#atrasDiv2.dx-button,
+#atrasDiv3.dx-button:hover {
     background-color: transparent !important;
     border-color: transparent !important;
     color: inherit !important;
 }
 
-#atrasDiv1.dx-button,#atrasDiv2.dx-button,#atrasDiv3.dx-button,.dx-button i {
+#atrasDiv1.dx-button,
+#atrasDiv2.dx-button,
+#atrasDiv3.dx-button,
+.dx-button i {
     color: #0035aa !important;
 }
 

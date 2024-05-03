@@ -41,7 +41,7 @@
 
     <div class="container py-5" id="calculadora">
         <p class="text-center">
-            <strong>Únete alafamilia Intergiros</strong> y disfruta de cambiar y recargar tu saldo PayPal, Skrill,
+            <strong>Únete a la familia Intergiros</strong> y disfruta de cambiar y recargar tu saldo PayPal, Skrill,
             Bitcoin, USDT y Zinli
             en Venezuela, cambiar y recargar tu saldo PayPal en Perú, y además, hacer envíos de dinero rápidos y seguros
             entre Perú, Colombia y Venezuela.

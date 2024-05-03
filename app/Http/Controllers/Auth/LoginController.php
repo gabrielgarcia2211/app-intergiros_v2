@@ -14,6 +14,7 @@ use App\Http\Requests\Login\loginRequest;
 use App\Http\Requests\Login\RegistroRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\ResponseController as Response;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
@@ -73,12 +74,7 @@ class LoginController extends Controller
     {
 
         try {
-            $form_info_general = $request->all()['formInfoGeneral'];
-            $form_password = $request->all()['formPassword'];
-            $form_info_redes = $request->all()['formRedes'];
-            $form_verificacion = $request->all()['formVerificacion'];
-
-            if ($form_password['inputPassword1'] !== $form_password['inputPassword2']) {
+            if ($request->input('password') !== $request->input('confirmPassword')) {
                 return Response::sendError('Las contraseñas no coinciden', 500);
             }
 
@@ -86,46 +82,44 @@ class LoginController extends Controller
             $user_redes_fk = new UserRedes();
             $user_redes_ig = new UserRedes();
 
-            $user->name = $form_info_general['nombre'];
-            $user->email = $form_info_general['email'];
-            $user->apellidos = $form_info_general['apellidos'];
-            $user->fecha_nacimiento = $form_info_general['fehaNacimiento'];
-            $user->fecha_nacimiento = $form_info_general['fehaNacimiento'];
-            $user->password = Hash::make($form_password['inputPassword1']);
+            $user->name = $request->input('nombre');
+            $user->apellidos =  $request->input('apellido');
+            $user->email = $request->input('correo');
+            $user->fecha_nacimiento = Carbon::parse($request->input('fehaNacimiento'))->format('Y-m-d');
+            $user->password = Hash::make($request->input('password'));
+            $user->verificado = 0;
 
             // campos relacionados
-            $user->pais_id = $form_info_general['pais'];
-            $user->telefono = $form_info_general['telefono'];
-            $user->pais_telefono_id = $form_info_general['paisTelefono'];
-            $user->documento = $form_verificacion['documento'];
-            $user->tipo_documento_id = $form_verificacion['tipoDocumento'];
+            $user->pais_id =  $request->input('pais');
+            $user->telefono = $request->input('celular');
+            $user->pais_telefono_id = $request->input('tipoCelular');
+            $user->documento = $request->input('documento');
+            $user->tipo_documento_id = $request->input('tipoDocumento');
+            if (
+                !empty($request->file('inputGroupFile01'))
+                && !empty($request->file('inputGroupFile02'))
+            ) {
+                $path_selfie = $this->fileService->saveFile($request->file('inputGroupFile01'), $user->id, 'verificacion');
+                $path_documento = $this->fileService->saveFile($request->file('inputGroupFile02'), $user->id, 'verificacion');
+                $user->path_selfie = $path_selfie;
+                $user->path_documento = $path_documento;
+                $user->verificado = 3;
+            }
 
-            // campos de redes
             $user->save();
-
-            if (isset($form_info_redes['nombreUsuario1']) && isset($form_info_redes['redes1'])) {
+            // campos de redes
+            if (!empty($request->input('red1')) && !empty($request->input('nombreRed1'))) {
                 $user_redes_fk->user_id = $user->id;
-                $user_redes_fk->redes_id = $form_info_redes['redes1'];
-                $user_redes_fk->nombre = $form_info_redes['nombreUsuario1'];
+                $user_redes_fk->redes_id = $request->input('red1');
+                $user_redes_fk->nombre = $request->input('nombreRed1');
                 $user_redes_fk->save();
             }
 
-            if (isset($form_info_redes['nombreUsuario2']) && isset($form_info_redes['redes2'])) {
+            if (!empty($request->input('red2')) &&  !empty($request->input('nombreRed2'))) {
                 $user_redes_ig->user_id = $user->id;
-                $user_redes_ig->redes_id = $form_info_redes['redes2'];
-                $user_redes_ig->nombre = $form_info_redes['nombreUsuario2'];
+                $user_redes_ig->redes_id = $request->input('red2');
+                $user_redes_ig->nombre = $request->input('nombreRed2');
                 $user_redes_ig->save();
-            }
-
-            if ((isset($form_verificacion['inputGroupFile01']) && !empty($form_verificacion['inputGroupFile01']))
-                && (isset($form_verificacion['inputGroupFile02']) && !empty($form_verificacion['inputGroupFile02']))
-            ) {
-                $path_selfie = $this->fileService->saveFile($form_verificacion['inputGroupFile01'], $user->id, 'verificacion');
-                $path_documento = $this->fileService->saveFile($form_verificacion['inputGroupFile02'], $user->id, 'verificacion');
-                User::where('id', $user->id)->update([
-                    'path_selfie' => $path_selfie,
-                    'path_documento' => $path_documento,
-                ]);
             }
             $this->guard()->login($user);
             return Response::sendResponse([], 'Registro guardado con exito.');

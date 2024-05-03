@@ -902,7 +902,7 @@ export default {
                 ),
                 correoDepositante: Yup.string()
                     .email("El formato del correo electrónico no es válido")
-                    .required("El beneficiario es obligatorio"),
+                    .required("El correo beneficiario es obligatorio"),
                 codigoIDepositante: Yup.string().required(
                     "La cuenta es obligatoria"
                 ),
