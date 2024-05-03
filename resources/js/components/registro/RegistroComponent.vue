@@ -139,7 +139,7 @@
                                     id=""
                                     v-model="registroForm.celular"
                                     placeholder="Número celular"
-                                    class="input-registro"
+                                    class="input-telefono"
                                     style="width: 80%"
                                     :class="{
                                         'p-invalid': errors.celular,
