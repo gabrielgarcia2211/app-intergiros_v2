@@ -40,10 +40,12 @@ class TasaCambioController extends Controller
                         $currency_from = self::currencyEquivalenceFrom($moneda->codigo);
                         $monto_a_pagar = "$ " . number_format($monto, 2, ',', '.') . " " . $currency_to;
                         $monto_a_recibir = "$ " . number_format(($tasa_cambio->valor * $monto), 2, ',', '.') . " " . $currency_from;
-                        $comision_fija = 0.3;
-                        $comision = number_format(($comision_fija * 100) / 94.6, 2, ',', '.');
+                        if (in_array($formulario->codigo, ['TP-01'])) {
+                            $comision_fija = 0.3; //(solo para paypal)
+                            $comision = round((($monto + $comision_fija) * 100) / 94.6, 2);
+                        }
                         if (!empty($currency_to) && !empty($currency_from)) {
-                            return Response::sendResponse(['pagar' => $monto_a_pagar, 'recibir' => $monto_a_recibir, 'comision' => $comision]);
+                            return Response::sendResponse(['pagar' => $monto_a_pagar, 'pagar_con_comision' => $comision ?? NULL, 'recibir' => $monto_a_recibir]);
                         }
                     }
                     break;
@@ -102,7 +104,6 @@ class TasaCambioController extends Controller
         }
     }
 
-
     public function getTasaCambio()
     {
         try {
@@ -116,7 +117,6 @@ class TasaCambioController extends Controller
             return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
         }
     }
-
 
     private static function currencyEquivalenceTo($codigo)
     {

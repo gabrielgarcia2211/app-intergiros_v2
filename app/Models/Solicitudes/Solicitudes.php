@@ -23,6 +23,7 @@ class Solicitudes extends Model
         'beneficiario_id',
         'producto_id',
         'monto_a_pagar',
+        'monto_a_pagar_comision',
         'monto_a_recibir',
         'revisiones',
         'notificacion',

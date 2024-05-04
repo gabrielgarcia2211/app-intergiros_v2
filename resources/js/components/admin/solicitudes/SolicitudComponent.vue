@@ -148,9 +148,7 @@
                 >
                     <template #body="{ data }">
                         <button
-                            @click="
-                                viewImagen(data.voucher_referencia_cliente)
-                            "
+                            @click="viewImagen(data.voucher_referencia_cliente)"
                             class="preview"
                         >
                             <i class="pi pi-eye"></i>
@@ -254,16 +252,15 @@
                         />
                     </template>
                 </Column>
-
                 <Column
-                    field="monto_a_pagar"
-                    header="Monto a Pagar"
+                    field="monto_a_pagar_comision"
+                    header="Monto a Pagar con Comision (PAYPAL)"
                     sortable
                     :showClearButton="false"
                     style="min-width: 150px"
                 >
                     <template #body="{ data }">
-                        {{ data.monto_a_pagar }}
+                        {{ $formatNumero(data.monto_a_pagar_comision) }}
                     </template>
                     <template #filter="{ filterModel }">
                         <InputText
@@ -274,7 +271,25 @@
                         />
                     </template>
                 </Column>
-
+                <Column
+                    field="monto_a_pagar"
+                    header="Monto a Pagar"
+                    sortable
+                    :showClearButton="false"
+                    style="min-width: 150px"
+                >
+                    <template #body="{ data }">
+                        {{ $formatNumero(data.monto_a_pagar) }}
+                    </template>
+                    <template #filter="{ filterModel }">
+                        <InputText
+                            v-model="filterModel.value"
+                            type="text"
+                            class="p-column-filter"
+                            placeholder="Buscar por monto a pagar"
+                        />
+                    </template>
+                </Column>
                 <Column
                     field="monto_a_recibir"
                     header="Monto a Recibir"
@@ -283,7 +298,7 @@
                     style="min-width: 150px"
                 >
                     <template #body="{ data }">
-                        {{ data.monto_a_recibir }}
+                        {{ $formatNumero(data.monto_a_recibir) }}
                     </template>
                     <template #filter="{ filterModel }">
                         <InputText
@@ -294,7 +309,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="revisiones"
                     header="Revisiones"
@@ -314,7 +328,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="tipo_formulario"
                     header="Tipo Formulario"
@@ -334,7 +347,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="tipo_moneda"
                     header="Tipo Moneda"
@@ -354,7 +366,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="descripcion_moneda"
                     header="Descripción Moneda"
@@ -374,7 +385,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="nombre_depositante"
                     header="Nombre Depositante"
@@ -394,7 +404,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="documento_depositante"
                     header="Documento Depositante"
@@ -414,7 +423,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="banco_depositante"
                     header="Banco Depositante"
@@ -434,7 +442,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="cuenta_depositante"
                     header="Cuenta Depositante"
@@ -454,7 +461,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="pago_movil_depositante"
                     header="Pago Móvil Depositante"
@@ -474,7 +480,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="correo_depositante"
                     header="Correo Depositante"
@@ -494,7 +499,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="celular_depositante"
                     header="Celular Depositante"
@@ -514,7 +518,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="path_documento_depositante"
                     header="Documento Depositante (Archivo)"
@@ -524,16 +527,13 @@
                 >
                     <template #body="{ data }">
                         <button
-                            @click="
-                                viewImagen(data.path_documento_depositante)
-                            "
+                            @click="viewImagen(data.path_documento_depositante)"
                             class="preview"
                         >
                             <i class="pi pi-eye"></i>
                         </button>
                     </template>
                 </Column>
-
                 <Column
                     field="nombre_beneficiario"
                     header="Nombre Beneficiario"
@@ -553,7 +553,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="documento_beneficiario"
                     header="Documento Beneficiario"
@@ -947,6 +946,12 @@ export default {
                         { value: null, matchMode: FilterMatchMode.STARTS_WITH },
                     ],
                 },
+                monto_a_pagar_comision: {
+                    clear: false,
+                    constraints: [
+                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                    ],
+                },
                 monto_a_pagar: {
                     clear: false,
                     constraints: [
@@ -1308,7 +1313,7 @@ export default {
                 .catch((error) => {
                     this.$readStatusHttp(error);
                 });
-        }
+        },
     },
 };
 

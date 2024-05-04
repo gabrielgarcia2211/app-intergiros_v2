@@ -72,6 +72,7 @@ class AdministracionController extends Controller
                     'users.path_documento as path_documento_user',
                     'users.verificado',
                     'solicitudes.monto_a_pagar',
+                    'solicitudes.monto_a_pagar_comision',
                     'solicitudes.monto_a_recibir',
                     'solicitudes.revisiones',
                     'solicitudes.voucher_referencia',

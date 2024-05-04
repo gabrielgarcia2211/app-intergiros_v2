@@ -750,6 +750,7 @@ export default {
             montoCambiar: {
                 monto_a_pagar: 0,
                 monto_a_recibir: 0,
+                monto_a_pagar_comision: 0,
             },
             montoBruto: null,
             isTermins: false,
@@ -800,6 +801,7 @@ export default {
             this.montoBruto = 0;
             this.montoCambiar.monto_a_pagar = 0;
             this.montoCambiar.monto_a_recibir = 0;
+            this.montoCambiar.monto_a_pagar_comision = 0;
         },
     },
     mounted() {
@@ -1347,9 +1349,11 @@ export default {
                 const currncy = convertidor.data;
                 this.montoCambiar.monto_a_pagar = currncy.pagar;
                 this.montoCambiar.monto_a_recibir = currncy.recibir;
+                this.montoCambiar.monto_a_pagar_comision = currncy.pagar_con_comision;
             } else {
                 this.montoCambiar.monto_a_pagar = 0;
                 this.montoCambiar.monto_a_recibir = 0;
+                this.montoCambiar.monto_a_pagar_comision = 0;
             }
         },
         validateSendSolicitud() {
@@ -1385,6 +1389,7 @@ export default {
                                 tipo_formulario_id: this.idService,
                                 tipo_moneda_id: this.monedaId,
                                 monto_a_pagar: this.montoCambiar.monto_a_pagar,
+                                monto_a_pagar_comision: this.montoCambiar.monto_a_pagar_comision,
                                 monto_a_recibir:
                                     this.montoCambiar.monto_a_recibir,
                             })

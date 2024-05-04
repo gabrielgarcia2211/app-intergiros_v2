@@ -27,7 +27,7 @@ class PaypalController extends Controller
         try {
             $solicitud_id = $request->input('solicitud_id');
             $solicitud = Solicitudes::setStatusSolicitud('pendiente', $solicitud_id);
-            $amount = $solicitud->monto_a_pagar;
+            $amount = $solicitud->monto_a_pagar_comision;
             $response = $this->payPalService->createPayment($amount);
             if ($response) {
                 foreach ($response->getLinks() as $link) {

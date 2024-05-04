@@ -66,7 +66,7 @@
                         placeholder="Nombres y apellidos"
                         class="w-full md:w-14rem input-registro input-readonly"
                         style="width: 100%"
-                        :readOnly="true"
+                        :disabled="true"
                     />
                 </div>
                 <div class="form-group">
@@ -96,7 +96,7 @@
                         placeholder="Correo Electronico"
                         class="w-full md:w-14rem input-registro input-readonly"
                         style="width: 100%"
-                        :readOnly="true"
+                        :disabled="true"
                     />
                 </div>
             </div>
@@ -148,12 +148,16 @@
     </div>
     <div class="text-center mt-5 mb-5 boton">
         <button
+            v-if="depositante.nombreDepositante"
             type="submit"
             class="btn btn-primary mb-2"
             @click="sendPaytoPaypal"
         >
             <strong>Realizar pago</strong>
         </button>
+        <div v-else>
+            <h3 style="color: red">No Aplica Transacción.</h3>
+        </div>
     </div>
 </template>
 
@@ -230,18 +234,16 @@ export default {
             this.products = dataTable;
         },
         initMonto(monto) {
-            const montoTotal = monto.monto_a_pagar;
-            const montoComision =
-                Math.round(
-                    parseFloat(monto.monto_a_pagar) + parseFloat(0.89) * 100
-                ) / 100;
-            this.montoCambiar.monto_a_pagar = montoTotal - montoComision;
-            this.montoCambiar.monto_comision =
-                Math.round(parseFloat(montoTotal) + parseFloat(0.89) * 100) /
-                100;
+            const montoTotal = parseFloat(monto.monto_a_pagar);
+            this.montoCambiar.monto_a_pagar = montoTotal;
+            this.montoCambiar.monto_comision = (
+                ((montoTotal + 0.3) * 100) / 94.6 -
+                montoTotal
+            ).toFixed(2);
+
             this.montoCambiar.monto_total =
-                this.montoCambiar.monto_a_pagar +
-                this.montoCambiar.monto_comision;
+                parseFloat(this.montoCambiar.monto_a_pagar) +
+                parseFloat(this.montoCambiar.monto_comision);
         },
         initForm(form) {
             this.depositante.nombreDepositante = form.depositante.nombre;

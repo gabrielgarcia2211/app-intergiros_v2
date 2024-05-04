@@ -151,3 +151,12 @@ function generateCodReferencia($user_id)
     $identificador_unico = $user_id . $timestamp . $random_value;
     return $identificador_unico;
 }
+
+function clearText($texto)
+{
+    $palabras_a_eliminar = array("cop", "dólar", "soles", "bs", "$");
+    $texto_limpio = str_replace($palabras_a_eliminar, "", $texto);
+    $texto_limpio = preg_replace('/\s+/', '', $texto_limpio);
+    $numero_formateado = str_replace(',', '.', str_replace('.', '', $texto_limpio));
+    return $numero_formateado;
+}

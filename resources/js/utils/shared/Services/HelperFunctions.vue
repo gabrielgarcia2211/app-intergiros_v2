@@ -190,6 +190,13 @@ export default {
                     return {};
             }
         },
+        $formatNumero(numero) {
+            if (numero) {
+                var partes = numero.toString().split(".");
+                partes[0] = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                return partes.join(",");
+            }
+        },
     },
 };
 </script>

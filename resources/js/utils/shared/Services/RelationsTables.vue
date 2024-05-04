@@ -21,6 +21,8 @@ export default {
                     return "users.verificado";
                 case "monto_a_pagar":
                     return "solicitudes.monto_a_pagar";
+                case "monto_a_pagar_comision":
+                    return "solicitudes.monto_a_pagar_comision";
                 case "monto_a_recibir":
                     return "solicitudes.monto_a_recibir";
                 case "revisiones":
