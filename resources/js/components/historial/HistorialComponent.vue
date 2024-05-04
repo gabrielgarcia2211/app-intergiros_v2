@@ -56,7 +56,7 @@
                                         <div class="col-6">
                                             <div class="text-left">
                                                 <p style="margin-bottom: 0px">
-                                                    ID#{{ item.id }}
+                                                    ID# {{ item.uuid }}
                                                 </p>
                                                 <p style="color: #0035aa">
                                                     Pedido en proceso
@@ -216,7 +216,7 @@
                                         <div class="col-6">
                                             <div class="text-left">
                                                 <p style="margin-bottom: 0px">
-                                                    ID#{{ item.id }}
+                                                    ID# {{ item.uuid }}
                                                 </p>
                                                 <p style="color: #cf0000">
                                                     Datos erróneos del
@@ -301,7 +301,7 @@
                                                 openModalPorSolucionar(item)
                                             "
                                         >
-                                            Reclamar
+                                            Solucionar
                                         </button>
                                     </div>
                                 </div>
@@ -390,7 +390,7 @@
                                         <div class="col-6">
                                             <div class="text-left">
                                                 <p style="margin-bottom: 0px">
-                                                    ID#{{ item.id }}
+                                                    ID# {{ item.uuid }}
                                                 </p>
                                                 <p style="color: #0035aa">
                                                     Procesado
@@ -565,7 +565,7 @@
                                         <div class="col-6">
                                             <div class="text-left">
                                                 <p style="margin-bottom: 0px">
-                                                    ID#{{ item.id }}
+                                                    ID# {{ item.uuid }}
                                                 </p>
                                                 <p>Rechazado</p>
                                                 <p style="margin-bottom: 0px">
@@ -724,10 +724,10 @@
                                         <div class="col-6">
                                             <div class="text-left">
                                                 <p style="margin-bottom: 0px">
-                                                    ID#{{ item.id }}
+                                                    ID# {{ item.uid }}
                                                 </p>
                                                 <p style="color: #0035aa">
-                                                    Procesado
+                                                    Reembolsado
                                                 </p>
                                                 <p
                                                     style="
@@ -912,20 +912,6 @@
         <template #header>
             <h1>Realizar Reclamo - PorSolucionar</h1>
         </template>
-        <div class="flex align-items-center mb-5">
-            <Dropdown
-                id="selectedOptionPorSolucionar"
-                v-model="selectedOptionPorSolucionar"
-                :options="optionPorSolucionar"
-                optionLabel="name"
-                optionValue="id"
-                :placeholder="'Opciones'"
-                class="w-full md:w-14rem input-registro"
-                style="width: 100%; text-align: left"
-                @change="handleReclamo('por_solucionar', $event)"
-                showClear
-            ></Dropdown>
-        </div>
         <div v-if="checkPorSolucionar.visible">
             <div
                 v-for="item in checkPorSolucionar.data"
@@ -970,7 +956,7 @@
                     font-size: 18px;
                     text-align: center;
                 "
-                >Enviar Reclamo</Button
+                >Enviar Solucion</Button
             ></template
         >
     </Dialog>
@@ -1160,6 +1146,7 @@ export default {
             this.resetForm();
             this.visiblePorSolucionar = true;
             this.formData.solicitud_id = item.id;
+            this.handleReclamo("por_solucionar", { value: 1 });
         },
         opennModalProcesado(item) {
             this.resetForm();
@@ -1313,9 +1300,8 @@ export default {
             this.validateReclamo();
         },
         previewImagen(data, titulo) {
-            const randomNumber = Math.floor(Math.random() * 10000);
             let swalOptions = {
-                title: `<strong>ID #${data.id}${randomNumber}</strong>`,
+                title: `<strong>ID #${data.uuid}</strong>`,
                 html: `
                 <h6>Enviado: ${data.user.email}</h6>
                 <h6>Fecha: ${data.created_at}</h6> `,

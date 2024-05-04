@@ -68,6 +68,7 @@ class AdministracionController extends Controller
                     'users.documento as documento_user',
                     'users.telefono as telefono_user',
                     'users.path_selfie as path_selfie_user',
+                    'solicitudes.uuid as uuid',
                     'users.path_documento as path_documento_user',
                     'users.verificado',
                     'solicitudes.monto_a_pagar',

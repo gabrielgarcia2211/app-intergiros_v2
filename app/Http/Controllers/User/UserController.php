@@ -45,8 +45,8 @@ class UserController extends Controller
         try {
 
             $user = User::find(Auth()->user()->id);
-            if (!$user->verificado) {
-                return Response::sendError('El usuario no ha sido verificado', 422);
+            if ($user->verificado != 1) {
+                return Response::sendError('El usuario no ha sido verificado', 403);
             }
             $token = Token::create([
                 'user_id' => $user->id,

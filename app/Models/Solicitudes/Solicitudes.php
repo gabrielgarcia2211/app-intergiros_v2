@@ -16,6 +16,7 @@ class Solicitudes extends Model
     protected $table = 'solicitudes';
 
     protected $fillable = [
+        'uuid',
         'tipo_formulario_id',
         'tipo_moneda_id',
         'depositante_id',

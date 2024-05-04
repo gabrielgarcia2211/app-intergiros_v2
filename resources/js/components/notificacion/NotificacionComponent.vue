@@ -126,6 +126,32 @@
                     </div>
                 </div>
             </TabPanel>
+            <TabPanel>
+                <template #header>
+                    <div class="flex align-items-center gap-2">
+                        <span
+                            id="opcion1-tab"
+                            class="font-bold white-space-nowrap"
+                            >Promociones</span
+                        >
+                    </div>
+                </template>
+                <div class="seccion">
+                    <ProgressSpinner
+                        v-if="loading"
+                        style="
+                            width: 180px;
+                            height: 180px;
+                            justify-content: center;
+                            display: block;
+                        "
+                    />
+                    <div>
+                        <h2 class="title-noticias">Promociones nuevas</h2>
+                        No hay promociones nuevas
+                    </div>
+                </div>
+            </TabPanel>
         </TabView>
     </div>
 </template>

@@ -77,14 +77,14 @@ $(document).ready(async function () {
         },
         errorElement: "div",
         errorPlacement: function (error, element) {
-            error.addClass('invalid-feedback text-center'); 
-            element.closest(".form-group").append(error); 
+            error.addClass("invalid-feedback text-center");
+            element.closest(".form-group").append(error);
         },
         highlight: function (element) {
             $(element).addClass("is-invalid");
         },
         unhighlight: function (element) {
-            $(element).removeClass("is-invalid"); 
+            $(element).removeClass("is-invalid");
         },
     });
     $("#formVerificacion").validate({
@@ -145,6 +145,13 @@ $(document).ready(async function () {
         var selectedTab = $(e.target).attr("href");
         setCookie("activeTab", selectedTab, 1);
     });
+
+    if (user_verificado == 3) {
+        $("#documento").prop("disabled", true);
+        $("#tipoDocumento").prop("disabled", true);
+        $("#inputGroupFile01").prop("disabled", true);
+        $("#inputGroupFile02").prop("disabled", true);
+    }
 });
 
 var tab1 = document.getElementById("tab1-tab");
@@ -353,7 +360,9 @@ function togglePasswordVisibility() {
     }
 }
 
-var inputs = document.querySelectorAll('input[type="text"], input[type="email"]');
+var inputs = document.querySelectorAll(
+    'input[type="text"], input[type="email"]'
+);
 
 // Función para convertir texto a mayúsculas
 function toUpperCaseInput() {
@@ -362,5 +371,5 @@ function toUpperCaseInput() {
 
 // Aplica el event listener a cada input
 inputs.forEach(function (input) {
-    input.addEventListener('input', toUpperCaseInput);
+    input.addEventListener("input", toUpperCaseInput);
 });

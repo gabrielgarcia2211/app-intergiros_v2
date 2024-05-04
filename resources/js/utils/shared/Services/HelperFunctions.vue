@@ -155,6 +155,34 @@ export default {
             const currentDate = new Date();
             return currentDate > nextDayDate;
         },
+        $getEstadoBackground(estado) {
+            switch (estado) {
+                case 0:
+                    return { backgroundColor: "#ECE731", color: "black" };
+                case 1:
+                    return { backgroundColor: "green", color: "white" };
+                case 2:
+                    return { backgroundColor: "red", color: "white" };
+                case 3:
+                    return { backgroundColor: "#2B93E7", color: "white" };
+                default:
+                    return {};
+            }
+        },
+        $getEstadoVerificado(estado) {
+            switch (estado) {
+                case 0:
+                    return "SIN VERIFICAR";
+                case 1:
+                    return "VERIFICADO";
+                case 2:
+                    return "RECHAZADO";
+                case 3:
+                    return "SOLICITUD VERIFICACION";
+                default:
+                    return {};
+            }
+        },
     },
 };
 </script>

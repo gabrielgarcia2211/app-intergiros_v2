@@ -614,16 +614,16 @@
                         v-model="montoBruto"
                         class="input-registro"
                         :class="{
-                            'valor-menor-500': montoBruto < 500,
+                            'valor-menor-500': montoBruto < 5,
                         }"
                         placeholder="Monto a cambiar"
                         @input="convertService"
                     />
                     <small
-                        v-if="montoBruto < 500"
+                        v-if="montoBruto < 5"
                         style="display: block; font-size: 16px"
                         class="p-error"
-                        >El monto debe ser mayor a 500</small
+                        >El monto debe ser mayor a 5.00</small
                     >
                     <div class="mt-5">
                         <p style="color: #0035aa">
@@ -1357,7 +1357,7 @@ export default {
                 this.montoCambiar.monto_a_pagar != 0 &&
                 this.montoCambiar.monto_a_recibir != 0 &&
                 this.isTermins &&
-                this.montoBruto > 500
+                this.montoBruto > 5
             ) {
                 this.isPay = true;
             } else {

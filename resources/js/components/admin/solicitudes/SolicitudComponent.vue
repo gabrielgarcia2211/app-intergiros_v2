@@ -44,7 +44,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="apellidos_user"
                     header="Apellidos"
@@ -64,7 +63,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="email_user"
                     header="Email"
@@ -84,7 +82,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="documento_user"
                     header="Documento"
@@ -104,7 +101,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="telefono_user"
                     header="Teléfono"
@@ -124,7 +120,25 @@
                         />
                     </template>
                 </Column>
-
+                <Column
+                    field="uuid"
+                    header="Referencia de Pago"
+                    sortable
+                    :showClearButton="false"
+                    style="min-width: 150px"
+                >
+                    <template #body="{ data }">
+                        {{ data.uuid }}
+                    </template>
+                    <template #filter="{ filterModel }">
+                        <InputText
+                            v-model="filterModel.value"
+                            type="text"
+                            class="p-column-filter"
+                            placeholder="Buscar por referencia"
+                        />
+                    </template>
+                </Column>
                 <Column
                     field="voucher_referencia_cliente"
                     header="Voucher Referencia Cliente"
@@ -135,7 +149,7 @@
                     <template #body="{ data }">
                         <button
                             @click="
-                                mostrarImagen(data.voucher_referencia_cliente)
+                                viewImagen(data.voucher_referencia_cliente)
                             "
                             class="preview"
                         >
@@ -162,7 +176,7 @@
                         <button
                             v-else
                             @click="
-                                mostrarImagen(
+                                viewImagen(
                                     data.voucher_referencia,
                                     true,
                                     true,
@@ -185,7 +199,7 @@
                 >
                     <template #body="{ data }">
                         <button
-                            @click="mostrarImagen(data.path_selfie_user)"
+                            @click="viewImagen(data.path_selfie_user)"
                             class="preview"
                         >
                             <i class="pi pi-eye"></i>
@@ -202,7 +216,7 @@
                 >
                     <template #body="{ data }">
                         <button
-                            @click="mostrarImagen(data.path_documento_user)"
+                            @click="viewImagen(data.path_documento_user)"
                             class="preview"
                         >
                             <i class="pi pi-eye"></i>
@@ -219,7 +233,7 @@
                 >
                     <template #body="{ data }">
                         <span
-                            :style="getEstadoBackground(data.verificado)"
+                            :style="$getEstadoBackground(data.verificado)"
                             style="
                                 cursor: pointer;
                                 display: block;
@@ -228,7 +242,7 @@
                                 border-radius: 10px;
                             "
                         >
-                            {{ getEstadoVerificado(data.verificado) }}
+                            {{ $getEstadoVerificado(data.verificado) }}
                         </span>
                     </template>
                     <template #filter="{ filterModel }">
@@ -511,7 +525,7 @@
                     <template #body="{ data }">
                         <button
                             @click="
-                                mostrarImagen(data.path_documento_depositante)
+                                viewImagen(data.path_documento_depositante)
                             "
                             class="preview"
                         >
@@ -897,6 +911,12 @@ export default {
                         { value: null, matchMode: FilterMatchMode.STARTS_WITH },
                     ],
                 },
+                uuid: {
+                    clear: false,
+                    constraints: [
+                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+                    ],
+                },
                 voucher_referencia_cliente: {
                     clear: false,
                     constraints: [
@@ -1163,7 +1183,7 @@ export default {
                     this.$readStatusHttp(error);
                 });
         },
-        mostrarImagen(path, flagReal = true, isDelete = false, solicitud_id) {
+        viewImagen(path, flagReal = true, isDelete = false, solicitud_id) {
             if (flagReal) {
                 axios
                     .post("/admin/solicitudes/path/img", {
@@ -1247,17 +1267,17 @@ export default {
         getEstadoBackgroundSolicitud(estado) {
             switch (estado) {
                 case "INICIADO":
-                    return { backgroundColor: "blue", color: "white" };
+                    return { backgroundColor: "brown", color: "white" };
                 case "PENDIENTE":
-                    return { backgroundColor: "orange", color: "white" };
+                    return { backgroundColor: "blue", color: "white" };
                 case "EN PROCESO":
-                    return { backgroundColor: "green", color: "white" };
+                    return { backgroundColor: "yellow", color: "black" };
                 case "ENTREGADO":
-                    return { backgroundColor: "purple", color: "white" };
+                    return { backgroundColor: "green", color: "white" };
                 case "CANCELADO":
                     return { backgroundColor: "red", color: "white" };
                 case "REEMBOLSADO":
-                    return { backgroundColor: "orange", color: "white" };
+                    return { backgroundColor: "purple", color: "white" };
                 default:
                     return {};
             }
@@ -1288,35 +1308,7 @@ export default {
                 .catch((error) => {
                     this.$readStatusHttp(error);
                 });
-        },
-        getEstadoBackground(estado) {
-            switch (estado) {
-                case 0:
-                    return { backgroundColor: "#ECE731", color: "black" };
-                case 1:
-                    return { backgroundColor: "green", color: "white" };
-                case 2:
-                    return { backgroundColor: "red", color: "white" };
-                case 3:
-                    return { backgroundColor: "#2B93E7", color: "white" };
-                default:
-                    return {};
-            }
-        },
-        getEstadoVerificado(estado) {
-            switch (estado) {
-                case 0:
-                    return "SIN VERIFICAR";
-                case 1:
-                    return "VERIFICADO";
-                case 2:
-                    return "RECHAZADO";
-                case 3:
-                    return "SOLICITUD VERIFICACION";
-                default:
-                    return {};
-            }
-        },
+        }
     },
 };
 

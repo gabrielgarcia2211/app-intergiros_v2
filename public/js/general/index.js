@@ -1,13 +1,3 @@
-var FILE_MAX_SIZE = 10097152;
-var PRODUCTION = 1;
-
-if(PRODUCTION){
-    var URL_SITE = "https://app.intergiros.com";
-}else {
-    var URL_SITE = "http://127.0.0.1:80";
-}
-
-
 // funcion para controlar errores
 function handleErrors(error) {
     switch (error.response.status) {
@@ -15,7 +5,11 @@ function handleErrors(error) {
             window.location.replace("/");
             break;
         case 403:
-            showError("No tiene permiso para realizar la acción.", "warning");
+            showInfo(
+                error.response.data.message ?? null,
+                "No tiene permiso para realizar la acción.",
+                "warning"
+            );
             break;
         case 422:
             const errors = error.response.data.errors;
@@ -46,6 +40,16 @@ function showError(message, type = "error") {
     Swal.fire({
         icon: type,
         title: "Error",
+        html: message,
+        position: "top",
+    });
+}
+
+// función para mostrar un mensaje de error
+function showInfo(title, message, type = "info") {
+    Swal.fire({
+        icon: type,
+        title: title,
         html: message,
         position: "top",
     });
@@ -104,7 +108,6 @@ function downloadImage(url, filename) {
     a.click();
     document.body.removeChild(a);
 }
-
 
 // get combos
 function getComboRelations(gestor) {

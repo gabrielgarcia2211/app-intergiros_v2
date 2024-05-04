@@ -1,17 +1,17 @@
 <template>
     <div class="seccion-notificacion" :class="{ nueva: isNew }">
         <div class="text-right">
-            {{ notificacion.created_at }}
+            {{ notificacion.formatted_created_at }}
             <a href="#" @click="hiddenNotificacion(notificacion.id)">
                 <i class="fas fa-trash-alt" v-if="isNew"></i>
             </a>
         </div>
         <h5>
-            <strong>{{ notificacion.estado.name }}</strong>
+            <strong>{{ notificacion.name }}</strong>
         </h5>
-        <h5><strong># ID: </strong>{{ notificacion.id }}</h5>
-        <h5>{{ notificacion.estado.valor1 }}</h5>
-        <p>{{ notificacion.estado.valor2 }}</p>
+        <h5><strong># ID: </strong>{{ notificacion.uuid }}</h5>
+        <h5>{{ notificacion.valor1 }}</h5>
+        <p>{{ notificacion.valor2 }}</p>
     </div>
 </template>
 
@@ -24,7 +24,9 @@ export default {
     methods: {
         hiddenNotificacion(id) {
             this.$axios
-                .post("/notificaciones/update/" + id)
+                .post("/notificaciones/update", {
+                    id: id,
+                })
                 .then((response) => {
                     this.$alertSuccess(
                         "Información actualizada correctamente!"

@@ -220,8 +220,7 @@
                         <br>
                         <div class="text-center mt-5 button">
                             <button type="button" class="btn btn-primary mb-2" onclick="updateVerification()"
-                                style="background-color: #0035aa"
-                                @if (auth()->user()->verificado === 3) disabled @endif>
+                                style="background-color: #0035aa" @if (auth()->user()->verificado === 3) disabled @endif>
                                 Solicitar verificación
                             </button>
                         </div>
@@ -237,6 +236,9 @@
 @endsection
 
 @section('script')
+    <script>
+        var user_verificado = {!! json_encode(auth()->user()->verificado) !!}
+    </script>
     <script src="{{ asset('js/perfil/input.js') }}"></script>
     <script src="{{ asset('js/perfil/index.js') }}"></script>
 @endsection

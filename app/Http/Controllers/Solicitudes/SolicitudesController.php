@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Solicitudes;
 
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use App\Services\FileService;
 use Illuminate\Support\Facades\Log;
@@ -55,6 +56,7 @@ class SolicitudesController extends Controller
             }
 
             $solicitud = new Solicitudes;
+            $solicitud->uuid = hexdec(str_replace('-', '', Uuid::uuid4()->toString()));;
             $solicitud->tipo_formulario_id = $tipo_formulario_id;
             $solicitud->tipo_moneda_id = $tipo_moneda_id;
             $solicitud->depositante_id = $depositante_id;
@@ -95,7 +97,8 @@ class SolicitudesController extends Controller
     public function getUpdateEstado($id, Request $request)
     {
         return Solicitudes::where('id', $id)->update([
-            'estado_id' => $request->input('estado_id')
+            'estado_id' => $request->input('estado_id'),
+            'notificacion' => 1,
         ]);
     }
 }
