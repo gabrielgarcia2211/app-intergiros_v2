@@ -443,7 +443,7 @@
                                     @change="onFileUpload('1')"
                                 >
                                     <template #empty>
-                                        <p>Adjuntar foto del documento.</p>
+                                        <p>Adjuntar Selfie.</p>
                                     </template>
                                 </FileUpload>
                                 <small
