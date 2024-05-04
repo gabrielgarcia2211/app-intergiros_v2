@@ -105,20 +105,27 @@ export default {
                     });
             });
         },
-        $devFormatoMoneda(key, value) {
+        $devFormatoMoneda(service, moneda, value) {
             return new Promise((resolve, reject) => {
                 var formData = new FormData();
-                formData.append("tasa", key);
+                formData.append("tipo_formulario", service);
+                formData.append("tipo_moneda", moneda);
                 formData.append("monto", value);
-                this.$axios
-                    .post("/convertidor/tasa", formData)
-                    .then((response) => {
-                        resolve(response.data);
-                    })
-                    .catch((error) => {
-                        this.$readStatusHttp(error);
-                        reject(error);
-                    });
+                if (
+                    formData.has("tipo_formulario") &&
+                    formData.has("tipo_moneda") &&
+                    formData.has("monto")
+                ) {
+                    this.$axios
+                        .post("/tasa-cambio/convert", formData)
+                        .then((response) => {
+                            resolve(response.data);
+                        })
+                        .catch((error) => {
+                            this.$readStatusHttp(error);
+                            reject(error);
+                        });
+                }
             });
         },
         $getBancoByMoneda(key) {

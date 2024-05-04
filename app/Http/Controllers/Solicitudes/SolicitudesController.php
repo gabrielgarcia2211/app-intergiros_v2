@@ -56,7 +56,7 @@ class SolicitudesController extends Controller
             }
 
             $solicitud = new Solicitudes;
-            $solicitud->uuid = hexdec(str_replace('-', '', Uuid::uuid4()->toString()));;
+            $solicitud->uuid = generateCodReferencia(Auth()->user()->id);
             $solicitud->tipo_formulario_id = $tipo_formulario_id;
             $solicitud->tipo_moneda_id = $tipo_moneda_id;
             $solicitud->depositante_id = $depositante_id;

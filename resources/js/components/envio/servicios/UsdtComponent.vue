@@ -625,10 +625,9 @@
                                     v-if="montoCambiar"
                                     style="display: inline-block"
                                 >
-                                    {{ montoCambiar.monto_a_pagar.toFixed(2) }}
+                                    {{ montoCambiar.monto_a_pagar }}
                                 </p>
-                                $ USD</strong
-                            >
+                            </strong>
                         </p>
                         <p style="color: #0035aa">
                             <strong style="font-size: 18px"
@@ -637,12 +636,9 @@
                                     v-if="montoCambiar"
                                     style="display: inline-block"
                                 >
-                                    {{
-                                        montoCambiar.monto_a_recibir.toFixed(2)
-                                    }}
+                                    {{ montoCambiar.monto_a_recibir }}
                                 </p>
-                                BS.</strong
-                            >
+                            </strong>
                         </p>
                     </div>
                 </div>
@@ -822,6 +818,9 @@ export default {
                     this.monedaId
                 );
             }
+            this.montoBruto = 0;
+            this.montoCambiar.monto_a_pagar = 0;
+            this.montoCambiar.monto_a_recibir = 0;
         },
     },
     mounted() {},
@@ -1354,11 +1353,14 @@ export default {
         },
         async convertService(event) {
             const convertidor = await this.$devFormatoMoneda(
-                "TP-02",
+                this.idService,
+                this.monedaId,
                 event.value
             );
             if (convertidor.data) {
-                this.montoCambiar = convertidor.data;
+                const currncy = convertidor.data;
+                this.montoCambiar.monto_a_pagar = currncy.pagar;
+                this.montoCambiar.monto_a_recibir = currncy.recibir;
             } else {
                 this.montoCambiar.monto_a_pagar = 0;
                 this.montoCambiar.monto_a_recibir = 0;

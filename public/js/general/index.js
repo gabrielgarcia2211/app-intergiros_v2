@@ -209,21 +209,34 @@ function updateButtonAndBindClick(buttonId, imagePath) {
 }
 
 // funcion de conversion de monedas
-function devFormatoMoneda(key, value) {
+function devFormatoMoneda(
+    codigo_tasa,
+    codigo_formulario,
+    codigo_moneda,
+    monto
+) {
     return new Promise((resolve, reject) => {
         var formData = new FormData();
-        formData.append("tasa", key);
-        formData.append("monto", value);
-
-        axios
-            .post("/convertidor/tasa", formData)
-            .then((response) => {
-                resolve(response.data);
-            })
-            .catch((error) => {
-                handleErrors(error);
-                reject(error);
-            });
+        formData.append("codigo_tasa", codigo_tasa);
+        formData.append("codigo_formulario", codigo_formulario);
+        formData.append("codigo_moneda", codigo_moneda);
+        formData.append("monto", monto);
+        if (
+            formData.has("codigo_tasa") &&
+            formData.has("codigo_formulario") &&
+            formData.has("codigo_moneda") &&
+            formData.has("monto")
+        ) {
+            axios
+                .post("/tasa-cambio/convert/calculadora", formData)
+                .then((response) => {
+                    resolve(response.data);
+                })
+                .catch((error) => {
+                    handleErrors(error);
+                    reject(error);
+                });
+        }
     });
 }
 

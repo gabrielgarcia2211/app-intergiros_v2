@@ -35,12 +35,6 @@ export default {
         return {
             images: [
                 {
-                    codigo: "N/A",
-                    src: "img/home/TDC Intergiros - Bitcoin.png",
-                    alt: "Bitcoin",
-                    descriptions: ["Todos los bancos - 1 USD = 00.00 BS."],
-                },
-                {
                     codigo: "TP-05",
                     src: "img/home/TDC Intergiros - Colombia.png",
                     alt: "Colombia",

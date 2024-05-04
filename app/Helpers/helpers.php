@@ -143,3 +143,11 @@ function getQueryValue($operator, $value)
             return $value;
     }
 }
+
+function generateCodReferencia($user_id)
+{
+    $timestamp = time();
+    $random_value = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 5)), 0, 3);
+    $identificador_unico = $user_id . $timestamp . $random_value;
+    return $identificador_unico;
+}

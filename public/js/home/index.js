@@ -28,29 +28,32 @@ $(document).ready(function () {
 
 async function obtenerValor(value) {
     var selectedOption = $("#selectorCambioHome").find("option:selected");
-    let code = mapTipoMoneda(selectedOption.data("code"));
-    let calculo = await devFormatoMoneda(code, value);
-    $("#monto_recibir_" + selectedOption.val()).val(
-        calculo.data.monto_a_recibir
+    const code = mapTipoMoneda(selectedOption.data("code"));
+    let calculo = await devFormatoMoneda(
+        code[0] + "-" + code[1],
+        code[0],
+        code[1],
+        value
     );
-    $("#monto_pagar_" + selectedOption.val()).html(calculo.data.monto_a_pagar);
-    $("#monto_recibir_comision_" + selectedOption.val()).html(
-        calculo.data.monto_a_recibir
+    console.log(calculo);
+    console.log(
+        parseFloat(calculo.data.comision) + parseFloat(calculo.data.pagar_clear)
     );
+    $("#monto_pagar_pay_ven").html(calculo.data.pagar);
+    $("#monto_recibir_pay_ven").val(calculo.data.recibir);
+    $("#monto_recibir_comision_pay_ven").html(calculo.data.comision);
 }
 
 function mapTipoMoneda(code) {
     switch (code) {
         case "TP-01":
-            var enviar = document.getElementById("montoPaypalVenezuela");
-            var recibir = document.getElementById("paisesPaypal");
-            var codigo = code + "-" + enviar.value + "-" + recibir.value;
-            return codigo;
+            var recibir = $("#paisesPaypal")
+                .find("option:selected")
+                .data("code");
+            return [code, recibir];
         case "TP-02":
-            var enviar = document.getElementById("montoUsdtVenezuela");
-            var recibir = document.getElementById("paisesUsdt");
-            var codigo = code + "-" + enviar.value + "-" + recibir.value;
-            return codigo;
+            var recibir = $("#paisesUsdt").find("option:selected").data("code");
+            return [code, recibir];
         case "TP-03":
             var enviar = document.getElementById("montoZinli");
             var recibir = document.getElementById("paisesZinli");

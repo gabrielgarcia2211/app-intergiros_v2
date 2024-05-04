@@ -58,10 +58,10 @@
                     <option value="usd_ven" data-code="TP-02">Cambiar saldo USDT</option>
                     <option value="zinli_ven" data-code="TP-03">Cambiar saldo Zinli en Venezuela</option>
                     <option value="peru_ven" data-code="TP-04">Enviar dinero de Perú</option>
-                    <option value="col_ven" data-code="TP-05">Enviar dinero de Colombia</option>
-                    <option value="ven_col" data-code="TP-06">Enviar dinero de Venezuela</option>
-                    <option value="zinli" data-code="TP-07">Recargar saldo Zinli</option>
-                    <option value="paypal" data-code="TP-08">Recargar saldo PayPal</option>
+                    <option value="col_ven" data-code="TP-06">Enviar dinero de Colombia</option>
+                    <option value="ven_col" data-code="TP-07">Enviar dinero de Venezuela</option>
+                    <option value="zinli" data-code="TP-08">Recargar saldo Zinli</option>
+                    <option value="paypal" data-code="TP-09">Recargar saldo PayPal</option>
                 </select>
             </div>
         </div>
@@ -139,7 +139,7 @@
                             <div id="imagenPais"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
                                     style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                             <select class="form-control" id="paisesPaypal">
-                                <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
+                                <option data-code="VES" data-image="{{ asset('img/home/venezuela.png') }}"
                                     value="venezuela">VEF</option>
                                 <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">PEN
                                 </option>
@@ -160,9 +160,9 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4>$ <span id="monto_pagar_pay_ven">0.00</span> USD</h4>
-                        <h4>$ <span id="monto_recibir_comision_pay_ven" style="display: inline-block">0.00</span> USD</h4>
-                        <h4>$1 USD=30,00 <span id="tipo_cambio_paypal">BS</span></h4>
+                        <h4><span id="monto_recibir_comision_pay_ven">0.00</span></h4>
+                        <h4><span id="monto_pagar_pay_ven" style="display: inline-block">0.00</span></h4>
+                        <h4>$1 USD=30,00 <span id="tipo_cambio_paypal"></span></h4>
                     </div>
                 </div>
                 <div class="mt-5">
@@ -352,7 +352,7 @@
                             <div id="imagenPaisUsdt"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
                                     style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                             <select class="form-control" id="paisesUsdt">
-                                <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
+                                <option data-code="VES" data-image="{{ asset('img/home/venezuela.png') }}"
                                     value="venezuela">VEF
                                 </option>
                                 <option data-code="PEN" data-image="{{ asset('img/home/peru.png') }}" value="peru">PEN
