@@ -693,7 +693,7 @@
                 <div class="form-group">
                     <div class="input-group" style="width: 100% !important;">
                         <input type="number" class="form-control w-100%" id="monto_cambiar_ven_col"
-                            placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
+                            placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)" readonly>
                         <div class="input-group-append">
                             <div id="imagenMontoVenezuela"><img src="{{ asset('img/home/venezuela.png') }}"
                                     alt="" style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
@@ -711,9 +711,9 @@
                 <div class="form-group mt-4">
                     <div class="input-group" style="width: 100% !important;">
                         <input type="text" class="form-control" id="monto_recibir_ven_col"
-                            placeholder="Monto a recibir" readonly>
+                            placeholder="Monto a recibir">
                         <div class="input-group-append">
-                            <div id="imagenPaisVenezuela"><img src="{{ asset('img/home/venezuela.png') }}"
+                            <div id="imagenPaisVenezuela"><img src="{{ asset('img/home/colombia.png') }}"
                                     alt="" style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                             <select class="form-control" id="paisesVenezuela">
                                 <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}"
@@ -804,7 +804,7 @@
                 <div class="form-group">
                     <div class="input-group" style="width: 100% !important;">
                         <input type="number" class="form-control w-100%" id="monto_cambiar_recarga_zinli"
-                            placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
+                            placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)" readonly>
                         <div class="input-group-append">
                             <div id="imagenRecargaZinli"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
                                     style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
@@ -833,7 +833,7 @@
                 <div class="form-group mt-4">
                     <div class="input-group" style="width: 100% !important;">
                         <input type="text" class="form-control" id="monto_recibir_recarga_zinli"
-                            placeholder="Monto a recibir" readonly>
+                            placeholder="Monto a recibir">
                         <div class="input-group-append">
                             <div id="imagenMontoZinli"><img src="{{ asset('img/home/zinli.png') }}" alt=""
                                     style="margin-top: 13px;margin-left: 10px; width: 50px;"></div>
@@ -918,7 +918,7 @@
                 <div class="form-group">
                     <div class="input-group" style="width: 100% !important;">
                         <input type="number" class="form-control w-100%" id="monto_cambiar_recarga_paypal"
-                            placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
+                            placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)" readonly>
                         <div class="input-group-append">
                             <div id="imagenRecargaPaypal"><img src="{{ asset('img/home/venezuela.png') }}"
                                     alt="" style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
@@ -948,7 +948,7 @@
                 <div class="form-group mt-4">
                     <div class="input-group" style="width: 100% !important;">
                         <input type="text" class="form-control" id="monto_recibir_recarga_paypal"
-                            placeholder="Monto a recibir" readonly>
+                            placeholder="Monto a recibir">
                         <div class="input-group-append">
                             <div id="imagenMontoPaypal"><img src="{{ asset('img/home/paypal.png') }}" alt=""
                                     style="margin-top: 10px;margin-left: 10px; width: 50px;"></div>
