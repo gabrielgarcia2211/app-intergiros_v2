@@ -5,7 +5,7 @@
                 <div class="col-3">
                     <div class="col-3 text-center">
                         <a
-                            v-if="isVisibleForm > 1"
+                            v-if="isVisibleForm > 1 && isVisibleForm != 5"
                             href="#"
                             @click="isVisibleForm--"
                             class="atras"
@@ -502,12 +502,7 @@
                     </button>
                 </div>
                 <div class="text-center">
-                    <a
-                        href="#"
-                        class="atras"
-                        data-toggle="modal"
-                        data-target="#myModal"
-                        @click="checkInfo('omitir_verificacion')"
+                    <a href="#" class="atras" @click="showOmitir(true)"
                         >Omitir por ahora</a
                     >
                 </div>
@@ -520,8 +515,9 @@
                     <h2 id="miH2"><strong></strong></h2>
                     <h4>
                         <strong
-                            >!Te damos la bienvenida a la familia
-                            Intergiros!</strong
+                            >Hola {{ registroForm.nombre }}
+                            {{ registroForm.apellido }}, !Te damos la bienvenida
+                            a la familia Intergiros!</strong
                         >
                     </h4>
                     <br /><br />
@@ -547,6 +543,34 @@
             </div>
         </div>
     </div>
+
+    <Dialog v-model:visible="isOmitir" style="width: 600px">
+        <template #header>
+            <h1>Omitir este paso</h1>
+        </template>
+        <div class="text-center">
+            <i class="fas fa-bell fa-3x" style="color: #0035aa"></i>
+        </div>
+        <div>
+            Si omites este paso ahora, podrás completarlo en otro momento, crear
+            tu usuario y acceder a él,
+            <strong>pero no podrás realizar pedidos</strong>
+        </div>
+        <template #footer
+            ><Button
+                class="btn-primary"
+                style="font-size: 18px; text-align: center"
+                @click="checkInfo('omitir_verificacion')"
+                >Omitir</Button
+            >
+            <Button
+                class="btn-primary"
+                style="font-size: 18px; text-align: center"
+                @click="showOmitir(false)"
+                >Ir Atras</Button
+            >
+        </template>
+    </Dialog>
 </template>
 <script>
 // Importar Librerias o Modulos
@@ -584,6 +608,7 @@ export default {
             dynamicRulesRed: {},
             dynamicRulesVerificacion: {},
             isVisibleRed2: false,
+            isOmitir: false,
         };
     },
     components: {},
@@ -654,15 +679,10 @@ export default {
             return this.initSchemaValidate(schema);
         },
         async validateFormVerificacion() {
-            this.dynamicRulesVerificacion.documento = Yup.string().required(
-                "El documento es obligatorio"
-            );
-            this.dynamicRulesVerificacion.tipoDocumento = Yup.string().required(
-                "El tipo documento es obligatorio"
-            );
             const schema = Yup.object().shape({
                 ...this.dynamicRulesVerificacion,
             });
+
             return this.initSchemaValidate(schema);
         },
         async initSchemaValidate(schema) {
@@ -700,6 +720,12 @@ export default {
                     }
                     break;
                 case "verificacion":
+                    this.dynamicRulesVerificacion.documento =
+                        Yup.string().required("El documento es obligatorio");
+                    this.dynamicRulesVerificacion.tipoDocumento =
+                        Yup.string().required(
+                            "El tipo documento es obligatorio"
+                        );
                     this.dynamicRulesVerificacion.inputGroupFile01 =
                         Yup.string().required("La selfie es obligatoria");
                     this.dynamicRulesVerificacion.inputGroupFile02 =
@@ -709,6 +735,8 @@ export default {
                     isValid = await this.validateFormVerificacion();
                     break;
                 case "omitir_verificacion":
+                    delete this.dynamicRulesVerificacion.documento;
+                    delete this.dynamicRulesVerificacion.tipoDocumento;
                     delete this.dynamicRulesVerificacion.inputGroupFile01;
                     delete this.dynamicRulesVerificacion.inputGroupFile02;
                     isValid = await this.validateFormVerificacion();
@@ -719,9 +747,13 @@ export default {
             if (isValid) {
                 this.isVisibleForm++;
                 if (this.isVisibleForm == 5) {
+                    this.isOmitir = false;
                     this.addUsuario();
                 }
             }
+        },
+        showOmitir(value) {
+            this.isOmitir = value;
         },
         handleRed(event, tipo) {
             if (tipo == "uno") {
@@ -774,6 +806,7 @@ export default {
                     this.$alertSuccess("Usuario añadido correctamente");
                 })
                 .catch((error) => {
+                    this.isVisibleForm--;
                     this.$readStatusHttp(error);
                 });
         },

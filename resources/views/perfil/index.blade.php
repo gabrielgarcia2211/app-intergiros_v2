@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-3 text-center">
                 <img src="{{ asset('img/perfil/people.jpg') }}" alt="" width="200px">
-                @if (Auth()->user()->verificado)
+                @if (Auth()->user()->verificado == 1)
                     <img src="{{ asset('img/perfil/verificado.png') }}" alt="" width="50px" class="verificado">
                 @endif
             </div>

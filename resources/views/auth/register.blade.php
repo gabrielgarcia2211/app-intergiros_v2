@@ -18,26 +18,6 @@
 <br><br><br><br><br>
 <!-- FOOTER -->
 @include('layouts.footer')
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="text-center">
-                    <i class="fas fa-bell fa-3x"></i>
-                </div>
-            </div>
-            <div class="modal-body">
-                Si omites este paso ahora, podrás completarlo en otro memonto, crear tu usuario y acceder a él,
-                <strong>pero no podrás realizar pedidos</strong>
-            </div>
-            <div class="modal-footer">
-                <div id="btn_omitirValidacion"></div>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Ir atrás</button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 <style>
