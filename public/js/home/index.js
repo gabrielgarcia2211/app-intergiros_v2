@@ -152,27 +152,27 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         switch (valor) {
             case "venezuela":
-                tipoCambio.textContent = "BS";
+                tipoCambio.textContent = "";
                 bancos.textContent = "BSBDV, pago móvil";
                 monto.textContent = "$5 USD + comisión PayPal";
                 tiempo.textContent = "8h laborales";
                 break;
             case "peru":
-                tipoCambio.textContent = "PEN";
+                tipoCambio.textContent = "";
                 bancos.textContent =
                     "BCP, Interbank, BBVA Continental, Scotiabank";
                 monto.textContent = "$5 USD";
                 tiempo.textContent = "24h no laborales";
                 break;
             case "peru-dolar":
-                tipoCambio.textContent = "PEN";
+                tipoCambio.textContent = "";
                 bancos.textContent =
                     "BCP, Interbank, BBVA Continental, Scotiabank";
                 monto.textContent = "$5 USD";
                 tiempo.textContent = "24h no laborales";
                 break;
             case "colombia":
-                tipoCambio.textContent = "COP";
+                tipoCambio.textContent = "";
                 bancos.textContent = "Banco de Bogotá, Bancolombia y Nequi";
                 monto.textContent = "$5 USD";
                 tiempo.textContent = "24h no laborales";
@@ -232,21 +232,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         switch (valor) {
             case "venezuela":
-                tipoCambio.textContent = "BS";
+                tipoCambio.textContent = "";
                 bancos.textContent = "BDV, pago móvil";
                 break;
             case "peru":
-                tipoCambio.textContent = "PEN";
+                tipoCambio.textContent = "";
                 bancos.textContent =
                     "BCP, Interbank, BBVA Continental, Scotiabank";
                 break;
             case "peru-dolar":
-                tipoCambio.textContent = "PEN";
+                tipoCambio.textContent = "";
                 bancos.textContent =
                     "BCP, Interbank, BBVA Continental, Scotiabank";
                 break;
             case "colombia":
-                tipoCambio.textContent = "COP";
+                tipoCambio.textContent = "";
                 bancos.textContent = "Banco de Bogotá, Bancolombia y Nequi";
                 break;
             default:
