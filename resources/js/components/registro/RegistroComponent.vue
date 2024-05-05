@@ -559,13 +559,13 @@
         <template #footer
             ><Button
                 class="btn-primary"
-                style="font-size: 18px; text-align: center"
+                style="font-size: 18px; text-align: center; border-radius: 25px; background-color: #0035aa" 
                 @click="checkInfo('omitir_verificacion')"
-                >Omitir</Button
+                >Omitir y continuar</Button
             >
             <Button
                 class="btn-primary"
-                style="font-size: 18px; text-align: center"
+                style="font-size: 18px; text-align: center; border-radius: 25px; background-color: #0035aa"
                 @click="showOmitir(false)"
                 >Ir Atras</Button
             >

@@ -346,3 +346,7 @@ ul.custom-list > li:before {
     color: inherit !important;
 }
 /* FIN REGISTRO */
+
+.p-dialog-footer {
+    justify-content: center !important;
+}
