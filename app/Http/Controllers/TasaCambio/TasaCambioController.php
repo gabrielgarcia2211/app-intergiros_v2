@@ -77,26 +77,34 @@ class TasaCambioController extends Controller
                 ])->get([
                     'tasa_cambio.valor'
                 ])->first();
+
+            $currency_to = self::currencyEquivalenceTo($codigo_formulario);
+            $currency_from = self::currencyEquivalenceFrom($codigo_moneda);
+
             switch ($codigo_formulario) {
                 case 'TP-01':
+                    if (!empty($tasa_cambio)) {
+                        $monto_a_recibir = "$ " . number_format(($tasa_cambio->valor * $monto), 2, ',', '.');
+                        $tasa_cambio->valor = "$ " . number_format($tasa_cambio->valor, 2, ',', '.') . " " . $currency_from;
+                        $comision_fija = 0.3;
+                        $comision = "$ " . round((($monto + $comision_fija) * 100) / 94.6 - $monto, 2);
+                        $monto_a_pagar = "$ " . round((($monto + $comision_fija) * 100) / 94.6, 2) . " " . $currency_from;
+                        return Response::sendResponse(['pagar' => $monto_a_pagar, 'pagar_con_comision' => $comision, 'recibir' => $monto_a_recibir, 'tasa' => $tasa_cambio]);
+                    }
+                    break;
                 case 'TP-02':
                 case 'TP-03':
                     if (!empty($tasa_cambio)) {
-                        $currency_to = self::currencyEquivalenceTo($codigo_formulario);
-                        $comision_fija = 0.3;
-                        $comision = "$" . number_format(($comision_fija * 100) / 94.6, 2, ',', '.'). " " . $currency_to;
-                        $monto_a_pagar = "$" . number_format($monto, 2, ',', '.') . " " . $currency_to;
-                        $monto_a_recibir = number_format(($tasa_cambio->valor * $monto), 2, ',', '.');
-                        $comision_clear = number_format(($comision_fija * 100) / 94.6, 2, ',', '.');
-                        if (!empty($currency_to)) {
-                            return Response::sendResponse(['pagar' => $monto_a_pagar, 'pagar_clear' => $monto, 'comision_clear' => $comision_clear, 'recibir' => $monto_a_recibir, 'comision' => $comision, 'tasa' => $tasa_cambio]);
-                        }
+                        $monto_a_pagar = "$ " . number_format($monto, 2, ',', '.') . " " . $currency_to;
+                        $monto_a_recibir = "$ " . number_format(($tasa_cambio->valor * $monto), 2, ',', '.');
+                        $tasa_cambio->valor = "$ " . number_format($tasa_cambio->valor, 2, ',', '.') . " " . $currency_from;
+                        return Response::sendResponse(['pagar' => $monto_a_pagar, 'pagar_con_comision' => "0.00", 'recibir' => $monto_a_recibir, 'tasa' => $tasa_cambio]);
                     }
                     break;
-
                 default:
                     break;
             }
+
             return Response::sendResponse(false, 'No hay informacion');
         } catch (\Exception $ex) {
             Log::debug($ex->getLine());

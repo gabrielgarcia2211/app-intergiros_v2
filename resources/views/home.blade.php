@@ -160,116 +160,14 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4><span id="monto_recibir_comision_pay_ven">$0.00 dolar</span></h4>
-                        <h4><span id="monto_pagar_pay_ven" style="display: inline-block">$0.00 dolar</span></h4>
-                        <h4>$1 dólar=<span id="tipo_cambio_paypal">0.00 Bs</span></h4>
+                        <h4><span id="monto_recibir_comision_pay_ven">0.00</span></h4>
+                        <h4><span id="monto_pagar_pay_ven" style="display: inline-block">0.00</span></h4>
+                        <h4><span id="tipo_cambio_paypal">0.00</span></h4>
                     </div>
                 </div>
                 <div class="mt-5">
                     <h4>No cobramos comisión por envíos. La única comisión que debe ser asumida por el cliente es la
                         comisión cobrada por PayPal en sus transacciones.</h4>
-                </div>
-                <div class="mt-5 text-center">
-                    <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- zinli_ven -->
-    <div class="container cambios" style="display: none;" id="zinli_ven">
-        <div class="row">
-            <div class="col-md-5 info">
-                <img src="{{ asset('img/home/TDC Intergiros - Zinli.png') }}" class="img-fluid" alt="">
-                <div class="row mt-5">
-                    <div class="col-3 icon">
-                        <img src="{{ asset('img/home/Ícono de Monto mínimo.png') }}" class="img-fluid" alt="">
-                    </div>
-                    <div class="col-9">
-                        <h5>Monto mínimo</h5>
-                        <p>$5 USD</p>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-3 icon">
-                        <img src="{{ asset('img/home/Ícono traansferencias en.png') }}" class="img-fluid"
-                            alt="">
-                    </div>
-                    <div class="col-9">
-                        <h5>Transferencias en</h5>
-                        <p>Máximo 8h laborales</p>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-3 icon">
-                        <img src="{{ asset('img/home/Ícono pagamos desde.png') }}" class="img-fluid" alt="">
-                    </div>
-                    <div class="col-9">
-                        <h5>Pagamos desde</h5>
-                        <p>BDV, pago móvil</p>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-3 icon">
-                        <img src="{{ asset('img/home/Ícono términos y condiciones.png') }}" class="img-fluid"
-                            alt="">
-                    </div>
-                    <div class="col-9">
-                        <h5><span class="resaltar">Consulta aquí los</span></h5>
-                        <a href="">
-                            <p><span class="resaltar">términos y condiciones</span></p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-7 data">
-                <div class="form-group mt-4">
-                    <div class="input-group" style="width: 100% !important;">
-                        <input type="number" class="form-control w-100%" id="monto_cambiar_zinli_peru"
-                            placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
-                        <div class="input-group-append">
-                            <div id=""><img src="{{ asset('img/home/zinli.png') }}" alt=""
-                                    style="margin-top: 13px;margin-left: 10px; width: 50px;"></div>
-                            <select class="form-control" id="montoZinli">
-                                <option data-image="{{ asset('img/home/Zinli.png') }}" value="zinli">Zinli
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
-                </div>
-                <div class="form-group mt-4">
-                    <div class="input-group" style="width: 100% !important;">
-                        <input type="text" class="form-control" id="monto_recibir_zinli_ven"
-                            placeholder="Monto a recibir" readonly>
-                        <div class="input-group-append">
-                            <div id="imagenPaisZinli"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
-                                    style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
-                            <select class="form-control" id="paisesZinli">
-                                <option data-code="VES" data-image="{{ asset('img/home/venezuela.png') }}"
-                                    value="venezuela">VEF
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-6">
-                        <h4>Comisiones:</h4>
-                        <h4>Total a pagar:</h4>
-                        <h4>Tipo de cambio:</h4>
-                    </div>
-                    <div class="col-6 text-right">
-                        <h4>$ <span id="monto_recibir_comision_zinli_ven">0.00 usd</span></h4>
-                        <h4>$ <span id="monto_pagar_zinli_ven" style="display: inline-block">0.00 usd</span></h4>
-                        <h4>$1 USD=<span id="tipo_cambio_zinli">0.00 Bs</span></h4>
-                    </div>
-                </div>
-                <div class="mt-5">
-                    <h4>No cobramos comisión por envíos.</h4>
                 </div>
                 <div class="mt-5 text-center">
                     <h6>Si realizas un pedido ahora:</h6>
@@ -374,15 +272,117 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4>$ <span id="monto_pagar_usd_ven">0.00 USD</span></h4>
-                        <h4>$ <span id="monto_recibir_comision_usd_ven" style="display: inline-block">0.00 USD</span></h4>
-                        <h4>$1 USD=<span id="tipo_cambio_usdt">0.00 Bs</span></h4>
+                        <h4><span id="monto_recibir_comision_usd_ven">0.00</span></h4>
+                        <h4><span id="monto_pagar_usd_ven" style="display: inline-block">0.00</span></h4>
+                        <h4><span id="tipo_cambio_usdt">0.00</span></h4>
                     </div>
                 </div>
                 <div class="mt-5">
                     <h4>No cobramos comisión por envíos. IMPORTANTE, en caso de que la plataforma de pago realice algún
                         cobro de comisión por su transacción, ésta deberá ser asumida por el cliente. Se recomienda realizar
                         pagos a través de Binance Pay para evitar cobro de comisiones.</h4>
+                </div>
+                <div class="mt-5 text-center">
+                    <h6>Si realizas un pedido ahora:</h6>
+                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- zinli_ven -->
+     <div class="container cambios" style="display: none;" id="zinli_ven">
+        <div class="row">
+            <div class="col-md-5 info">
+                <img src="{{ asset('img/home/TDC Intergiros - Zinli.png') }}" class="img-fluid" alt="">
+                <div class="row mt-5">
+                    <div class="col-3 icon">
+                        <img src="{{ asset('img/home/Ícono de Monto mínimo.png') }}" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-9">
+                        <h5>Monto mínimo</h5>
+                        <p>$5 USD</p>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-3 icon">
+                        <img src="{{ asset('img/home/Ícono traansferencias en.png') }}" class="img-fluid"
+                            alt="">
+                    </div>
+                    <div class="col-9">
+                        <h5>Transferencias en</h5>
+                        <p>Máximo 8h laborales</p>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-3 icon">
+                        <img src="{{ asset('img/home/Ícono pagamos desde.png') }}" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-9">
+                        <h5>Pagamos desde</h5>
+                        <p>BDV, pago móvil</p>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-3 icon">
+                        <img src="{{ asset('img/home/Ícono términos y condiciones.png') }}" class="img-fluid"
+                            alt="">
+                    </div>
+                    <div class="col-9">
+                        <h5><span class="resaltar">Consulta aquí los</span></h5>
+                        <a href="">
+                            <p><span class="resaltar">términos y condiciones</span></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7 data">
+                <div class="form-group mt-4">
+                    <div class="input-group" style="width: 100% !important;">
+                        <input type="number" class="form-control w-100%" id="monto_cambiar_zinli_peru"
+                            placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
+                        <div class="input-group-append">
+                            <div id=""><img src="{{ asset('img/home/zinli.png') }}" alt=""
+                                    style="margin-top: 13px;margin-left: 10px; width: 50px;"></div>
+                            <select class="form-control" id="montoZinli">
+                                <option data-image="{{ asset('img/home/Zinli.png') }}" value="zinli">Zinli
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <img src="{{ asset('img/home/Ícono para la calculadora.png') }}" class="img-fluid" alt="">
+                </div>
+                <div class="form-group mt-4">
+                    <div class="input-group" style="width: 100% !important;">
+                        <input type="text" class="form-control" id="monto_recibir_zinli_ven"
+                            placeholder="Monto a recibir" readonly>
+                        <div class="input-group-append">
+                            <div id="imagenPaisZinli"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
+                                    style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
+                            <select class="form-control" id="paisesZinli">
+                                <option data-code="VES" data-image="{{ asset('img/home/venezuela.png') }}"
+                                    value="venezuela">VEF
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <h4>Comisiones:</h4>
+                        <h4>Total a pagar:</h4>
+                        <h4>Tipo de cambio:</h4>
+                    </div>
+                    <div class="col-6 text-right">
+                        <h4><span id="monto_recibir_comision_zinli_ven">0.00</span></h4>
+                        <h4><span id="monto_pagar_zinli_ven" style="display: inline-block">0.00</span></h4>
+                        <h4><span id="tipo_cambio_zinli">0.00</span></h4>
+                    </div>
+                </div>
+                <div class="mt-5">
+                    <h4>No cobramos comisión por envíos.</h4>
                 </div>
                 <div class="mt-5 text-center">
                     <h6>Si realizas un pedido ahora:</h6>
