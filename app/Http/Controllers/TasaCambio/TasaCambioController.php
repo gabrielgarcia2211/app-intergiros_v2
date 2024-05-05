@@ -81,12 +81,13 @@ class TasaCambioController extends Controller
                 case 'TP-03':
                     if (!empty($tasa_cambio)) {
                         $currency_to = self::currencyEquivalenceTo($codigo_formulario);
-                        $monto_a_pagar = "$ " . number_format($monto, 2, ',', '.') . " " . $currency_to;
-                        $monto_a_recibir = "$ " . number_format(($tasa_cambio->valor * $monto), 2, ',', '.');
                         $comision_fija = 0.3;
-                        $comision = number_format(($comision_fija * 100) / 94.6, 2, ',', '.');
+                        $comision = "$" . number_format(($comision_fija * 100) / 94.6, 2, ',', '.'). " " . $currency_to;
+                        $monto_a_pagar = "$" . number_format($monto, 2, ',', '.') . " " . $currency_to;
+                        $monto_a_recibir = number_format(($tasa_cambio->valor * $monto), 2, ',', '.');
+                        $comision_clear = number_format(($comision_fija * 100) / 94.6, 2, ',', '.');
                         if (!empty($currency_to)) {
-                            return Response::sendResponse(['pagar' => $monto_a_pagar, 'pagar_clear' => $monto, 'recibir' => $monto_a_recibir, 'comision' => $comision, 'tasa' => $tasa_cambio]);
+                            return Response::sendResponse(['pagar' => $monto_a_pagar, 'pagar_clear' => $monto, 'comision_clear' => $comision_clear, 'recibir' => $monto_a_recibir, 'comision' => $comision, 'tasa' => $tasa_cambio]);
                         }
                     }
                     break;
