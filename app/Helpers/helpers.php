@@ -10,6 +10,7 @@ function mapTipoTercero($data)
                 case 'TP-01':
                 case 'TP-02':
                 case 'TP-03':
+                case 'TP-04':
                     return [
                         'alias' => $data['aliasBeneficiario'],
                         'nombre' => $data['nombreBeneficiario'],
@@ -36,6 +37,20 @@ function mapTipoTercero($data)
                         'pais_telefono_id' => $data['codigoIDepositante'],
                         'celular' => $data['celularDepositante'],
                         'pais_id' => $data['paisDepositante'],
+                        'adjuntar_documento' => $data['adjuntarDocumento']
+                    ];
+                    break;
+                case 'TP-04':
+                    return [
+                        'alias' => $data['aliasDepositante'],
+                        'nombre' => $data['nombreDepositante'],
+                        'tipo_documento_id' => $data['tipoDocumentoDepositante'],
+                        'documento' => $data['documentoDepositante'],
+                        'banco_id' => $data['bancoDepositante'],
+                        'tipo_cuenta_id' => $data['tipoCuentaDepositante'],
+                        'cuenta' => $data['cuentaDepositante'],
+                        'pais_telefono_id' => $data['codigoIDepositante'],
+                        'celular' => $data['celularDepositante'],
                         'adjuntar_documento' => $data['adjuntarDocumento']
                     ];
                     break;

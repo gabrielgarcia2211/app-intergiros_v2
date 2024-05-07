@@ -135,7 +135,7 @@ class AdministracionController extends Controller
             'tipo',
             DB::raw("CONCAT(tipo, ',', codigo) as descripcion")
         )
-            ->where('codigo', $codigo)
+            ->whereIn('codigo', explode(",", $codigo))
             ->get();
     }
 

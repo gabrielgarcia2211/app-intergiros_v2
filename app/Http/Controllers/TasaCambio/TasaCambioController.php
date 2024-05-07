@@ -33,19 +33,28 @@ class TasaCambioController extends Controller
                 ])->first();
             switch ($formulario->codigo) {
                 case 'TP-01':
-                case 'TP-02':
-                case 'TP-03':
                     if (!empty($tasa_cambio)) {
                         $currency_to = self::currencyEquivalenceTo($formulario->codigo);
                         $currency_from = self::currencyEquivalenceFrom($moneda->codigo);
                         $monto_a_pagar = "$ " . number_format($monto, 2, ',', '.') . " " . $currency_to;
                         $monto_a_recibir = "$ " . number_format(($tasa_cambio->valor * $monto), 2, ',', '.') . " " . $currency_from;
-                        if (in_array($formulario->codigo, ['TP-01'])) {
-                            $comision_fija = 0.3; //(solo para paypal)
-                            $comision = round((($monto + $comision_fija) * 100) / 94.6, 2);
-                        }
+                        $comision_fija = 0.3;
+                        $comision = round((($monto + $comision_fija) * 100) / 94.6, 2);
                         if (!empty($currency_to) && !empty($currency_from)) {
                             return Response::sendResponse(['pagar' => $monto_a_pagar, 'pagar_con_comision' => $comision ?? NULL, 'recibir' => $monto_a_recibir]);
+                        }
+                    }
+                    break;
+                case 'TP-02':
+                case 'TP-03':
+                case 'TP-04':
+                    if (!empty($tasa_cambio)) {
+                        $currency_to = self::currencyEquivalenceTo($formulario->codigo);
+                        $currency_from = self::currencyEquivalenceFrom($moneda->codigo);
+                        $monto_a_pagar = "$ " . number_format($monto, 2, ',', '.') . " " . $currency_to;
+                        $monto_a_recibir = "$ " . number_format(($tasa_cambio->valor * $monto), 2, ',', '.') . " " . $currency_from;
+                        if (!empty($currency_to) && !empty($currency_from)) {
+                            return Response::sendResponse(['pagar' => $monto_a_pagar, 'recibir' => $monto_a_recibir]);
                         }
                     }
                     break;
@@ -53,6 +62,7 @@ class TasaCambioController extends Controller
                 default:
                     break;
             }
+
             return Response::sendResponse(false, 'No hay informacion');
         } catch (\Exception $ex) {
             Log::debug($ex->getLine());
@@ -87,7 +97,7 @@ class TasaCambioController extends Controller
                         $monto_a_recibir = number_format(($tasa_cambio->valor * $monto), 2, ',', '.');
                         $tasa_cambio->valor = "$ " . number_format($tasa_cambio->valor, 2, ',', '.') . " " . $currency_from;
                         $comision_fija = 0.3;
-                        $comision = "$ " . round((($monto + $comision_fija) * 100) / 94.6 - $monto, 2). " " . $currency_to;
+                        $comision = "$ " . round((($monto + $comision_fija) * 100) / 94.6 - $monto, 2) . " " . $currency_to;
                         $monto_a_pagar = "$ " . round((($monto + $comision_fija) * 100) / 94.6, 2) . " " . $currency_to;
                         return Response::sendResponse(['pagar' => $monto_a_pagar, 'pagar_con_comision' => $comision, 'recibir' => $monto_a_recibir, 'tasa' => $tasa_cambio]);
                     }
@@ -139,6 +149,9 @@ class TasaCambioController extends Controller
                 break;
             case 'TP-03':
                 $currency = 'dólar';
+                break;
+            case 'TP-04':
+                $currency = 'soles';
                 break;
             default:
                 break;

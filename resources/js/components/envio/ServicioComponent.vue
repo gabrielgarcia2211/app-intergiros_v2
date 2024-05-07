@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-5" style="margin-bottom: 150px;">
+    <div class="container mt-5" style="margin-bottom: 150px">
         <div class="row">
             <div class="col-md-5">
                 <InputGroup>
@@ -63,6 +63,11 @@
             :idService="idService"
             :monedaId="monedaId"
         ></servicio-zinli-component>
+        <servicio-peru-component
+            v-if="checkService == 'TP-04' && monedaId"
+            :idService="idService"
+            :monedaId="monedaId"
+        ></servicio-peru-component>
     </div>
 </template>
 <script>
@@ -94,7 +99,9 @@ export default {
     mounted() {},
     methods: {
         async handleSelectService(event) {
+            this.idService = null;
             this.checkService = null;
+            this.optionsMonedas = null;
             switch (event.value) {
                 case 1:
                     this.idService = 1;
@@ -110,6 +117,13 @@ export default {
                     this.idService = 11;
                     this.checkService = "TP-03";
                     this.optionsMonedas = await this.getMonedaByCodigo("VES");
+                    break;
+                case 13:
+                    this.idService = 13;
+                    this.checkService = "TP-04";
+                    this.optionsMonedas = await this.getMonedaByCodigo(
+                        "VES,COP"
+                    );
                     break;
                 default:
                     break;

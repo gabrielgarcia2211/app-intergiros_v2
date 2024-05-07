@@ -61,7 +61,7 @@ class TercerosController extends Controller
         return Response::sendResponse($response, 'Registro obtenido con exito.');
     }
 
-    public function storeTercero(Request $request)
+    public function storeTercero(StoreTerceroRequest $request)
     {
         try {
             $data = mapTipoTercero($request->all());
