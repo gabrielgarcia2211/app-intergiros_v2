@@ -68,6 +68,11 @@
             :idService="idService"
             :monedaId="monedaId"
         ></servicio-peru-component>
+        <servicio-peru-usd-component
+            v-if="checkService == 'TP-05' && monedaId"
+            :idService="idService"
+            :monedaId="monedaId"
+        ></servicio-peru-usd-component>
     </div>
 </template>
 <script>
@@ -99,28 +104,38 @@ export default {
     mounted() {},
     methods: {
         async handleSelectService(event) {
+            const currentService = this.optionsServices.find(
+                (item) => item.id == event.value
+            );
             this.idService = null;
             this.checkService = null;
             this.optionsMonedas = null;
-            switch (event.value) {
-                case 1:
-                    this.idService = 1;
-                    this.checkService = "TP-01";
+            switch (currentService.codigo) {
+                case "TP-01":
+                    this.idService = currentService.id;
+                    this.checkService = currentService.codigo;
                     this.optionsMonedas = await this.getMonedas();
                     break;
-                case 6:
-                    this.idService = 6;
-                    this.checkService = "TP-02";
+                case "TP-02":
+                    this.idService = currentService.id;
+                    this.checkService = currentService.codigo;
                     this.optionsMonedas = await this.getMonedas();
                     break;
-                case 11:
-                    this.idService = 11;
-                    this.checkService = "TP-03";
+                case "TP-03":
+                    this.idService = currentService.id;
+                    this.checkService = currentService.codigo;
                     this.optionsMonedas = await this.getMonedaByCodigo("VES");
                     break;
-                case 13:
-                    this.idService = 13;
-                    this.checkService = "TP-04";
+                case "TP-04":
+                    this.idService = currentService.id;
+                    this.checkService = currentService.codigo;
+                    this.optionsMonedas = await this.getMonedaByCodigo(
+                        "VES,COP"
+                    );
+                    break;
+                case "TP-05":
+                    this.idService = currentService.id;
+                    this.checkService = currentService.codigo;
                     this.optionsMonedas = await this.getMonedaByCodigo(
                         "VES,COP"
                     );

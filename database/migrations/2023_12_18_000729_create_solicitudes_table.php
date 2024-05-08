@@ -20,13 +20,13 @@ class CreateSolicitudesTable extends Migration
             $table->bigInteger('tipo_moneda_id')->unsigned();
             $table->bigInteger('depositante_id')->unsigned();
             $table->bigInteger('beneficiario_id')->unsigned();
-            $table->bigInteger('producto_id')->unsigned();
+            $table->bigInteger('producto_id')->unsigned()->nullable();
             $table->bigInteger('user_id')->unsigned();
             $table->integer('estado_id')->unsigned()->nullable();
             $table->string('monto_a_pagar');
             $table->string('monto_a_pagar_comision');
             $table->string('monto_a_recibir');
-            $table->string('revisiones');
+            $table->string('revisiones')->nullable();
             $table->string('voucher_referencia', 255)->nullable();
             $table->string('voucher_referencia_cliente', 255)->nullable();
             $table->tinyInteger('notificacion')->default(1);

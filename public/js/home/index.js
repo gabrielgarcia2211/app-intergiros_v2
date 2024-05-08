@@ -27,7 +27,6 @@ $(document).ready(function () {
 });
 
 async function obtenerValor(value) {
-    //selectprincipal
     var selectMain = document.getElementById("selectorCambioHome");
     var valorSeleccionado = selectMain.value;
     var selectedOption = $("#selectorCambioHome").find("option:selected");
@@ -67,9 +66,19 @@ async function obtenerValor(value) {
             $("#tipo_cambio_zinli").html(tasa);
             break;
         case "peru_ven":
+            $("#monto_recibir_peru_ven").val(calculo.data.recibir);
+            $("#monto_pagar_peru_ven").html(calculo.data.pagar);
+            $("#monto_recibir_comision_peru_ven").html(
+                calculo.data.pagar_con_comision ?? "0.00"
+            );
+            if (code == "TP-04") {
+                tasa = "$1 sol = " + calculo.data.tasa.valor;
+            } else {
+                tasa = "$1 dólar = " + calculo.data.tasa.valor;
+            }
+            $("#tipo_cambio_peru").html(tasa);
             break;
         default:
-            // Código a ejecutar si el valor seleccionado no coincide con ninguno de los casos anteriores
             console.log("Selección no reconocida");
     }
 }
@@ -89,12 +98,12 @@ function mapTipoMoneda(code) {
                 .find("option:selected")
                 .data("code");
             return [code, recibir];
-        /*  case "TP-04":
-            var enviar = document.getElementById("montoPeru");
-            var recibir = document.getElementById("paisesPeru");
-            var codigo = code + "-" + enviar.value + "-" + recibir.value;
-            return codigo;
-        case "TP-05":
+        case "TP-04-05":
+            var enviar = $("#montoPeru").find("option:selected").data("code");
+            var recibir = $("#paisesPeru").find("option:selected").data("code");
+            code = enviar == "PEN" ? "TP-04" : "TP-05";
+            return [code, recibir];
+        /*  case "TP-05":
             var enviar = document.getElementById("montoColombia");
             var recibir = document.getElementById("paisesColombia");
             var codigo = code + "-" + enviar.value + "-" + recibir.value;
@@ -307,12 +316,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         switch (valor) {
             case "venezuela":
-                tipoCambio.textContent = "BS";
                 bancos.textContent = "BDV, pago móvil";
                 tiempo.textContent = "8h laborales";
                 break;
             case "colombia":
-                tipoCambio.textContent = "COP";
                 bancos.textContent = "Banco de Bogotá, Bancolombia y Nequi";
                 tiempo.textContent = "8h laborales";
                 break;
@@ -333,11 +340,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         switch (valor) {
             case "peru":
-                moneda.textContent = "PEN";
                 monto.textContent = "20 Soles";
                 break;
             case "peru-dolar":
-                moneda.textContent = "USD";
                 monto.textContent = "$10 USD";
                 break;
             default:

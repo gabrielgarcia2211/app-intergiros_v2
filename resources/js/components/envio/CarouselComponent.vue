@@ -35,13 +35,13 @@ export default {
         return {
             images: [
                 {
-                    codigo: "TP-05",
+                    codigo: "TP-06-VES",
                     src: "img/home/TDC Intergiros - Colombia.png",
                     alt: "Colombia",
                     descriptions: null,
                 },
                 {
-                    codigo: "TP-01",
+                    codigo: "TP-01-VES",
                     src: "img/home/TDC Intergiros - PayPal.png",
                     alt: "PayPal",
                     descriptions: null,
@@ -53,19 +53,19 @@ export default {
                     descriptions: ["Todos los bancos - 1 USD = 00.00 BS."],
                 },
                 {
-                    codigo: "TP-04",
+                    codigo: "TP-04-VES",
                     src: "img/home/TDC Intergiros - Perú.png",
                     alt: "Perú",
                     descriptions: null,
                 },
                 {
-                    codigo: "TP-02",
+                    codigo: "TP-02-VES",
                     src: "img/home/TDC Intergiros - USDT.png",
                     alt: "USDT",
                     descriptions: null,
                 },
                 {
-                    codigo: "TP-03",
+                    codigo: "TP-03-VES",
                     src: "img/home/TDC Intergiros - Zinli.png",
                     alt: "Zinli",
                     descriptions: null,

@@ -57,11 +57,11 @@
                     <option value="pay_ven" data-code="TP-01">Cambiar saldo PayPal</option>
                     <option value="usd_ven" data-code="TP-02">Cambiar saldo USDT</option>
                     <option value="zinli_ven" data-code="TP-03">Cambiar saldo Zinli en Venezuela</option>
-                    <option value="peru_ven" data-code="TP-04">Enviar dinero de Perú</option>
+                    <option value="peru_ven" data-code="TP-04-05">Enviar dinero de Perú</option>
                     <!-- <option value="col_ven" data-code="TP-06">Enviar dinero de Colombia</option>
-                    <option value="ven_col" data-code="TP-07">Enviar dinero de Venezuela</option>
-                    <option value="zinli" data-code="TP-08">Recargar saldo Zinli</option>
-                    <option value="paypal" data-code="TP-09">Recargar saldo PayPal</option> -->
+                            <option value="ven_col" data-code="TP-07">Enviar dinero de Venezuela</option>
+                            <option value="zinli" data-code="TP-08">Recargar saldo Zinli</option>
+                            <option value="paypal" data-code="TP-09">Recargar saldo PayPal</option> -->
                 </select>
             </div>
         </div>
@@ -290,8 +290,8 @@
         </div>
     </div>
 
-     <!-- zinli_ven -->
-     <div class="container cambios" style="display: none;" id="zinli_ven">
+    <!-- zinli_ven -->
+    <div class="container cambios" style="display: none;" id="zinli_ven">
         <div class="row">
             <div class="col-md-5 info">
                 <img src="{{ asset('img/home/TDC Intergiros - Zinli.png') }}" class="img-fluid" alt="">
@@ -477,7 +477,7 @@
                             <div id="imagenPaisPeru"><img src="{{ asset('img/home/venezuela.png') }}" alt=""
                                     style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                             <select class="form-control" id="paisesPeru">
-                                <option data-code="VED" data-image="{{ asset('img/home/venezuela.png') }}"
+                                <option data-code="VES" data-image="{{ asset('img/home/venezuela.png') }}"
                                     value="venezuela">VEF
                                 </option>
                                 <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}"
@@ -495,10 +495,9 @@
                         <h4>Tipo de cambio:</h4>
                     </div>
                     <div class="col-6 text-right">
-                        <h4>$ <span id="monto_pagar_peru_ven">0.00</span> USD</h4>
-                        <h4>$ <span id="monto_recibir_comision_peru_ven" style="display: inline-block">0.00</span> USD
-                        </h4>
-                        <h4>$1 <span id="tipo_moneda_peru">PEN</span>=30,00 <span id="tipo_cambio_peru">BS</span></h4>
+                        <h4><span id="monto_recibir_comision_peru_ven">0.00</span></h4>
+                        <h4><span id="monto_pagar_peru_ven" style="display: inline-block">0.00</span></h4>
+                        <h4><span id="tipo_cambio_peru">0.00</span></h4>
                     </div>
                 </div>
                 <div class="mt-5">
@@ -712,8 +711,8 @@
                         <input type="text" class="form-control" id="monto_recibir_ven_col"
                             placeholder="Monto a recibir">
                         <div class="input-group-append">
-                            <div id="imagenPaisVenezuela"><img src="{{ asset('img/home/colombia.png') }}"
-                                    alt="" style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
+                            <div id="imagenPaisVenezuela"><img src="{{ asset('img/home/colombia.png') }}" alt=""
+                                    style="margin-top: 8px;margin-left: 10px; width: 50px;"></div>
                             <select class="form-control" id="paisesVenezuela">
                                 <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}"
                                     value="colombia">
@@ -868,7 +867,7 @@
     </div>
 
     <!-- Paypal -->
-    <div class="container cambios" style="display: none;" id="paypal"> 
+    <div class="container cambios" style="display: none;" id="paypal">
         <div class="row">
             <div class="col-md-5 info">
                 <img src="{{ asset('img/home/TDC Intergiros - PayPal.png') }}" class="img-fluid" alt="">

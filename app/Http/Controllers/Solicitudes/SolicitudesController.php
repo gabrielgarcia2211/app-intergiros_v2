@@ -49,10 +49,6 @@ class SolicitudesController extends Controller
             $estado_iniciado_id = MasterCombos::getEstadoSolicitud('iniciado');
             $estado_en_proceso_id = MasterCombos::getEstadoSolicitud('en_proceso');
 
-            $producto = getCostRange($monto_a_pagar);
-            if (empty($producto)) {
-                return Response::sendError('No se encontro un producto en este rango de costo', 400);
-            }
             $solicitud = new Solicitudes;
             $formulario = TipoFormulario::find($tipo_formulario_id);
             $solicitud->uuid = generateCodReferencia(Auth()->user()->id);
@@ -62,14 +58,21 @@ class SolicitudesController extends Controller
             $solicitud->beneficiario_id = $beneficiario_id;
             $solicitud->monto_a_pagar = $monto_a_pagar;
             $solicitud->monto_a_recibir = $monto_a_recibir;
+
             if (in_array($formulario->codigo, ["TP-01"])) {
+                $producto = getCostRange($monto_a_pagar);
+                if (empty($producto)) {
+                    return Response::sendError('No se encontro un producto en este rango de costo', 400);
+                }
                 $monto_a_pagar_comision = $request->input('monto_a_pagar_comision');
                 $solicitud->monto_a_pagar_comision = $monto_a_pagar_comision;
+                $solicitud->producto_id = $producto['id'];
+                $solicitud->revisiones = $producto['revisiones'];
             }
+            
             $solicitud->user_id = Auth()->user()->id;
             $solicitud->estado_id = ($tipo_formulario_id == 1) ? $estado_iniciado_id : $estado_en_proceso_id;
-            $solicitud->producto_id = $producto['id'];
-            $solicitud->revisiones = $producto['revisiones'];
+    
             if (isset($referencia_pago)) {
                 $solicitud->voucher_referencia_cliente = $this->fileService->saveFile($referencia_pago, Auth()->user()->id, 'voucher_referencia_cliente');
             }

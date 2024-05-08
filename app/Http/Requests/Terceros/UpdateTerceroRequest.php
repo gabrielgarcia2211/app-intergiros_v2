@@ -31,6 +31,7 @@ class UpdateTerceroRequest extends FormRequest
                     case 'TP-02':
                     case 'TP-03':
                     case 'TP-04':
+                    case 'TP-05':
                         return [
                             'aliasBeneficiario' => 'required',
                             'nombreBeneficiario' => 'required',
@@ -61,6 +62,7 @@ class UpdateTerceroRequest extends FormRequest
                         ];
                         break;
                     case 'TP-04':
+                    case 'TP-05':
                         return [
                             'aliasDepositante' => 'required',
                             'nombreDepositante' => 'required',

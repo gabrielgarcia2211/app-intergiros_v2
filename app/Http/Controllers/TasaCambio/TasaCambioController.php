@@ -48,6 +48,7 @@ class TasaCambioController extends Controller
                 case 'TP-02':
                 case 'TP-03':
                 case 'TP-04':
+                case 'TP-05':
                     if (!empty($tasa_cambio)) {
                         $currency_to = self::currencyEquivalenceTo($formulario->codigo);
                         $currency_from = self::currencyEquivalenceFrom($moneda->codigo);
@@ -104,6 +105,8 @@ class TasaCambioController extends Controller
                     break;
                 case 'TP-02':
                 case 'TP-03':
+                case 'TP-04':
+                case 'TP-05':
                     if (!empty($tasa_cambio)) {
                         $monto_a_pagar = "$ " . number_format($monto, 2, ',', '.') . " " . $currency_to;
                         $monto_a_recibir = number_format(($tasa_cambio->valor * $monto), 2, ',', '.');
@@ -127,7 +130,7 @@ class TasaCambioController extends Controller
     {
         try {
             $data = TasaCambio::leftJoin('tipo_formulario', 'tipo_formulario.id', '=', 'tasa_cambio.tipo_formulario_id')
-                ->whereIn('tipo_formulario.codigo', ['TP-01', 'TP-02', 'TP-03', 'TP-04', 'TP-05', 'TP-06', 'TP-07', 'TP-08'])
+                ->whereIn('tipo_formulario.codigo', ['TP-06-VES', 'TP-01-VES', 'TP-04-VES', 'TP-02-VES', 'TP-03-VES'])
                 ->get();
             return Response::sendResponse($data, 'Registros obtenidos con exito.');
         } catch (\Exception $ex) {
@@ -152,6 +155,9 @@ class TasaCambioController extends Controller
                 break;
             case 'TP-04':
                 $currency = 'soles';
+                break;
+            case 'TP-05':
+                $currency = 'dólar';
                 break;
             default:
                 break;
