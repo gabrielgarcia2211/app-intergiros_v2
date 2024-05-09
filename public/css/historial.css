@@ -152,7 +152,9 @@ h5 {
 #tipoDocumentoReclamo_list,
 #selectPaisReclamo_list,
 #codigoIReclamo_list,
-#inputGroupServiciosReclamo_list {
+#inputGroupServiciosReclamo_list,
+#tipoCuentaDepositante_list,
+#selectBanco_list {
     padding-left: 0 !important;
     margin-bottom: 0 !important;
 }

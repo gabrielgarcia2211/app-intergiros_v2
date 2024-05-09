@@ -10,6 +10,7 @@
             class="w-full md:w-14rem"
             style="width: 100%"
             v-show="servicioDepositanteVisible"
+            @change="onServiceChange"
         ></Dropdown>
     </div>
     <!-- depositante -->
@@ -130,7 +131,37 @@
                         >
                     </div>
                 </div>
-                <div class="col-6">
+                <div
+                    class="col-6"
+                    v-if="
+                        currentService == 'TP-04' || currentService == 'TP-05'
+                    "
+                >
+                    <div class="form-group">
+                        <Dropdown
+                            id="selectBanco"
+                            v-model="depositanteForm.bancoDepositante"
+                            :options="optionsBancosPeru"
+                            placeholder="Bancos"
+                            optionLabel="name"
+                            optionValue="id"
+                            class="w-full md:w-14rem input-registro"
+                            style="width: 100%; text-align: left"
+                            :class="{
+                                'p-invalid': errors.bancoDepositante,
+                                'input-readonly': isEdit,
+                            }"
+                            :disabled="isEdit"
+                        />
+                        <small
+                            v-if="errors.bancoDepositante"
+                            style="display: block"
+                            class="p-error"
+                            >{{ errors.bancoDepositante }}</small
+                        >
+                    </div>
+                </div>
+                <div class="col-6" v-else>
                     <div class="form-group">
                         <InputText
                             v-model="depositanteForm.correoDepositante"
@@ -195,7 +226,52 @@
                         >
                     </div>
                 </div>
-                <div class="col-6">
+                <div
+                    class="col-6"
+                    v-if="
+                        currentService == 'TP-04' || currentService == 'TP-05'
+                    "
+                >
+                    <div
+                        class="form-group"
+                        style="width: 100%; display: inline-block"
+                    >
+                        <InputGroup>
+                            <Dropdown
+                                id="tipoCuentaDepositante"
+                                v-model="depositanteForm.tipoCuentaDepositante"
+                                :options="optionsTipoCuenta"
+                                placeholder="Cuenta"
+                                optionLabel="name"
+                                optionValue="id"
+                                style="width: 30%"
+                                class="input-indicativo"
+                                :class="{
+                                    'p-invalid': errors.tipoCuentaDepositante,
+                                    'input-readonly': isEdit,
+                                }"
+                                :disabled="isEdit"
+                            ></Dropdown>
+                            <InputNumber
+                                v-model="depositanteForm.cuentaDepositante"
+                                :placeholder="placeholderPeru"
+                                style="width: 80%"
+                                class="w-full md:w-14rem input-telefono"
+                                :class="{
+                                    'p-invalid': errors.cuentaDepositante,
+                                }"
+                                :disabled="isEdit"
+                            />
+                        </InputGroup>
+                        <small
+                            v-if="errors.cuentaDepositante"
+                            style="display: block"
+                            class="p-error"
+                            >{{ errors.cuentaDepositante }}</small
+                        >
+                    </div>
+                </div>
+                <div class="col-6" v-else>
                     <div class="form-group">
                         <Dropdown
                             id="selectPaisReclamo"
@@ -340,6 +416,9 @@ export default {
     data() {
         return {
             optionsServices: [],
+            optionsTipoCuenta: [],
+            optionsDocument: [],
+            optionsBancosPeru: [],
             selectedService: null,
             servicioDepositanteVisible: false,
             depositantes: [],
@@ -358,11 +437,17 @@ export default {
                 codigoIDepositante: null,
                 celularDepositante: null,
                 paisDepositante: null,
+                bancoDepositante: null,
                 adjuntarDocumento: null,
+                tipoCuentaDepositante: null,
+                cuentaDepositante: null,
                 servicio: null,
                 code: null,
             },
             errors: {},
+            currentService: null,
+            placeholderPeru: null,
+            dynamicRules: {},
         };
     },
     components: {},
@@ -379,7 +464,7 @@ export default {
     mounted() {},
     methods: {
         async validateForm() {
-            const schema = Yup.object().shape({
+            let initialRules = {
                 aliasDepositante: Yup.string().required(
                     "El alias es obligatorio"
                 ),
@@ -392,21 +477,40 @@ export default {
                 documentoDepositante: Yup.string().required(
                     "El documento es obligatorio"
                 ),
-                correoDepositante: Yup.string()
-                    .email("El formato del correo electrónico no es válido")
-                    .required("El beneficiario es obligatorio"),
                 codigoIDepositante: Yup.string().required(
                     "La cuenta es obligatoria"
                 ),
                 celularDepositante: Yup.string().required(
                     "El pago movil es obligatorio"
                 ),
-                paisDepositante: Yup.string().required(
-                    "El pais es obligatorio"
-                ),
                 adjuntarDocumento: Yup.string().required(
                     "La foto es obligatoria"
                 ),
+            };
+            if (
+                this.currentService == "TP-04" ||
+                this.currentService == "TP-05"
+            ) {
+                this.dynamicRules.tipoCuentaDepositante = Yup.string().required(
+                    "El tipo cuenta es obligatorio"
+                );
+                this.dynamicRules.bancoDepositante = Yup.string().required(
+                    "El banco es obligatorio"
+                );
+                this.dynamicRules.cuentaDepositante = Yup.string().required(
+                    "La cuenta es obligatoria"
+                );
+            } else {
+                this.dynamicRules.paisDepositante = Yup.string().required(
+                    "El pais es obligatorio"
+                );
+                this.dynamicRules.correoDepositante = Yup.string()
+                    .email("El formato del correo electrónico no es válido")
+                    .required("El beneficiario es obligatorio");
+            }
+            const schema = Yup.object().shape({
+                ...initialRules,
+                ...this.dynamicRules,
             });
             this.errors = {};
             try {
@@ -442,20 +546,22 @@ export default {
                     "tipo_documento",
                     "pais_telefono",
                     "pais",
-                    "banco",
+                    "tipo_cuenta",
                 ];
                 const response = await this.$getComboRelations(comboNames);
                 const {
                     tipo_documento: responseTipoDocumento,
                     pais_telefono: responsePaisTelefono,
                     pais: responsePais,
-                    banco: responseBanco,
+                    tipo_cuenta: responseTipoCuenta,
                 } = response;
 
                 this.optionsDocument = responseTipoDocumento;
                 this.optionsCodigoI = responsePaisTelefono;
                 this.optionsPais = responsePais;
-                this.optionsBancos = responseBanco;
+                this.optionsTipoCuenta = responseTipoCuenta;
+
+                this.optionsBancosPeru = await this.$getBancoByMoneda(3);
             }
         },
         async handleSelect(event) {
@@ -551,6 +657,15 @@ export default {
                 depositante.celular
             );
             this.depositanteForm.paisDepositante = depositante.pais_id;
+            this.depositanteForm.tipoCuentaDepositante = parseInt(
+                depositante.tipo_cuenta_id
+            );
+            this.depositanteForm.cuentaDepositante = parseInt(
+                depositante.cuenta
+            );
+            this.depositanteForm.bancoDepositante = parseInt(
+                depositante.banco_id
+            );
             this.isEditImage = depositante.path_documento ? false : true;
         },
         resetForm() {
@@ -564,6 +679,9 @@ export default {
             this.depositanteForm.celularDepositante = null;
             this.depositanteForm.paisDepositante = null;
             this.depositanteForm.adjuntarDocumento = null;
+            this.depositanteForm.tipoCuentaDepositante = null;
+            this.depositanteForm.bancoDepositante = null;
+            this.depositanteForm.cuentaDepositante = null;
             this.depositanteForm.servicio = null;
             this.depositanteForm.code = null;
         },
@@ -704,6 +822,17 @@ export default {
         },
         optionLabelFunction(option) {
             return `${option.name} - ${option.valor1}`;
+        },
+        onServiceChange(event) {
+            this.currentService = this.optionsServices.find(
+                (item) => item.id == event.value
+            ).codigo;
+            if (this.currentService == "TP-04") {
+                this.placeholderPeru = "Cuenta en soles";
+            } else if (this.currentService == "TP-05") {
+                this.placeholderPeru = "Cuenta en dolares";
+            }
+            this.formDepositanteVisible = false;
         },
     },
 };
