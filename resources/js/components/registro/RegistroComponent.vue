@@ -427,7 +427,7 @@
                         </div>
                         <div class="mt-3">
                             <div
-                                class="form-group"
+                                class="form-group file-selfie"
                                 style="width: 80%; display: inline-block"
                             >
                                 <h5>Adjuntar Selfie</h5>
@@ -445,7 +445,45 @@
                                     <template #empty>
                                         <p>Adjuntar Selfie.</p>
                                     </template>
+                                    <template
+                                        #content="{ files, removeFileCallback }"
+                                    >
+                                        <div
+                                            v-if="files.length > 0"
+                                            class="image-container"
+                                        >
+                                            <img
+                                                v-if="
+                                                    registroForm.inputGroupFile01
+                                                "
+                                                :src="
+                                                    registroForm
+                                                        .inputGroupFile01
+                                                        .objectURL
+                                                "
+                                                alt="Uploaded Image"
+                                                class="uploaded-image"
+                                                style="width: 400px; height: 320px;"
+                                                @click="openModal"
+                                            />
+                                            <button
+                                                @click="
+                                                    removeFile(
+                                                        files[0],
+                                                        removeFileCallback
+                                                    )
+                                                "
+                                                class="remove-button"
+                                                v-if="
+                                                    registroForm.inputGroupFile01
+                                                "
+                                            >
+                                                Eliminar
+                                            </button>
+                                        </div>
+                                    </template>
                                 </FileUpload>
+
                                 <small
                                     v-if="errors.inputGroupFile01"
                                     style="display: block"
@@ -559,13 +597,23 @@
         <template #footer
             ><Button
                 class="btn-primary"
-                style="font-size: 18px; text-align: center; border-radius: 25px; background-color: #0035aa" 
+                style="
+                    font-size: 18px;
+                    text-align: center;
+                    border-radius: 25px;
+                    background-color: #0035aa;
+                "
                 @click="checkInfo('omitir_verificacion')"
                 >Omitir y continuar</Button
             >
             <Button
                 class="btn-primary"
-                style="font-size: 18px; text-align: center; border-radius: 25px; background-color: #0035aa"
+                style="
+                    font-size: 18px;
+                    text-align: center;
+                    border-radius: 25px;
+                    background-color: #0035aa;
+                "
                 @click="showOmitir(false)"
                 >Ir Atras</Button
             >
@@ -602,7 +650,7 @@ export default {
                 inputGroupFile01: null,
                 inputGroupFile02: null,
             },
-            isVisibleForm: 1,
+            isVisibleForm: 4,
             selectedOptionRedes: null,
             errors: {},
             dynamicRulesRed: {},
@@ -827,6 +875,10 @@ export default {
                 }
             }
         },
+        removeFile(file, removeFileCallback) {
+            this.registroForm.inputGroupFile01 = null;
+            removeFileCallback(file);
+        },
         renderColorCheck() {
             this.renderColorInit();
             let posiciones = this.isVisibleForm;
@@ -849,4 +901,31 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.file-selfie .image-container {
+    position: relative;
+}
+
+.file-selfie .uploaded-image {
+    cursor: pointer;
+    max-width: 100%;
+    height: auto;
+}
+
+.file-selfie .remove-button {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.file-selfie .remove-button:hover {
+    background-color: #c82333;
+}
+</style>
