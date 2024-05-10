@@ -128,6 +128,71 @@ function mapTipoMoneda(code) {
     }
 }
 
+//Hora calculadora
+
+function obtenerHoraVenezuela() {
+    var horaActual = new Date();
+    var horaUTC = horaActual.getTime() + (horaActual.getTimezoneOffset() * 60000); // Obtener hora UTC
+    var diferenciaHoraria = -4 * 60 * 60 * 1000; // UTC-4 para Venezuela
+    var horaVenezuela = new Date(horaUTC + diferenciaHoraria); // Calcular hora en Venezuela
+    return horaVenezuela;
+}
+
+function sumarHoras(cantidadHoras) {
+    var fecha = new Date(obtenerHoraVenezuela()); // Obtener la hora actual en Venezuela
+    fecha.setHours(fecha.getHours() + parseInt(cantidadHoras)); // Sumar la cantidad de horas (asegúrate de convertir a entero)
+
+    // Verificar si la hora resultante supera las 18:00 (6 pm)
+    if (fecha.getHours() >= 18) {
+        fecha.setDate(fecha.getDate() + 1); // Sumar un día si es después de las 18:00
+    }
+    
+    // Obtener el nombre del mes
+    var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    var nombreMes = meses[fecha.getMonth()];
+    
+    // Formatear la fecha
+    var textoBoton = 'Recibirás el dinero máximo el ' + fecha.getDate() + ' de ' + nombreMes;
+    
+    // Retornar el texto formateado
+    return textoBoton;
+}
+
+function cargarTextosEnBotones() {
+    // Definir un arreglo de IDs de botones
+    var botones = ["paypal-fecha","usdt-fecha","zinli-fecha","peru-fecha"]; // Puedes agregar más IDs si es necesario
+    
+    // Iterar sobre los IDs de botones
+    for (var i = 0; i < botones.length; i++) {
+        var botonID = botones[i];
+        var texto = "";
+        
+        // Utilizar un switch para asignar texto según el ID del botón
+        switch (botonID) {
+            case "paypal-fecha":
+                texto = sumarHoras(8); // Por ejemplo, aquí se suma 24 horas para el primer botón
+                break;
+            case "usdt-fecha":
+                texto = sumarHoras(8); // Por ejemplo, aquí se suma 24 horas para el primer botón
+                break;
+            case "zinli-fecha":
+                texto = sumarHoras(8); // Por ejemplo, aquí se suma 24 horas para el primer botón
+                break;
+            case "peru-fecha":
+                texto = sumarHoras(8); // Por ejemplo, aquí se suma 24 horas para el primer botón
+                break;
+            // Puedes agregar más casos según los IDs de tus botones y asignar las horas adecuadas
+        }
+        
+        // Mostrar el texto en el botón correspondiente
+        document.getElementById(botonID).innerText = texto;
+    }
+}
+
+window.onload = function() {
+    cargarTextosEnBotones();
+};
+
 /* Paypal */
 document.addEventListener("DOMContentLoaded", function () {
     var selectPaises = document.getElementById("paisesPaypal");
@@ -155,6 +220,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const bancos = document.getElementById("bancos_paypal");
     const monto = document.getElementById("monto_minimo_paypal");
     const tiempo = document.getElementById("tiempo_transferencia_paypal");
+    var fecha = document.getElementById('paypal-fecha');
 
     miSelect.addEventListener("change", (event) => {
         const valor = event.target.value;
@@ -165,6 +231,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 bancos.textContent = "BSBDV, pago móvil";
                 monto.textContent = "$5 USD + comisión PayPal";
                 tiempo.textContent = "8h laborales";
+                fecha.innerText = sumarHoras(8);
                 break;
             case "peru":
                 tipoCambio.textContent = "";
@@ -172,6 +239,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     "BCP, Interbank, BBVA Continental, Scotiabank";
                 monto.textContent = "$5 USD";
                 tiempo.textContent = "24h no laborales";
+                fecha.innerText = sumarHoras(24);
                 break;
             case "peru-dolar":
                 tipoCambio.textContent = "";
@@ -179,12 +247,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     "BCP, Interbank, BBVA Continental, Scotiabank";
                 monto.textContent = "$5 USD";
                 tiempo.textContent = "24h no laborales";
+                fecha.innerText = sumarHoras(24);
                 break;
             case "colombia":
                 tipoCambio.textContent = "";
                 bancos.textContent = "Banco de Bogotá, Bancolombia y Nequi";
                 monto.textContent = "$5 USD";
                 tiempo.textContent = "24h no laborales";
+                fecha.innerText = sumarHoras(24);
                 break;
             default:
                 tipoCambio.textContent = "Ninguno";

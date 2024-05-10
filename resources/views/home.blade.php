@@ -171,7 +171,7 @@
                 </div>
                 <div class="mt-5 text-center">
                     <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                    <button type="button" id="paypal-fecha" class="btn btn-primary">/button>
                 </div>
             </div>
         </div>
@@ -284,7 +284,7 @@
                 </div>
                 <div class="mt-5 text-center">
                     <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                    <button type="button" id="usdt-fecha" class="btn btn-primary"></button>
                 </div>
             </div>
         </div>
@@ -386,7 +386,7 @@
                 </div>
                 <div class="mt-5 text-center">
                     <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                    <button type="button" id="zinli-fecha" class="btn btn-primary"></button>
                 </div>
             </div>
         </div>
@@ -506,7 +506,7 @@
                 </div>
                 <div class="mt-5 text-center">
                     <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                    <button type="button" id="peru-fecha" class="btn btn-primary"></button>
                 </div>
             </div>
         </div>
