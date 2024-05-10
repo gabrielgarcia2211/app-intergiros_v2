@@ -650,7 +650,7 @@ export default {
                 inputGroupFile01: null,
                 inputGroupFile02: null,
             },
-            isVisibleForm: 4,
+            isVisibleForm: 1,
             selectedOptionRedes: null,
             errors: {},
             dynamicRulesRed: {},
