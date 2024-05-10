@@ -16,13 +16,13 @@ class UsersSeeder extends Seeder
     {
         $adminUser = User::create([
             'name' => 'Admin User',
-            'email' => 'gabriel@gmail.com',
+            'email' => 'admin@intergiros.com',
             'password' => bcrypt('password'), // Cambia 'password' por la contraseña deseada
         ]);
 
         $clientUser = User::create([
             'name' => 'Client User',
-            'email' => 'client@example.com',
+            'email' => 'client@intergiros.com',
             'password' => bcrypt('password'), // Cambia 'password' por la contraseña deseada
         ]);
 
