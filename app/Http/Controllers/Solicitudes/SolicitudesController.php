@@ -51,7 +51,6 @@ class SolicitudesController extends Controller
 
             $solicitud = new Solicitudes;
             $formulario = TipoFormulario::find($tipo_formulario_id);
-            $solicitud->uuid = generateCodReferencia(Auth()->user()->id);
             $solicitud->tipo_formulario_id = $tipo_formulario_id;
             $solicitud->tipo_moneda_id = $tipo_moneda_id;
             $solicitud->depositante_id = $depositante_id;
@@ -69,13 +68,16 @@ class SolicitudesController extends Controller
                 $solicitud->producto_id = $producto['id'];
                 $solicitud->revisiones = $producto['revisiones'];
             }
-            
+
             $solicitud->user_id = Auth()->user()->id;
             $solicitud->estado_id = ($tipo_formulario_id == 1) ? $estado_iniciado_id : $estado_en_proceso_id;
-    
+
             if (isset($referencia_pago)) {
                 $solicitud->voucher_referencia_cliente = $this->fileService->saveFile($referencia_pago, Auth()->user()->id, 'voucher_referencia_cliente');
             }
+            $solicitud->save();
+
+            $solicitud->uuid = $solicitud->id;
             $solicitud->save();
 
             return Response::sendResponse($solicitud, 'Registro creado con exito.');

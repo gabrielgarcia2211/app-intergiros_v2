@@ -24,7 +24,7 @@ class CreateSolicitudesTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->integer('estado_id')->unsigned()->nullable();
             $table->string('monto_a_pagar');
-            $table->string('monto_a_pagar_comision');
+            $table->string('monto_a_pagar_comision')->nullable();
             $table->string('monto_a_recibir');
             $table->string('revisiones')->nullable();
             $table->string('voucher_referencia', 255)->nullable();
