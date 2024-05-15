@@ -9,7 +9,7 @@ class FileService
 {
     public function saveFile(UploadedFile $file, $userId, $subfolder = null, $disk = 'comprobante_disk')
     {
-        $filename = time() . '_' . $file->getClientOriginalName() . rand(1, 1000);
+        $filename = time() . '_' . rand(1, 1000) . $file->getClientOriginalName();
         $path = $this->buildPath($userId, $subfolder, $filename);
         $file->storeAs('', $path, $disk);
         return $path;
