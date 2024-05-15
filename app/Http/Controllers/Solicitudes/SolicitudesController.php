@@ -71,14 +71,14 @@ class SolicitudesController extends Controller
 
             $solicitud->user_id = Auth()->user()->id;
             $solicitud->estado_id = ($tipo_formulario_id == 1) ? $estado_iniciado_id : $estado_en_proceso_id;
-
-            if (isset($referencia_pago)) {
-                $solicitud->voucher_referencia_cliente = $this->fileService->saveFile($referencia_pago, Auth()->user()->id, 'voucher_referencia_cliente');
-            }
             $solicitud->save();
 
             $solicitud->uuid = $solicitud->id;
-            $solicitud->save();
+            if ($solicitud->save()) {
+                if (isset($referencia_pago)) {
+                    $solicitud->voucher_referencia_cliente = $this->fileService->saveFile($referencia_pago, Auth()->user()->id, 'voucher_referencia_cliente');
+                }
+            }
 
             return Response::sendResponse($solicitud, 'Registro creado con exito.');
         } catch (\Exception $ex) {

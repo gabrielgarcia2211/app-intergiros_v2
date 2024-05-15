@@ -95,6 +95,7 @@ class LoginController extends Controller
             $user->pais_telefono_id = $request->input('tipoCelular');
             $user->documento = $request->input('documento');
             $user->tipo_documento_id = $request->input('tipoDocumento');
+            $user->save();
             if (
                 !empty($request->file('inputGroupFile01'))
                 && !empty($request->file('inputGroupFile02'))

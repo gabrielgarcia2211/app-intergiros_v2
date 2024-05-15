@@ -15,7 +15,7 @@ class CreateSolicitudesTable extends Migration
     {
         Schema::create('solicitudes', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid');
+            $table->string('uuid')->nullable();
             $table->bigInteger('tipo_formulario_id')->unsigned();
             $table->bigInteger('tipo_moneda_id')->unsigned();
             $table->bigInteger('depositante_id')->unsigned();
