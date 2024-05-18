@@ -163,6 +163,9 @@
                                 :class="{
                                     'p-invalid': errors.fehaNacimiento,
                                 }"
+                                :manualInput="false"
+                                :minDate="minDate" 
+                                :maxDate="maxDate"
                             />
                             <small
                                 v-if="errors.fehaNacimiento"
@@ -551,11 +554,15 @@
                 <div class="text-center mt-5">
                     <i class="fas fa-check fa-7x"></i>
                     <br />
-                    <h2 id="miH2"><strong></strong></h2>
+                    <h2 id="miH2">
+                        <strong>
+                            {{ registroForm.nombre }} 
+                            {{ registroForm.apellido }}
+                        </strong>
+                    </h2>
                     <h4>
                         <strong
-                            >Hola {{ registroForm.nombre }}
-                            {{ registroForm.apellido }}, !Te damos la bienvenida
+                            >¡Te damos la bienvenida
                             a la familia Intergiros!</strong
                         >
                     </h4>
@@ -624,6 +631,9 @@
 <script>
 // Importar Librerias o Modulos
 import * as Yup from "yup";
+import { ref } from "vue";
+
+const validDomains = ['hotmail.com', 'gmail.com', 'outlook.com', 'yahoo.es', 'yahoo.com'];
 
 export default {
     data() {
@@ -693,11 +703,22 @@ export default {
         },
         async validateFormInfoGeneral() {
             const schema = Yup.object().shape({
-                nombre: Yup.string().required("El nombre es obligatorio"),
-                apellido: Yup.string().required("El apellido es obligatorio"),
+                nombre: Yup.string()
+                    .required("El nombre es obligatorio")
+                    .min(3, 'El nombre debe tener al menos 3 caracteres')
+                    .max(5, "El nombre no debe tener mas de 20 caracteres"),
+                apellido: Yup.string()
+                    .required("El apellido es obligatorio")
+                    .min(3, 'El apellido debe tener al menos 3 caracteres')
+                    .max(5, "El apellido no debe tener mas de 20 caracteres"),
                 correo: Yup.string()
                     .email("El formato del correo electrónico no es válido")
-                    .required("El beneficiario es obligatorio"),
+                    .required("El beneficiario es obligatorio")
+                    .test('is-valid-domain', 'El dominio del correo electrónico no es válido', (value) => {
+                        if (!value) return true;
+                        const domain = value.split('@')[1];
+                        return validDomains.includes(domain);
+                        }),
                 pais: Yup.string().required("El pais es obligatorio"),
                 tipoCelular: Yup.string().required(
                     "El numero indicativo es obligatorio"
@@ -770,7 +791,10 @@ export default {
                     break;
                 case "verificacion":
                     this.dynamicRulesVerificacion.documento =
-                        Yup.string().required("El documento es obligatorio");
+                        Yup.string()
+                            .required("El documento es obligatorio")
+                            .min(5, "El documento debe tener al menos 5 caracteres")
+                            .max(5, "El documento no debe tener mas de 15 caracteres");
                     this.dynamicRulesVerificacion.tipoDocumento =
                         Yup.string().required(
                             "El tipo documento es obligatorio"
@@ -898,6 +922,13 @@ export default {
                 });
             }
         },
+    },
+    setup() {
+        const date = ref(null);
+        const minDate = ref(new Date(1930, 0, 1));
+        const maxDate = ref(new Date(2008, 11, 31));
+
+        return { date, minDate, maxDate };
     },
 };
 </script>
