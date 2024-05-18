@@ -128,7 +128,7 @@
                                     placeholder="CI"
                                     :optionLabel="optionLabelFunction"
                                     optionValue="id"
-                                    style="width: 30%"
+                                    style="width: 31%;"
                                     class="input-indicativo"
                                     :class="{
                                         'p-invalid': errors.tipoCelular,
@@ -141,6 +141,7 @@
                                     placeholder="Número celular"
                                     class="input-telefono"
                                     style="width: 80%"
+                                    :useGrouping="false"
                                     :class="{
                                         'p-invalid': errors.celular,
                                     }"
