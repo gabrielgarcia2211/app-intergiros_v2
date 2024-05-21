@@ -115,8 +115,8 @@ class UserController extends Controller
         DB::beginTransaction();
         try {
 
-            if (Auth()->user()->verificado == 3) {
-                return Response::sendError('El usuario esta en proceso de verificacion', 422);
+            if (Auth()->user()->verificado == 3 || Auth()->user()->verificado == 1) {
+                return Response::sendError('El usuario esta en proceso de verificacion o ha sido verificado', 422);
             }
 
             $form_verificacion = $request->all()['formVerificacion'];

@@ -2,14 +2,14 @@ $(document).ready(async function () {
     await setLoadInputs();
 
     async function setLoadInputs() {
-        const comboNames = ["pais_telefono", "pais", "redes", "tipo_documento"];
+        const comboNames = ["pais_telefono", "pais", "redes", "tipo_documento_registro"];
 
         const response = await getComboRelations(comboNames);
         const {
             pais_telefono: responsePaisTelefono,
             pais: responsePais,
             redes: responseRedes,
-            tipo_documento: responseTipoDocumento,
+            tipo_documento_registro: responseTipoDocumento,
         } = response;
 
         $.each(responsePaisTelefono, function (key, value) {

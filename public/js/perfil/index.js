@@ -32,7 +32,7 @@ $(document).ready(async function () {
                 required: true,
             },
             nombreUsuario2: {
-                required: true,
+                /* required: true, */
             },
             redes2: {
                 required: true,
@@ -63,13 +63,13 @@ $(document).ready(async function () {
                 equalTo: "Las contraseñas no coinciden.",
             },
             nombreUsuario1: {
-                required: "El campo de nombre de usuario 1 es obligatorio",
+                required: "El campo de nombre de usuario es obligatorio",
             },
             redes1: {
                 required: "El campo redes 1 es obligatorio",
             },
-            nombreUsuario1: {
-                required: "El campo de nombre de usuario 2 es obligatorio",
+            nombreUsuario2: {
+                required: "El campo de nombre de usuario es obligatorio",
             },
             redes1: {
                 required: "El campo redes 2 es obligatorio",
@@ -157,22 +157,6 @@ $(document).ready(async function () {
 var tab1 = document.getElementById("tab1-tab");
 var tab2 = document.getElementById("tab2-tab");
 
-window.addEventListener("load", function () {
-    document.getElementById("fehaNacimiento").type = "text";
-
-    document
-        .getElementById("fehaNacimiento")
-        .addEventListener("blur", function () {
-            document.getElementById("fehaNacimiento").type = "text";
-        });
-
-    document
-        .getElementById("fehaNacimiento")
-        .addEventListener("focus", function () {
-            document.getElementById("fehaNacimiento").type = "date";
-        });
-});
-
 function habilitarElementos() {
     // Obtén todos los elementos <input>, <select> y <div> con la clase "input-group" en la página
     var elementos = document.querySelectorAll("input, select");
@@ -190,6 +174,25 @@ function habilitarElementos() {
     display2.style.display = "block";
     button2.style.display = "none";
     button1.style.display = "block";
+}
+
+function deshabilitarElementos() {
+    // Obtén todos los elementos <input>, <select> y <div> con la clase "input-group" en la página
+    var elementos = document.querySelectorAll("input, select");
+    var input = document.getElementById("ocultar");
+    var display1 = document.getElementById("passwordDisplay1");
+    var display2 = document.getElementById("passwordDisplay2");
+    var button1 = document.getElementById("actualizarDatos");
+    var button2 = document.getElementById("habilitarDatos");
+    // Recorre todos los elementos
+    elementos.forEach(function (elemento, index) {
+        elemento.disabled = index != 0;
+    });
+    input.style.display = "block";
+    display1.style.display = "none";
+    display2.style.display = "none";
+    button2.style.display = "block";
+    button1.style.display = "none";
 }
 
 function getUser() {
@@ -257,9 +260,12 @@ function updateUser() {
                 const responseData = response.data.data;
                 validarToken(responseData);
             })
-            .catch((error) => {
+            .catch(async (error) => {
                 Swal.close();
                 handleErrors(error);
+                var details = await getUser();
+                setUserDataFields(details);
+                deshabilitarElementos();
             });
     }
 }

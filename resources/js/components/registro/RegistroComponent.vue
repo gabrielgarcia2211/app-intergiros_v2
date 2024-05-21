@@ -125,15 +125,16 @@
                                     id="tipoIndicativo"
                                     v-model="registroForm.tipoCelular"
                                     :options="optionsCodigoI"
-                                    placeholder="CI"
+                                    placeholder="+"
                                     :optionLabel="optionLabelFunction"
                                     optionValue="id"
-                                    style="width: 31%;"
+                                    style="width: 31%"
                                     class="input-indicativo"
                                     :class="{
                                         'p-invalid': errors.tipoCelular,
                                     }"
                                     filter
+                                    @change="handleCodigoI"
                                 ></Dropdown>
                                 <InputNumber
                                     id=""
@@ -164,7 +165,7 @@
                                     'p-invalid': errors.fehaNacimiento,
                                 }"
                                 :manualInput="false"
-                                :minDate="minDate" 
+                                :minDate="minDate"
                                 :maxDate="maxDate"
                             />
                             <small
@@ -402,7 +403,7 @@
                                     v-model="registroForm.tipoDocumento"
                                     :options="optionsDocument"
                                     placeholder="TD"
-                                    :optionLabel="optionLabelFunction"
+                                    :optionLabel="'name'"
                                     optionValue="id"
                                     class="input-indicativo"
                                     style="width: 30%; text-align: left"
@@ -467,7 +468,10 @@
                                                 "
                                                 alt="Uploaded Image"
                                                 class="uploaded-image"
-                                                style="width: 400px; height: 320px;"
+                                                style="
+                                                    width: 400px;
+                                                    height: 320px;
+                                                "
                                                 @click="openModal"
                                             />
                                             <button
@@ -556,14 +560,14 @@
                     <br />
                     <h2 id="miH2">
                         <strong>
-                            {{ registroForm.nombre }} 
+                            {{ registroForm.nombre }}
                             {{ registroForm.apellido }}
                         </strong>
                     </h2>
                     <h4>
                         <strong
-                            >¡Te damos la bienvenida
-                            a la familia Intergiros!</strong
+                            >¡Te damos la bienvenida a la familia
+                            Intergiros!</strong
                         >
                     </h4>
                     <br /><br />
@@ -571,7 +575,10 @@
                 </div>
                 <div class="form-row mt-5">
                     <div class="col-md-4 button text-center">
-                        <a class="btn btn-primary mb-2" href="#"
+                        <a
+                            class="btn btn-primary mb-2"
+                            href="#"
+                            @click="showContactar"
                             >Contactarnos</a
                         >
                     </div>
@@ -581,7 +588,7 @@
                         >
                     </div>
                     <div class="col-md-4 button text-center">
-                        <a class="btn btn-primary mb-2" href="/historial"
+                        <a class="btn btn-primary mb-2" href="/servicios"
                             >Ir al panel de envios</a
                         >
                     </div>
@@ -627,13 +634,59 @@
             >
         </template>
     </Dialog>
+
+    <Dialog v-model:visible="isContact" style="width: 450px">
+        <div style="text-align: center; font-size: 20px;padding: 20px">
+            Selecciona la plataforma a la cual deseas contactarnos
+        </div>
+        <template #footer>
+            <a
+                class="btn-primary"
+                style="
+                    font-size: 18px;
+                    text-align: center;
+                    border-radius: 25px;
+                    background-color: #0035aa;
+                    display: inline-block;
+                    padding: 10px 20px;
+                    color: white !important;
+                    text-decoration: none;
+                "
+                href="https://www.facebook.com/intergiros.oficial"
+                target="_blank"
+                >Facebook</a
+            >
+            <a
+                class="btn-primary"
+                style="
+                    font-size: 18px;
+                    text-align: center;
+                    border-radius: 25px;
+                    background-color: #0035aa;
+                    display: inline-block;
+                    padding: 10px 20px;
+                    color: white !important;
+                    text-decoration: none;
+                "
+                href="https://www.instagram.com/intergiros.oficial"
+                target="_blank"
+                >Instagram
+            </a>
+        </template>
+    </Dialog>
 </template>
 <script>
 // Importar Librerias o Modulos
 import * as Yup from "yup";
 import { ref } from "vue";
 
-const validDomains = ['hotmail.com', 'gmail.com', 'outlook.com', 'yahoo.es', 'yahoo.com'];
+const validDomains = [
+    "hotmail.com",
+    "gmail.com",
+    "outlook.com",
+    "yahoo.es",
+    "yahoo.com",
+];
 
 export default {
     data() {
@@ -661,13 +714,14 @@ export default {
                 inputGroupFile01: null,
                 inputGroupFile02: null,
             },
-            isVisibleForm: 1,
+            isVisibleForm: 5,
             selectedOptionRedes: null,
             errors: {},
             dynamicRulesRed: {},
             dynamicRulesVerificacion: {},
             isVisibleRed2: false,
             isOmitir: false,
+            isContact: false,
         };
     },
     components: {},
@@ -683,14 +737,14 @@ export default {
     methods: {
         async initCombos() {
             const comboNames = [
-                "tipo_documento",
+                "tipo_documento_registro",
                 "pais_telefono",
                 "pais",
                 "redes",
             ];
             const response = await this.$getComboRelations(comboNames);
             const {
-                tipo_documento: responseTipoDocumento,
+                tipo_documento_registro: responseTipoDocumento,
                 pais_telefono: responsePaisTelefono,
                 redes: responseRedes,
                 pais: responsePais,
@@ -705,20 +759,24 @@ export default {
             const schema = Yup.object().shape({
                 nombre: Yup.string()
                     .required("El nombre es obligatorio")
-                    .min(3, 'El nombre debe tener al menos 3 caracteres')
-                    .max(5, "El nombre no debe tener mas de 20 caracteres"),
+                    .min(3, "El nombre debe tener al menos 3 caracteres")
+                    .max(20, "El nombre no debe tener mas de 20 caracteres"),
                 apellido: Yup.string()
                     .required("El apellido es obligatorio")
-                    .min(3, 'El apellido debe tener al menos 3 caracteres')
-                    .max(5, "El apellido no debe tener mas de 20 caracteres"),
+                    .min(3, "El apellido debe tener al menos 3 caracteres")
+                    .max(20, "El apellido no debe tener mas de 20 caracteres"),
                 correo: Yup.string()
                     .email("El formato del correo electrónico no es válido")
                     .required("El beneficiario es obligatorio")
-                    .test('is-valid-domain', 'El dominio del correo electrónico no es válido', (value) => {
-                        if (!value) return true;
-                        const domain = value.split('@')[1];
-                        return validDomains.includes(domain);
-                        }),
+                    .test(
+                        "is-valid-domain",
+                        "El dominio del correo electrónico no es válido",
+                        (value) => {
+                            if (!value) return true;
+                            const domain = value.split("@")[1];
+                            return validDomains.includes(domain.toLowerCase());
+                        }
+                    ),
                 pais: Yup.string().required("El pais es obligatorio"),
                 tipoCelular: Yup.string().required(
                     "El numero indicativo es obligatorio"
@@ -790,11 +848,13 @@ export default {
                     }
                     break;
                 case "verificacion":
-                    this.dynamicRulesVerificacion.documento =
-                        Yup.string()
-                            .required("El documento es obligatorio")
-                            .min(5, "El documento debe tener al menos 5 caracteres")
-                            .max(5, "El documento no debe tener mas de 15 caracteres");
+                    this.dynamicRulesVerificacion.documento = Yup.string()
+                        .required("El documento es obligatorio")
+                        .min(5, "El documento debe tener al menos 5 caracteres")
+                        .max(
+                            15,
+                            "El documento no debe tener mas de 15 caracteres"
+                        );
                     this.dynamicRulesVerificacion.tipoDocumento =
                         Yup.string().required(
                             "El tipo documento es obligatorio"
@@ -848,6 +908,14 @@ export default {
                 }
             }
         },
+        handleCodigoI(event) {
+            const selectedObj = this.optionsCodigoI.find(
+                (option) => option.id === event.value
+            );
+            if (selectedObj) {
+                $("#tipoIndicativo > .p-dropdown-label").text(selectedObj.name);
+            }
+        },
         optionLabelFunction(option) {
             return `${option.name} - ${option.valor1}`;
         },
@@ -864,6 +932,9 @@ export default {
                 toggleIcon.classList.remove("fa-eye-slash");
                 toggleIcon.classList.add("fa-eye");
             }
+        },
+        showContactar() {
+            this.isContact = true;
         },
         addRed() {
             this.isVisibleRed2 = true;

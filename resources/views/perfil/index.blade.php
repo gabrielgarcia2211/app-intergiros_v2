@@ -23,12 +23,12 @@
             </div>
             <div class="col-md-9">
                 <h4><strong>User ID #000-{{ Auth()->user()->id }}</strong></h4>
-                <h4>{{ Auth()->user()->name }}</h4>
+                <h4>{{ Auth()->user()->name }} {{ Auth()->user()->apellidos }}</h4>
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-md-3 text-center">
-                <a href="">Cambiar foto</a>
+                <a href="#">Cambiar foto</a>
             </div>
             <div class="col-md-9">
 
@@ -150,14 +150,11 @@
                                 @if (Auth()->user()->verificado == 0)
                                     <strong>Sin verificar</strong>
                                 @elseif(Auth()->user()->verificado == 1)
-                                    <strong>Verificado</strong>
+                                    <strong style="color: rgb(85, 170, 0)">Aprobado</strong>
                                 @elseif(Auth()->user()->verificado == 2)
-                                    <strong>Rechazado</strong>
-                                    <p style="color: red">Los documentos cargados no cumplen con los requisitos solicitados
-                                    </p>
+                                    <strong style="color: red">Rechazado</strong>
                                 @elseif(Auth()->user()->verificado == 3)
-                                    <strong>Solicitud en verificación</strong>
-                                    <p style="color: #2B93E7"><b>En proceso de verificación<b></p>
+                                    <strong  style="color: rgb(0, 53, 170)">Verificación en proceso</strong>
                                 @endif
                             </p>
                         </div>
@@ -220,7 +217,7 @@
                         <br>
                         <div class="text-center mt-5 button">
                             <button type="button" class="btn btn-primary mb-2" onclick="updateVerification()"
-                                style="background-color: #0035aa" @if (auth()->user()->verificado === 3) disabled @endif>
+                                style="background-color: #0035aa" @if (auth()->user()->verificado === 3 || auth()->user()->verificado === 1) disabled @endif>
                                 Solicitar verificación
                             </button>
                         </div>
