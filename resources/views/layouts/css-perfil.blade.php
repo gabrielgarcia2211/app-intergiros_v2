@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-    <link href="{{ asset('css/perfil.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/home-auth.css') }}?v={{ uniqid() }}" rel="stylesheet" />
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -44,7 +44,7 @@
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
     </script>
 
-    <script src="{{ asset('js/general/index.js') }}"></script>
+    <script src="{{ asset('js/general/index.js') }}?v={{ uniqid() }}"></script>
     @yield('script')
 
 </body>

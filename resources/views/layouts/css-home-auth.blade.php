@@ -11,13 +11,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-    <link href="{{ asset('css/home-auth.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/home-auth.css') }}?v={{ uniqid() }}" rel="stylesheet" />
+
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Scripts -->
-    @vite([/* 'resources/sass/app.scss',  */'resources/js/app.js'])
+    @vite([/* 'resources/sass/app.scss',  */ 'resources/js/app.js'])
     <title>{{ config('app.name', 'Laravel') }}</title>
 
 </head>
@@ -29,9 +30,11 @@
         </main>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{ asset('js/general/index.js') }}"></script>
-    <script src="{{ asset('js/home/index.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('js/general/index.js') }}?v={{ uniqid() }}"></script>
+    <script src="{{ asset('js/home/index.js') }}?v={{ uniqid() }}"></script>
     @yield('script')
 
 </body>
