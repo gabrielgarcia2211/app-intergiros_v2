@@ -245,6 +245,6 @@
     <script>
         var user_verificado = {!! json_encode(auth()->user()->verificado) !!}
     </script>
-    <script src="{{ asset('js/perfil/input.js') }}"></script>
-    <script src="{{ asset('js/perfil/index.js') }}"></script>
+   <script src="{{ asset('js/perfil/input.js') }}?v={{ uniqid() }}"></script>
+   <script src="{{ asset('js/perfil/index.js') }}?v={{ uniqid() }}"></script>   
 @endsection
