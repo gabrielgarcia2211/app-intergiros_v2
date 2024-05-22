@@ -1017,7 +1017,7 @@ export default {
         },
         handleSelectBanco(event) {
             this.placeholderCuenta = "Número de cuenta";
-            var bancosPeru = ["bcp", "interbank", "bbva"];
+            var bancosPeru = ["bcp_pen", "interbank_pen", "bbva_pen"];
             let banco = this.optionsBancos.find((item) => {
                 return item.id == event.value;
             });

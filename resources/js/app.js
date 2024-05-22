@@ -86,12 +86,14 @@ import UsdtComponent from "./components/envio/servicios/UsdtComponent.vue";
 import ZinliComponent from "./components/envio/servicios/ZinliComponent.vue";
 import PeruComponent from "./components/envio/servicios/PeruComponent.vue";
 import PeruUSDComponent from "./components/envio/servicios/PeruUSDComponent.vue";
+import ColombiaComponent from "./components/envio/servicios/ColombiaComponent.vue";
 app.component("servicio-component", ServicioComponent);
 app.component("servicio-paypal-component", PaypalComponent);
 app.component("servicio-usdt-component", UsdtComponent);
 app.component("servicio-zinli-component", ZinliComponent);
 app.component("servicio-peru-component", PeruComponent);
 app.component("servicio-peru-usd-component", PeruUSDComponent);
+app.component("servicio-colombia-component", ColombiaComponent);
 
 // Importacion de componentes carrusel
 import CarouselComponent from "./components/envio/CarouselComponent.vue";

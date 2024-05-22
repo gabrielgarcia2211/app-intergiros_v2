@@ -73,13 +73,16 @@
             :idService="idService"
             :monedaId="monedaId"
         ></servicio-peru-usd-component>
+        <!-- <servicio-colombia-component
+            v-if="checkService == 'TP-06' && monedaId"
+            :idService="idService"
+            :monedaId="monedaId"
+            :optionsMonedas="optionsMonedas"
+        ></servicio-colombia-component> -->
     </div>
 </template>
 <script>
 // Importar Librerias o Modulos
-import PaypalComponent from "./servicios/PaypalComponent.vue";
-import UsdtComponent from "./servicios/UsdtComponent.vue";
-import ZinliComponent from "./servicios/ZinliComponent.vue";
 
 export default {
     data() {
@@ -93,11 +96,7 @@ export default {
             selectedMoneda: null,
         };
     },
-    components: {
-        PaypalComponent,
-        UsdtComponent,
-        ZinliComponent,
-    },
+    components: {},
     created() {
         this.initSelects();
     },
@@ -110,6 +109,7 @@ export default {
             this.idService = null;
             this.checkService = null;
             this.optionsMonedas = null;
+            this.monedaId = null;
             switch (currentService.codigo) {
                 case "TP-01":
                     this.idService = currentService.id;
@@ -138,6 +138,13 @@ export default {
                     this.checkService = currentService.codigo;
                     this.optionsMonedas = await this.getMonedaByCodigo(
                         "VES,COP"
+                    );
+                    break;
+                case "TP-06":
+                    this.idService = currentService.id;
+                    this.checkService = currentService.codigo;
+                    this.optionsMonedas = await this.getMonedaByCodigo(
+                        "VES,PEN,USD"
                     );
                     break;
                 default:
