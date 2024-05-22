@@ -236,7 +236,7 @@ class CoreMasterComboBancosSeeder extends Seeder
                     DB::table('master_combos')->insert([
                         'parent_id' => $father_id,
                         'name' => $child['name'],
-                        //'code' => strtolower(str_replace(' ', '_',  $this->removeAccents($child['name']))) . "_" . strtolower($child['valor1']),
+                        'code' => strtolower(str_replace(' ', '_',  $this->removeAccents($child['name']))) . "_" . strtolower($child['valor1']),
                         'valor1' => $child['valor1'],
                         'status' => true
                     ]);
