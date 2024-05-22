@@ -109,6 +109,7 @@ export default {
             this.idService = null;
             this.checkService = null;
             this.optionsMonedas = null;
+            this.selectedMoneda = null;
             this.monedaId = null;
             switch (currentService.codigo) {
                 case "TP-01":
