@@ -778,7 +778,7 @@ export default {
                         (value) => {
                             if (!value) return true;
                             const domain = value.split("@")[1];
-                            return validDomains.includes(domain);
+                            return this.validDomains.includes(domain);
                         }
                     ),
                 pais: Yup.string().required("El pais es obligatorio"),
