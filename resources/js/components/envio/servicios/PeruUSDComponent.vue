@@ -106,6 +106,7 @@
                                 placeholder="Número documento"
                                 class="w-full md:w-14rem input-telefono"
                                 style="width: 80%"
+                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsBeneficiario.documentoBeneficiario,
@@ -175,6 +176,7 @@
                                 :placeholder="placeholderCuenta"
                                 style="width: 80%"
                                 class="w-full md:w-14rem input-telefono"
+                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsBeneficiario.cuentaBeneficiario,
@@ -383,6 +385,7 @@
                                 placeholder="Número documento"
                                 class="w-full md:w-14rem input-telefono"
                                 style="width: 80%"
+                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsDepositante.documentoDepositante,
@@ -446,6 +449,7 @@
                                 :placeholder="'Cuenta en dolares'"
                                 style="width: 80%"
                                 class="w-full md:w-14rem input-telefono"
+                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsDepositante.cuentaDepositante,
@@ -481,6 +485,7 @@
                                 }"
                                 :disabled="isEditDepositante"
                                 filter
+                                @change="handleCodigoI"
                             ></Dropdown>
                             <InputNumber
                                 id=""
@@ -488,6 +493,7 @@
                                 placeholder="Número celular"
                                 class="w-full md:w-14rem input-telefono"
                                 style="width: 80%"
+                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsDepositante.celularDepositante,
@@ -636,6 +642,18 @@
                         placeholder="Monto a cambiar"
                         @input="convertService"
                     />
+                    <small
+                        v-if="montoBruto < 5 || montoBruto > 500"
+                        style="display: block; font-size: 16px"
+                        class="p-error"
+                        ><p v-if="montoBruto < 5">
+                            El monto debe ser mayor a 5,00
+                        </p>
+                        <p v-else-if="montoBruto > 500">
+                            El monto debe ser menor a 500,00
+                        </p>
+                        </small
+                    >
                     <div class="mt-5">
                         <p style="color: #0035aa">
                             {{}}
@@ -746,6 +764,18 @@ export default {
             optionsDocumentDepositantePeru: [],
             selectedBeneficiario: null,
             selectedDepositante: null,
+            validDomains: [
+                "hotmail.com",
+                "HOTMIAL.COM",
+                "gmail.com",
+                "GMAIL.COM",
+                "outlook.com",
+                "OUTLOOK.COM",
+                "yahoo.es",
+                "YAHOO.ES",
+                "yahoo.com",
+                "YAHOO.COM",
+            ],
             /** Formulario Beneficario*/
             formBeneficiarioVisible: false,
             beneficiarioForm: {
@@ -887,7 +917,9 @@ export default {
                 ),
                 documentoBeneficiario: Yup.string().required(
                     "El documento es obligatorio"
-                ),
+                )
+                .min(5, "El documento debe tener al menos 5 caracteres")
+                .max(15, "El documento no debe tener mas de 15 caracteres"),
                 tipoCuentaBeneficiario: Yup.string().required(
                     "El tipo banco es obligatorio"
                 ),
@@ -927,7 +959,9 @@ export default {
                 ),
                 documentoDepositante: Yup.string().required(
                     "El documento es obligatorio"
-                ),
+                )
+                .min(5, "El documento debe tener al menos 5 caracteres")
+                .max(15, "El documento no debe tener mas de 15 caracteres"),
                 tipoCuentaDepositante: Yup.string().required(
                     "El tipo banco es obligatorio"
                 ),
@@ -1011,6 +1045,14 @@ export default {
             });
             if (bancosPeru.includes(banco.code)) {
                 this.placeholderCuenta = "Código de cuenta interbancario";
+            }
+        },
+        handleCodigoI(event) {
+            const selectedObj = this.optionsCodigoI.find(
+                (option) => option.id === event.value
+            );
+            if (selectedObj) {
+                $("#codigoIDepositante > .p-dropdown-label").text(selectedObj.name);
             }
         },
         async initBeneficiario() {

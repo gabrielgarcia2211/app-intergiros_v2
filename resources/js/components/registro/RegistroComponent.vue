@@ -680,14 +680,6 @@
 import * as Yup from "yup";
 import { ref } from "vue";
 
-const validDomains = [
-    "hotmail.com",
-    "gmail.com",
-    "outlook.com",
-    "yahoo.es",
-    "yahoo.com",
-];
-
 export default {
     data() {
         return {
@@ -714,6 +706,18 @@ export default {
                 inputGroupFile01: null,
                 inputGroupFile02: null,
             },
+            validDomains: [
+                "hotmail.com",
+                "HOTMIAL.COM",
+                "gmail.com",
+                "GMAIL.COM",
+                "outlook.com",
+                "OUTLOOK.COM",
+                "yahoo.es",
+                "YAHOO.ES",
+                "yahoo.com",
+                "YAHOO.COM",
+            ],
             isVisibleForm: 1,
             selectedOptionRedes: null,
             errors: {},
@@ -774,7 +778,7 @@ export default {
                         (value) => {
                             if (!value) return true;
                             const domain = value.split("@")[1];
-                            return validDomains.includes(domain.toLowerCase());
+                            return validDomains.includes(domain);
                         }
                     ),
                 pais: Yup.string().required("El pais es obligatorio"),
