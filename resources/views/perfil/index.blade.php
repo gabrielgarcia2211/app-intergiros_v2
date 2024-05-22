@@ -16,7 +16,11 @@
     <div class="container mt-5 contenedor-perfil">
         <div class="row">
             <div class="col-md-3 text-center">
-                <img src="{{ asset('img/perfil/people.jpg') }}" alt="" width="200px">
+                @if (empty(Auth()->user()->path_foto_perfil))
+                    <img src="{{ asset('img/perfil/people.jpg') }}" alt="" width="200px">
+                @else
+                    <img src="{{ asset('comprobantes/' . Auth()->user()->path_foto_perfil) }}" alt="" width="200px" height="200px">
+                @endif
                 @if (Auth()->user()->verificado == 1)
                     <img src="{{ asset('img/perfil/verificado.png') }}" alt="" width="50px" class="verificado">
                 @endif
@@ -28,7 +32,12 @@
         </div>
         <div class="row mt-2">
             <div class="col-md-3 text-center">
-                <a href="#">Cambiar foto</a>
+                @if (empty(Auth()->user()->path_foto_perfil))
+                    <label for="file-upload" class="custom-file-upload">Subir foto</label>
+                    <input id="file-upload" type="file" style="display:none;" onchange="updateFoto(this, 'UP')">
+                @else
+                    <a href="#" onclick="updateFoto({}, 'DELETE')">Eliminar foto</a>
+                @endif
             </div>
             <div class="col-md-9">
 
@@ -96,8 +105,8 @@
                             </div>
                             <div class="form-group col-md-6" style="display: none;" id="passwordDisplay2">
                                 <div class="input-group">
-                                    <input type="password" class="form-control" id="inputPassword2" name="inputPassword2"
-                                        placeholder="Nueva contraseña">
+                                    <input type="password" class="form-control" id="inputPassword2"
+                                        name="inputPassword2" placeholder="Nueva contraseña">
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="fa fa-eye toggle-password" data-toggle="password"
@@ -154,7 +163,7 @@
                                 @elseif(Auth()->user()->verificado == 2)
                                     <strong style="color: red">Rechazado</strong>
                                 @elseif(Auth()->user()->verificado == 3)
-                                    <strong  style="color: rgb(0, 53, 170)">Verificación en proceso</strong>
+                                    <strong style="color: rgb(0, 53, 170)">Verificación en proceso</strong>
                                 @endif
                             </p>
                         </div>

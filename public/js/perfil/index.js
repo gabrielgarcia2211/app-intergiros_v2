@@ -26,7 +26,7 @@ $(document).ready(async function () {
                 minlength: 6,
             },
             nombreUsuario1: {
-                required: true,
+                /* required: true, */
             },
             redes1: {
                 required: true,
@@ -379,3 +379,25 @@ function toUpperCaseInput() {
 inputs.forEach(function (input) {
     input.addEventListener("input", toUpperCaseInput);
 });
+
+function updateFoto(input, is_delete) {
+    if ((input && input.files && input.files[0]) || is_delete == "DELETE") {
+        var formData = new FormData();
+        if (input && input.files) {
+            formData.append("foto", input.files[0]);
+        }
+        formData.append("is_delete", is_delete);
+        axios
+            .post("/perfil/foto", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((response) => {
+                location.reload();
+            })
+            .catch((error) => {
+                handleErrors(error);
+            });
+    }
+}

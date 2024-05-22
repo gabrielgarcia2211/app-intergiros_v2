@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Models\User;
 use App\Mail\TokenGenerated;
 use App\Models\Perfil\Token;
+use Illuminate\Http\Request;
 use App\Services\FileService;
 use App\Models\Registro\UserRedes;
 use Illuminate\Support\Facades\DB;
@@ -128,6 +129,29 @@ class UserController extends Controller
             $user->path_selfie = $this->fileService->saveFile($form_verificacion['inputGroupFile01'], Auth()->user()->id, 'verificacion');
             $user->path_documento = $this->fileService->saveFile($form_verificacion['inputGroupFile02'], Auth()->user()->id, 'verificacion');
             $user->verificado = 3;
+            $user->save();
+            DB::commit();
+            return Response::sendResponse($user, 'Perfil actualizado con exito.');
+        } catch (\Exception $ex) {
+            DB::rollback();
+            Log::debug($ex->getMessage());
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
+        }
+    }
+
+    public function updateFoto(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $isDelete = $request->input('is_delete');
+            $foto = $request->file('foto');
+            $user = User::find(Auth()->user()->id);
+            $this->fileService->deleteFile($user->path_foto_perfil);
+            if ($isDelete == "DELETE") {
+                $user->path_foto_perfil = null;
+            } else {
+                $user->path_foto_perfil = $this->fileService->saveFile($foto, Auth()->user()->id, 'foto_perfil');
+            }
             $user->save();
             DB::commit();
             return Response::sendResponse($user, 'Perfil actualizado con exito.');

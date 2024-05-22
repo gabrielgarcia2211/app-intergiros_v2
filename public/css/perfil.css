@@ -230,13 +230,13 @@ p {
     font-size: 20px;
     font-family: 'Lato', sans-serif !important;
 }
+
+.custom-file-upload {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 /* FIN VERIFICACION */
-
-
-
-
-
-
 
 
 /* FOOTER */

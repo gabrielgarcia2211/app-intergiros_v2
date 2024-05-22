@@ -34,6 +34,7 @@ class User extends Authenticatable
         'tipo_documento_id',
         'path_selfie',
         'path_documento',
+        'path_foto_perfil',
         'verificado'
     ];
 
