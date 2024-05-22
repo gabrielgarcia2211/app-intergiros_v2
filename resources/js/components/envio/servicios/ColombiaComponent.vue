@@ -2,7 +2,7 @@
     <div class="panel container mt-5" id="panel-paypal">
         <div class="text-center">
             <p style="font-size: 18px">
-                <strong>Peru</strong>
+                <strong>Colombia</strong>
             </p>
             <p style="font-size: 18px">
                 <strong>Tiempo aproximado de espera:</strong> 8 horas laborales
@@ -106,7 +106,6 @@
                                 placeholder="Número documento"
                                 class="w-full md:w-14rem input-telefono"
                                 style="width: 80%"
-                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsBeneficiario.documentoBeneficiario,
@@ -176,7 +175,6 @@
                                 :placeholder="placeholderCuenta"
                                 style="width: 80%"
                                 class="w-full md:w-14rem input-telefono"
-                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsBeneficiario.cuentaBeneficiario,
@@ -191,7 +189,7 @@
                             >{{ errorsBeneficiario.cuentaBeneficiario }}</small
                         >
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" v-if="monedaValue == 'Bolivar'">
                         <InputText
                             v-model="beneficiarioForm.pagoMovilBeneficiario"
                             placeholder="Pago móvil"
@@ -366,7 +364,7 @@
                                 v-model="
                                     depositanteForm.tipoDocumentoDepositante
                                 "
-                                :options="optionsDocumentDepositantePeru"
+                                :options="optionsDocumentDepositante"
                                 placeholder="TD"
                                 optionLabel="name"
                                 optionValue="id"
@@ -385,7 +383,6 @@
                                 placeholder="Número documento"
                                 class="w-full md:w-14rem input-telefono"
                                 style="width: 80%"
-                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsDepositante.documentoDepositante,
@@ -401,67 +398,23 @@
                         >
                     </div>
                     <div class="form-group">
-                        <Dropdown
-                            id="selectBanco"
-                            v-model="depositanteForm.bancoDepositante"
-                            :options="optionsBancosPeru"
-                            placeholder="Bancos"
-                            optionLabel="name"
-                            optionValue="id"
+                        <InputText
+                            v-model="depositanteForm.correoDepositante"
+                            placeholder="Correo Electronico"
                             class="w-full md:w-14rem input-registro"
-                            style="width: 80%; text-align: left"
+                            style="width: 80%"
                             :class="{
-                                'p-invalid': errorsDepositante.bancoDepositante,
+                                'p-invalid':
+                                    errorsDepositante.correoDepositante,
                                 'input-readonly': isEditDepositante,
                             }"
-                            :disabled="isEditDepositante"
+                            :readOnly="isEditDepositante"
                         />
                         <small
-                            v-if="errorsDepositante.bancoDepositante"
+                            v-if="errorsDepositante.correoDepositante"
                             style="display: block"
                             class="p-error"
-                            >{{ errorsDepositante.bancoDepositante }}</small
-                        >
-                    </div>
-                    <div
-                        class="form-group"
-                        style="width: 80%; display: inline-block"
-                    >
-                        <InputGroup>
-                            <Dropdown
-                                id="tipoCuentaDepositante"
-                                v-model="depositanteForm.tipoCuentaDepositante"
-                                :options="optionsTipoCuenta"
-                                placeholder="Cuenta"
-                                optionLabel="name"
-                                optionValue="id"
-                                style="width: 30%"
-                                class="input-indicativo"
-                                :class="{
-                                    'p-invalid':
-                                        errorsDepositante.tipoCuentaDepositante,
-                                    'input-readonly': isEditDepositante,
-                                }"
-                                :disabled="isEditDepositante"
-                            ></Dropdown>
-                            <InputNumber
-                                v-model="depositanteForm.cuentaDepositante"
-                                :placeholder="'Cuenta en soles'"
-                                style="width: 80%"
-                                class="w-full md:w-14rem input-telefono"
-                                :useGrouping="false"
-                                :class="{
-                                    'p-invalid':
-                                        errorsDepositante.cuentaDepositante,
-                                }"
-                                :disabled="isEditDepositante"
-                            />
-                        </InputGroup>
-                        <small
-                            v-if="errorsDepositante.cuentaDepositante"
-                            style="display: block"
-                            class="p-error"
-                            >{{ errorsDepositante.cuentaDepositante }}</small
+                            >{{ errorsDepositante.correoDepositante }}</small
                         >
                     </div>
                     <div
@@ -473,7 +426,7 @@
                                 id="codigoIDepositante"
                                 v-model="depositanteForm.codigoIDepositante"
                                 :options="optionsCodigoI"
-                                placeholder="+"
+                                placeholder="CI"
                                 :optionLabel="optionLabelFunction"
                                 optionValue="id"
                                 style="width: 30%"
@@ -492,7 +445,6 @@
                                 placeholder="Número celular"
                                 class="w-full md:w-14rem input-telefono"
                                 style="width: 80%"
-                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsDepositante.celularDepositante,
@@ -505,6 +457,29 @@
                             style="display: block"
                             class="p-error"
                             >{{ errorsDepositante.celularDepositante }}</small
+                        >
+                    </div>
+                    <div class="form-group">
+                        <Dropdown
+                            id="selectPais"
+                            v-model="depositanteForm.paisDepositante"
+                            :options="optionsPais"
+                            placeholder="Pais"
+                            optionLabel="name"
+                            optionValue="id"
+                            class="w-full md:w-14rem input-registro"
+                            style="width: 80%; text-align: left"
+                            :class="{
+                                'p-invalid': errorsDepositante.paisDepositante,
+                                'input-readonly': isEditDepositante,
+                            }"
+                            :disabled="isEditDepositante"
+                        />
+                        <small
+                            v-if="errorsDepositante.paisDepositante"
+                            style="display: block"
+                            class="p-error"
+                            >{{ errorsDepositante.paisDepositante }}</small
                         >
                     </div>
                     <div
@@ -632,113 +607,8 @@
                     </div>
                 </form>
             </div>
-            <!-- monto -->
-            <div class="col-md-6">
-                <div class="text-center mt-4">
-                    <InputNumber
-                        v-model="montoBruto"
-                        class="input-registro"
-                        placeholder="Monto a cambiar"
-                        @input="convertService"
-                    />
-                    <small
-                        v-if="montoBruto < 5 || montoBruto > 500"
-                        style="display: block; font-size: 16px"
-                        class="p-error"
-                        ><p v-if="montoBruto < 5">
-                            El monto debe ser mayor a 20,00
-                        </p>
-                        <p v-else-if="montoBruto > 500">
-                            El monto debe ser menor a 2000,00
-                        </p>
-                        </small
-                    >
-                    <div class="mt-5">
-                        <p style="color: #0035aa">
-                            {{}}
-                            <strong style="font-size: 18px"
-                                >Monto a pagar:
-                                <p
-                                    v-if="montoCambiar"
-                                    style="display: inline-block"
-                                >
-                                    {{ montoCambiar.monto_a_pagar }}
-                                </p>
-                            </strong>
-                        </p>
-                        <p style="color: #0035aa">
-                            <strong style="font-size: 18px"
-                                >Monto a recibir:
-                                <p
-                                    v-if="montoCambiar"
-                                    style="display: inline-block"
-                                >
-                                    {{ montoCambiar.monto_a_recibir }}
-                                </p>
-                            </strong>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="text-center mt-4">
-                    <button
-                        class="btn btn-primary"
-                        type="button"
-                        id="realizarPago"
-                        style="width: 80%"
-                        :disabled="!isPay"
-                        @click="realizarPago"
-                    >
-                        Realizar pago
-                    </button>
-                </div>
-            </div>
-            <div class="text-center mt-3">
-                <div class="form-check">
-                    <input
-                        class="form-check-input"
-                        type="checkbox"
-                        v-model="isTermins"
-                        id="defaultCheck1"
-                    />
-                    <label class="form-check-label" for="defaultCheck1">
-                        <p style="font-size: 18px">
-                            Acepto los
-                            <a href="#" style="color: #0035aa"
-                                ><strong>Terminos y Condiciones</strong></a
-                            >
-                            del servicio de intergiros.
-                        </p>
-                    </label>
-                </div>
-            </div>
-            <div class="text-center mt-2">
-                <div class="text-center mt-4">
-                    <button
-                        class="btn btn-primary"
-                        type="button"
-                        id="realizarPago"
-                        style="width: 80%"
-                        :disabled="!isPayTotal"
-                        @click="addSolicitudPago"
-                    >
-                        Enviar
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
-
-    <realizar-pago-component
-        v-if="idService && monedaId"
-        :isRealizarPago="isRealizarPago"
-        :idService="idService"
-        :monedaId="monedaId"
-        @savePago="saveReferenciaPago"
-        @hidden="hiddenModalPago"
-    >
-    </realizar-pago-component>
 </template>
 
 <script>
@@ -747,7 +617,7 @@ import * as Yup from "yup";
 import RealizarPagoComponent from "../pago/RealizarPagoComponent.vue";
 
 export default {
-    props: ["idService", "monedaId"],
+    props: ["idService", "monedaId", "optionsMonedas"],
     data() {
         return {
             beneficiarios: [],
@@ -759,8 +629,6 @@ export default {
             optionsCodigoI: [],
             optionsPais: [],
             optionsTipoCuenta: [],
-            optionsBancosPeru: [],
-            optionsDocumentDepositantePeru: [],
             selectedBeneficiario: null,
             selectedDepositante: null,
             /** Formulario Beneficario*/
@@ -781,18 +649,6 @@ export default {
             createOrUpdateBeneficiario: null,
             isEditBeneficiario: true,
             errorsBeneficiario: {},
-            validDomains: [
-                "hotmail.com",
-                "HOTMIAL.COM",
-                "gmail.com",
-                "GMAIL.COM",
-                "outlook.com",
-                "OUTLOOK.COM",
-                "yahoo.es",
-                "YAHOO.ES",
-                "yahoo.com",
-                "YAHOO.COM",
-            ],
             /** Formulario Depositante*/
             formDepositanteVisible: false,
             depositanteForm: {
@@ -801,11 +657,10 @@ export default {
                 nombreDepositante: "",
                 tipoDocumentoDepositante: null,
                 documentoDepositante: null,
-                bancoDepositante: "",
+                correoDepositante: null,
                 codigoIDepositante: null,
                 celularDepositante: null,
-                tipoCuentaDepositante: null,
-                cuentaDepositante: null,
+                paisDepositante: null,
                 adjuntarDocumento: null,
                 servicio: null,
                 code: null,
@@ -827,6 +682,7 @@ export default {
             isRealizarPago: false,
             pathReferenciaPago: null,
             isPayTotal: false,
+            monedaValue: null,
         };
     },
     components: {
@@ -834,8 +690,7 @@ export default {
     },
     computed: {},
     created() {
-        this.initServicePeru();
-        this.initServicePeruDepositante();
+        this.initServiceZinli();
     },
     watch: {
         "beneficiarioForm.id": function (value) {
@@ -874,13 +729,16 @@ export default {
             this.montoBruto = 0;
             this.montoCambiar.monto_a_pagar = 0;
             this.montoCambiar.monto_a_recibir = 0;
+            this.monedaValue = this.optionsMonedas.find(
+                (item) => item.id == value
+            ).tipo;
         },
     },
     mounted() {},
     methods: {
-        async initServicePeru() {
-            this.beneficiarios = await this.getTerceros("TB", "TP-04");
-            this.depositantes = await this.getTerceros("TD", "TP-04");
+        async initServiceZinli() {
+            this.beneficiarios = await this.getTerceros("TB", "TP-06");
+            this.depositantes = await this.getTerceros("TD", "TP-06");
             const comboNames = ["pais_telefono", "pais", "tipo_cuenta"];
             // solicitudes a combos
             const listTd = await this.$getTDByMoneda(this.monedaId);
@@ -898,11 +756,6 @@ export default {
             this.optionsCodigoI = responsePaisTelefono;
             this.optionsPais = responsePais;
         },
-        async initServicePeruDepositante() {
-            // moneda Peru
-            this.optionsBancosPeru = await this.$getBancoByMoneda(2);
-            this.optionsDocumentDepositantePeru = await this.$getTDByMoneda(2);
-        },
         async validateFormBeneficiario() {
             const schema = Yup.object().shape({
                 aliasBeneficiario: Yup.string().required(
@@ -916,9 +769,7 @@ export default {
                 ),
                 documentoBeneficiario: Yup.string().required(
                     "El documento es obligatorio"
-                )
-                .min(5, "El documento debe tener al menos 5 caracteres")
-                .max(15, "El documento no debe tener mas de 15 caracteres"),
+                ),
                 tipoCuentaBeneficiario: Yup.string().required(
                     "El tipo banco es obligatorio"
                 ),
@@ -958,23 +809,18 @@ export default {
                 ),
                 documentoDepositante: Yup.string().required(
                     "El documento es obligatorio"
-                )
-                .min(5, "El documento debe tener al menos 5 caracteres")
-                .max(15, "El documento no debe tener mas de 15 caracteres"),
-                tipoCuentaDepositante: Yup.string().required(
-                    "El tipo banco es obligatorio"
                 ),
-                cuentaDepositante: Yup.string().required(
-                    "La cuenta es obligatoria"
-                ),
-                bancoDepositante: Yup.string().required(
-                    "El banco es obligatorio"
-                ),
+                correoDepositante: Yup.string()
+                    .email("El formato del correo electrónico no es válido")
+                    .required("El correo beneficiario es obligatorio"),
                 codigoIDepositante: Yup.string().required(
                     "La cuenta es obligatoria"
                 ),
                 celularDepositante: Yup.string().required(
                     "El pago movil es obligatorio"
+                ),
+                paisDepositante: Yup.string().required(
+                    "El pais es obligatorio"
                 ),
                 adjuntarDocumento: Yup.string().required(
                     "La foto es obligatoria"
@@ -995,7 +841,7 @@ export default {
         },
         async handleSelectAfiliado(event) {
             const code = "TB";
-            const servicio = "TP-04";
+            const servicio = "TP-06";
             this.errorsBeneficiario = {};
             this.createOrUpdateBeneficiario = "edit";
             let tmpAfiliado = await this.showTercero(
@@ -1022,7 +868,7 @@ export default {
         },
         async handleSelectDepositante(event) {
             const code = "TD";
-            const servicio = "TP-04";
+            const servicio = "TP-06";
             this.errorsDepositante = {};
             this.createOrUpdateDepositante = "edit";
             let tmpAfiliado = await this.showTercero(
@@ -1046,20 +892,12 @@ export default {
                 this.placeholderCuenta = "Código de cuenta interbancario";
             }
         },
-        handleCodigoI(event) {
-            const selectedObj = this.optionsCodigoI.find(
-                (option) => option.id === event.value
-            );
-            if (selectedObj) {
-                $("#codigoIDepositante > .p-dropdown-label").text(selectedObj.name);
-            }
-        },
         async initBeneficiario() {
             this.createOrUpdateBeneficiario = "create";
             this.formBeneficiarioVisible = true;
             this.isEditBeneficiario = false;
             this.resetFormBeneficiario();
-            this.beneficiarioForm.servicio = "TP-04";
+            this.beneficiarioForm.servicio = "TP-06";
             this.beneficiarioForm.code = "TB";
             this.optionsBancos = await this.$getBancoByMoneda(this.monedaId);
             this.optionsDocumentBenficiario = await this.$getTDByMoneda(
@@ -1072,7 +910,7 @@ export default {
             this.isEditDepositante = false;
             this.isEditImage = true;
             this.resetFormDepositante();
-            this.depositanteForm.servicio = "TP-04";
+            this.depositanteForm.servicio = "TP-06";
             this.depositanteForm.code = "TD";
             this.optionsDocumentDepositante = await this.$getTDByMoneda(
                 this.monedaId
@@ -1127,7 +965,7 @@ export default {
                     })
                     .then((response) => {
                         this.$alertSuccess("Beneficiario Añadido");
-                        this.initServicePeru();
+                        this.initServiceZinli();
                         this.resetFormBeneficiario();
                     })
                     .catch((error) => {
@@ -1146,7 +984,7 @@ export default {
                     })
                     .then((response) => {
                         this.$alertSuccess("Depositante Añadido");
-                        this.initServicePeru();
+                        this.initServiceZinli();
                         this.resetFormDepositante();
                         this.isEditImage = true;
                         this.$refs.fileUpload.clear();
@@ -1240,9 +1078,9 @@ export default {
                             )
                             .then((response) => {
                                 this.$alertSuccess("Beneficiario Eliminado");
-                                this.initServicePeru();
+                                this.initServiceZinli();
                                 this.resetFormBeneficiario();
-                                this.beneficiarioForm.servicio = "TP-04";
+                                this.beneficiarioForm.servicio = "TP-06";
                                 this.beneficiarioForm.code = "TB";
                                 this.createOrUpdateBeneficiario = "create";
                                 this.isEditBeneficiario = false;
@@ -1274,9 +1112,9 @@ export default {
                             )
                             .then((response) => {
                                 this.$alertSuccess("Beneficiario Eliminado");
-                                this.initServicePeru();
+                                this.initServiceZinli();
                                 this.resetFormDepositante();
-                                this.depositanteForm.servicio = "TP-04";
+                                this.depositanteForm.servicio = "TP-06";
                                 this.depositanteForm.code = "TD";
                                 this.createOrUpdateDepositante = "create";
                                 this.isEditDepositante = false;
@@ -1317,21 +1155,14 @@ export default {
             this.depositanteForm.tipoDocumentoDepositante =
                 depositante.tipo_documento_id;
             this.depositanteForm.documentoDepositante = depositante.documento;
+            this.depositanteForm.correoDepositante = depositante.correo;
             this.depositanteForm.codigoIDepositante =
                 depositante.pais_telefono_id;
             this.depositanteForm.adjuntarDocumento = depositante.path_documento;
-            this.depositanteForm.tipoCuentaDepositante = parseInt(
-                depositante.tipo_cuenta_id
-            );
-            this.depositanteForm.cuentaDepositante = parseInt(
-                depositante.cuenta
-            );
-            this.depositanteForm.bancoDepositante = parseInt(
-                depositante.banco_id
-            );
             this.depositanteForm.celularDepositante = parseInt(
                 depositante.celular
             );
+            this.depositanteForm.paisDepositante = depositante.pais_id;
             this.isEditImage = depositante.path_documento ? false : true;
         },
         resetFormBeneficiario() {
@@ -1353,11 +1184,10 @@ export default {
             this.depositanteForm.nombreDepositante = null;
             this.depositanteForm.tipoDocumentoDepositante = null;
             this.depositanteForm.documentoDepositante = null;
+            this.depositanteForm.correoDepositante = null;
             this.depositanteForm.codigoIDepositante = null;
             this.depositanteForm.celularDepositante = null;
-            this.depositanteForm.tipoCuentaDepositante = null;
-            this.depositanteForm.cuentaDepositante = null;
-            this.depositanteForm.bancoDepositante = null;
+            this.depositanteForm.paisDepositante = null;
             this.depositanteForm.adjuntarDocumento = null;
             this.depositanteForm.servicio = null;
             this.depositanteForm.code = null;

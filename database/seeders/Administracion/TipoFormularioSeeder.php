@@ -27,11 +27,11 @@ class TipoFormularioSeeder extends Seeder
             ['descripcion' => 'Zinli', 'codigo' => 'TP-03', 'principal' => 1],
             ['descripcion' => 'Zinli-Venezuela', 'codigo' => 'TP-03-VES', 'principal' => 0],
             // TP-04
-            ['descripcion' => 'Peru', 'codigo' => 'TP-04', 'principal' => 2],
+            ['descripcion' => 'Peru', 'codigo' => 'TP-04', 'principal' => 1],
             ['descripcion' => 'Peru-Venezuela', 'codigo' => 'TP-04-VES', 'principal' => 0],
             ['descripcion' => 'Peru-Colombia', 'codigo' => 'TP-04-COP', 'principal' => 0],
             // TP-05
-            ['descripcion' => 'USD', 'codigo' => 'TP-05', 'principal' => 2],
+            ['descripcion' => 'USD', 'codigo' => 'TP-05', 'principal' => 1],
             ['descripcion' => 'Peru-USD-Venezuela', 'codigo' => 'TP-05-VES', 'principal' => 0],
             ['descripcion' => 'Peru-USD-Colombia', 'codigo' => 'TP-05-COP', 'principal' => 0],
             // TP-06
