@@ -88,7 +88,7 @@
                                     beneficiarioForm.tipoDocumentoBeneficiario
                                 "
                                 :options="optionsDocumentBenficiario"
-                                placeholder="TD"
+                                placeholder="T"
                                 optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
@@ -106,6 +106,7 @@
                                 placeholder="Número documento"
                                 class="w-full md:w-14rem input-telefono"
                                 style="width: 80%"
+                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsBeneficiario.documentoBeneficiario,
@@ -365,7 +366,7 @@
                                     depositanteForm.tipoDocumentoDepositante
                                 "
                                 :options="optionsDocumentDepositante"
-                                placeholder="TD"
+                                placeholder="T"
                                 optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
@@ -383,6 +384,7 @@
                                 placeholder="Número documento"
                                 class="w-full md:w-14rem input-telefono"
                                 style="width: 80%"
+                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsDepositante.documentoDepositante,
@@ -426,7 +428,7 @@
                                 id="codigoIDepositante"
                                 v-model="depositanteForm.codigoIDepositante"
                                 :options="optionsCodigoI"
-                                placeholder="CI"
+                                placeholder="+"
                                 :optionLabel="optionLabelFunction"
                                 optionValue="id"
                                 style="width: 30%"
@@ -445,6 +447,7 @@
                                 placeholder="Número celular"
                                 class="w-full md:w-14rem input-telefono"
                                 style="width: 80%"
+                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsDepositante.celularDepositante,

@@ -88,7 +88,7 @@
                                     beneficiarioForm.tipoDocumentoBeneficiario
                                 "
                                 :options="optionsDocumentBenficiario"
-                                placeholder="TD"
+                                placeholder="T"
                                 optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
@@ -367,7 +367,7 @@
                                     depositanteForm.tipoDocumentoDepositante
                                 "
                                 :options="optionsDocumentDepositante"
-                                placeholder="TD"
+                                placeholder="T"
                                 optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
