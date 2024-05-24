@@ -34,7 +34,11 @@
     "css": [
       "assets/app-60fd5290.css"
     ],
+<<<<<<< HEAD
     "file": "assets/app-a13bf644.js",
+=======
+    "file": "assets/app-81a9ac42.js",
+>>>>>>> 8d12d6a4130f97ec969d84c51211db0b97189a7e
     "isEntry": true,
     "src": "resources/js/app.js"
   },

@@ -139,6 +139,7 @@
                                 <InputNumber
                                     id=""
                                     v-model="registroForm.celular"
+                                    autocomplete="off"
                                     placeholder="Número celular"
                                     class="input-telefono"
                                     style="width: 80%"
@@ -402,7 +403,7 @@
                                     id="tipoDocumento"
                                     v-model="registroForm.tipoDocumento"
                                     :options="optionsDocument"
-                                    placeholder="TD"
+                                    placeholder="T"
                                     :optionLabel="'name'"
                                     optionValue="id"
                                     class="input-indicativo"
@@ -412,12 +413,13 @@
                                     }"
                                     filter
                                 ></Dropdown>
-                                <InputNumber
+                                <InputText
                                     id=""
                                     v-model="registroForm.documento"
                                     placeholder="Número documento"
                                     class="w-full md:w-14rem input-telefono"
                                     style="width: 80%"
+                                    :useGrouping="false"
                                     :class="{
                                         'p-invalid': errors.documento,
                                     }"
@@ -778,14 +780,16 @@ export default {
                         (value) => {
                             if (!value) return true;
                             const domain = value.split("@")[1];
-                            return validDomains.includes(domain);
+                            return this.validDomains.includes(domain);
                         }
                     ),
                 pais: Yup.string().required("El pais es obligatorio"),
                 tipoCelular: Yup.string().required(
                     "El numero indicativo es obligatorio"
                 ),
-                celular: Yup.string().required("El celular es obligatorio"),
+                celular: Yup.string().required("El celular es obligatorio")
+                .min(7, "El celular debe tener al menos 7 digitos")
+                .max(15, "El celular no debe tener mas de 15 digitos"),
                 fehaNacimiento: Yup.string().required(
                     "La fecha de naciemiento es obligatoria"
                 ),

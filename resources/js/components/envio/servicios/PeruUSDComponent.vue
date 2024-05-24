@@ -88,7 +88,7 @@
                                     beneficiarioForm.tipoDocumentoBeneficiario
                                 "
                                 :options="optionsDocumentBenficiario"
-                                placeholder="TD"
+                                placeholder="T"
                                 optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
@@ -367,7 +367,7 @@
                                     depositanteForm.tipoDocumentoDepositante
                                 "
                                 :options="optionsDocumentDepositantePeru"
-                                placeholder="TD"
+                                placeholder="T"
                                 optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
@@ -473,7 +473,7 @@
                                 id="codigoIDepositante"
                                 v-model="depositanteForm.codigoIDepositante"
                                 :options="optionsCodigoI"
-                                placeholder="CI"
+                                placeholder="+"
                                 :optionLabel="optionLabelFunction"
                                 optionValue="id"
                                 style="width: 30%"
