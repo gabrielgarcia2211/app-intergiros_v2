@@ -16,6 +16,7 @@
                         type="email"
                         class="form-control"
                         placeholder="Correo Electronico"
+                        @keyup.enter="submitOnEnter"
                         :class="{
                             'is-invalid': errors.email,
                         }"
@@ -35,6 +36,7 @@
                             type="password"
                             class="form-control"
                             placeholder="Contraseña"
+                            @keyup.enter="submitOnEnter"
                             :class="{
                                 'is-invalid': errors.password,
                             }"
@@ -62,6 +64,7 @@
                 <button
                     type="button"
                     class="btn btn-primary mb-2"
+                    ref="loginButton"
                     @click="submitLogin"
                 >
                     Iniciar Sesión
@@ -162,6 +165,9 @@ export default {
                         }
                     });
             }
+        },
+        submitOnEnter() {
+            this.$refs.loginButton.click();
         },
     },
 };
