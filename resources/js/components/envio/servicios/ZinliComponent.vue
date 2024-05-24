@@ -88,7 +88,7 @@
                                     beneficiarioForm.tipoDocumentoBeneficiario
                                 "
                                 :options="optionsDocumentBenficiario"
-                                placeholder="TD"
+                                placeholder="T"
                                 optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
@@ -367,7 +367,7 @@
                                     depositanteForm.tipoDocumentoDepositante
                                 "
                                 :options="optionsDocumentDepositante"
-                                placeholder="TD"
+                                placeholder="T"
                                 optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
@@ -385,6 +385,7 @@
                                 placeholder="Número documento"
                                 class="w-full md:w-14rem input-telefono"
                                 style="width: 80%"
+                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsDepositante.documentoDepositante,
@@ -448,6 +449,7 @@
                                 placeholder="Número celular"
                                 class="w-full md:w-14rem input-telefono"
                                 style="width: 80%"
+                                :useGrouping="false"
                                 :class="{
                                     'p-invalid':
                                         errorsDepositante.celularDepositante,
