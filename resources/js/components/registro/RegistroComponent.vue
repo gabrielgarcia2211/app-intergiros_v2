@@ -50,6 +50,7 @@
                                 :class="{
                                     'p-invalid': errors.nombre,
                                 }"
+                                maxlength="20"
                             />
                             <small
                                 v-if="errors.nombre"
@@ -108,6 +109,7 @@
                                 :class="{
                                     'p-invalid': errors.apellido,
                                 }"
+                                maxlength="20"
                             />
                             <small
                                 v-if="errors.apellido"
@@ -139,7 +141,7 @@
                                 <InputNumber
                                     id=""
                                     v-model="registroForm.celular"
-                                    autocomplete="off"
+                                    ref="inputNumberRef"
                                     placeholder="Número celular"
                                     class="input-telefono"
                                     style="width: 80%"
@@ -708,18 +710,6 @@ export default {
                 inputGroupFile01: null,
                 inputGroupFile02: null,
             },
-            validDomains: [
-                "hotmail.com",
-                "HOTMIAL.COM",
-                "gmail.com",
-                "GMAIL.COM",
-                "outlook.com",
-                "OUTLOOK.COM",
-                "yahoo.es",
-                "YAHOO.ES",
-                "yahoo.com",
-                "YAHOO.COM",
-            ],
             isVisibleForm: 1,
             selectedOptionRedes: null,
             errors: {},
@@ -779,9 +769,21 @@ export default {
                         "El dominio del correo electrónico no es válido",
                         (value) => {
                             if (!value) return true;
-                            const domain = value.split("@")[1];
-                            return this.validDomains.includes(domain);
-                        }
+                                const atIndex = value.indexOf("@");
+                                const dotIndex = value.lastIndexOf(".");
+                                
+                                if (atIndex === -1 || dotIndex === -1 || dotIndex < atIndex) {
+                                    // Si no hay símbolo "@" o "." o "." está antes de "@" o no hay texto después de "@" o "."
+                                    return false;
+                                }
+
+                                const afterAt = value.substring(atIndex + 1, dotIndex);
+                                const afterDot = value.substring(dotIndex + 1);
+
+                                const letterRegex = /^[a-zA-Z]+$/; // Expresión regular para letras
+
+                                return letterRegex.test(afterAt) && letterRegex.test(afterDot);
+                            }
                     ),
                 pais: Yup.string().required("El pais es obligatorio"),
                 tipoCelular: Yup.string().required(
@@ -1008,6 +1010,17 @@ export default {
         const maxDate = ref(new Date(2008, 11, 31));
 
         return { date, minDate, maxDate };
+    },
+    mounted() {
+    // Acceder al input interno del InputNumber
+    const inputElement = this.$refs.inputNumberRef.$el.querySelector('input');
+        if (inputElement) {
+            inputElement.setAttribute('autocomplete', 'off');
+            inputElement.setAttribute('inputmode', 'numeric');
+            inputElement.setAttribute('autocorrect', 'off');
+            inputElement.setAttribute('autocapitalize', 'none');
+            inputElement.setAttribute('spellcheck', 'false');
+        }
     },
 };
 </script>
