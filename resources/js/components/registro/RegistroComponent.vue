@@ -150,6 +150,7 @@
                                     }"
                                     maxlength="15"
                                     inputmode="numeric"
+                                    @input="filterNumbers"
                                 />
                             </InputGroup>
                             <small
@@ -1015,6 +1016,16 @@ export default {
                 });
             }
         },
+        filterNumbers(event) {
+            // Obtener el valor actual del input
+            let input = event.target.value;
+            // Reemplazar cualquier caracter que no sea un número
+            let filteredValue = input.replace(/[^0-9]/g, '');
+            // Actualizar el valor del input con el valor filtrado
+            this.registroForm.celular = filteredValue;
+            // También actualizar el valor del campo directamente (si es necesario)
+            event.target.value = filteredValue;
+        },
     },
     setup() {
         const date = ref(null);
@@ -1022,18 +1033,6 @@ export default {
         const maxDate = ref(new Date(2008, 11, 31));
 
         return { date, minDate, maxDate };
-    },
-    mounted() {
-        // Acceder al input interno del InputNumber
-        const inputElement =
-            this.$refs.inputNumberRef.$el.querySelector("input");
-        if (inputElement) {
-            inputElement.setAttribute("autocomplete", "off");
-            inputElement.setAttribute("inputmode", "numeric");
-            inputElement.setAttribute("autocorrect", "off");
-            inputElement.setAttribute("autocapitalize", "none");
-            inputElement.setAttribute("spellcheck", "false");
-        }
     },
 };
 </script>
