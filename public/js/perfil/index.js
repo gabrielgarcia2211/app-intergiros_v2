@@ -218,6 +218,10 @@ function setUserDataFields(details) {
     var redes = details.data.user_redes;
     if (redes && redes.length) {
         for (let index = 0; index < redes.length; index++) {
+            if (redes[index]["redes_id"]) {
+                $("#redes" + (index + 1)).show();
+                $("#nombreUsuario" + (index + 1)).show();
+            }
             $("#redes" + (index + 1)).val(redes[index]["redes_id"]);
             $("#nombreUsuario" + (index + 1)).val(redes[index]["nombre"]);
         }

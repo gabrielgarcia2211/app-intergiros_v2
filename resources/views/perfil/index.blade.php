@@ -19,7 +19,8 @@
                 @if (empty(Auth()->user()->path_foto_perfil))
                     <img src="{{ asset('img/perfil/people.jpg') }}" alt="" width="200px">
                 @else
-                    <img src="{{ asset('comprobantes/' . Auth()->user()->path_foto_perfil) }}" alt="" width="200px" height="200px">
+                    <img src="{{ asset('comprobantes/' . Auth()->user()->path_foto_perfil) }}" alt="" width="200px"
+                        height="200px">
                 @endif
                 @if (Auth()->user()->verificado == 1)
                     <img src="{{ asset('img/perfil/verificado.png') }}" alt="" width="50px" class="verificado">
@@ -119,24 +120,28 @@
                         <div class="form-row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <select class="form-control input-registro" id="redes1" name="redes1" disabled>
+                                    <select class="form-control input-registro" id="redes1" name="redes1" disabled
+                                        style="display: none">
                                         <!-- Agrega más opciones aquí -->
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control input-registro" id="nombreUsuario1"
-                                        name="nombreUsuario1" placeholder="Nombre de usuario" disabled>
+                                        name="nombreUsuario1" placeholder="Nombre de usuario" disabled
+                                        style="display: none">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group" id="otroP">
-                                    <select class="form-control input-registro" id="redes2" name="redes2" disabled>
+                                    <select class="form-control input-registro" id="redes2" name="redes2" disabled
+                                        style="display: none">
                                         <!-- Agrega más opciones aquí -->
                                     </select>
                                 </div>
                                 <div class="form-group" id="otroN">
                                     <input type="text" class="form-control input-registro" id="nombreUsuario2"
-                                        name="nombreUsuario2" placeholder="Nombre de usuario" disabled>
+                                        name="nombreUsuario2" placeholder="Nombre de usuario" disabled
+                                        style="display: none">
                                 </div>
                             </div>
                         </div>
@@ -245,6 +250,6 @@
     <script>
         var user_verificado = {!! json_encode(auth()->user()->verificado) !!}
     </script>
-   <script src="{{ asset('js/perfil/input.js') }}?v={{ uniqid() }}"></script>
-   <script src="{{ asset('js/perfil/index.js') }}?v={{ uniqid() }}"></script>   
+    <script src="{{ asset('js/perfil/input.js') }}?v={{ uniqid() }}"></script>
+    <script src="{{ asset('js/perfil/index.js') }}?v={{ uniqid() }}"></script>
 @endsection
