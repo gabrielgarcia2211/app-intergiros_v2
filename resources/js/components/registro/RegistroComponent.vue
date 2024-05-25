@@ -149,6 +149,7 @@
                                         'p-invalid': errors.celular,
                                     }"
                                     maxlength="15"
+                                    inputmode="numeric"
                                 />
                             </InputGroup>
                             <small
