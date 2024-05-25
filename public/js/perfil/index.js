@@ -146,7 +146,7 @@ $(document).ready(async function () {
         setCookie("activeTab", selectedTab, 1);
     });
 
-    if (user_verificado == 3) {
+    if (user_verificado == 3 || user_verificado == 1) {
         $("#documento").prop("disabled", true);
         $("#tipoDocumento").prop("disabled", true);
         $("#inputGroupFile01").prop("disabled", true);

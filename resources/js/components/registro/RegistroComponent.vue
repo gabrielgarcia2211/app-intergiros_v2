@@ -138,17 +138,17 @@
                                     filter
                                     @change="handleCodigoI"
                                 ></Dropdown>
-                                <InputNumber
+                                <InputText
                                     id=""
                                     v-model="registroForm.celular"
                                     ref="inputNumberRef"
                                     placeholder="Número celular"
                                     class="input-telefono"
                                     style="width: 80%"
-                                    :useGrouping="false"
                                     :class="{
                                         'p-invalid': errors.celular,
                                     }"
+                                    maxlength="15"
                                 />
                             </InputGroup>
                             <small
@@ -640,7 +640,7 @@
     </Dialog>
 
     <Dialog v-model:visible="isContact" style="width: 450px">
-        <div style="text-align: center; font-size: 20px;padding: 20px">
+        <div style="text-align: center; font-size: 20px; padding: 20px">
             Selecciona la plataforma a la cual deseas contactarnos
         </div>
         <template #footer>
@@ -769,29 +769,40 @@ export default {
                         "El dominio del correo electrónico no es válido",
                         (value) => {
                             if (!value) return true;
-                                const atIndex = value.indexOf("@");
-                                const dotIndex = value.lastIndexOf(".");
-                                
-                                if (atIndex === -1 || dotIndex === -1 || dotIndex < atIndex) {
-                                    // Si no hay símbolo "@" o "." o "." está antes de "@" o no hay texto después de "@" o "."
-                                    return false;
-                                }
+                            const atIndex = value.indexOf("@");
+                            const dotIndex = value.lastIndexOf(".");
 
-                                const afterAt = value.substring(atIndex + 1, dotIndex);
-                                const afterDot = value.substring(dotIndex + 1);
-
-                                const letterRegex = /^[a-zA-Z]+$/; // Expresión regular para letras
-
-                                return letterRegex.test(afterAt) && letterRegex.test(afterDot);
+                            if (
+                                atIndex === -1 ||
+                                dotIndex === -1 ||
+                                dotIndex < atIndex
+                            ) {
+                                // Si no hay símbolo "@" o "." o "." está antes de "@" o no hay texto después de "@" o "."
+                                return false;
                             }
+
+                            const afterAt = value.substring(
+                                atIndex + 1,
+                                dotIndex
+                            );
+                            const afterDot = value.substring(dotIndex + 1);
+
+                            const letterRegex = /^[a-zA-Z]+$/; // Expresión regular para letras
+
+                            return (
+                                letterRegex.test(afterAt) &&
+                                letterRegex.test(afterDot)
+                            );
+                        }
                     ),
                 pais: Yup.string().required("El pais es obligatorio"),
                 tipoCelular: Yup.string().required(
                     "El numero indicativo es obligatorio"
                 ),
-                celular: Yup.string().required("El celular es obligatorio")
-                .min(7, "El celular debe tener al menos 7 digitos")
-                .max(15, "El celular no debe tener mas de 15 digitos"),
+                celular: Yup.string()
+                    .required("El celular es obligatorio")
+                    .min(7, "El celular debe tener al menos 7 digitos")
+                    .max(15, "El celular no debe tener mas de 15 digitos"),
                 fehaNacimiento: Yup.string().required(
                     "La fecha de naciemiento es obligatoria"
                 ),
@@ -1012,14 +1023,15 @@ export default {
         return { date, minDate, maxDate };
     },
     mounted() {
-    // Acceder al input interno del InputNumber
-    const inputElement = this.$refs.inputNumberRef.$el.querySelector('input');
+        // Acceder al input interno del InputNumber
+        const inputElement =
+            this.$refs.inputNumberRef.$el.querySelector("input");
         if (inputElement) {
-            inputElement.setAttribute('autocomplete', 'off');
-            inputElement.setAttribute('inputmode', 'numeric');
-            inputElement.setAttribute('autocorrect', 'off');
-            inputElement.setAttribute('autocapitalize', 'none');
-            inputElement.setAttribute('spellcheck', 'false');
+            inputElement.setAttribute("autocomplete", "off");
+            inputElement.setAttribute("inputmode", "numeric");
+            inputElement.setAttribute("autocorrect", "off");
+            inputElement.setAttribute("autocapitalize", "none");
+            inputElement.setAttribute("spellcheck", "false");
         }
     },
 };

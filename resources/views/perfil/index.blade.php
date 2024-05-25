@@ -176,7 +176,7 @@
                                                 name="tipoDocumento">
                                             </select>
                                         </div>
-                                        <input type="number" class="form-control input-telefono" id="documento"
+                                        <input type="text" class="form-control input-telefono" id="documento"
                                             name="documento" placeholder="Número documento">
                                     </div>
                                 </div>
