@@ -177,7 +177,7 @@
                                             </select>
                                         </div>
                                         <input type="text" class="form-control input-telefono" id="documento"
-                                            name="documento" placeholder="Número documento">
+                                            name="documento" placeholder="Número documento" maxlength="15">
                                     </div>
                                 </div>
                                 <div class="mt-3">
