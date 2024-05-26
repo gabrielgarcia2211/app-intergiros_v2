@@ -141,7 +141,6 @@
                                 <InputText
                                     id=""
                                     v-model="registroForm.celular"
-                                    ref="inputNumberRef"
                                     placeholder="Número celular"
                                     class="input-telefono"
                                     style="width: 80%"
@@ -150,6 +149,7 @@
                                     }"
                                     maxlength="15"
                                     inputmode="numeric"
+                                    autocomplete="new-password"
                                     @input="filterNumbers"
                                 />
                             </InputGroup>
