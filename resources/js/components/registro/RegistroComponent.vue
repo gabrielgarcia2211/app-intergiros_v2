@@ -139,7 +139,8 @@
                                     @change="handleCodigoI"
                                 ></Dropdown>
                                 <InputText
-                                    id=""
+                                    ref="celularInput"
+                                    id="unique-celular-id"
                                     v-model="registroForm.celular"
                                     placeholder="Número celular"
                                     class="input-telefono"
@@ -149,7 +150,6 @@
                                     }"
                                     maxlength="15"
                                     inputmode="numeric"
-                                    autocomplete="new-password"
                                     @input="filterNumbers"
                                 />
                             </InputGroup>
@@ -1026,6 +1026,12 @@ export default {
             // También actualizar el valor del campo directamente (si es necesario)
             event.target.value = filteredValue;
         },
+        disableAutoFill() {
+            // Usar JavaScript nativo para deshabilitar el autocompletado
+            const input = this.$refs.celularInput.$el;
+            input.setAttribute('autocomplete', 'off');
+            input.setAttribute('name', 'fake-name-field');
+        },
     },
     setup() {
         const date = ref(null);
@@ -1033,6 +1039,9 @@ export default {
         const maxDate = ref(new Date(2008, 11, 31));
 
         return { date, minDate, maxDate };
+    },
+    mounted() {
+        this.disableAutoFill();
     },
 };
 </script>
