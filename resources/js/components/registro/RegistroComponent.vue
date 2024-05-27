@@ -151,7 +151,6 @@
                                     maxlength="15"
                                     inputmode="numeric"
                                     @input="filterNumbers"
-                                    autocomplete="off"
                                 />
                             </InputGroup>
                             <small
@@ -1034,6 +1033,7 @@ export default {
             const input = this.$refs.celularInput.$el;
             input.setAttribute("autocomplete", "off");
             input.setAttribute("name", "fake-name-field");
+            input.setAttribute('readonly', 'readonly');
         },
     },
     setup() {
