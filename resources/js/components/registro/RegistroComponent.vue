@@ -1033,7 +1033,7 @@ export default {
             const input = this.$refs.celularInput.$el;
             input.setAttribute("autocomplete", "off");
             input.setAttribute("name", "fake-name-field");
-            input.setAttribute('readonly', 'readonly');
+            /* input.setAttribute('readonly', 'readonly'); */
         },
     },
     setup() {
