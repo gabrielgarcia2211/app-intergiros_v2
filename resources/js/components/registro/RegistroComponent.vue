@@ -151,6 +151,7 @@
                                     maxlength="15"
                                     inputmode="numeric"
                                     @input="filterNumbers"
+                                    autocomplete="off"
                                 />
                             </InputGroup>
                             <small
@@ -731,7 +732,9 @@ export default {
     created() {
         this.initCombos();
     },
-    mounted() {},
+    mounted() {
+        this.disableAutoFill();
+    },
     methods: {
         async initCombos() {
             const comboNames = [
@@ -1020,7 +1023,7 @@ export default {
             // Obtener el valor actual del input
             let input = event.target.value;
             // Reemplazar cualquier caracter que no sea un número
-            let filteredValue = input.replace(/[^0-9]/g, '');
+            let filteredValue = input.replace(/[^0-9]/g, "");
             // Actualizar el valor del input con el valor filtrado
             this.registroForm.celular = filteredValue;
             // También actualizar el valor del campo directamente (si es necesario)
@@ -1029,8 +1032,8 @@ export default {
         disableAutoFill() {
             // Usar JavaScript nativo para deshabilitar el autocompletado
             const input = this.$refs.celularInput.$el;
-            input.setAttribute('autocomplete', 'off');
-            input.setAttribute('name', 'fake-name-field');
+            input.setAttribute("autocomplete", "off");
+            input.setAttribute("name", "fake-name-field");
         },
     },
     setup() {
@@ -1039,9 +1042,6 @@ export default {
         const maxDate = ref(new Date(2008, 11, 31));
 
         return { date, minDate, maxDate };
-    },
-    mounted() {
-        this.disableAutoFill();
     },
 };
 </script>
