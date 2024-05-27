@@ -149,8 +149,7 @@
                                         'p-invalid': errors.celular,
                                     }"
                                     maxlength="15"
-                                    inputmode="numeric"
-                                    @input="filterNumbers"
+                                    @keyup="onInputChange"
                                 />
                             </InputGroup>
                             <small
@@ -731,9 +730,7 @@ export default {
     created() {
         this.initCombos();
     },
-    mounted() {
-        this.disableAutoFill();
-    },
+    mounted() {},
     methods: {
         async initCombos() {
             const comboNames = [
@@ -1018,22 +1015,11 @@ export default {
                 });
             }
         },
-        filterNumbers(event) {
-            // Obtener el valor actual del input
-            let input = event.target.value;
-            // Reemplazar cualquier caracter que no sea un número
-            let filteredValue = input.replace(/[^0-9]/g, "");
-            // Actualizar el valor del input con el valor filtrado
-            this.registroForm.celular = filteredValue;
-            // También actualizar el valor del campo directamente (si es necesario)
-            event.target.value = filteredValue;
-        },
-        disableAutoFill() {
-            // Usar JavaScript nativo para deshabilitar el autocompletado
-            const input = this.$refs.celularInput.$el;
-            input.setAttribute("autocomplete", "off");
-            input.setAttribute("name", "fake-name-field");
-            /* input.setAttribute('readonly', 'readonly'); */
+        onInputChange() {
+            this.registroForm.celular = this.registroForm.celular.replace(
+                /\D/g,
+                ""
+            );
         },
     },
     setup() {
