@@ -148,6 +148,7 @@
                                     :class="{
                                         'p-invalid': errors.celular,
                                     }"
+                                    autocomplete="tel"
                                 />
                             </InputGroup>
                             <small
@@ -1012,12 +1013,6 @@ export default {
                     color: "#0035aa",
                 });
             }
-        },
-        onInputChange() {
-            this.registroForm.celular = this.registroForm.celular.replace(
-                /\D/g,
-                ""
-            );
         },
     },
     setup() {
