@@ -138,9 +138,9 @@
                                     filter
                                     @change="handleCodigoI"
                                 ></Dropdown>
-                                <InputText
-                                    ref="celularInput"
-                                    id="unique-celular-id"
+                                <InputMask
+                                    mask="?999999999999999"
+                                    id=""
                                     v-model="registroForm.celular"
                                     placeholder="Número celular"
                                     class="input-telefono"
@@ -148,8 +148,6 @@
                                     :class="{
                                         'p-invalid': errors.celular,
                                     }"
-                                    maxlength="15"
-                                    @keyup="onInputChange"
                                 />
                             </InputGroup>
                             <small

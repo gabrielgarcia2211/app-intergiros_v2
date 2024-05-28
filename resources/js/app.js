@@ -29,6 +29,7 @@ import Menubar from "primevue/menubar";
 import Carousel from "primevue/carousel";
 import InputGroupAddon from "primevue/inputgroupaddon";
 import Image from "primevue/image";
+import InputMask from 'primevue/inputmask';
 
 const app = createApp({});
 
@@ -78,6 +79,7 @@ app.component("Menubar", Menubar);
 app.component("Carousel", Carousel);
 app.component("InputGroupAddon", InputGroupAddon);
 app.component("Image", Image);
+app.component("InputMask", InputMask);
 
 // Importacion de componentes envio
 import ServicioComponent from "./components/envio/ServicioComponent.vue";
