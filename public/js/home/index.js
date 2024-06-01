@@ -142,8 +142,8 @@ function sumarHoras(cantidadHoras) {
     var fecha = new Date(obtenerHoraVenezuela()); // Obtener la hora actual en Venezuela
     fecha.setHours(fecha.getHours() + parseInt(cantidadHoras)); // Sumar la cantidad de horas (asegúrate de convertir a entero)
 
-    // Verificar si la hora resultante supera las 18:00 (6 pm)
-    if (fecha.getHours() >= 18) {
+    // Verificar si la hora resultante supera las 20:00 (8 pm)
+    if (fecha.getHours() >= 20) {
         fecha.setDate(fecha.getDate() + 1); // Sumar un día si es después de las 18:00
     }
     
@@ -193,12 +193,41 @@ window.onload = function() {
     cargarTextosEnBotones();
 };
 
+//valor ingresado calculadora
+function valorCalculadora(inputElement, errorElement, minValue, maxValue, moneda) {
+    inputElement.addEventListener('input', function() {
+        const value = parseFloat(inputElement.value);
+
+        // Definimos los mensajes de error dentro de la función
+        const minErrorMessage = `El monto minimo son ${minValue} ${moneda}.`;
+        const maxErrorMessage = `El monto maximo son ${maxValue} ${moneda}.`;
+
+        // Verifica si el valor está fuera del rango
+        if (isNaN(value)) {
+                    errorElement.textContent = '';
+                    errorElement.style.display = 'none';
+                } else if (value < minValue) {
+                    errorElement.textContent = minErrorMessage;
+                    errorElement.style.display = 'inline';
+                } else if (value > maxValue) {
+                    errorElement.textContent = maxErrorMessage;
+                    errorElement.style.display = 'inline';
+                } else {
+                    errorElement.style.display = 'none';
+                }
+    });
+}
+
+
 /* Paypal */
 document.addEventListener("DOMContentLoaded", function () {
     var selectPaises = document.getElementById("paisesPaypal");
     var imagenPais = document.getElementById("imagenPais");
     var envia = document.getElementById("monto_cambiar_pay_ven");
     var recibe = document.getElementById("monto_recibir_pay_ven");
+    var input = document.getElementById("monto_cambiar_pay_ven");
+    var error = document.getElementById("error-message-paypal");
+    valorCalculadora(input,error,5,500,"dolares");
 
     selectPaises.addEventListener("change", function () {
         var imagenUrl =
@@ -228,7 +257,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         switch (valor) {
             case "venezuela":
                 tipoCambio.textContent = "";
-                bancos.textContent = "BSBDV, pago móvil";
+                bancos.textContent = "BDV, pago móvil";
                 monto.textContent = "$5 USD + comisión PayPal";
                 tiempo.textContent = "8h laborales";
                 fecha.innerText = sumarHoras(8);
@@ -267,6 +296,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
 document.addEventListener("DOMContentLoaded", function () {
     var selectPaises = document.getElementById("paisesZinli");
     var imagenPais = document.getElementById("imagenPaisZinli");
+    var input = document.getElementById("monto_cambiar_zinli_peru");
+    var error = document.getElementById("error-message-zinli");
+    valorCalculadora(input,error,5,500,"dolares");
 
     selectPaises.addEventListener("change", function () {
         var imagenUrl =
@@ -286,6 +318,9 @@ document.addEventListener("DOMContentLoaded", function () {
     var imagenPais = document.getElementById("imagenPaisUsdt");
     var envia = document.getElementById("monto_cambiar_usdt_ven");
     var recibe = document.getElementById("monto_recibir_usdt_ven");
+    var input = document.getElementById("monto_cambiar_usdt_ven");
+    var error = document.getElementById("error-message-usdt");
+    valorCalculadora(input,error,5,500,"dolares");
 
     selectPaises.addEventListener("change", function () {
         var imagenUrl =
@@ -404,6 +439,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const miSelect = document.getElementById("montoPeru");
     const moneda = document.getElementById("tipo_moneda_peru");
     const monto = document.getElementById("monto_minimo_peru");
+    var input = document.getElementById("monto_cambiar_peru_ven");
+    var error = document.getElementById("error-message-peru");
+    valorCalculadora(input,error,20,2000,"soles");
 
     miSelect.addEventListener("change", (event) => {
         const valor = event.target.value;
@@ -411,9 +449,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
         switch (valor) {
             case "peru":
                 monto.textContent = "20 Soles";
+                valorCalculadora(input,error,20,2000,"soles");
                 break;
             case "peru-dolar":
                 monto.textContent = "$10 USD";
+                valorCalculadora(input,error,10,500,"dolares");
                 break;
             default:
                 moneda.textContent = "Ninguno";
