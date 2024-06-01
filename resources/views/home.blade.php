@@ -115,6 +115,9 @@
             </div>
             <div class="col-md-7 data">
                 <div class="form-group mt-4">
+                    <div class="text-center">
+                        <span id="error-message-paypal" class="error" style="font-size: 15px; color: red;"></span>
+                    </div>
                     <div class="input-group" style="width: 100% !important;">
                         <input type="number" class="form-control w-100%" id="monto_cambiar_pay_ven"
                             placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
@@ -145,7 +148,7 @@
                                 </option>
                                 <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}"
                                     value="peru-dolar">
-                                    USDT</option>
+                                    USD</option>
                                 <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}"
                                     value="colombia">
                                     COP</option>
@@ -225,6 +228,9 @@
             </div>
             <div class="col-md-7 data">
                 <div class="form-group mt-4">
+                    <div class="text-center">
+                        <span id="error-message-usdt" class="error" style="font-size: 15px; color: red;"></span>
+                    </div>
                     <div class="input-group" style="width: 100% !important;">
                         <input type="number" class="form-control w-100%" id="monto_cambiar_usdt_ven"
                             placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
@@ -232,7 +238,7 @@
                             <div id=""><img src="{{ asset('img/home/usdt.png') }}" alt=""
                                     style="margin-top: 15px;margin-left: 5px; width: 58px;"></div>
                             <select class="form-control" id="montoUsdtVenezuela">
-                                <option data-image="{{ asset('img/home/usdt.png') }}" value="usdt">USDT
+                                <option data-image="{{ asset('img/home/usdt.png') }}" value="usdt">USD
                                 </option>
                             </select>
                         </div>
@@ -256,7 +262,7 @@
                                 </option>
                                 <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}"
                                     value="peru-dolar">
-                                    USDT</option>
+                                    USD</option>
                                 <option data-code="COP" data-image="{{ asset('img/home/colombia.png') }}"
                                     value="colombia">
                                     COP
@@ -338,6 +344,9 @@
             </div>
             <div class="col-md-7 data">
                 <div class="form-group mt-4">
+                    <div class="text-center">
+                        <span id="error-message-zinli" class="error" style="font-size: 15px; color: red;"></span>
+                    </div>
                     <div class="input-group" style="width: 100% !important;">
                         <input type="number" class="form-control w-100%" id="monto_cambiar_zinli_peru"
                             placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
@@ -448,7 +457,10 @@
                 </div>
             </div>
             <div class="col-md-7 data">
-                <div class="form-group">
+                <div class="form-group mt-4">
+                    <div class="text-center">
+                        <span id="error-message-peru" class="error" style="font-size: 15px; color: red;"></span>
+                    </div>
                     <div class="input-group" style="width: 100% !important;">
                         <input type="number" class="form-control w-100%" id="monto_cambiar_peru_ven"
                             placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
@@ -460,7 +472,7 @@
                                 </option>
                                 <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}"
                                     value="peru-dolar">
-                                    USDT
+                                    USD
                                 </option>
                             </select>
                         </div>
@@ -602,7 +614,7 @@
                                 </option>
                                 <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}"
                                     value="peru-dolar">
-                                    USDT
+                                    USD
                                 </option>
                             </select>
                         </div>
@@ -722,7 +734,7 @@
                                 </option>
                                 <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}"
                                     value="peru-dolar">
-                                    USDT
+                                    USD
                                 </option>
                             </select>
                         </div>
@@ -818,7 +830,7 @@
                                 </option>
                                 <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}"
                                     value="peru-dolar">
-                                    USDT
+                                    USD
                                 </option>
                             </select>
                         </div>
@@ -933,7 +945,7 @@
                                 </option>
                                 <option data-code="USD" data-image="{{ asset('img/home/peru.png') }}"
                                     value="peru-dolar">
-                                    USDT
+                                    USD
                                 </option>
                             </select>
                         </div>
