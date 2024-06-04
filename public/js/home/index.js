@@ -140,19 +140,40 @@ function obtenerHoraVenezuela() {
 
 function sumarHoras(cantidadHoras) {
     var fecha = new Date(obtenerHoraVenezuela()); // Obtener la hora actual en Venezuela
-    fecha.setHours(fecha.getHours() + parseInt(cantidadHoras)); // Sumar la cantidad de horas (asegúrate de convertir a entero)
+    var minutosIniciales = fecha.getMinutes(); // Guardar los minutos actuales
 
-    // Verificar si la hora resultante supera las 20:00 (8 pm)
-    if (fecha.getHours() >= 20) {
-        fecha.setDate(fecha.getDate() + 1); // Sumar un día si es después de las 18:00
+    if (parseInt(cantidadHoras) === 8) {
+        // Si la hora actual está entre las 00:00 y las 06:00, iniciar desde las 06:00
+        if (fecha.getHours() < 6) {
+            fecha.setHours(6, minutosIniciales, 0, 0); // Establecer la hora a 06:00 y mantener los minutos actuales
+        }
+        
+        fecha.setHours(fecha.getHours() + parseInt(cantidadHoras)); // Sumar las horas
+
+        // Verificar si la hora resultante supera las 20:00 (8 pm)
+        if (fecha.getHours() >= 20) {
+            // Calcular las horas restantes que exceden las 20:00
+            var horasExcedidas = fecha.getHours() - 20;
+
+            // Sumar un día y ajustar la hora a 6:00 am del día siguiente
+            fecha.setDate(fecha.getDate() + 1);
+            fecha.setHours(6 + horasExcedidas, minutosIniciales, 0, 0); // Ajustar la hora a 06:00 más las horas excedidas y mantener los minutos actuales
+        }
+    } else {
+        // Si cantidadHoras no es igual a 8, simplemente sumar las horas y mantener los minutos actuales
+        fecha.setHours(fecha.getHours() + parseInt(cantidadHoras), minutosIniciales, 0, 0);
     }
     
     // Obtener el nombre del mes
     var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     var nombreMes = meses[fecha.getMonth()];
+
+    // Formatear la hora y minutos
+    var horas = fecha.getHours().toString().padStart(2, '0');
+    var minutos = fecha.getMinutes().toString().padStart(2, '0');
     
     // Formatear la fecha
-    var textoBoton = 'Recibirás el dinero máximo el ' + fecha.getDate() + ' de ' + nombreMes;
+    var textoBoton = 'Recibirás el dinero máximo el ' + fecha.getDate() + ' de ' + nombreMes + ' a las ' + horas + ':' + minutos + " UTC-4";
     
     // Retornar el texto formateado
     return textoBoton;
