@@ -144,8 +144,8 @@ function sumarHoras(cantidadHoras) {
 
     if (parseInt(cantidadHoras) === 8) {
         // Si la hora actual está entre las 00:00 y las 06:00, iniciar desde las 06:00
-        if (fecha.getHours() < 6) {
-            fecha.setHours(6, minutosIniciales, 0, 0); // Establecer la hora a 06:00 y mantener los minutos actuales
+        if (fecha.getHours() < 6 || fecha.getHours() >20) {
+            fecha.setHours(6, 0, 0); // Establecer la hora a 06:00 y mantener los minutos actuales
         }
         
         fecha.setHours(fecha.getHours() + parseInt(cantidadHoras)); // Sumar las horas
