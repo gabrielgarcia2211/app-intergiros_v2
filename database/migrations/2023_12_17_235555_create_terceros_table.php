@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('alias');
             $table->string('nombre');
-            $table->integer('documento');
+            $table->string('documento');
             $table->string('banco')->nullable();
             $table->string('cuenta')->nullable();
             $table->string('pago_movil')->nullable();

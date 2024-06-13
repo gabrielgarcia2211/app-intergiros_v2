@@ -15,7 +15,7 @@
                     id="selectedBeneficiario"
                     v-model="selectedBeneficiario"
                     :options="beneficiarios"
-                    optionLabel="nombre"
+                    optionLabel="alias"
                     optionValue="id"
                     :placeholder="'Beneficiarios afiliados'"
                     class="w-full md:w-14rem input-registro"
@@ -159,7 +159,7 @@
                                     beneficiarioForm.tipoCuentaBeneficiario
                                 "
                                 :options="optionsTipoCuenta"
-                                placeholder="Cuenta"
+                                placeholder="T"
                                 optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
@@ -171,7 +171,7 @@
                                 }"
                                 :disabled="isEditBeneficiario"
                             ></Dropdown>
-                            <InputNumber
+                            <InputText
                                 v-model="beneficiarioForm.cuentaBeneficiario"
                                 :placeholder="placeholderCuenta"
                                 style="width: 80%"
@@ -295,7 +295,7 @@
                     id="selectedDepositante"
                     v-model="selectedDepositante"
                     :options="depositantes"
-                    optionLabel="nombre"
+                    optionLabel="alias"
                     optionValue="id"
                     :placeholder="'Depositantes afiliados'"
                     class="w-full md:w-14rem input-registro"
@@ -634,8 +634,7 @@
                         <p v-else-if="montoBruto > 500">
                             El monto debe ser menor a 500,00
                         </p>
-                        </small
-                    >
+                    </small>
                     <div class="mt-5">
                         <p style="color: #0035aa">
                             {{}}
@@ -922,9 +921,7 @@ export default {
                         (value) => {
                             if (!value) return true;
                             const domain = value.split("@")[1];
-                            return this.validDomains.includes(
-                                domain
-                            );
+                            return this.validDomains.includes(domain);
                         }
                     ),
                 codigoIDepositante: Yup.string().required(
@@ -1011,7 +1008,9 @@ export default {
                 (option) => option.id === event.value
             );
             if (selectedObj) {
-                $("#codigoIDepositante > .p-dropdown-label").text(selectedObj.name);
+                $("#codigoIDepositante > .p-dropdown-label").text(
+                    selectedObj.name
+                );
             }
         },
         async initBeneficiario() {
@@ -1264,9 +1263,7 @@ export default {
             this.beneficiarioForm.bancoBeneficiario = parseInt(
                 beneficiario.banco_id
             );
-            this.beneficiarioForm.cuentaBeneficiario = parseInt(
-                beneficiario.cuenta
-            );
+            this.beneficiarioForm.cuentaBeneficiario = beneficiario.cuenta;
             this.beneficiarioForm.pagoMovilBeneficiario =
                 beneficiario.pago_movil;
         },

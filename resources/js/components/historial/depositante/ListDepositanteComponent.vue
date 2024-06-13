@@ -1,25 +1,11 @@
 <template>
+    <!-- beneficiario -->
     <div class="col-md-12 mt-5" style="text-align: center">
-        <Dropdown
-            id="inputGroupServiciosReclamo"
-            :options="optionsServices"
-            v-model="selectedService"
-            :placeholder="'Selecciona Formulario Busqueda'"
-            optionLabel="descripcion"
-            optionValue="id"
-            class="w-full md:w-14rem"
-            style="width: 100%"
-            v-show="servicioDepositanteVisible"
-            @change="onServiceChange"
-        ></Dropdown>
-    </div>
-    <!-- depositante -->
-    <div class="col-md-12 mt-5" style="text-align: center" v-if="selectVisible">
         <Dropdown
             id="selectedDepositanteReclamo"
             v-model="selectedDepositante"
             :options="depositantes"
-            optionLabel="nombre"
+            optionLabel="alias"
             optionValue="id"
             :placeholder="'Depostantes afiliados'"
             class="w-full md:w-14rem input-registro"
@@ -40,7 +26,7 @@
                 Afiliar nuevo depositante
             </p>
         </div>
-        <form id="form" v-if="formDepositanteVisible">
+        <form id="form" v-if="isVisibleForm">
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
@@ -98,7 +84,7 @@
                                     depositanteForm.tipoDocumentoDepositante
                                 "
                                 :options="optionsDocument"
-                                placeholder="TD"
+                                placeholder="T"
                                 :optionLabel="optionLabelFunction"
                                 optionValue="id"
                                 style="width: 30%"
@@ -111,7 +97,7 @@
                                 :disabled="isEdit"
                                 filter
                             ></Dropdown>
-                            <InputNumber
+                            <InputText
                                 id=""
                                 v-model="depositanteForm.documentoDepositante"
                                 placeholder="Número documento"
@@ -206,7 +192,7 @@
                                 :disabled="isEdit"
                                 filter
                             ></Dropdown>
-                            <InputNumber
+                            <InputText
                                 id=""
                                 v-model="depositanteForm.celularDepositante"
                                 placeholder="Número celular"
@@ -287,6 +273,7 @@
                                 'input-readonly': isEdit,
                             }"
                             :disabled="isEdit"
+                            filter
                         />
                         <small
                             v-if="errors.paisDepositante"
@@ -412,18 +399,17 @@
 import * as Yup from "yup";
 
 export default {
+    props: ["selectedService"],
     emits: ["formId"],
     data() {
         return {
-            optionsServices: [],
             optionsTipoCuenta: [],
             optionsDocument: [],
             optionsBancosPeru: [],
-            selectedService: null,
-            servicioDepositanteVisible: false,
+            optionsPais: [],
+            optionsCodigoI: [],
             depositantes: [],
             selectedDepositante: null,
-            selectVisible: false,
             isEdit: true,
             createOrUpdate: null,
             isEditImage: true,
@@ -448,273 +434,102 @@ export default {
             currentService: null,
             placeholderPeru: null,
             dynamicRules: {},
+            isVisibleForm: false,
         };
     },
     components: {},
-    watch: {
-        selectedService: async function (value) {
-            this.resetForm();
-            this.selectVisible = value ? true : false;
-            if (value) {
-                this.list();
-            }
-        },
+    watch: {},
+    created() {
+        this.initModal();
     },
-    created() {},
     mounted() {},
     methods: {
-        async validateForm() {
-            let initialRules = {
-                aliasDepositante: Yup.string().required(
-                    "El alias es obligatorio"
-                ),
-                nombreDepositante: Yup.string().required(
-                    "El nombre es obligatorio"
-                ),
-                tipoDocumentoDepositante: Yup.string().required(
-                    "El tipo documento es obligatorio"
-                ),
-                documentoDepositante: Yup.string().required(
-                    "El documento es obligatorio"
-                ),
-                codigoIDepositante: Yup.string().required(
-                    "La cuenta es obligatoria"
-                ),
-                celularDepositante: Yup.string().required(
-                    "El pago movil es obligatorio"
-                ),
-                adjuntarDocumento: Yup.string().required(
-                    "La foto es obligatoria"
-                ),
-            };
-            if (
-                this.currentService == "TP-04" ||
-                this.currentService == "TP-05"
-            ) {
-                this.dynamicRules.tipoCuentaDepositante = Yup.string().required(
-                    "El tipo cuenta es obligatorio"
-                );
-                this.dynamicRules.bancoDepositante = Yup.string().required(
-                    "El banco es obligatorio"
-                );
-                this.dynamicRules.cuentaDepositante = Yup.string().required(
-                    "La cuenta es obligatoria"
-                );
-            } else {
-                this.dynamicRules.paisDepositante = Yup.string().required(
-                    "El pais es obligatorio"
-                );
-                this.dynamicRules.correoDepositante = Yup.string()
-                    .email("El formato del correo electrónico no es válido")
-                    .required("El beneficiario es obligatorio");
+        async initModal() {
+            this.depositantes = await this.$getTercerosByService(
+                "TD",
+                this.selectedService.id
+            );
+            this.isVisibleForm = false;
+            switch (this.selectedService.codigo) {
+                case "TP-01":
+                case "TP-02":
+                    this.optionsBancos = await this.$getBancoByMonedas(
+                        "VES,PEN,USD,COP"
+                    );
+                    this.optionsDocument = await this.$getDocumentByMonedas(
+                        "VES,PEN,USD,COP"
+                    );
+                    break;
+                case "TP-03":
+                    this.optionsBancos = await this.$getBancoByMonedas("VES");
+                    this.optionsDocument = await this.$getDocumentByMonedas(
+                        "VES"
+                    );
+                    break;
+                case "TP-04":
+                case "TP-05":
+                    this.optionsBancos = await this.$getBancoByMoneda(
+                        "VES,COP"
+                    );
+                    this.optionsDocument = await this.$getDocumentByMonedas(
+                        "VES,COP"
+                    );
+                    break;
+                case "TP-06":
+                    this.optionsBancos = await this.$getBancoByMonedas(
+                        "VES,PEN,USD"
+                    );
+                    this.optionsDocument = await this.$getDocumentByMonedas(
+                        "VES,PEN,USD"
+                    );
+                    break;
+                default:
+                    break;
             }
-            const schema = Yup.object().shape({
-                ...initialRules,
-                ...this.dynamicRules,
-            });
-            this.errors = {};
-            try {
-                await schema.validate(this.depositanteForm, {
-                    abortEarly: false,
-                });
-                return true;
-            } catch (err) {
-                err.inner.forEach((error) => {
-                    this.errors[error.path] = error.message;
-                });
-                return false;
-            }
+            const comboNames = [
+                "tipo_documento",
+                "pais_telefono",
+                "pais",
+                "tipo_cuenta",
+            ];
+            const response = await this.$getComboRelations(comboNames);
+            const {
+                tipo_documento: responseTipoDocumento,
+                pais_telefono: responsePaisTelefono,
+                pais: responsePais,
+                tipo_cuenta: responseTipoCuenta,
+            } = response;
+
+            this.optionsDocument = responseTipoDocumento;
+            this.optionsCodigoI = responsePaisTelefono;
+            this.optionsPais = responsePais;
+            this.optionsTipoCuenta = responseTipoCuenta;
+            this.optionsBancosPeru = await this.$getBancoByMoneda(3);
         },
         initDepositante() {
             this.createOrUpdate = "create";
-            this.formDepositanteVisible = true;
             this.isEdit = false;
             this.isEditImage = true;
             this.resetForm();
-            this.depositanteForm.servicio = this.getService(
-                this.selectedService
-            ).codigo;
+            this.depositanteForm.servicio = this.selectedService.codigo;
             this.depositanteForm.code = "TD";
-        },
-        async list() {
-            this.depositantes = await this.getTerceros(
-                "TD",
-                this.getService(this.selectedService).codigo
-            );
-            if (this.depositantes) {
-                const comboNames = [
-                    "tipo_documento",
-                    "pais_telefono",
-                    "pais",
-                    "tipo_cuenta",
-                ];
-                const response = await this.$getComboRelations(comboNames);
-                const {
-                    tipo_documento: responseTipoDocumento,
-                    pais_telefono: responsePaisTelefono,
-                    pais: responsePais,
-                    tipo_cuenta: responseTipoCuenta,
-                } = response;
-
-                this.optionsDocument = responseTipoDocumento;
-                this.optionsCodigoI = responsePaisTelefono;
-                this.optionsPais = responsePais;
-                this.optionsTipoCuenta = responseTipoCuenta;
-
-                this.optionsBancosPeru = await this.$getBancoByMoneda(3);
-            }
+            this.isVisibleForm = true;
         },
         async handleSelect(event) {
-            this.errors = {};
-            const code = "TD";
-            const servicio = this.getService(this.selectedService).codigo;
-            this.createOrUpdate = "edit";
-            this.formDepositanteVisible = true;
-            let tmpAfiliado = await this.showTercero(
+            let tmpAfiliado = await this.$showTercero(
                 event.value,
-                code,
-                servicio
+                "TD",
+                this.selectedService.codigo
             );
-            this.isEdit = true;
             this.setForm(tmpAfiliado.data);
-            this.depositanteForm.servicio = servicio;
-            this.depositanteForm.code = code;
-            this.$emit("formId", this.depositanteForm.id);
-        },
-        async add() {
-            const isValid = await this.validateForm();
-            if (isValid) {
-                this.$axios
-                    .post("/terceros/store", this.depositanteForm, {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    })
-                    .then(async (response) => {
-                        this.selectedDepositante = null;
-                        this.$alertSuccess("Añadido");
-                        this.list();
-                        this.resetForm();
-                        this.isEditImage = true;
-                        this.$refs.fileUpload.clear();
-                    })
-                    .catch((error) => {
-                        this.$readStatusHttp(error);
-                    });
-            }
-        },
-        async update() {
-            const isValid = await this.validateForm();
-            if (isValid) {
-                this.$axios
-                    .post(
-                        "/terceros/update/" + this.depositanteForm.id,
-                        this.depositanteForm,
-                        {
-                            headers: {
-                                "Content-Type": "multipart/form-data",
-                            },
-                        }
-                    )
-                    .then((response) => {
-                        this.$alertSuccess("Actualizado");
-                        this.createOrUpdate = "edit";
-                        this.isEdit = true;
-                        this.isEditImage = false;
-                        this.depositanteForm.adjuntarDocumento =
-                            response.data.data.adjuntar_documento;
-                    })
-                    .catch((error) => {
-                        this.$readStatusHttp(error);
-                    });
-            }
-        },
-        async getFormsServices(principal = 1) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const response = await axios.get(
-                        "/gestion/formularios/" + principal
-                    );
-                    resolve(response.data);
-                } catch (error) {
-                    this.$readStatusHttp(error);
-                    reject(error);
-                }
-            });
-        },
-        setForm(depositante) {
-            this.depositanteForm.id = depositante.id;
-            this.depositanteForm.aliasDepositante = depositante.alias;
-            this.depositanteForm.nombreDepositante = depositante.nombre;
-            this.depositanteForm.tipoDocumentoDepositante =
-                depositante.tipo_documento_id;
-            this.depositanteForm.documentoDepositante = depositante.documento;
-            this.depositanteForm.correoDepositante = depositante.correo;
-            this.depositanteForm.codigoIDepositante =
-                depositante.pais_telefono_id;
-            this.depositanteForm.adjuntarDocumento = depositante.path_documento;
-            this.depositanteForm.celularDepositante = parseInt(
-                depositante.celular
-            );
-            this.depositanteForm.paisDepositante = depositante.pais_id;
-            this.depositanteForm.tipoCuentaDepositante = parseInt(
-                depositante.tipo_cuenta_id
-            );
-            this.depositanteForm.cuentaDepositante = parseInt(
-                depositante.cuenta
-            );
-            this.depositanteForm.bancoDepositante = parseInt(
-                depositante.banco_id
-            );
-            this.isEditImage = depositante.path_documento ? false : true;
-        },
-        resetForm() {
-            this.depositanteForm.id = null;
-            this.depositanteForm.aliasDepositante = null;
-            this.depositanteForm.nombreDepositante = null;
-            this.depositanteForm.tipoDocumentoDepositante = null;
-            this.depositanteForm.documentoDepositante = null;
-            this.depositanteForm.correoDepositante = null;
-            this.depositanteForm.codigoIDepositante = null;
-            this.depositanteForm.celularDepositante = null;
-            this.depositanteForm.paisDepositante = null;
-            this.depositanteForm.adjuntarDocumento = null;
-            this.depositanteForm.tipoCuentaDepositante = null;
-            this.depositanteForm.bancoDepositante = null;
-            this.depositanteForm.cuentaDepositante = null;
-            this.depositanteForm.servicio = null;
-            this.depositanteForm.code = null;
+            this.isVisibleForm = true;
+            this.createOrUpdate = "edit";
+            this.$emit("formId", this.depositanteForm.id, 'depositante_id');
         },
         habilitarEdicion() {
             this.errors = {};
             this.createOrUpdate = "update";
             this.isEdit = false;
-        },
-        async getTerceros(code, servicio) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const response = await axios.get(
-                        "/terceros/list/" + code + "/" + servicio
-                    );
-                    resolve(response.data);
-                } catch (error) {
-                    this.$readStatusHttp(error);
-                    reject(error);
-                }
-            });
-        },
-        async showTercero(id, code, servicio) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const response = await axios.get(
-                        "/terceros/show/" + id + "/" + code + "/" + servicio
-                    );
-                    resolve(response.data);
-                } catch (error) {
-                    this.$readStatusHttp(error);
-                    reject(error);
-                }
-            });
         },
         onFileUpload() {
             const fileUploadComponent = this.$refs.fileUpload;
@@ -805,34 +620,165 @@ export default {
                     this.$readStatusHttp(error);
                 });
         },
-        getService(selectedService) {
-            return this.optionsServices.find((item) => {
-                return item.id == selectedService;
-            });
-        },
-        async checkValidateProceso(service, others) {
-            if (service) {
-                this.optionsServices = await this.getFormsServices();
-            }
-            this.formDepositanteVisible = false;
-            this.selectedDepositante = null;
-            this.selectedService = null;
-            this.servicioDepositanteVisible = others;
-            this.resetForm();
-        },
         optionLabelFunction(option) {
             return `${option.name} - ${option.valor1}`;
         },
-        onServiceChange(event) {
-            this.currentService = this.optionsServices.find(
-                (item) => item.id == event.value
-            ).codigo;
-            if (this.currentService == "TP-04") {
-                this.placeholderPeru = "Cuenta en soles";
-            } else if (this.currentService == "TP-05") {
-                this.placeholderPeru = "Cuenta en dolares";
+        async add() {
+            const isValid = await this.validateForm();
+            if (isValid) {
+                this.$axios
+                    .post("/terceros/store", this.depositanteForm, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    })
+                    .then(async (response) => {
+                        this.selectedDepositante = null;
+                        this.$alertSuccess("Añadido");
+                        this.initDepositante();
+                        this.initModal();
+                        this.resetForm();
+                        this.isEditImage = true;
+                        this.$refs.fileUpload.clear();
+                    })
+                    .catch((error) => {
+                        this.$readStatusHttp(error);
+                    });
             }
-            this.formDepositanteVisible = false;
+        },
+        async update() {
+            const isValid = await this.validateForm();
+            if (isValid) {
+                this.$axios
+                    .post(
+                        "/terceros/update/" + this.depositanteForm.id,
+                        this.depositanteForm,
+                        {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                            },
+                        }
+                    )
+                    .then((response) => {
+                        this.$alertSuccess("Actualizado");
+                        this.createOrUpdate = "edit";
+                        this.isEdit = true;
+                        this.isEditImage = false;
+                        this.depositanteForm.adjuntarDocumento =
+                            response.data.data.adjuntar_documento;
+                            this.initModal();
+                    })
+                    .catch((error) => {
+                        this.$readStatusHttp(error);
+                    });
+            }
+        },
+        async validateForm() {
+            let initialRules = {
+                aliasDepositante: Yup.string().required(
+                    "El alias es obligatorio"
+                ),
+                nombreDepositante: Yup.string().required(
+                    "El nombre es obligatorio"
+                ),
+                tipoDocumentoDepositante: Yup.string().required(
+                    "El tipo documento es obligatorio"
+                ),
+                documentoDepositante: Yup.string().required(
+                    "El documento es obligatorio"
+                ),
+                codigoIDepositante: Yup.string().required(
+                    "La cuenta es obligatoria"
+                ),
+                celularDepositante: Yup.string().required(
+                    "El pago movil es obligatorio"
+                ),
+                adjuntarDocumento: Yup.string().required(
+                    "La foto es obligatoria"
+                ),
+            };
+            if (
+                this.currentService == "TP-04" ||
+                this.currentService == "TP-05"
+            ) {
+                this.dynamicRules.tipoCuentaDepositante = Yup.string().required(
+                    "El tipo cuenta es obligatorio"
+                );
+                this.dynamicRules.bancoDepositante = Yup.string().required(
+                    "El banco es obligatorio"
+                );
+                this.dynamicRules.cuentaDepositante = Yup.string().required(
+                    "La cuenta es obligatoria"
+                );
+            } else {
+                this.dynamicRules.paisDepositante = Yup.string().required(
+                    "El pais es obligatorio"
+                );
+                this.dynamicRules.correoDepositante = Yup.string()
+                    .email("El formato del correo electrónico no es válido")
+                    .required("El beneficiario es obligatorio");
+            }
+            const schema = Yup.object().shape({
+                ...initialRules,
+                ...this.dynamicRules,
+            });
+            this.errors = {};
+            try {
+                await schema.validate(this.depositanteForm, {
+                    abortEarly: false,
+                });
+                return true;
+            } catch (err) {
+                err.inner.forEach((error) => {
+                    this.errors[error.path] = error.message;
+                });
+                return false;
+            }
+        },
+        setForm(depositante) {
+            this.depositanteForm.id = depositante.id;
+            this.depositanteForm.aliasDepositante = depositante.alias;
+            this.depositanteForm.nombreDepositante = depositante.nombre;
+            this.depositanteForm.tipoDocumentoDepositante =
+                depositante.tipo_documento_id;
+            this.depositanteForm.documentoDepositante = depositante.documento;
+            this.depositanteForm.correoDepositante = depositante.correo;
+            this.depositanteForm.codigoIDepositante =
+                depositante.pais_telefono_id;
+            this.depositanteForm.adjuntarDocumento = depositante.path_documento;
+            this.depositanteForm.celularDepositante = parseInt(
+                depositante.celular
+            );
+            this.depositanteForm.paisDepositante = depositante.pais_id;
+            this.depositanteForm.tipoCuentaDepositante = parseInt(
+                depositante.tipo_cuenta_id
+            );
+            this.depositanteForm.cuentaDepositante = parseInt(
+                depositante.cuenta
+            );
+            this.depositanteForm.bancoDepositante = parseInt(
+                depositante.banco_id
+            );
+            this.isEditImage = depositante.path_documento ? false : true;
+            this.depositanteForm.servicio = this.selectedService.codigo;
+            this.depositanteForm.code = "TD";
+        },
+        resetForm() {
+            this.depositanteForm.id = null;
+            this.depositanteForm.aliasDepositante = null;
+            this.depositanteForm.nombreDepositante = null;
+            this.depositanteForm.tipoDocumentoDepositante = null;
+            this.depositanteForm.documentoDepositante = null;
+            this.depositanteForm.correoDepositante = null;
+            this.depositanteForm.codigoIDepositante = null;
+            this.depositanteForm.celularDepositante = null;
+            this.depositanteForm.paisDepositante = null;
+            this.depositanteForm.adjuntarDocumento = null;
+            this.depositanteForm.tipoCuentaDepositante = null;
+            this.depositanteForm.bancoDepositante = null;
+            this.depositanteForm.cuentaDepositante = null;
+            this.depositanteForm.servicio = null;
+            this.depositanteForm.code = null;
         },
     },
 };

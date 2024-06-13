@@ -25,7 +25,7 @@ class CoreMasterComboReclamoPorSolucionarSeeder extends Seeder
                         'name' => 'reintentar',
                         'code' => 'reintentar_pr',
                         'orden' => 0,
-                        'valor1' => 'Corregir los datos del beneficiario',
+                        'valor1' => 'Corregir los datos de la cuenta',
                     ],
                     [
                         'name' => 'reintentar_beneficiario',

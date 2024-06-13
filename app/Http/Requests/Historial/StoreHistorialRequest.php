@@ -26,21 +26,25 @@ class StoreHistorialRequest extends FormRequest
     public function rules(): array
     {
 
-        $opciones = request('opciones');
+        $opciones = request('opcion');
+        $field_update = request('field_update');
 
         $rules = [
             'solicitud_id' => 'required',
-            'opciones' => 'required',
             'comentario' => 'nullable|max:200',
         ];
 
-        $masterCombos = MasterCombos::whereIn('id', $opciones)->get();
-       
+        if ($field_update != 'monto') {
+            $rules['opcion'] = 'required';
+        }
+
+        $masterCombos = MasterCombos::where('id', $opciones)->get();
+
         $tieneReintentarBeneficiarioPs = $masterCombos->contains(function ($value, $key) {
-            return $value->code == 'reintentar_beneficiario_pr';
+            return $value->code == 'reintentar_beneficiario_pr' || $value->code == 'reintentar_pr';
         });
         if ($tieneReintentarBeneficiarioPs) {
-            $rules['beneficiario_id'] = 'required';
+            $rules['tercero_id'] = 'required';
         }
 
         return $rules;
@@ -56,7 +60,7 @@ class StoreHistorialRequest extends FormRequest
         return [
             'solicitud_id.required' => 'El campo solicitud es obligatorio.',
             'afiliado_id.required' => 'El campo afiliado es obligatorio.',
-            'beneficiario_id.required' => 'El campo beneficiario es obligatorio.',
+            'tercero_id.required' => 'El campo beneficiario/depositante es obligatorio.',
         ];
     }
 

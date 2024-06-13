@@ -35,7 +35,7 @@ const app = createApp({});
 
 app.use(PrimeVue, {
     zIndex: {
-        modal: 1100, //dialog, sidebar
+        modal: 1000, //dialog, sidebar
         overlay: 9999, //dropdown, overlaypanel
         menu: 1000, //overlay menus
         tooltip: 1100, //tooltip

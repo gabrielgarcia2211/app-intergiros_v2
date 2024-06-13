@@ -69,6 +69,13 @@ h5 {
     color: white;
     border-radius: 25px;
 }
+
+.btn-secondary {
+    background-color: #676d7b !important;
+    font-family: "Lato", sans-serif !important;
+    color: white;
+    border-radius: 25px;
+}
 /* FIN SECCION NOTIFICIONES */
 
 /* MODAL COMPROBANTE*/
@@ -154,7 +161,10 @@ h5 {
 #codigoIReclamo_list,
 #inputGroupServiciosReclamo_list,
 #tipoCuentaDepositante_list,
-#selectBanco_list {
+#selectBanco_list,
+#selectedBeneficiario_list,
+#tipoDocumentoBeneficiario_list,
+#tipoCuentaBeneficiario_list {
     padding-left: 0 !important;
     margin-bottom: 0 !important;
 }

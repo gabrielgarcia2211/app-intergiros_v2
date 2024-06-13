@@ -75,4 +75,46 @@ class ConfigurationController extends Controller
             return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
         }
     }
+
+    public function getBancosByCodigo($moneda)
+    {
+        try {
+            $monedas = TipoMoneda::whereIn('codigo', explode(",", $moneda))->pluck('codigo')->unique()->toArray();
+            $response = MasterCombos::whereIn('parent_id', function ($query) {
+                $query->select('id')
+                    ->from('master_combos')
+                    ->where('code', 'banco');
+            })
+                ->where([
+                    ['status', '=', true],
+                ])
+                ->whereIn('valor1', $monedas)
+                ->orderBy('orden', 'asc')
+                ->get();
+            return $response;
+        } catch (\Exception $ex) {
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
+        }
+    }
+
+    public function getDocumentoByMoneda($moneda)
+    {
+        try {
+            $monedas = TipoMoneda::whereIn('codigo', explode(",", $moneda))->pluck('codigo')->unique()->toArray();
+            $response = MasterCombos::whereIn('parent_id', function ($query) {
+                $query->select('id')
+                    ->from('master_combos')
+                    ->where('code', 'tipo_documento');
+            })
+                ->where([
+                    ['status', '=', true],
+                ])
+                ->whereIn('valor1', $monedas)
+                ->orderBy('orden', 'asc')
+                ->get();
+            return $response;
+        } catch (\Exception $ex) {
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
+        }
+    }
 }

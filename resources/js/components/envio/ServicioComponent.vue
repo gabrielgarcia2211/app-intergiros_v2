@@ -115,36 +115,36 @@ export default {
                 case "TP-01":
                     this.idService = currentService.id;
                     this.checkService = currentService.codigo;
-                    this.optionsMonedas = await this.getMonedas();
+                    this.optionsMonedas = await this.$getMonedas();
                     break;
                 case "TP-02":
                     this.idService = currentService.id;
                     this.checkService = currentService.codigo;
-                    this.optionsMonedas = await this.getMonedas();
+                    this.optionsMonedas = await this.$getMonedas();
                     break;
                 case "TP-03":
                     this.idService = currentService.id;
                     this.checkService = currentService.codigo;
-                    this.optionsMonedas = await this.getMonedaByCodigo("VES");
+                    this.optionsMonedas = await this.$getMonedaByCodigo("VES");
                     break;
                 case "TP-04":
                     this.idService = currentService.id;
                     this.checkService = currentService.codigo;
-                    this.optionsMonedas = await this.getMonedaByCodigo(
+                    this.optionsMonedas = await this.$getMonedaByCodigo(
                         "VES,COP"
                     );
                     break;
                 case "TP-05":
                     this.idService = currentService.id;
                     this.checkService = currentService.codigo;
-                    this.optionsMonedas = await this.getMonedaByCodigo(
+                    this.optionsMonedas = await this.$getMonedaByCodigo(
                         "VES,COP"
                     );
                     break;
                 case "TP-06":
                     this.idService = currentService.id;
                     this.checkService = currentService.codigo;
-                    this.optionsMonedas = await this.getMonedaByCodigo(
+                    this.optionsMonedas = await this.$getMonedaByCodigo(
                         "VES,PEN,USD"
                     );
                     break;
@@ -170,31 +170,7 @@ export default {
                     reject(error);
                 }
             });
-        },
-        async getMonedas() {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const response = await axios.get("/gestion/monedas");
-                    resolve(response.data);
-                } catch (error) {
-                    this.$readStatusHttp(error);
-                    reject(error);
-                }
-            });
-        },
-        async getMonedaByCodigo(codigo) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const response = await axios.get(
-                        "/gestion/monedas/" + codigo
-                    );
-                    resolve(response.data);
-                } catch (error) {
-                    this.$readStatusHttp(error);
-                    reject(error);
-                }
-            });
-        },
+        }
     },
 };
 </script>

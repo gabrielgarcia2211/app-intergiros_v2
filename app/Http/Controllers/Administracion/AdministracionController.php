@@ -121,22 +121,53 @@ class AdministracionController extends Controller
 
     public function getMonedas()
     {
-        return TipoMoneda::select(
+        $monedas = TipoMoneda::get([
             'id',
             'tipo',
-            DB::raw("CONCAT(tipo, ',', codigo) as descripcion")
-        )->get();
+        ]);
+        foreach ($monedas as $key => $value) {
+            switch ($value->tipo) {
+                case 'Bolivar':
+                    $monedas[$key]->descripcion = $value->tipo . ', ' . 'Venezuela';
+                    break;
+                case 'Sol':
+                case 'Dolar':
+                    $monedas[$key]->descripcion =  $value->tipo . ', ' . 'Perú';
+                    break;
+                case 'Peso':
+                    $monedas[$key]->descripcion =  $value->tipo . ', ' . 'Colombia';
+                    break;
+                default:
+                    break;
+            }
+        }
+        return $monedas;
     }
 
     public function getMonedaByCodigo($codigo)
     {
-        return TipoMoneda::select(
-            'id',
-            'tipo',
-            DB::raw("CONCAT(tipo, ',', codigo) as descripcion")
-        )
-            ->whereIn('codigo', explode(",", $codigo))
-            ->get();
+        $monedas = TipoMoneda::whereIn('codigo', explode(",", $codigo))
+            ->get([
+                'id',
+                'tipo'
+            ]);
+        foreach ($monedas as $key => $value) {
+            switch ($value->tipo) {
+                case 'Bolivar':
+                    $monedas[$key]->descripcion = $value->tipo . ', ' . 'Venezuela';
+                    break;
+                case 'Sol':
+                case 'Dolar':
+                    $monedas[$key]->descripcion =  $value->tipo . ', ' . 'Perú';
+                    break;
+                case 'Peso':
+                    $monedas[$key]->descripcion =  $value->tipo . ', ' . 'Colombia';
+                    break;
+                default:
+                    break;
+            }
+        }
+        return $monedas;
     }
 
     private function setQuery()

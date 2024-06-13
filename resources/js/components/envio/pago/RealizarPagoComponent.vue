@@ -1,5 +1,5 @@
 <template>
-    <Dialog class="pago" v-model:visible="visible">
+    <Dialog class="pago" v-model:visible="visible" modal :style="{ width: '70vw' }" :draggable="false">
         <template #header>
             <h1>Realizar Pago</h1>
         </template>

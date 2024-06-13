@@ -197,6 +197,82 @@ export default {
                 return partes.join(",");
             }
         },
+        async $getMonedas() {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const response = await axios.get("/gestion/monedas");
+                    resolve(response.data);
+                } catch (error) {
+                    this.$readStatusHttp(error);
+                    reject(error);
+                }
+            });
+        },
+        async $getMonedaByCodigo(codigo) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const response = await axios.get(
+                        "/gestion/monedas/" + codigo
+                    );
+                    resolve(response.data);
+                } catch (error) {
+                    this.$readStatusHttp(error);
+                    reject(error);
+                }
+            });
+        },
+        async $getTercerosByService(code, servicio) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const response = await axios.get(
+                        "/terceros/list/service/" + code + "/" + servicio
+                    );
+                    resolve(response.data);
+                } catch (error) {
+                    this.$readStatusHttp(error);
+                    reject(error);
+                }
+            });
+        },
+        async $getBancoByMonedas(moneda) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const response = await axios.get(
+                        "/configuration/bancos/" + moneda
+                    );
+                    resolve(response.data);
+                } catch (error) {
+                    this.$readStatusHttp(error);
+                    reject(error);
+                }
+            });
+        },
+        async $getDocumentByMonedas(moneda) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const response = await axios.get(
+                        "/configuration/documento/" + moneda
+                    );
+                    resolve(response.data);
+                } catch (error) {
+                    this.$readStatusHttp(error);
+                    reject(error);
+                }
+            });
+        },
+        async $showTercero(id, code, servicio) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const response = await axios.get(
+                        "/terceros/show/" + id + "/" + code + "/" + servicio
+                    );
+                    resolve(response.data);
+                } catch (error) {
+                    this.$readStatusHttp(error);
+                    reject(error);
+                }
+            });
+        },
     },
 };
 </script>

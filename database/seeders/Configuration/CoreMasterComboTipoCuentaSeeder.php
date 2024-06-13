@@ -22,12 +22,12 @@ class CoreMasterComboTipoCuentaSeeder extends Seeder
                 'status' => true,
                 'childrens' => [
                     [
-                        'name' => 'AHORRO',
+                        'name' => 'A-AHORRO',
                         'code' => 'ahorro',
                         'orden' => 0,
                     ],
                     [
-                        'name' => 'CORRIENTE',
+                        'name' => 'C-CORRIENTE',
                         'code' => 'corriente',
                         'orden' => 1,
                     ]

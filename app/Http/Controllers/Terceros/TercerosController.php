@@ -29,7 +29,7 @@ class TercerosController extends Controller
     public function getTerceros($code, $servicio)
     {
         try {
-            return Tercero::select('terceros.id', 'terceros.nombre')
+            return Tercero::select('terceros.id', 'terceros.nombre', 'terceros.alias')
                 ->join('master_combos', 'master_combos.id', 'terceros.tipo_tercero_id')
                 ->join('tipo_formulario', 'tipo_formulario.id', 'terceros.tipo_formulario_id')
                 ->where([
@@ -130,12 +130,30 @@ class TercerosController extends Controller
     {
         $id = $request->input('id');
         $path_document = ltrim(parse_url($request->input('path_document'))['path'], '/comprobantes/');
-        Log::debug($path_document);
         if ($this->fileService->deleteFile($path_document)) {
             Tercero::where('id', $id)->update([
                 'path_documento' => null,
             ]);
         }
         return true;
+    }
+
+    public function getTercerosByService($code, $servicio)
+    {
+        try {
+            return Tercero::select('terceros.id', 'terceros.nombre', 'terceros.alias')
+                ->join('master_combos', 'master_combos.id', 'terceros.tipo_tercero_id')
+                ->join('tipo_formulario', 'tipo_formulario.id', 'terceros.tipo_formulario_id')
+                ->where([
+                    'terceros.user_id' => Auth()->user()->id,
+                    'master_combos.code' => $code,
+                    'tipo_formulario.id' => $servicio
+                ])
+                ->get();
+        } catch (\Exception $ex) {
+            Log::debug($ex->getLine());
+            Log::debug($ex->getMessage());
+            return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
+        }
     }
 }

@@ -15,7 +15,7 @@
                     id="selectedBeneficiario"
                     v-model="selectedBeneficiario"
                     :options="beneficiarios"
-                    optionLabel="nombre"
+                    optionLabel="alias"
                     optionValue="id"
                     :placeholder="'Beneficiarios afiliados'"
                     class="w-full md:w-14rem input-registro"
@@ -159,7 +159,7 @@
                                     beneficiarioForm.tipoCuentaBeneficiario
                                 "
                                 :options="optionsTipoCuenta"
-                                placeholder="Cuenta"
+                                placeholder="T"
                                 optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
@@ -295,7 +295,7 @@
                     id="selectedDepositante"
                     v-model="selectedDepositante"
                     :options="depositantes"
-                    optionLabel="nombre"
+                    optionLabel="alias"
                     optionValue="id"
                     :placeholder="'Depositantes afiliados'"
                     class="w-full md:w-14rem input-registro"
@@ -432,7 +432,7 @@
                                 id="tipoCuentaDepositante"
                                 v-model="depositanteForm.tipoCuentaDepositante"
                                 :options="optionsTipoCuenta"
-                                placeholder="Cuenta"
+                                placeholder="T"
                                 optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
@@ -444,7 +444,7 @@
                                 }"
                                 :disabled="isEditDepositante"
                             ></Dropdown>
-                            <InputNumber
+                            <InputText
                                 v-model="depositanteForm.cuentaDepositante"
                                 :placeholder="'Cuenta en dolares'"
                                 style="width: 80%"
@@ -652,8 +652,7 @@
                         <p v-else-if="montoBruto > 500">
                             El monto debe ser menor a 500,00
                         </p>
-                        </small
-                    >
+                    </small>
                     <div class="mt-5">
                         <p style="color: #0035aa">
                             {{}}
@@ -915,11 +914,10 @@ export default {
                 tipoDocumentoBeneficiario: Yup.string().required(
                     "El tipo documento es obligatorio"
                 ),
-                documentoBeneficiario: Yup.string().required(
-                    "El documento es obligatorio"
-                )
-                .min(5, "El documento debe tener al menos 5 caracteres")
-                .max(15, "El documento no debe tener mas de 15 caracteres"),
+                documentoBeneficiario: Yup.string()
+                    .required("El documento es obligatorio")
+                    .min(5, "El documento debe tener al menos 5 caracteres")
+                    .max(15, "El documento no debe tener mas de 15 caracteres"),
                 tipoCuentaBeneficiario: Yup.string().required(
                     "El tipo banco es obligatorio"
                 ),
@@ -957,11 +955,10 @@ export default {
                 tipoDocumentoDepositante: Yup.string().required(
                     "El tipo documento es obligatorio"
                 ),
-                documentoDepositante: Yup.string().required(
-                    "El documento es obligatorio"
-                )
-                .min(5, "El documento debe tener al menos 5 caracteres")
-                .max(15, "El documento no debe tener mas de 15 caracteres"),
+                documentoDepositante: Yup.string()
+                    .required("El documento es obligatorio")
+                    .min(5, "El documento debe tener al menos 5 caracteres")
+                    .max(15, "El documento no debe tener mas de 15 caracteres"),
                 tipoCuentaDepositante: Yup.string().required(
                     "El tipo banco es obligatorio"
                 ),
@@ -1052,7 +1049,9 @@ export default {
                 (option) => option.id === event.value
             );
             if (selectedObj) {
-                $("#codigoIDepositante > .p-dropdown-label").text(selectedObj.name);
+                $("#codigoIDepositante > .p-dropdown-label").text(
+                    selectedObj.name
+                );
             }
         },
         async initBeneficiario() {
@@ -1305,9 +1304,7 @@ export default {
             this.beneficiarioForm.bancoBeneficiario = parseInt(
                 beneficiario.banco_id
             );
-            this.beneficiarioForm.cuentaBeneficiario = parseInt(
-                beneficiario.cuenta
-            );
+            this.beneficiarioForm.cuentaBeneficiario = beneficiario.cuenta;
             this.beneficiarioForm.pagoMovilBeneficiario =
                 beneficiario.pago_movil;
         },
@@ -1324,9 +1321,7 @@ export default {
             this.depositanteForm.tipoCuentaDepositante = parseInt(
                 depositante.tipo_cuenta_id
             );
-            this.depositanteForm.cuentaDepositante = parseInt(
-                depositante.cuenta
-            );
+            this.depositanteForm.cuentaDepositante = depositante.cuenta;
             this.depositanteForm.bancoDepositante = parseInt(
                 depositante.banco_id
             );

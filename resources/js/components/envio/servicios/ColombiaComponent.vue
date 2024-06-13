@@ -15,7 +15,7 @@
                     id="selectedBeneficiario"
                     v-model="selectedBeneficiario"
                     :options="beneficiarios"
-                    optionLabel="nombre"
+                    optionLabel="alias"
                     optionValue="id"
                     :placeholder="'Beneficiarios afiliados'"
                     class="w-full md:w-14rem input-registro"
@@ -159,7 +159,7 @@
                                     beneficiarioForm.tipoCuentaBeneficiario
                                 "
                                 :options="optionsTipoCuenta"
-                                placeholder="Cuenta"
+                                placeholder="T"
                                 optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
@@ -171,7 +171,7 @@
                                 }"
                                 :disabled="isEditBeneficiario"
                             ></Dropdown>
-                            <InputNumber
+                            <InputText
                                 v-model="beneficiarioForm.cuentaBeneficiario"
                                 :placeholder="placeholderCuenta"
                                 style="width: 80%"
@@ -294,7 +294,7 @@
                     id="selectedDepositante"
                     v-model="selectedDepositante"
                     :options="depositantes"
-                    optionLabel="nombre"
+                    optionLabel="alias"
                     optionValue="id"
                     :placeholder="'Depositantes afiliados'"
                     class="w-full md:w-14rem input-registro"
@@ -1145,9 +1145,7 @@ export default {
             this.beneficiarioForm.bancoBeneficiario = parseInt(
                 beneficiario.banco_id
             );
-            this.beneficiarioForm.cuentaBeneficiario = parseInt(
-                beneficiario.cuenta
-            );
+            this.beneficiarioForm.cuentaBeneficiario = beneficiario.cuenta;
             this.beneficiarioForm.pagoMovilBeneficiario =
                 beneficiario.pago_movil;
         },

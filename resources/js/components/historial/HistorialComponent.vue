@@ -218,10 +218,35 @@
                                                 <p style="margin-bottom: 0px">
                                                     ID# {{ item.uuid }}
                                                 </p>
-                                                <p style="color: #cf0000">
-                                                    Datos erróneos del
-                                                    beneficiario
-                                                </p>
+                                                <div style="color: #cf0000">
+                                                    <p
+                                                        v-if="
+                                                            item.estado.code ==
+                                                            'pendiente_beneficiario'
+                                                        "
+                                                    >
+                                                        Datos erróneos del
+                                                        beneficiario
+                                                    </p>
+                                                    <p
+                                                        v-else-if="
+                                                            item.estado.code ==
+                                                            'pendiente_depositante'
+                                                        "
+                                                    >
+                                                        Datos erróneos del
+                                                        depositante
+                                                    </p>
+                                                    <p
+                                                        v-else-if="
+                                                            item.estado.code ==
+                                                            'pendiente_monto'
+                                                        "
+                                                    >
+                                                        Monto erróneo
+                                                    </p>
+                                                </div>
+
                                                 <p
                                                     style="
                                                         margin-bottom: 0px;
@@ -842,7 +867,14 @@
     </div>
 
     <!-- openEnProceso -->
-    <Dialog v-model:visible="visibleEnProceso" style="width: 500px">
+    <Dialog
+        v-model:visible="visibleEnProceso"
+        style="width: 600px"
+        position="top"
+        modal
+        :draggable="false"
+        :closable="false"
+    >
         <template #header>
             <h1>Realizar Reclamo - EnProceso</h1>
         </template>
@@ -867,12 +899,12 @@
                 class="form-check"
             >
                 <input
-                    type="checkbox"
+                    type="radio"
                     class="form-check-input opcion-reclamo-entregado"
                     :id="'option' + item.id"
                     :data-code="item.code"
                     :value="item.id"
-                    v-model="formData.opciones"
+                    v-model="formDataEnProceso.opcion"
                 />
                 <label class="form-check-label" :for="'option' + item.id">{{
                     item.valor1
@@ -881,7 +913,7 @@
             <div class="form-group mt-5">
                 <label>Escribenos un mensaje (Opcional)</label>
                 <Textarea
-                    v-model="formData.comentario"
+                    v-model="formDataEnProceso.comentario"
                     rows="5"
                     cols="30"
                     style="width: 100%"
@@ -890,9 +922,19 @@
         </div>
         <template #footer
             ><Button
+                class="btn-secondary"
+                @click="visibleEnProceso = false"
+                style="
+                    background-color: transparent;
+                    border: none;
+                    font-size: 18px;
+                    text-align: center;
+                "
+                >Cerrar</Button
+            ><Button
                 class="btn-primary"
-                :disabled="formData.opciones.length == 0"
-                @click="sendReclamo"
+                :disabled="!isEnProceso"
+                @click="sendReclamoEnProceso"
                 style="
                     background-color: transparent;
                     border: none;
@@ -907,49 +949,98 @@
     <!-- openPorSolucionar -->
     <Dialog
         v-model:visible="visiblePorSolucionar"
-        style="width: 800px; top: 20%"
+        :style="
+            selectedStatus === 'pendiente_monto'
+                ? 'width: 400px; top: 20%'
+                : 'width: 800px; top: 20%'
+        "
+        position="top"
+        modal
+        :draggable="false"
+        :closable="false"
     >
         <template #header>
             <h1>Realizar Reclamo - PorSolucionar</h1>
         </template>
         <div v-if="checkPorSolucionar.visible">
-            <div
-                v-for="item in checkPorSolucionar.data"
-                :key="item.id"
-                class="form-check"
-            >
-                <input
-                    type="checkbox"
-                    class="form-check-input opcion-reclamo-entregado"
-                    :id="'option' + item.id"
-                    :data-code="item.code"
-                    :value="item.id"
-                    v-model="formData.opciones"
-                />
-                <label class="form-check-label" :for="'option' + item.id">{{
-                    item.valor1
-                }}</label>
+            <h3># ID {{ selectedUser }}</h3>
+            <div v-if="selectedStatus == 'pendiente_monto'">
+                <monto-component
+                    :formularioId="selectedMonto.tipo_formulario.id"
+                    :monedaId="selectedMonto.tipo_moneda.id"
+                    @formMonto="capFormMonto"
+                ></monto-component>
             </div>
-            <depositante-component
-                ref="historialTerceros"
-                @formId="capFormId"
-                v-if="visiblePorSolucionar"
-            ></depositante-component>
-            <div class="form-group mt-5">
-                <label>Escribenos un mensaje (Opcional)</label>
-                <Textarea
-                    v-model="formData.comentario"
-                    rows="5"
-                    cols="30"
-                    style="width: 100%"
-                />
+            <div v-else>
+                <div
+                    v-for="item in checkPorSolucionar.data"
+                    :key="item.id"
+                    class="form-check"
+                >
+                    <input
+                        type="radio"
+                        class="form-check-input opcion-reclamo-entregado"
+                        :id="'option' + item.id"
+                        :data-code="item.code"
+                        :value="item.id"
+                        v-model="formDataPorSolucionar.opcion"
+                    />
+                    <label class="form-check-label" :for="'option' + item.id">{{
+                        item.valor1
+                    }}</label>
+                </div>
+                <div v-if="selectedStatus == 'pendiente_beneficiario'">
+                    <list-beneficiario-component
+                        :selectedService="selectedService"
+                        @formId="capFormIdPorSolucionarList"
+                        v-if="selectedPorSolucionarList"
+                    ></list-beneficiario-component>
+                    <current-beneficiario-component
+                        :selectedService="selectedService"
+                        :selectedUser="selectedUser"
+                        @formId="capFormIdPorSolucionarCurrent"
+                        v-if="selectedPorSolucionarCurrent"
+                    ></current-beneficiario-component>
+                </div>
+                <div v-if="selectedStatus == 'pendiente_depositante'">
+                    <list-depositante-component
+                        :selectedService="selectedService"
+                        @formId="capFormIdPorSolucionarList"
+                        v-if="selectedPorSolucionarList"
+                    ></list-depositante-component>
+                    <current-depositante-component
+                        :selectedService="selectedService"
+                        :selectedUser="selectedUser"
+                        @formId="capFormIdPorSolucionarCurrent"
+                        v-if="selectedPorSolucionarCurrent"
+                    ></current-depositante-component>
+                </div>
+                <div class="form-group mt-5">
+                    <label>Escribenos un mensaje (Opcional)</label>
+                    <Textarea
+                        v-model="formDataPorSolucionar.comentario"
+                        rows="5"
+                        cols="30"
+                        style="width: 100%"
+                    />
+                </div>
             </div>
         </div>
         <template #footer
             ><Button
+                class="btn-secondary"
+                @click="visiblePorSolucionar = false"
+                style="
+                    background-color: transparent;
+                    border: none;
+                    font-size: 18px;
+                    text-align: center;
+                "
+                >Cerrar</Button
+            ><Button
                 class="btn-primary"
-                :disabled="!isReclamo"
-                @click="sendReclamo"
+                :disabled="!isPorSolucionar"
+                @click="sendReclamoPorSolucionar"
                 style="
                     background-color: transparent;
                     border: none;
@@ -962,7 +1053,13 @@
     </Dialog>
 
     <!-- openProcesado -->
-    <Dialog v-model:visible="visibleProcesado" style="width: 800px; top: 20%">
+    <Dialog
+        v-model:visible="visibleProcesado"
+        style="width: 800px; top: 20%"
+        position="top"
+        modal
+        :draggable="false"
+    >
         <template #header>
             <h1>Realizar Reclamo - Procesado</h1>
         </template>
@@ -992,21 +1089,16 @@
                     :id="'option' + item.id"
                     :data-code="item.code"
                     :value="item.id"
-                    v-model="formData.opciones"
+                    v-model="formDataProcesado.opciones"
                 />
                 <label class="form-check-label" :for="'option' + item.id">{{
                     item.valor1
                 }}</label>
             </div>
-            <depositante-component
-                ref="historialTerceros"
-                @formId="capFormId"
-                v-if="visibleProcesado"
-            ></depositante-component>
             <div class="form-group mt-5">
                 <label>Escribenos un mensaje (Opcional)</label>
                 <Textarea
-                    v-model="formData.comentario"
+                    v-model="formDataProcesado.comentario"
                     rows="5"
                     cols="30"
                     style="width: 100%"
@@ -1016,8 +1108,8 @@
         <template #footer>
             <Button
                 class="btn-primary"
-                :disabled="!isReclamo"
-                @click="sendReclamo"
+                :disabled="!isProcesado"
+                @click="sendReclamoProcesado"
                 style="
                     background-color: transparent;
                     border: none;
@@ -1032,7 +1124,11 @@
 
 <script>
 // Importar Librerias o Modulos
-import DepositanteComponent from "./terceros/DepositanteComponent.vue";
+import ListBeneficiarioComponent from "./beneficiario/ListBeneficiarioComponent.vue";
+import CurrentBeneficiarioComponent from "./beneficiario/CurrentBeneficiarioComponent.vue";
+import ListDepositanteComponent from "./depositante/ListDepositanteComponent.vue";
+import CurrentDepositanteComponent from "./depositante/CurrentDepositanteComponent.vue";
+import MontoComponent from "./monto/MontoComponent.vue";
 
 export default {
     data() {
@@ -1055,6 +1151,7 @@ export default {
                 data: [],
             },
             selectedOptionEnProceso: null,
+            isEnProceso: false,
             /** Por solucionar */
             visiblePorSolucionar: false,
             optionPorSolucionar: [
@@ -1064,7 +1161,11 @@ export default {
                 visible: false,
                 data: [],
             },
-            selectedOptionPorSolucionar: null,
+            selectedPorSolucionarList: false,
+            selectedPorSolucionarCurrent: false,
+            selectedPorSolucionarMonto: false,
+            isPorSolucionar: false,
+            beneficiarioFormId: null,
             /** Procesados */
             visibleProcesado: false,
             optionProcesado: [
@@ -1075,29 +1176,79 @@ export default {
                 data: [],
             },
             selectedOptionProcesado: null,
-            /** formulario de envio */
-            formData: {
+            isProcesado: false,
+            /** formulario de envio enProceso */
+            formDataEnProceso: {
                 solicitud_id: null,
-                opciones: [],
+                opcion: null,
                 comentario: null,
-                beneficiario_id: null,
+            },
+            /** formulario de envio porSolucionar */
+            formDataPorSolucionar: {
+                solicitud_id: null,
+                opcion: null,
+                comentario: null,
+                tercero_id: null,
+                field_update: null
+            },
+            /** formulario de envio procesados*/
+            formDataProcesado: {
+                solicitud_id: null,
+                opcion: null,
+                comentario: null,
+                tercero_id: null,
                 estadoCuenta: null,
             },
             servicioDepositanteVisible: false,
+            selectedService: null,
+            selectedUser: null,
+            selectedStatus: null,
+            selectedMonto: null,
+            fieldUpdate: null,
         };
     },
     components: {
-        DepositanteComponent,
+        ListBeneficiarioComponent,
+        ListDepositanteComponent,
+        CurrentBeneficiarioComponent,
+        CurrentDepositanteComponent,
+        MontoComponent,
     },
     watch: {
-        "formData.opciones": async function (value) {
-            if (this.visiblePorSolucionar || this.visibleProcesado) {
+        "formDataEnProceso.opcion": async function (value) {
+            if (this.visibleEnProceso) {
+                if (this.formDataEnProceso.opcion) {
+                    this.isEnProceso = true;
+                } else {
+                    this.isEnProceso = false;
+                }
+            }
+        },
+        "formDataPorSolucionar.opcion": async function (value) {
+            if (this.visiblePorSolucionar) {
+                if (value) {
+                    this.selectedPorSolucionarList = false;
+                    this.selectedPorSolucionarCurrent = false;
+                    this.beneficiarioFormId = null;
+                    let values = await this.visibleFormBeneficiario([value]);
+                    if (values.includes("reintentar_beneficiario_pr")) {
+                        this.selectedPorSolucionarList = true;
+                    } else if (values.includes("reintentar_pr")) {
+                        this.selectedPorSolucionarCurrent = true;
+                    }
+                } else {
+                    this.selectedPorSolucionarList = false;
+                    this.selectedPorSolucionarCurrent = false;
+                    this.beneficiarioFormId = null;
+                }
+                this.validateReclamoPorSolucionar();
+            }
+        },
+        "formDataProcesado.opciones": async function (value) {
+            if (this.visibleProcesado) {
                 if (value.length > 0) {
                     let values = await this.visibleFormBeneficiario(value);
-                    if (
-                        values.includes("reintentar_beneficiario_pr") ||
-                        values.includes("reintentar_beneficiario_p")
-                    ) {
+                    if (values.includes("reintentar_beneficiario_p")) {
                         if (!this.servicioDepositanteVisible) {
                             this.depositanteFormId = null;
                             this.servicioDepositanteVisible = true;
@@ -1138,20 +1289,32 @@ export default {
             });
         },
         openModalEnProceso(item) {
-            this.resetForm();
+            this.resetFormEnProceso();
             this.visibleEnProceso = true;
-            this.formData.solicitud_id = item.id;
+            this.formDataEnProceso.solicitud_id = item.id;
+            this.formDataEnProceso.opcion = null;
         },
         openModalPorSolucionar(item) {
-            this.resetForm();
+            this.resetFormPorSolucionar();
+            this.fieldUpdate = null;
             this.visiblePorSolucionar = true;
-            this.formData.solicitud_id = item.id;
+            this.formDataPorSolucionar.solicitud_id = item.id;
+            this.formDataPorSolucionar.opcion = null;
+            this.selectedService = item.tipo_formulario;
+            this.selectedMonto = item;
+            this.selectedStatus = item.estado.code;
+            if (item.estado.code == "pendiente_beneficiario") {
+                this.selectedUser = item.beneficiario_id;
+            } else {
+                this.selectedUser = item.depositante_id;
+            }
             this.handleReclamo("por_solucionar", { value: 1 });
         },
         opennModalProcesado(item) {
-            this.resetForm();
+            this.resetFormProcesado();
             this.visibleProcesado = true;
-            this.formData.solicitud_id = item.id;
+            this.formDataProcesado.solicitud_id = item.id;
+            this.formDataProcesado.opcion = null;
         },
         async getTypeReclamos() {
             const comboNames = [
@@ -1209,18 +1372,43 @@ export default {
                     });
             });
         },
-        sendReclamo() {
-            this.formData.beneficiario_id = this.depositanteFormId;
+        sendReclamoEnProceso() {
             this.$axios
-                .post("/historial/store", this.formData, {
+                .post("/historial/store", this.formDataEnProceso)
+                .then((response) => {
+                    this.$alertSuccess("Solicitud realizada correctamente");
+                    this.visibleEnProceso = false;
+                })
+                .catch((error) => {
+                    this.$readStatusHttp(error);
+                });
+        },
+        sendReclamoPorSolucionar() {
+            this.formDataPorSolucionar.tercero_id = this.beneficiarioFormId;
+            this.formDataPorSolucionar.field_update = this.fieldUpdate ?? null;
+            this.formDataPorSolucionar.monto = this.montoSolicitud;
+            this.$axios
+                .post("/historial/store", this.formDataPorSolucionar)
+                .then((response) => {
+                    this.$alertSuccess("Solicitud realizada correctamente");
+                    this.visiblePorSolucionar = false;
+                    this.selectedPorSolucionarList = false;
+                    this.selectedPorSolucionarCurrent = false;
+                })
+                .catch((error) => {
+                    this.$readStatusHttp(error);
+                });
+        },
+        sendReclamoProcesado() {
+            this.formDataProcesado.tercero_id = this.depositanteFormId;
+            this.$axios
+                .post("/historial/store", this.formDataProcesado, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
                 })
                 .then((response) => {
                     this.$alertSuccess("Solicitud realizada correctamente");
-                    this.visiblePorSolucionar = false;
-                    this.visibleEnProceso = false;
                     this.visibleProcesado = false;
                 })
                 .catch((error) => {
@@ -1263,13 +1451,26 @@ export default {
 
             return tipo;
         },
-        resetForm() {
-            this.formData.solicitud_id = null;
-            this.formData.opciones = [];
-            this.formData.comentario = null;
-            this.formData.beneficiario_id = null;
-            this.formData.estadoCuenta = null;
+        resetFormEnProceso() {
+            this.formDataProcesado.solicitud_id = null;
+            this.formDataProcesado.opcion = null;
+            this.formDataProcesado.comentario = null;
             this.checkEnProceso.visible = false;
+        },
+        resetFormPorSolucionar() {
+            this.formDataPorSolucionar.solicitud_id = null;
+            this.formDataPorSolucionar.opcion = null;
+            this.formDataPorSolucionar.comentario = null;
+            this.formDataPorSolucionar.tercero_id = null;
+            this.checkPorSolucionar.visible = false;
+        },
+        resetFormProcesado() {
+            this.formDataProcesado.solicitud_id = null;
+            this.formDataProcesado.opcion = null;
+            this.formDataProcesado.comentario = null;
+            this.formDataProcesado.tercero_id = null;
+            this.formDataProcesado.estadoCuenta = null;
+            this.checkProcesado.visible = false;
         },
         validateReclamo() {
             if (this.servicioDepositanteVisible) {
@@ -1278,10 +1479,23 @@ export default {
                 } else {
                     this.isReclamo = false;
                 }
-            } else if (this.formData.opciones.length > 0) {
+            } else if (this.formDataProcesado.opciones.length > 0) {
                 this.isReclamo = true;
             } else {
                 this.isReclamo = false;
+            }
+        },
+        validateReclamoPorSolucionar() {
+            if (this.selectedPorSolucionarList) {
+                if (this.beneficiarioFormId) {
+                    this.isPorSolucionar = true;
+                } else {
+                    this.isPorSolucionar = false;
+                }
+            } else if (this.formDataPorSolucionar.opcion) {
+                this.isPorSolucionar = true;
+            } else {
+                this.isPorSolucionar = false;
             }
         },
         validateDepositante(service, others) {
@@ -1298,6 +1512,19 @@ export default {
         capFormId(value) {
             this.depositanteFormId = value;
             this.validateReclamo();
+        },
+        capFormIdPorSolucionarList(value, field) {
+            this.beneficiarioFormId = value;
+            this.fieldUpdate = field;
+            this.validateReclamoPorSolucionar();
+        },
+        capFormIdPorSolucionarCurrent(value) {
+            this.beneficiarioFormId = value;
+        },
+        capFormMonto(status, monto) {
+            this.isPorSolucionar = status;
+            this.montoSolicitud = monto;
+            this.fieldUpdate = 'monto';
         },
         previewImagen(data, titulo) {
             let swalOptions = {

@@ -11,7 +11,7 @@ class Historial extends Model
 
     protected $fillable = [
         'solicitud_id',
-        'beneficiario_id',
+        'tercero_id',
         'comentarios',
         'opciones',
         'path_estado_cuenta'
