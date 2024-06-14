@@ -443,7 +443,8 @@
                                 filter
                                 @change="handleCodigoI"
                             ></Dropdown>
-                            <InputNumber
+                            <InputMask
+                                mask="?999999999999999"
                                 id=""
                                 v-model="depositanteForm.celularDepositante"
                                 placeholder="Número celular"
@@ -455,6 +456,7 @@
                                         errorsDepositante.celularDepositante,
                                 }"
                                 :disabled="isEditDepositante"
+                                autocomplete="tel"
                             />
                         </InputGroup>
                         <small
@@ -740,18 +742,6 @@ export default {
             optionsTipoCuenta: [],
             selectedBeneficiario: null,
             selectedDepositante: null,
-            validDomains: [
-                "hotmail.com",
-                "HOTMIAL.COM",
-                "gmail.com",
-                "GMAIL.COM",
-                "outlook.com",
-                "OUTLOOK.COM",
-                "yahoo.es",
-                "YAHOO.ES",
-                "yahoo.com",
-                "YAHOO.COM",
-            ],
             /** Formulario Beneficario*/
             formBeneficiarioVisible: false,
             beneficiarioForm: {
@@ -937,16 +927,39 @@ export default {
                         "El dominio del correo electrónico no es válido",
                         (value) => {
                             if (!value) return true;
-                            const domain = value.split("@")[1];
-                            return this.validDomains.includes(domain);
+                            const atIndex = value.indexOf("@");
+                            const dotIndex = value.lastIndexOf(".");
+
+                            if (
+                                atIndex === -1 ||
+                                dotIndex === -1 ||
+                                dotIndex < atIndex
+                            ) {
+                                // Si no hay símbolo "@" o "." o "." está antes de "@" o no hay texto después de "@" o "."
+                                return false;
+                            }
+
+                            const afterAt = value.substring(
+                                atIndex + 1,
+                                dotIndex
+                            );
+                            const afterDot = value.substring(dotIndex + 1);
+
+                            const letterRegex = /^[a-zA-Z]+$/; // Expresión regular para letras
+
+                            return (
+                                letterRegex.test(afterAt) &&
+                                letterRegex.test(afterDot)
+                            );
                         }
                     ),
                 codigoIDepositante: Yup.string().required(
                     "La cuenta es obligatoria"
                 ),
-                celularDepositante: Yup.string().required(
-                    "El pago movil es obligatorio"
-                ),
+                celularDepositante: Yup.string()
+                    .required("El celular es obligatorio")
+                    .min(7, "El celular debe tener al menos 7 digitos")
+                    .max(15, "El celular no debe tener mas de 15 digitos"),
                 paisDepositante: Yup.string().required(
                     "El pais es obligatorio"
                 ),

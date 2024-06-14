@@ -487,7 +487,8 @@
                                 filter
                                 @change="handleCodigoI"
                             ></Dropdown>
-                            <InputNumber
+                            <InputMask
+                                mask="?999999999999999"
                                 id=""
                                 v-model="depositanteForm.celularDepositante"
                                 placeholder="Número celular"
@@ -499,6 +500,7 @@
                                         errorsDepositante.celularDepositante,
                                 }"
                                 :disabled="isEditDepositante"
+                                autocomplete="tel"
                             />
                         </InputGroup>
                         <small
@@ -971,9 +973,10 @@ export default {
                 codigoIDepositante: Yup.string().required(
                     "La cuenta es obligatoria"
                 ),
-                celularDepositante: Yup.string().required(
-                    "El pago movil es obligatorio"
-                ),
+                celularDepositante: Yup.string()
+                    .required("El celular es obligatorio")
+                    .min(7, "El celular debe tener al menos 7 digitos")
+                    .max(15, "El celular no debe tener mas de 15 digitos"),
                 adjuntarDocumento: Yup.string().required(
                     "La foto es obligatoria"
                 ),
