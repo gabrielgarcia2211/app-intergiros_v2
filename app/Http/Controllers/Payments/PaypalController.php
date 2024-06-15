@@ -43,7 +43,7 @@ class PaypalController extends Controller
             return Response::sendResponseService(false,  ['denied_url' => url('/paypal/cancel')], 'Lo siento, no se pudo crear el pago con PayPal.');
         } catch (\Exception $ex) {
             DB::rollback();
-            Log::debug($ex->getMessage());
+            Log::debug($ex);
             return Response::sendError('Ocurrio un error inesperado al intentar procesar la solicitud', 500);
         }
     }

@@ -9,7 +9,7 @@
                             v-model="beneficiarioForm.aliasBeneficiario"
                             placeholder="Alias"
                             class="w-full md:w-14rem input-registro"
-                            style="width: 80%"
+                            style="width: 100%"
                             :class="{
                                 'p-invalid': errors.aliasBeneficiario,
                                 'input-readonly': isEdit,
@@ -30,7 +30,7 @@
                             v-model="beneficiarioForm.nombreBeneficiario"
                             placeholder="Nombres y apellidos"
                             class="w-full md:w-14rem input-registro"
-                            style="width: 80%"
+                            style="width: 100%"
                             :class="{
                                 'p-invalid': errors.nombreBeneficiario,
                                 'input-readonly': isEdit,
@@ -50,7 +50,7 @@
                 <div class="col-6">
                     <div
                         class="form-group"
-                        style="width: 80%; display: inline-block"
+                        style="width: 100%; display: inline-block"
                     >
                         <InputGroup>
                             <Dropdown
@@ -70,6 +70,7 @@
                                     'input-readonly': isEdit,
                                 }"
                                 :disabled="isEdit"
+                                filter
                             ></Dropdown>
                             <InputNumber
                                 id=""
@@ -101,7 +102,7 @@
                             optionLabel="name"
                             optionValue="id"
                             class="w-full md:w-14rem input-registro"
-                            style="width: 80%; text-align: left"
+                            style="width: 100%; text-align: left"
                             :class="{
                                 'p-invalid': errors.bancoBeneficiario,
                                 'input-readonly': isEdit,
@@ -122,7 +123,7 @@
                 <div class="col-6">
                     <div
                         class="form-group"
-                        style="width: 80%; display: inline-block"
+                        style="width: 100%; display: inline-block"
                     >
                         <InputGroup>
                             <Dropdown
@@ -167,7 +168,7 @@
                             v-model="beneficiarioForm.pagoMovilBeneficiario"
                             placeholder="Pago móvil"
                             class="w-full md:w-14rem input-registro"
-                            style="width: 80%"
+                            style="width: 100%"
                             :class="{
                                 'p-invalid': errors.pagoMovilBeneficiario,
                             }"
@@ -208,14 +209,14 @@
 import * as Yup from "yup";
 
 export default {
-    props: ["selectedService", "selectedUser"],
+    props: ["selectedService", "selectedTercero", "selectedTipoMoneda"],
     emits: ["formId"],
     data() {
         return {
             optionsTipoCuenta: [],
             optionsDocument: [],
             optionsBancos: [],
-            placeholderCuenta: null,
+            placeholderCuenta: "Número de cuenta",
             selectedBeneficiario: null,
             isEdit: true,
             createOrUpdate: "update",
@@ -243,47 +244,19 @@ export default {
     mounted() {},
     methods: {
         async initModal() {
-            switch (this.selectedService.codigo) {
-                case "TP-01":
-                case "TP-02":
-                    this.optionsBancos = await this.$getBancoByMonedas(
-                        "VES,PEN,USD,COP"
-                    );
-                    this.optionsDocument = await this.$getDocumentByMonedas(
-                        "VES,PEN,USD,COP"
-                    );
-                    break;
-                case "TP-03":
-                    this.optionsBancos = await this.$getBancoByMonedas("VES");
-                    this.optionsDocument = await this.$getDocumentByMonedas(
-                        "VES"
-                    );
-                    break;
-                case "TP-04":
-                case "TP-05":
-                    this.optionsBancos = await this.$getBancoByMoneda("VES,COP");
-                    this.optionsDocument = await this.$getDocumentByMonedas(
-                        "VES,COP"
-                    );
-                    break;
-                case "TP-06":
-                    this.optionsBancos = await this.$getBancoByMonedas(
-                        "VES,PEN,USD"
-                    );
-                    this.optionsDocument = await this.$getDocumentByMonedas(
-                        "VES,PEN,USD"
-                    );
-                    break;
-                default:
-                    break;
-            }
+            this.optionsBancos = await this.$getBancoByMonedas(
+                this.selectedTipoMoneda.codigo
+            );
+            this.optionsDocument = await this.$getDocumentByMonedas(
+                this.selectedTipoMoneda.codigo
+            );
             const comboNames = ["tipo_cuenta"];
             const response = await this.$getComboRelations(comboNames);
             const { tipo_cuenta: responseTipoCuenta } = response;
             this.optionsTipoCuenta = responseTipoCuenta;
 
             let tmpAfiliado = await this.$showTercero(
-                this.selectedUser,
+                this.selectedTercero,
                 "TB",
                 this.selectedService.codigo
             );

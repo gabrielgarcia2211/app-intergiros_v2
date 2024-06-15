@@ -52,9 +52,10 @@ class MasterCombos extends Model
 
     public static function getEstadoSolicitud($status)
     {
-        return MasterCombos::whereRaw("parent_id = (SELECT id FROM master_combos WHERE code = 'estados_solicitud')")
+        $estado = MasterCombos::whereRaw("parent_id = (SELECT id FROM master_combos WHERE code = 'estados_solicitud')")
             ->whereRaw("LOWER(code) = LOWER('$status')")
             ->get()
-            ->first()->id;
+            ->first();
+        return $estado ? $estado->id : null;
     }
 }

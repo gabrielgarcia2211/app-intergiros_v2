@@ -399,7 +399,7 @@
 import * as Yup from "yup";
 
 export default {
-    props: ["selectedService"],
+    props: ["selectedService", "selectedTercero", "selectedTipoMoneda"],
     emits: ["formId"],
     data() {
         return {
@@ -445,46 +445,27 @@ export default {
     mounted() {},
     methods: {
         async initModal() {
-            this.depositantes = await this.$getTercerosByService(
+            let monedaId = null;
+            this.currentService = this.selectedService.codigo;
+            this.depositantes = await this.$getTerceros(
                 "TD",
-                this.selectedService.id
+                this.selectedService.codigo,
+                this.selectedTercero
             );
             this.isVisibleForm = false;
-            switch (this.selectedService.codigo) {
-                case "TP-01":
-                case "TP-02":
-                    this.optionsBancos = await this.$getBancoByMonedas(
-                        "VES,PEN,USD,COP"
-                    );
-                    this.optionsDocument = await this.$getDocumentByMonedas(
-                        "VES,PEN,USD,COP"
-                    );
-                    break;
-                case "TP-03":
-                    this.optionsBancos = await this.$getBancoByMonedas("VES");
-                    this.optionsDocument = await this.$getDocumentByMonedas(
-                        "VES"
-                    );
-                    break;
-                case "TP-04":
-                case "TP-05":
-                    this.optionsBancos = await this.$getBancoByMoneda(
-                        "VES,COP"
-                    );
-                    this.optionsDocument = await this.$getDocumentByMonedas(
-                        "VES,COP"
-                    );
-                    break;
-                case "TP-06":
-                    this.optionsBancos = await this.$getBancoByMonedas(
-                        "VES,PEN,USD"
-                    );
-                    this.optionsDocument = await this.$getDocumentByMonedas(
-                        "VES,PEN,USD"
-                    );
-                    break;
-                default:
-                    break;
+            this.optionsBancos = await this.$getBancoByMonedas(
+                this.selectedTipoMoneda.codigo
+            );
+            this.optionsDocument = await this.$getDocumentByMonedas(
+                this.selectedTipoMoneda.codigo
+            );
+            if (this.selectedService.codigo == "TP-04") {
+                monedaId = 2;
+                this.placeholderPeru = "Cuenta en soles";
+            }
+            if (this.selectedService.codigo == "TP-05") {
+                monedaId = 3;
+                this.placeholderPeru = "Cuenta en dolares";
             }
             const comboNames = [
                 "tipo_documento",
@@ -494,17 +475,16 @@ export default {
             ];
             const response = await this.$getComboRelations(comboNames);
             const {
-                tipo_documento: responseTipoDocumento,
                 pais_telefono: responsePaisTelefono,
                 pais: responsePais,
                 tipo_cuenta: responseTipoCuenta,
             } = response;
-
-            this.optionsDocument = responseTipoDocumento;
             this.optionsCodigoI = responsePaisTelefono;
             this.optionsPais = responsePais;
             this.optionsTipoCuenta = responseTipoCuenta;
-            this.optionsBancosPeru = await this.$getBancoByMoneda(3);
+            if (monedaId != null) {
+                this.optionsBancosPeru = await this.$getBancoByMoneda(monedaId);
+            }
         },
         initDepositante() {
             this.createOrUpdate = "create";
@@ -524,7 +504,7 @@ export default {
             this.setForm(tmpAfiliado.data);
             this.isVisibleForm = true;
             this.createOrUpdate = "edit";
-            this.$emit("formId", this.depositanteForm.id, 'depositante_id');
+            this.$emit("formId", this.depositanteForm.id, "depositante_id");
         },
         habilitarEdicion() {
             this.errors = {};
@@ -666,7 +646,7 @@ export default {
                         this.isEditImage = false;
                         this.depositanteForm.adjuntarDocumento =
                             response.data.data.adjuntar_documento;
-                            this.initModal();
+                        this.initModal();
                     })
                     .catch((error) => {
                         this.$readStatusHttp(error);

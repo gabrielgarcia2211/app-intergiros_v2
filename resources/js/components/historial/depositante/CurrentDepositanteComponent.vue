@@ -211,7 +211,6 @@
                                     'p-invalid': errors.tipoCuentaDepositante,
                                     'input-readonly': isEdit,
                                 }"
-                                :disabled="isEdit"
                             ></Dropdown>
                             <InputNumber
                                 v-model="depositanteForm.cuentaDepositante"
@@ -221,7 +220,6 @@
                                 :class="{
                                     'p-invalid': errors.cuentaDepositante,
                                 }"
-                                :disabled="isEdit"
                             />
                         </InputGroup>
                         <small
@@ -333,13 +331,14 @@
 import * as Yup from "yup";
 
 export default {
-    props: ["selectedService", "selectedUser"],
+    props: ["selectedService", "selectedTercero", "selectedTipoMoneda"],
     emits: ["formId"],
     data() {
         return {
             optionsTipoCuenta: [],
             optionsDocument: [],
             optionsBancos: [],
+            optionsBancosPeru: [],
             optionsPais: [],
             optionsCodigoI: [],
             isEdit: true,
@@ -365,6 +364,7 @@ export default {
             errors: {},
             dynamicRules: {},
             currentService: null,
+            placeholderPeru: null,
         };
     },
     components: {},
@@ -375,41 +375,21 @@ export default {
     mounted() {},
     methods: {
         async initModal() {
-            switch (this.selectedService.codigo) {
-                case "TP-01":
-                case "TP-02":
-                    this.optionsBancos = await this.$getBancoByMonedas(
-                        "VES,PEN,USD,COP"
-                    );
-                    this.optionsDocument = await this.$getDocumentByMonedas(
-                        "VES,PEN,USD,COP"
-                    );
-                    break;
-                case "TP-03":
-                    this.optionsBancos = await this.$getBancoByMonedas("VES");
-                    this.optionsDocument = await this.$getDocumentByMonedas(
-                        "VES"
-                    );
-                    break;
-                case "TP-04":
-                case "TP-05":
-                    this.optionsBancos = await this.$getBancoByMoneda(
-                        "VES,COP"
-                    );
-                    this.optionsDocument = await this.$getDocumentByMonedas(
-                        "VES,COP"
-                    );
-                    break;
-                case "TP-06":
-                    this.optionsBancos = await this.$getBancoByMonedas(
-                        "VES,PEN,USD"
-                    );
-                    this.optionsDocument = await this.$getDocumentByMonedas(
-                        "VES,PEN,USD"
-                    );
-                    break;
-                default:
-                    break;
+            let monedaId = null;
+            this.currentService = this.selectedService.codigo;
+            this.optionsBancos = await this.$getBancoByMonedas(
+                this.selectedTipoMoneda.codigo
+            );
+            this.optionsDocument = await this.$getDocumentByMonedas(
+                this.selectedTipoMoneda.codigo
+            );
+            if (this.selectedService.codigo == "TP-04") {
+                monedaId = 2;
+                this.placeholderPeru = "Cuenta en soles";
+            }
+            if (this.selectedService.codigo == "TP-05") {
+                monedaId = 3;
+                this.placeholderPeru = "Cuenta en dolares";
             }
             const comboNames = [
                 "tipo_documento",
@@ -419,20 +399,19 @@ export default {
             ];
             const response = await this.$getComboRelations(comboNames);
             const {
-                tipo_documento: responseTipoDocumento,
                 pais_telefono: responsePaisTelefono,
                 pais: responsePais,
                 tipo_cuenta: responseTipoCuenta,
             } = response;
 
-            this.optionsDocument = responseTipoDocumento;
             this.optionsCodigoI = responsePaisTelefono;
             this.optionsPais = responsePais;
             this.optionsTipoCuenta = responseTipoCuenta;
-            this.optionsBancosPeru = await this.$getBancoByMoneda(3);
-
+            if (monedaId != null) {
+                this.optionsBancosPeru = await this.$getBancoByMoneda(monedaId);
+            }
             let tmpAfiliado = await this.$showTercero(
-                this.selectedUser,
+                this.selectedTercero,
                 "TD",
                 this.selectedService.codigo
             );

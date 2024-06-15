@@ -26,18 +26,21 @@ class TercerosController extends Controller
         $this->fileService = $fileService;
     }
 
-    public function getTerceros($code, $servicio)
+    public function getTerceros($code, $servicio, $filter = null)
     {
         try {
-            return Tercero::select('terceros.id', 'terceros.nombre', 'terceros.alias')
+            $query = Tercero::select('terceros.id', 'terceros.nombre', 'terceros.alias')
                 ->join('master_combos', 'master_combos.id', 'terceros.tipo_tercero_id')
                 ->join('tipo_formulario', 'tipo_formulario.id', 'terceros.tipo_formulario_id')
                 ->where([
                     'terceros.user_id' => Auth()->user()->id,
                     'master_combos.code' => $code,
                     'tipo_formulario.codigo' => $servicio
-                ])
-                ->get();
+                ]);
+            if (!empty($filter)) {
+                $query->whereNotIn('terceros.id', [$filter]);
+            }
+            return $query->get();
         } catch (\Exception $ex) {
             Log::debug($ex->getLine());
             Log::debug($ex->getMessage());
@@ -138,18 +141,13 @@ class TercerosController extends Controller
         return true;
     }
 
-    public function getTercerosByService($code, $servicio)
+    public function getTercerosFiltered(Request $request)
     {
         try {
-            return Tercero::select('terceros.id', 'terceros.nombre', 'terceros.alias')
-                ->join('master_combos', 'master_combos.id', 'terceros.tipo_tercero_id')
-                ->join('tipo_formulario', 'tipo_formulario.id', 'terceros.tipo_formulario_id')
-                ->where([
-                    'terceros.user_id' => Auth()->user()->id,
-                    'master_combos.code' => $code,
-                    'tipo_formulario.id' => $servicio
-                ])
-                ->get();
+            $ids = $request->input('ids');
+            $code = $request->input('code');
+            $servicio = $request->input('servicio');
+            return $this->getTerceros($code, $servicio, $ids);
         } catch (\Exception $ex) {
             Log::debug($ex->getLine());
             Log::debug($ex->getMessage());

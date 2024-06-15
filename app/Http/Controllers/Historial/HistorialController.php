@@ -69,25 +69,32 @@ class HistorialController extends Controller
             }
             $historial->save();
             $listOptions = MasterCombos::where('id', $request->opcion)->first();
-            if ($listOptions && $listOptions->code == 'reintentar_beneficiario_pr') {
+            if ($listOptions && in_array($listOptions->code, ['reintentar_beneficiario_pr'])) {
                 Solicitudes::where('id', $request->solicitud_id)->update([
                     $request->field_update => $request->tercero_id
                 ]);
-            } else {
-                if ($request->field_update == 'monto') {
-                    $monto_a_pagar = clearText($request->input('monto')['monto_a_pagar']);
-                    $monto_a_recibir = clearText($request->input('monto')['monto_a_recibir']);
-                    $solicitud = Solicitudes::find($request->solicitud_id);
-                    $formulario = TipoFormulario::find($solicitud->tipo_formulario_id);
-                    $solicitud->monto_a_pagar = $monto_a_pagar;
-                    $solicitud->monto_a_recibir = $monto_a_recibir;
-                    if (in_array($formulario->codigo, ['TP-01'])) {
-                        $monto_a_pagar_comision = $request->input('monto')['monto_a_pagar_comision'];
-                        $solicitud->monto_a_pagar_comision = $monto_a_pagar_comision;
-                    }
-                    $solicitud->save();
+            }
+            if ($listOptions && in_array($listOptions->code, ['reintentar_beneficiario_p', 'reintentar_p'])) {
+                if ($listOptions->code == 'reintentar_beneficiario_p') {
+                     Solicitudes::where('id', $request->solicitud_id)->update([
+                        $request->field_update => $request->tercero_id
+                    ]);
                 }
             }
+            if ($request->field_update == 'monto') {
+                $monto_a_pagar = clearText($request->input('monto')['monto_a_pagar']);
+                $monto_a_recibir = clearText($request->input('monto')['monto_a_recibir']);
+                $solicitud = Solicitudes::find($request->solicitud_id);
+                $formulario = TipoFormulario::find($solicitud->tipo_formulario_id);
+                $solicitud->monto_a_pagar = $monto_a_pagar;
+                $solicitud->monto_a_recibir = $monto_a_recibir;
+                if (in_array($formulario->codigo, ['TP-01'])) {
+                    $monto_a_pagar_comision = $request->input('monto')['monto_a_pagar_comision'];
+                    $solicitud->monto_a_pagar_comision = $monto_a_pagar_comision;
+                }
+                $solicitud->save();
+            }
+            Solicitudes::setStatusSolicitud('en_proceso', $request->solicitud_id);
             DB::commit();
             return Response::sendResponse($historial, 'Registro guardado con exito.');
         } catch (\Exception $ex) {
