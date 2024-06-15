@@ -28,96 +28,52 @@
                 scrollable
             >
                 <Column
-                    field="user"
-                    header="Usuario"
-                    sortable
-                    :showClearButton="false"
-                    style="min-width: 120px"
-                >
-                    <template #body="{ data }"> {{ data.user }} </template>
-                    <template #filter="{ filterModel }">
-                        <InputText
-                            v-model="filterModel.value"
-                            type="text"
-                            class="p-column-filter"
-                            placeholder="Buscar por usuario"
-                        />
-                    </template>
-                </Column>
-                <Column
-                    field="apellidos_user"
-                    header="Apellidos"
+                    field="estado_actual"
+                    header="Estado Actual"
                     sortable
                     :showClearButton="false"
                     style="min-width: 150px"
                 >
                     <template #body="{ data }">
-                        {{ data.apellidos_user }}
-                    </template>
-                    <template #filter="{ filterModel }">
-                        <InputText
-                            v-model="filterModel.value"
-                            type="text"
-                            class="p-column-filter"
-                            placeholder="Buscar por apellidos"
-                        />
-                    </template>
-                </Column>
-                <Column
-                    field="email_user"
-                    header="Email"
-                    sortable
-                    :showClearButton="false"
-                    style="min-width: 200px"
-                >
-                    <template #body="{ data }">
-                        {{ data.email_user }}
-                    </template>
-                    <template #filter="{ filterModel }">
-                        <InputText
-                            v-model="filterModel.value"
-                            type="email"
-                            class="p-column-filter"
-                            placeholder="Buscar por email"
-                        />
+                        <span
+                            :style="
+                                getEstadoBackgroundSolicitud(data.estado_actual)
+                            "
+                            style="
+                                cursor: pointer;
+                                display: block;
+                                padding: 5px;
+                                text-align: center;
+                                border-radius: 10px;
+                            "
+                            @click="onRowAction(data)"
+                        >
+                            {{ data.estado_actual }}
+                        </span>
                     </template>
                 </Column>
                 <Column
-                    field="documento_user"
-                    header="Documento"
+                    field="historial_id"
+                    header="Reclamos"
                     sortable
                     :showClearButton="false"
-                    style="min-width: 150px"
+                    style="min-width: 60px"
                 >
                     <template #body="{ data }">
-                        {{ data.documento_user }}
-                    </template>
-                    <template #filter="{ filterModel }">
-                        <InputText
-                            v-model="filterModel.value"
-                            type="text"
-                            class="p-column-filter"
-                            placeholder="Buscar por documento"
-                        />
-                    </template>
-                </Column>
-                <Column
-                    field="telefono_user"
-                    header="Teléfono"
-                    sortable
-                    :showClearButton="false"
-                    style="min-width: 150px"
-                >
-                    <template #body="{ data }">
-                        {{ data.telefono_user }}
-                    </template>
-                    <template #filter="{ filterModel }">
-                        <InputText
-                            v-model="filterModel.value"
-                            type="text"
-                            class="p-column-filter"
-                            placeholder="Buscar por teléfono"
-                        />
+                        <span
+                            :style="getReclamoBackground(data.historial_id)"
+                            style="
+                                cursor: pointer;
+                                display: block;
+                                padding: 1px;
+                                text-align: center;
+                                border-radius: 10px;
+                            "
+                            @click="onRowActionReclamo(data.historial_id)"
+                        >
+                            {{ data.historial_id }}
+                            {{ getReclamoSolicitud(data.historial_id) }}
+                        </span>
                     </template>
                 </Column>
                 <Column
@@ -155,7 +111,6 @@
                         </button>
                     </template>
                 </Column>
-
                 <Column
                     field="voucher_referencia"
                     header="Voucher Referencia Admin"
@@ -185,71 +140,6 @@
                         >
                             <i class="pi pi-eye"></i>
                         </button>
-                    </template>
-                </Column>
-
-                <Column
-                    field="path_selfie_user"
-                    header="Selfie"
-                    sortable
-                    :showClearButton="false"
-                    style="min-width: 150px"
-                >
-                    <template #body="{ data }">
-                        <button
-                            @click="viewImagen(data.path_selfie_user)"
-                            class="preview"
-                        >
-                            <i class="pi pi-eye"></i>
-                        </button>
-                    </template>
-                </Column>
-
-                <Column
-                    field="path_documento_user"
-                    header="Documento Usuario (Archivo)"
-                    sortable
-                    :showClearButton="false"
-                    style="min-width: 200px"
-                >
-                    <template #body="{ data }">
-                        <button
-                            @click="viewImagen(data.path_documento_user)"
-                            class="preview"
-                        >
-                            <i class="pi pi-eye"></i>
-                        </button>
-                    </template>
-                </Column>
-
-                <Column
-                    field="verificado"
-                    header="Verificado"
-                    sortable
-                    :showClearButton="false"
-                    style="min-width: 100px"
-                >
-                    <template #body="{ data }">
-                        <span
-                            :style="$getEstadoBackground(data.verificado)"
-                            style="
-                                cursor: pointer;
-                                display: block;
-                                padding: 5px;
-                                text-align: center;
-                                border-radius: 10px;
-                            "
-                        >
-                            {{ $getEstadoVerificado(data.verificado) }}
-                        </span>
-                    </template>
-                    <template #filter="{ filterModel }">
-                        <InputText
-                            v-model="filterModel.value"
-                            type="text"
-                            class="p-column-filter"
-                            placeholder="Verificado"
-                        />
                     </template>
                 </Column>
                 <Column
@@ -629,7 +519,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="pago_movil_beneficiario"
                     header="Pago Móvil Beneficiario"
@@ -649,7 +538,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="correo_beneficiario"
                     header="Correo Beneficiario"
@@ -669,7 +557,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="celular_beneficiario"
                     header="Celular Beneficiario"
@@ -689,7 +576,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="path_documento_beneficiario"
                     header="Documento Beneficiario (Archivo)"
@@ -701,7 +587,6 @@
                         {{ data.path_documento_beneficiario }}
                     </template>
                 </Column>
-
                 <Column
                     field="nombre_producto"
                     header="Nombre Producto"
@@ -721,7 +606,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="costo_base_producto"
                     header="Costo Base Producto"
@@ -741,7 +625,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="rango_min_producto"
                     header="Rango Mínimo Producto"
@@ -761,7 +644,6 @@
                         />
                     </template>
                 </Column>
-
                 <Column
                     field="rango_max_producto"
                     header="Rango Máximo Producto"
@@ -779,57 +661,6 @@
                             class="p-column-filter"
                             placeholder="Buscar por rango máximo producto"
                         />
-                    </template>
-                </Column>
-
-                <Column
-                    field="estado_actual"
-                    header="Estado Actual"
-                    sortable
-                    :showClearButton="false"
-                    style="min-width: 150px"
-                >
-                    <template #body="{ data }">
-                        <span
-                            :style="
-                                getEstadoBackgroundSolicitud(data.estado_actual)
-                            "
-                            style="
-                                cursor: pointer;
-                                display: block;
-                                padding: 5px;
-                                text-align: center;
-                                border-radius: 10px;
-                            "
-                            @click="onRowAction(data)"
-                        >
-                            {{ data.estado_actual }}
-                        </span>
-                    </template>
-                </Column>
-
-                <Column
-                    field="historial_id"
-                    header="Reclamos"
-                    sortable
-                    :showClearButton="false"
-                    style="min-width: 60px"
-                >
-                    <template #body="{ data }">
-                        <span
-                            :style="getReclamoBackground(data.historial_id)"
-                            style="
-                                cursor: pointer;
-                                display: block;
-                                padding: 1px;
-                                text-align: center;
-                                border-radius: 10px;
-                            "
-                            @click="onRowActionReclamo(data.historial_id)"
-                        >
-                            {{ data.historial_id }}
-                            {{ getReclamoSolicitud(data.historial_id) }}
-                        </span>
                     </template>
                 </Column>
             </DataTable>

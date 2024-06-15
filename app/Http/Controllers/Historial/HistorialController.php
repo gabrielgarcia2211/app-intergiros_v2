@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Historial;
 
+use Illuminate\Http\Request;
 use App\Services\FileService;
 use Illuminate\Support\Facades\DB;
 use App\Models\Historial\Historial;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Solicitudes\Solicitudes;
 use App\Models\Configuration\MasterCombos;
 use App\Models\Administracion\TipoFormulario;
@@ -29,9 +29,10 @@ class HistorialController extends Controller
         return view('envio.historial');
     }
 
-    public function getSolicitudes($estado)
+    public function getSolicitudes(Request $request)
     {
         try {
+            $estado = $request->input('estado');
             $query = Solicitudes::select('solicitudes.*')
                 ->join('master_combos as mc_estado', 'mc_estado.id', '=', 'solicitudes.estado_id')
                 ->where([
@@ -44,7 +45,7 @@ class HistorialController extends Controller
                     'pendiente_monto'
                 ]);
             } else {
-                $query->where('mc_estado.code', $estado);
+                $query->whereIn('mc_estado.code', explode(",", $estado));
             }
             $data = $query->with(Solicitudes::RELATIONS)->get();
             return Response::sendResponse($data, "Informacion Obtenida");
@@ -68,15 +69,15 @@ class HistorialController extends Controller
                 $historial->path_estado_cuenta = $path_selfie;
             }
             $historial->save();
-            $listOptions = MasterCombos::where('id', $request->opcion)->first();
-            if ($listOptions && in_array($listOptions->code, ['reintentar_beneficiario_pr'])) {
+            $list_options = MasterCombos::where('id', $request->opcion)->first();
+            if ($list_options && in_array($list_options->code, ['reintentar_beneficiario_pr'])) {
                 Solicitudes::where('id', $request->solicitud_id)->update([
                     $request->field_update => $request->tercero_id
                 ]);
             }
-            if ($listOptions && in_array($listOptions->code, ['reintentar_beneficiario_p', 'reintentar_p'])) {
-                if ($listOptions->code == 'reintentar_beneficiario_p') {
-                     Solicitudes::where('id', $request->solicitud_id)->update([
+            if ($list_options && in_array($list_options->code, ['reintentar_beneficiario_p', 'reintentar_p'])) {
+                if ($list_options->code == 'reintentar_beneficiario_p') {
+                    Solicitudes::where('id', $request->solicitud_id)->update([
                         $request->field_update => $request->tercero_id
                     ]);
                 }
@@ -94,7 +95,7 @@ class HistorialController extends Controller
                 }
                 $solicitud->save();
             }
-            Solicitudes::setStatusSolicitud('en_proceso', $request->solicitud_id);
+            Solicitudes::setStatusSolicitud('recibido', $request->solicitud_id);
             DB::commit();
             return Response::sendResponse($historial, 'Registro guardado con exito.');
         } catch (\Exception $ex) {

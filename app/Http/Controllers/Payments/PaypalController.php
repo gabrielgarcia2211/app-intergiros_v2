@@ -26,7 +26,7 @@ class PaypalController extends Controller
         DB::beginTransaction();
         try {
             $solicitud_id = $request->input('solicitud_id');
-            $solicitud = Solicitudes::setStatusSolicitud('pendiente', $solicitud_id);
+            $solicitud = Solicitudes::find($solicitud_id);
             $amount = $solicitud->monto_a_pagar_comision;
             $response = $this->payPalService->createPayment($amount);
             if ($response) {
@@ -38,7 +38,7 @@ class PaypalController extends Controller
                     }
                 }
             }
-            Solicitudes::setStatusSolicitud('cancelado', $solicitud_id);
+            Solicitudes::setStatusSolicitud('rechazado', $solicitud_id);
             DB::commit();
             return Response::sendResponseService(false,  ['denied_url' => url('/paypal/cancel')], 'Lo siento, no se pudo crear el pago con PayPal.');
         } catch (\Exception $ex) {
@@ -55,14 +55,13 @@ class PaypalController extends Controller
             $solicitud_id = session('solicitud_id');
             $payerId = $request->get('PayerID');
             $paymentId = $request->get('paymentId');
-            Solicitudes::setStatusSolicitud('en_proceso', $solicitud_id);
             $response = $this->payPalService->executePayment($paymentId, $payerId);
             if ($response) {
                 DB::commit();
                 return $this->success();
             }
             DB::commit();
-            Solicitudes::setStatusSolicitud('cancelado', $solicitud_id);
+            Solicitudes::setStatusSolicitud('rechazado', $solicitud_id);
             return redirect('/paypal/cancel');
         } catch (\Exception $ex) {
             DB::rollback();

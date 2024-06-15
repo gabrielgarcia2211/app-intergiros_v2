@@ -749,7 +749,7 @@
                                         <div class="col-6">
                                             <div class="text-left">
                                                 <p style="margin-bottom: 0px">
-                                                    ID# {{ item.uid }}
+                                                    ID# {{ item.uuid }}
                                                 </p>
                                                 <p style="color: #0035aa">
                                                     Reembolsado
@@ -888,7 +888,7 @@
                 :placeholder="'Opciones'"
                 class="w-full md:w-14rem input-registro"
                 style="width: 100%; text-align: left"
-                @change="handleReclamo('en_proceso', $event)"
+                @change="handleReclamo('iniciado', $event)"
                 showClear
             ></Dropdown>
         </div>
@@ -1103,6 +1103,32 @@
                     item.valor1
                 }}</label>
             </div>
+            <div
+                class="form-group mt-4"
+                style="width: 100%; display: inline-block"
+            >
+                <FileUpload
+                    id="estadoCuenta"
+                    ref="fileUpload"
+                    accept="image/*,application/pdf"
+                    :multiple="false"
+                    :fileLimit="1"
+                    :class="{
+                        'p-invalid': errors.estadoCuenta,
+                    }"
+                    @change="onFileUpload"
+                >
+                    <template #empty>
+                        <p>Adjuntar foto del documento.</p>
+                    </template>
+                </FileUpload>
+                <small
+                    v-if="errors.estadoCuenta"
+                    style="display: block"
+                    class="p-error"
+                    >{{ errors.estadoCuenta }}</small
+                >
+            </div>
             <list-depositante-component
                 :selectedService="selectedService"
                 :selectedTipoMoneda="selectedTipoMoneda"
@@ -1157,6 +1183,7 @@
 
 <script>
 // Importar Librerias o Modulos
+import * as Yup from "yup";
 import ListBeneficiarioComponent from "./beneficiario/ListBeneficiarioComponent.vue";
 import CurrentBeneficiarioComponent from "./beneficiario/CurrentBeneficiarioComponent.vue";
 import ListDepositanteComponent from "./depositante/ListDepositanteComponent.vue";
@@ -1239,6 +1266,7 @@ export default {
             selectedMonto: null,
             selectedTipoMoneda: null,
             fieldUpdate: null,
+            errors: {},
         };
     },
     components: {
@@ -1305,11 +1333,33 @@ export default {
     },
     mounted() {},
     methods: {
+        async validateForm() {
+            let initialRules = {
+                estadoCuenta: Yup.string().required(
+                    "El documento es obligatorio"
+                ),
+            };
+            const schema = Yup.object().shape({
+                ...initialRules,
+            });
+            this.errors = {};
+            try {
+                await schema.validate(this.formDataProcesado, {
+                    abortEarly: false,
+                });
+                return true;
+            } catch (err) {
+                err.inner.forEach((error) => {
+                    this.errors[error.path] = error.message;
+                });
+                return false;
+            }
+        },
         getSolicitudes(estado) {
             return new Promise((resolve, reject) => {
                 axios
-                    .get(`/historial/solicitudes/${estado}`)
-                    .then(function (response) {
+                    .post("/historial/solicitudes", { estado: estado })
+                    .then((response) => {
                         resolve(response.data.data);
                     })
                     .catch((error) => {
@@ -1319,6 +1369,7 @@ export default {
                     });
             });
         },
+
         openModalEnProceso(item) {
             this.resetFormEnProceso();
             this.visibleEnProceso = true;
@@ -1371,7 +1422,7 @@ export default {
         },
         handleReclamo(tipo, event) {
             switch (tipo) {
-                case "en_proceso":
+                case "iniciado":
                     this.checkEnProceso.visible =
                         event.value == 1 ? true : false;
                     break;
@@ -1437,25 +1488,28 @@ export default {
                     this.$readStatusHttp(error);
                 });
         },
-        sendReclamoProcesado() {
-            this.formDataProcesado.tercero_id = this.depositanteFormId;
-            this.formDataProcesado.field_update = this.fieldUpdate ?? null;
-            this.$axios
-                .post("/historial/store", this.formDataProcesado, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                })
-                .then((response) => {
-                    this.$alertSuccess("Solicitud realizada correctamente");
-                    this.visibleProcesado = false;
-                    this.selectedProcesadoList = false;
-                    this.selectedProcesadoCurrent = false;
-                    this.handleTabStatus({ index: 2 });
-                })
-                .catch((error) => {
-                    this.$readStatusHttp(error);
-                });
+        async sendReclamoProcesado() {
+            const isValid = await this.validateForm();
+            if (isValid) {
+                this.formDataProcesado.tercero_id = this.depositanteFormId;
+                this.formDataProcesado.field_update = this.fieldUpdate ?? null;
+                this.$axios
+                    .post("/historial/store", this.formDataProcesado, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    })
+                    .then((response) => {
+                        this.$alertSuccess("Solicitud realizada correctamente");
+                        this.visibleProcesado = false;
+                        this.selectedProcesadoList = false;
+                        this.selectedProcesadoCurrent = false;
+                        this.handleTabStatus({ index: 2 });
+                    })
+                    .catch((error) => {
+                        this.$readStatusHttp(error);
+                    });
+            }
         },
         toggleCollapse(var1, var2, index) {
             const icon = document.getElementById(var1 + index);
@@ -1473,16 +1527,16 @@ export default {
             let tipo = "";
             switch (index) {
                 case 0:
-                    tipo = "en_proceso";
+                    tipo = "recibido,verificado";
                     break;
                 case 1:
                     tipo = "pendiente";
                     break;
                 case 2:
-                    tipo = "entregado";
+                    tipo = "procesado";
                     break;
                 case 3:
-                    tipo = "cancelado";
+                    tipo = "rechazado";
                     break;
                 case 4:
                     tipo = "reembolsado";
@@ -1597,6 +1651,21 @@ export default {
                     }
                 });
         },
+        onFileUpload() {
+            const fileUploadComponent = this.$refs.fileUpload;
+            if (fileUploadComponent) {
+                const file = fileUploadComponent.files[0];
+                if (file) {
+                    if (
+                        file.type &&
+                        (file.type.startsWith("image/") ||
+                            file.type === "application/pdf")
+                    ) {
+                        this.formDataProcesado.estadoCuenta = file;
+                    }
+                }
+            }
+        },
     },
 };
 </script>
@@ -1615,8 +1684,8 @@ export default {
     color: #000000 !important;
 }
 
-#adjuntarDocumento [data-pc-name="uploadbutton"],
-#adjuntarDocumento [data-pc-name="cancelbutton"] {
+#estadoCuenta [data-pc-name="uploadbutton"],
+#estadoCuenta [data-pc-name="cancelbutton"] {
     display: none;
 }
 

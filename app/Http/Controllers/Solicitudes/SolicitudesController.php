@@ -46,8 +46,7 @@ class SolicitudesController extends Controller
             $monto_a_recibir = clearText($request->input('monto_a_recibir'));
             $referencia_pago = $request->file('referencia_pago');
 
-            $estado_iniciado_id = MasterCombos::getEstadoSolicitud('iniciado');
-            $estado_en_proceso_id = MasterCombos::getEstadoSolicitud('en_proceso');
+            $estado_recibido_id = MasterCombos::getEstadoSolicitud('recibido');
 
             $solicitud = new Solicitudes;
             $formulario = TipoFormulario::find($tipo_formulario_id);
@@ -70,13 +69,14 @@ class SolicitudesController extends Controller
             }
 
             $solicitud->user_id = Auth()->user()->id;
-            $solicitud->estado_id = ($tipo_formulario_id == 1) ? $estado_iniciado_id : $estado_en_proceso_id;
+            $solicitud->estado_id = $estado_recibido_id;
             $solicitud->save();
 
             $solicitud->uuid = $solicitud->id;
             if ($solicitud->save()) {
                 if (isset($referencia_pago)) {
                     $solicitud->voucher_referencia_cliente = $this->fileService->saveFile($referencia_pago, Auth()->user()->id, 'voucher_referencia_cliente');
+                    $solicitud->save();
                 }
             }
 
@@ -88,14 +88,16 @@ class SolicitudesController extends Controller
         }
     }
 
-    public function getSolicitud($id)
+    public function getSolicitudPaypal($id)
     {
         try {
-            $estado_iniciado_id = MasterCombos::getEstadoSolicitud('iniciado');
+            $estado_recibido_id = MasterCombos::getEstadoSolicitud('recibido');
+            $tipo_formulario_id = TipoFormulario::where('codigo', 'TP-01')->first()->id;
             $solicitud = Solicitudes::where([
                 'id' => $id,
                 'user_id' => Auth()->user()->id,
-                'estado_id' => $estado_iniciado_id
+                'estado_id' => $estado_recibido_id,
+                'tipo_formulario_id' => $tipo_formulario_id,
             ])->with(Solicitudes::RELATIONS)->first();
             return Response::sendResponse($solicitud, 'Registro obtenido con exito.');
         } catch (\Exception $ex) {

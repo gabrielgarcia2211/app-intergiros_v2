@@ -263,7 +263,7 @@ export default {
         getSolicitud(id) {
             return new Promise((resolve, reject) => {
                 this.$axios
-                    .get(`/solicitudes/${id}`)
+                    .get(`/solicitudes/paypal/${id}`)
                     .then(function (response) {
                         resolve(response.data);
                     })
