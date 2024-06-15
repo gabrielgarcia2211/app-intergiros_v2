@@ -1,5 +1,11 @@
 <template>
-    <Dialog class="pago" v-model:visible="visible" modal :style="{ width: '70vw' }" :draggable="false">
+    <Dialog
+        class="pago"
+        v-model:visible="visible"
+        modal
+        :style="{ width: '60vw' }"
+        :draggable="false"
+    >
         <template #header>
             <h1>Realizar Pago</h1>
         </template>
@@ -106,6 +112,30 @@
                         />
                     </div>
                 </div>
+                <div class="text-center mt-4">
+                    <FileUpload
+                        v-if="!pathComprobante"
+                        ref="fileUpload"
+                        chooseLabel="Adjuntar Documento"
+                        mode="basic"
+                        accept="image/*"
+                        style="border-radius: 25px; width: 40%"
+                        @change="onFileUpload"
+                    />
+                    <i
+                        v-else
+                        class="pi pi-trash"
+                        style="
+                            font-size: 1.5rem;
+                            background-color: #0035aa;
+                            padding: 10px;
+                            border-radius: 10px;
+                            color: white;
+                            cursor: pointer;
+                        "
+                        @click="clearImageUpload"
+                    ></i>
+                </div>
             </div>
         </div>
         <div class="row mt-5">
@@ -116,35 +146,6 @@
                     de comprobante, realice el pago y adjunte el comprobante del
                     pago realizado
                 </p>
-            </div>
-        </div>
-        <div class="row mt-5 mb-2" style="justify-content: center">
-            <div class="text-center mt-4">
-                <FileUpload
-                    v-if="!pathComprobante"
-                    ref="fileUpload"
-                    chooseLabel="Adjuntar Documento"
-                    mode="basic"
-                    accept="image/*"
-                    style="
-                        border-radius: 25px;
-                        width: 40%;
-                    "
-                    @change="onFileUpload"
-                />
-                <i
-                    v-else
-                    class="pi pi-times"
-                    style="
-                        font-size: 1.5rem;
-                        background-color: #0035aa;
-                        padding: 10px;
-                        border-radius: 10px;
-                        color: white;
-                        cursor: pointer;
-                    "
-                    @click="clearImageUpload"
-                ></i>
             </div>
         </div>
         <template #footer>
@@ -230,13 +231,13 @@ export default {
                 title: "Elemento copiado!",
                 showConfirmButton: false,
                 timer: 800,
-                backdrop: false ,
+                backdrop: false,
                 customClass: {
                     container: "custom-swal-container",
                     popup: "custom-swal-popup small-popup",
                 },
-                width: '10rem',
-                heightAuto: false
+                width: "10rem",
+                heightAuto: false,
             });
         },
         handleDialogClose() {
@@ -321,7 +322,6 @@ export default {
 
 .pago > .p-dialog-header [data-pc-section="closebuttonicon"] {
     display: none !important;
-    
 }
 
 .pago > .p-dialog-header {
@@ -339,6 +339,9 @@ export default {
     width: 100%;
     height: 450px !important;
     object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .referencia {

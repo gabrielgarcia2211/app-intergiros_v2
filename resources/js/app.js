@@ -30,6 +30,7 @@ import Carousel from "primevue/carousel";
 import InputGroupAddon from "primevue/inputgroupaddon";
 import Image from "primevue/image";
 import InputMask from 'primevue/inputmask';
+import RadioButton from 'primevue/radiobutton';
 
 const app = createApp({});
 
@@ -80,6 +81,7 @@ app.component("Carousel", Carousel);
 app.component("InputGroupAddon", InputGroupAddon);
 app.component("Image", Image);
 app.component("InputMask", InputMask);
+app.component("RadioButton", RadioButton);
 
 // Importacion de componentes envio
 import ServicioComponent from "./components/envio/ServicioComponent.vue";

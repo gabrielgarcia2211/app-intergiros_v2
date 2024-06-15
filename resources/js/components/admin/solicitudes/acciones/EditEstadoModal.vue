@@ -22,9 +22,25 @@
                         optionValue="id"
                         placeholder="Seleccione un tipo"
                         class="p-dropdown p-component"
+                        @change="handleEstado"
                         showClear
                         filter
                     />
+                </div>
+            </div>
+            <div class="radio-button-row mt-5" v-if="isVisiblePendiente">
+                <div
+                    v-for="(item, index) in listPendientes"
+                    :key="item.id"
+                    class="radio-button-column"
+                >
+                    <input
+                        type="radio"
+                        :id="item.code"
+                        v-model="selectedOptionPendiente"
+                        :value="item.id"
+                    />
+                    <label :for="item.code">{{ item.name }}</label>
                 </div>
             </div>
             <Button
@@ -32,6 +48,7 @@
                 type="submit"
                 class="p-button p-button-primary custom-button-primary"
                 style="width: 100%; margin-top: 20px"
+                :disabled="!isSendStatus"
             />
         </form>
     </Dialog>
@@ -47,6 +64,27 @@ export default {
         manageSolicitud(value) {
             this.form.solicitud_id = value.id;
             this.form.estado_id = value.estado_actual_id;
+            this.selectedOptionPendiente = null;
+            this.isVisiblePendiente = false;
+            const item = this.listPendientes.find(
+                (data) => data.id == this.form.estado_id
+            );
+            if (item && item.code.startsWith("pendiente")) {
+                this.form.estado_id = -1;
+                this.form.sub_estado_id = value.estado_actual_id;
+                this.selectedOptionPendiente = value.estado_actual_id;
+                this.isVisiblePendiente = true;
+                this.isSendStatus = true;
+            }
+        },
+        selectedOptionPendiente(value) {
+            if (value) {
+                const item = this.listPendientes.find(
+                    (data) => data.id == value
+                );
+                this.form.sub_estado_id = item.id ?? null;
+                this.isSendStatus = true;
+            }
         },
     },
     data() {
@@ -56,7 +94,12 @@ export default {
             form: {
                 solicitud_id: null,
                 estado_id: null,
+                sub_estado_id: null,
             },
+            selectedOptionPendiente: null,
+            isVisiblePendiente: false,
+            listPendientes: [],
+            isSendStatus: true,
         };
     },
     components: {},
@@ -69,14 +112,51 @@ export default {
             this.$emit("update", this.form);
         },
         async getEnums() {
+            this.selectedOptionPendiente = null;
             const enumsCode = ["estados_solicitud"];
             const response = await this.$getEnumsRelations(enumsCode);
             const { estados_solicitud } = response;
-            this.rpTipoEstado = estados_solicitud;
+            this.listPendientes = estados_solicitud.filter((item) =>
+                item.code.startsWith("pendiente")
+            );
+            const filteredData = estados_solicitud.filter(
+                (item) => !item.code.startsWith("pendiente")
+            );
+            const pendienteItem = {
+                id: -1,
+                parent_id: null,
+                code: "pendiente",
+                name: "PENDIENTE",
+                description: null,
+                valor1: null,
+                valor2: null,
+                valor3: null,
+                is_father: 0,
+                status: 1,
+                orden: null,
+                deleted_at: null,
+                created_at: null,
+                updated_at: null,
+            };
+            filteredData.push(pendienteItem);
+            this.rpTipoEstado = filteredData;
         },
         handleDialogClose() {
             this.visible = false;
             this.$emit("hidden", this.visible);
+        },
+        handleEstado(event) {
+            this.selectedOptionPendiente = null;
+            const item = this.rpTipoEstado.find(
+                (data) => data.id == event.value
+            );
+            if (item?.name == "PENDIENTE") {
+                this.isVisiblePendiente = true;
+                this.isSendStatus = false;
+            } else {
+                this.isVisiblePendiente = false;
+                this.isSendStatus = true;
+            }
         },
     },
 };
@@ -84,5 +164,21 @@ export default {
 <style>
 .text-invalid {
     color: red;
+}
+
+.radio-button-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.radio-button-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px;
+    text-align: center;
 }
 </style>

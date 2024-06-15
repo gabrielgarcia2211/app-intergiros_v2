@@ -8,7 +8,6 @@
                 @update="handleUpdatedSolicitud"
                 @hidden="hiddenModal"
             ></edit-estado-modal>
-
             <DataTable
                 v-model:filters="filters"
                 :loading="loading"
@@ -104,10 +103,14 @@
                 >
                     <template #body="{ data }">
                         <button
+                            v-if="data.voucher_referencia_cliente"
                             @click="viewImagen(data.voucher_referencia_cliente)"
                             class="preview"
                         >
                             <i class="pi pi-eye"></i>
+                        </button>
+                        <button v-else class="preview-slash">
+                            <i class="pi pi-eye-slash"></i>
                         </button>
                     </template>
                 </Column>
@@ -711,36 +714,6 @@ export default {
                         { value: null, matchMode: FilterMatchMode.STARTS_WITH },
                     ],
                 },
-                user: {
-                    clear: false,
-                    constraints: [
-                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-                    ],
-                },
-                apellidos_user: {
-                    clear: false,
-                    constraints: [
-                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-                    ],
-                },
-                email_user: {
-                    clear: false,
-                    constraints: [
-                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-                    ],
-                },
-                documento_user: {
-                    clear: false,
-                    constraints: [
-                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-                    ],
-                },
-                telefono_user: {
-                    clear: false,
-                    constraints: [
-                        { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-                    ],
-                },
                 uuid: {
                     clear: false,
                     constraints: [
@@ -1007,6 +980,10 @@ export default {
             this.visibleModal = status;
         },
         handleUpdatedSolicitud(newRecord) {
+            newRecord.estado_id =
+                newRecord.estado_id == "-1"
+                    ? newRecord.sub_estado_id
+                    : newRecord.estado_id;
             this.$axios
                 .post("/solicitudes/update/estado/" + newRecord.solicitud_id, {
                     estado_id: newRecord.estado_id,
@@ -1102,15 +1079,23 @@ export default {
         },
         getEstadoBackgroundSolicitud(estado) {
             switch (estado) {
-                case "INICIADO":
-                    return { backgroundColor: "brown", color: "white" };
-                case "PENDIENTE":
-                    return { backgroundColor: "blue", color: "white" };
-                case "EN PROCESO":
+                case "RECIBIDO":
+                    return {
+                        backgroundColor: "white",
+                        color: "black",
+                        borderColor: "black",
+                        borderStyle: "solid",
+                        borderWidth: "1px",
+                    };
+                case "VERIFICADO":
                     return { backgroundColor: "yellow", color: "black" };
-                case "ENTREGADO":
+                case "PENDIENTE BENEFICIARIO":
+                case "PENDIENTE DEPOSITANTE":
+                case "PENDIENTE MONTO":
+                    return { backgroundColor: "blue", color: "white" };
+                case "PROCESADO":
                     return { backgroundColor: "green", color: "white" };
-                case "CANCELADO":
+                case "RECHAZADO":
                     return { backgroundColor: "red", color: "white" };
                 case "REEMBOLSADO":
                     return { backgroundColor: "purple", color: "white" };
@@ -1171,6 +1156,13 @@ window.previewImage = function () {
     border: 1px;
     border-radius: 10px;
     background-color: rgb(4, 155, 4);
+    color: white;
+}
+
+.preview-slash {
+    border: 1px;
+    border-radius: 10px;
+    background-color: rgb(19, 21, 19);
     color: white;
 }
 

@@ -101,7 +101,6 @@
                                 :disabled="isEditBeneficiario"
                             ></Dropdown>
                             <InputNumber
-                                id=""
                                 v-model="beneficiarioForm.documentoBeneficiario"
                                 placeholder="Número documento"
                                 class="w-full md:w-14rem input-telefono"
@@ -380,7 +379,6 @@
                                 :disabled="isEditDepositante"
                             ></Dropdown>
                             <InputNumber
-                                id=""
                                 v-model="depositanteForm.documentoDepositante"
                                 placeholder="Número documento"
                                 class="w-full md:w-14rem input-telefono"
@@ -1286,7 +1284,9 @@ export default {
             this.depositanteForm.nombreDepositante = depositante.nombre;
             this.depositanteForm.tipoDocumentoDepositante =
                 depositante.tipo_documento_id;
-            this.depositanteForm.documentoDepositante = depositante.documento;
+            this.depositanteForm.documentoDepositante = parseInt(
+                depositante.documento
+            );
             this.depositanteForm.correoDepositante = depositante.correo;
             this.depositanteForm.codigoIDepositante =
                 depositante.pais_telefono_id;

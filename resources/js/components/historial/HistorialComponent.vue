@@ -303,15 +303,6 @@
                             :id="'solucionar' + index"
                             class="collapse container"
                         >
-                            <div class="text-center">
-                                <p>
-                                    <strong
-                                        >Su solicitud ha sido rechazada debido a
-                                        que el pago realizado no figura en
-                                        nuestra cuenta.</strong
-                                    >
-                                </p>
-                            </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="text-left">
