@@ -398,23 +398,26 @@
                         >
                     </div>
                     <div class="form-group">
-                        <InputText
-                            v-model="depositanteForm.correoDepositante"
-                            placeholder="Correo Electronico"
+                        <Dropdown
+                            id="selectBanco"
+                            v-model="depositanteForm.bancoDepositante"
+                            :options="optionsBancos"
+                            placeholder="Bancos"
+                            optionLabel="name"
+                            optionValue="id"
                             class="w-full md:w-14rem input-registro"
-                            style="width: 80%"
+                            style="width: 80%; text-align: left"
                             :class="{
-                                'p-invalid':
-                                    errorsDepositante.correoDepositante,
+                                'p-invalid': errorsDepositante.bancoDepositante,
                                 'input-readonly': isEditDepositante,
                             }"
-                            :readOnly="isEditDepositante"
+                            :disabled="isEditDepositante"
                         />
                         <small
-                            v-if="errorsDepositante.correoDepositante"
+                            v-if="errorsDepositante.bancoDepositante"
                             style="display: block"
                             class="p-error"
-                            >{{ errorsDepositante.correoDepositante }}</small
+                            >{{ errorsDepositante.bancoDepositante }}</small
                         >
                     </div>
                     <div
@@ -423,66 +426,39 @@
                     >
                         <InputGroup>
                             <Dropdown
-                                id="codigoIDepositante"
-                                v-model="depositanteForm.codigoIDepositante"
-                                :options="optionsCodigoI"
-                                placeholder="+"
-                                :optionLabel="optionLabelFunction"
+                                id="tipoCuentaDepositante"
+                                v-model="depositanteForm.tipoCuentaDepositante"
+                                :options="optionsTipoCuenta"
+                                placeholder="T"
+                                optionLabel="name"
                                 optionValue="id"
                                 style="width: 30%"
                                 class="input-indicativo"
                                 :class="{
                                     'p-invalid':
-                                        errorsDepositante.codigoIDepositante,
+                                        errorsDepositante.tipoCuentaDepositante,
                                     'input-readonly': isEditDepositante,
                                 }"
                                 :disabled="isEditDepositante"
-                                filter
                             ></Dropdown>
-                            <InputMask
-                                mask="?999999999999999"
-                                id=""
-                                v-model="depositanteForm.celularDepositante"
-                                placeholder="Número celular"
-                                class="w-full md:w-14rem input-telefono"
+                            <InputText
+                                v-model="depositanteForm.cuentaDepositante"
+                                :placeholder="'Número de cuenta'"
                                 style="width: 80%"
+                                class="w-full md:w-14rem input-telefono"
                                 :useGrouping="false"
                                 :class="{
                                     'p-invalid':
-                                        errorsDepositante.celularDepositante,
+                                        errorsDepositante.cuentaDepositante,
                                 }"
                                 :disabled="isEditDepositante"
-                                autocomplete="tel"
                             />
                         </InputGroup>
                         <small
-                            v-if="errorsDepositante.celularDepositante"
+                            v-if="errorsDepositante.cuentaDepositante"
                             style="display: block"
                             class="p-error"
-                            >{{ errorsDepositante.celularDepositante }}</small
-                        >
-                    </div>
-                    <div class="form-group">
-                        <Dropdown
-                            id="selectPais"
-                            v-model="depositanteForm.paisDepositante"
-                            :options="optionsPais"
-                            placeholder="Pais"
-                            optionLabel="name"
-                            optionValue="id"
-                            class="w-full md:w-14rem input-registro"
-                            style="width: 80%; text-align: left"
-                            :class="{
-                                'p-invalid': errorsDepositante.paisDepositante,
-                                'input-readonly': isEditDepositante,
-                            }"
-                            :disabled="isEditDepositante"
-                        />
-                        <small
-                            v-if="errorsDepositante.paisDepositante"
-                            style="display: block"
-                            class="p-error"
-                            >{{ errorsDepositante.paisDepositante }}</small
+                            >{{ errorsDepositante.cuentaDepositante }}</small
                         >
                     </div>
                     <div
@@ -610,8 +586,112 @@
                     </div>
                 </form>
             </div>
+            <!-- monto -->
+            <div class="col-md-6">
+                <div class="text-center mt-4">
+                    <InputNumber
+                        v-model="montoBruto"
+                        class="input-registro"
+                        placeholder="Monto a cambiar"
+                        @input="convertService"
+                    />
+                    <small
+                        v-if="montoBruto < 5 || montoBruto > 500"
+                        style="display: block; font-size: 16px"
+                        class="p-error"
+                        ><p v-if="montoBruto < 5">
+                            El monto debe ser mayor a 5,00
+                        </p>
+                        <p v-else-if="montoBruto > 500">
+                            El monto debe ser menor a 500,00
+                        </p>
+                    </small>
+                    <div class="mt-5">
+                        <p style="color: #0035aa">
+                            {{}}
+                            <strong style="font-size: 18px"
+                                >Monto a pagar:
+                                <p
+                                    v-if="montoCambiar"
+                                    style="display: inline-block"
+                                >
+                                    {{ montoCambiar.monto_a_pagar }}
+                                </p>
+                            </strong>
+                        </p>
+                        <p style="color: #0035aa">
+                            <strong style="font-size: 18px"
+                                >Monto a recibir:
+                                <p
+                                    v-if="montoCambiar"
+                                    style="display: inline-block"
+                                >
+                                    {{ montoCambiar.monto_a_recibir }}
+                                </p>
+                            </strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-center mt-4">
+                    <button
+                        class="btn btn-primary"
+                        type="button"
+                        id="realizarPago"
+                        style="width: 80%"
+                        :disabled="!isPay"
+                        @click="realizarPago"
+                    >
+                        Realizar pago
+                    </button>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <div class="form-check">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        v-model="isTermins"
+                        id="defaultCheck1"
+                    />
+                    <label class="form-check-label" for="defaultCheck1">
+                        <p style="font-size: 18px">
+                            Acepto los
+                            <a href="#" style="color: #0035aa"
+                                ><strong>Terminos y Condiciones</strong></a
+                            >
+                            del servicio de intergiros.
+                        </p>
+                    </label>
+                </div>
+            </div>
+            <div class="text-center mt-2">
+                <div class="text-center mt-4">
+                    <button
+                        class="btn btn-primary"
+                        type="button"
+                        id="realizarPago"
+                        style="width: 80%"
+                        :disabled="!isPayTotal"
+                        @click="addSolicitudPago"
+                    >
+                        Enviar
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
+
+    <realizar-pago-component
+        v-if="idService && monedaId"
+        :isRealizarPago="isRealizarPago"
+        :idService="idService"
+        :monedaId="monedaId"
+        @savePago="saveReferenciaPago"
+        @hidden="hiddenModalPago"
+    >
+    </realizar-pago-component>
 </template>
 
 <script>
@@ -660,10 +740,9 @@ export default {
                 nombreDepositante: "",
                 tipoDocumentoDepositante: null,
                 documentoDepositante: null,
-                correoDepositante: null,
-                codigoIDepositante: null,
-                celularDepositante: null,
-                paisDepositante: null,
+                bancoDepositante: null,
+                tipoCuentaDepositante: null,
+                cuentaDepositante: null,
                 adjuntarDocumento: null,
                 servicio: null,
                 code: null,
@@ -686,6 +765,7 @@ export default {
             pathReferenciaPago: null,
             isPayTotal: false,
             monedaValue: null,
+            dynamicRules: {},
         };
     },
     components: {
@@ -717,9 +797,6 @@ export default {
         monedaId: async function (value) {
             if (!this.isEditBeneficiario) {
                 this.beneficiarioForm.bancoBeneficiario = null;
-                this.optionsBancos = await this.$getBancoByMoneda(
-                    this.monedaId
-                );
                 this.optionsDocumentBenficiario = await this.$getTDByMoneda(
                     this.monedaId
                 );
@@ -729,6 +806,7 @@ export default {
                     this.monedaId
                 );
             }
+            this.optionsBancos = await this.$getBancoByMoneda(this.monedaId);
             this.montoBruto = 0;
             this.montoCambiar.monto_a_pagar = 0;
             this.montoCambiar.monto_a_recibir = 0;
@@ -760,7 +838,8 @@ export default {
             this.optionsPais = responsePais;
         },
         async validateFormBeneficiario() {
-            const schema = Yup.object().shape({
+            this.dynamicRules = {};
+            let initialRules = {
                 aliasBeneficiario: Yup.string().required(
                     "El alias es obligatorio"
                 ),
@@ -782,9 +861,15 @@ export default {
                 cuentaBeneficiario: Yup.string().required(
                     "La cuenta es obligatoria"
                 ),
-                pagoMovilBeneficiario: Yup.string().required(
+            };
+            if (this.monedaValue == "Bolivar") {
+                this.dynamicRules.pagoMovilBeneficiario = Yup.string().required(
                     "El pago movil es obligatorio"
-                ),
+                );
+            }
+            const schema = Yup.object().shape({
+                ...initialRules,
+                ...this.dynamicRules,
             });
             this.errorsBeneficiario = {};
             try {
@@ -813,49 +898,14 @@ export default {
                 documentoDepositante: Yup.string().required(
                     "El documento es obligatorio"
                 ),
-                correoDepositante: Yup.string()
-                    .email("El formato del correo electrónico no es válido")
-                    .required("El correo beneficiario es obligatorio")
-                    .test(
-                        "is-valid-domain",
-                        "El dominio del correo electrónico no es válido",
-                        (value) => {
-                            if (!value) return true;
-                            const atIndex = value.indexOf("@");
-                            const dotIndex = value.lastIndexOf(".");
-
-                            if (
-                                atIndex === -1 ||
-                                dotIndex === -1 ||
-                                dotIndex < atIndex
-                            ) {
-                                // Si no hay símbolo "@" o "." o "." está antes de "@" o no hay texto después de "@" o "."
-                                return false;
-                            }
-
-                            const afterAt = value.substring(
-                                atIndex + 1,
-                                dotIndex
-                            );
-                            const afterDot = value.substring(dotIndex + 1);
-
-                            const letterRegex = /^[a-zA-Z]+$/; // Expresión regular para letras
-
-                            return (
-                                letterRegex.test(afterAt) &&
-                                letterRegex.test(afterDot)
-                            );
-                        }
-                    ),
-                codigoIDepositante: Yup.string().required(
+                tipoCuentaDepositante: Yup.string().required(
+                    "El tipo banco es obligatorio"
+                ),
+                cuentaDepositante: Yup.string().required(
                     "La cuenta es obligatoria"
                 ),
-                celularDepositante: Yup.string()
-                    .required("El celular es obligatorio")
-                    .min(7, "El celular debe tener al menos 7 digitos")
-                    .max(15, "El celular no debe tener mas de 15 digitos"),
-                paisDepositante: Yup.string().required(
-                    "El pais es obligatorio"
+                bancoDepositante: Yup.string().required(
+                    "El banco es obligatorio"
                 ),
                 adjuntarDocumento: Yup.string().required(
                     "La foto es obligatoria"
@@ -1190,14 +1240,16 @@ export default {
             this.depositanteForm.documentoDepositante = parseInt(
                 depositante.documento
             );
-            this.depositanteForm.correoDepositante = depositante.correo;
-            this.depositanteForm.codigoIDepositante =
-                depositante.pais_telefono_id;
-            this.depositanteForm.adjuntarDocumento = depositante.path_documento;
-            this.depositanteForm.celularDepositante = parseInt(
-                depositante.celular
+            this.depositanteForm.tipoCuentaDepositante = parseInt(
+                depositante.tipo_cuenta_id
             );
-            this.depositanteForm.paisDepositante = depositante.pais_id;
+            this.depositanteForm.cuentaDepositante = parseInt(
+                depositante.cuenta
+            );
+            this.depositanteForm.bancoDepositante = parseInt(
+                depositante.banco_id
+            );
+            this.depositanteForm.adjuntarDocumento = depositante.path_documento;
             this.isEditImage = depositante.path_documento ? false : true;
         },
         resetFormBeneficiario() {
@@ -1219,10 +1271,9 @@ export default {
             this.depositanteForm.nombreDepositante = null;
             this.depositanteForm.tipoDocumentoDepositante = null;
             this.depositanteForm.documentoDepositante = null;
-            this.depositanteForm.correoDepositante = null;
-            this.depositanteForm.codigoIDepositante = null;
-            this.depositanteForm.celularDepositante = null;
-            this.depositanteForm.paisDepositante = null;
+            this.depositanteForm.bancoDepositante = null;
+            this.depositanteForm.tipoCuentaDepositante = null;
+            this.depositanteForm.cuentaDepositante = null;
             this.depositanteForm.adjuntarDocumento = null;
             this.depositanteForm.servicio = null;
             this.depositanteForm.code = null;

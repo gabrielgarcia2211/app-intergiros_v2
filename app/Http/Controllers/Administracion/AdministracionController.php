@@ -230,6 +230,22 @@ class AdministracionController extends Controller
             'tasa_cambio.valor',
         ])
             ->join('tasa_cambio', 'tasa_cambio.tipo_formulario_id', 'tipo_formulario.id')
+            ->whereNotIn('codigo', [
+                'TP-07',
+                'TP-07-COP',
+                'TP-07-PEN',
+                'TP-07-USD',
+                'TP-08',
+                'TP-08-VES',
+                'TP-08-COP',
+                'TP-08-PEN',
+                'TP-08-USD',
+                'TP-09',
+                'TP-09-VES',
+                'TP-09-COP',
+                'TP-09-PEN',
+                'TP-09-USD',
+            ])
             ->distinct()
             ->get();
 

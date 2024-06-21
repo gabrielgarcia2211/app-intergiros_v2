@@ -73,12 +73,12 @@
             :idService="idService"
             :monedaId="monedaId"
         ></servicio-peru-usd-component>
-        <!-- <servicio-colombia-component
+        <servicio-colombia-component
             v-if="checkService == 'TP-06' && monedaId"
             :idService="idService"
             :monedaId="monedaId"
             :optionsMonedas="optionsMonedas"
-        ></servicio-colombia-component> -->
+        ></servicio-colombia-component>
     </div>
 </template>
 <script>

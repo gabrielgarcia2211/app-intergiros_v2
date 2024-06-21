@@ -95,14 +95,20 @@
                 <div
                     class="col-6"
                     v-if="
-                        currentService == 'TP-04' || currentService == 'TP-05'
+                        currentService == 'TP-04' ||
+                        currentService == 'TP-05' ||
+                        currentService == 'TP-06'
                     "
                 >
                     <div class="form-group">
                         <Dropdown
                             id="selectBanco"
                             v-model="depositanteForm.bancoDepositante"
-                            :options="optionsBancosPeru"
+                            :options="
+                                currentService == 'TP-06'
+                                    ? optionsBancos
+                                    : optionsBancosPeru
+                            "
                             placeholder="Bancos"
                             optionLabel="name"
                             optionValue="id"
@@ -145,7 +151,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-6" v-if="currentService != 'TP-06'">
                     <div
                         class="form-group"
                         style="width: 100%; display: inline-block"
@@ -190,7 +196,9 @@
                 <div
                     class="col-6"
                     v-if="
-                        currentService == 'TP-04' || currentService == 'TP-05'
+                        currentService == 'TP-04' ||
+                        currentService == 'TP-05' ||
+                        currentService == 'TP-06'
                     "
                 >
                     <div
@@ -537,6 +545,7 @@ export default {
             }
         },
         async validateForm() {
+            this.dynamicRules = {};
             let initialRules = {
                 aliasDepositante: Yup.string().required(
                     "El alias es obligatorio"
@@ -550,19 +559,22 @@ export default {
                 documentoDepositante: Yup.string().required(
                     "El documento es obligatorio"
                 ),
-                codigoIDepositante: Yup.string().required(
-                    "La cuenta es obligatoria"
-                ),
-                celularDepositante: Yup.string().required(
-                    "El pago movil es obligatorio"
-                ),
                 adjuntarDocumento: Yup.string().required(
                     "La foto es obligatoria"
                 ),
             };
+            if (this.currentService != "TP-06") {
+                this.dynamicRules.celularDepositante = Yup.string().required(
+                    "El pago movil es obligatorio"
+                );
+                this.dynamicRules.codigoIDepositante = Yup.string().required(
+                    "La cuenta es obligatoria"
+                );
+            }
             if (
                 this.currentService == "TP-04" ||
-                this.currentService == "TP-05"
+                this.currentService == "TP-05" ||
+                this.currentService == "TP-06"
             ) {
                 this.dynamicRules.tipoCuentaDepositante = Yup.string().required(
                     "El tipo cuenta es obligatorio"

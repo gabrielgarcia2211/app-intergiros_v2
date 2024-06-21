@@ -43,7 +43,7 @@ class TipoFormularioSeeder extends Seeder
             ['descripcion' => 'Venezuela', 'codigo' => 'TP-07', 'principal' => 2],
             ['descripcion' => 'Venezuela-Colombia', 'codigo' => 'TP-07-COP', 'principal' => 0],
             ['descripcion' => 'Venezuela-Peru', 'codigo' => 'TP-07-PEN', 'principal' => 0],
-            ['descripcion' => 'Venezuela-Peru-USD', 'codigo' => ' TP-07-USD', 'principal' => 0],
+            ['descripcion' => 'Venezuela-Peru-USD', 'codigo' => 'TP-07-USD', 'principal' => 0],
             // TP-08
             ['descripcion' => 'P-Zinli', 'codigo' => 'TP-08', 'principal' => 2],
             ['descripcion' => 'Venezuela-Zinli', 'codigo' => 'TP-08-VES', 'principal' => 0],

@@ -39,8 +39,8 @@ export default {
             cards: [
                 {
                     image: "img/home/people.jpg",
-                    alt: "Persona 1",
-                    name: "Nombre Persona #1",
+                    alt: "Persona 01",
+                    name: "Nombre Persona #01",
                     description:
                         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed quasi non aperiam itaque earum voluptatem sequi, ut rem veniam hic nesciunt numquam veritatis quaerat laboriosam possimus, nulla libero temporibus! Laudantium.",
                 },

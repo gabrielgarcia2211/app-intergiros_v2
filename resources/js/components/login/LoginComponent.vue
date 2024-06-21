@@ -135,8 +135,13 @@ export default {
         async submitLogin() {
             const isValid = await this.validateForm();
             if (isValid) {
+                const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
                 this.$axios
-                    .post("/login", this.formLogin)
+                    .post("/login", this.formLogin, {
+                        headers: {
+                            "X-CSRF-TOKEN": csrfToken,
+                        },
+                    })
                     .then((response) => {
                         window.location.href = "/perfil";
                     })

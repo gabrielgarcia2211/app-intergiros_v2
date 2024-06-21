@@ -43,6 +43,18 @@ class UpdateTerceroRequest extends FormRequest
                             'pagoMovilBeneficiario' => 'required',
                         ];
                         break;
+                    case 'TP-06':
+                        return [
+                            'aliasBeneficiario' => 'required',
+                            'nombreBeneficiario' => 'required',
+                            'tipoDocumentoBeneficiario' => 'required',
+                            'documentoBeneficiario' => 'required|integer',
+                            'tipoCuentaBeneficiario' => 'required',
+                            'bancoBeneficiario' => 'required',
+                            'cuentaBeneficiario' => 'required',
+                            'pagoMovilBeneficiario' => 'nullable',
+                        ];
+                        break;
                 }
             case 'TD':
                 switch (request('servicio')) {
@@ -76,6 +88,17 @@ class UpdateTerceroRequest extends FormRequest
                             'adjuntarDocumento' => 'required|max:' . env('UPLOAD_MAX_FILESIZE'),
                         ];
                         break;
+                    case 'TP-06':
+                        return [
+                            'aliasDepositante' => 'required',
+                            'nombreDepositante' => 'required',
+                            'tipoDocumentoDepositante' => 'required',
+                            'documentoDepositante' => 'required|integer',
+                            'bancoDepositante' => 'required|integer',
+                            'tipoCuentaDepositante' => 'required',
+                            'cuentaDepositante' => 'required',
+                            'adjuntarDocumento' => 'required|max:' . env('UPLOAD_MAX_FILESIZE'),
+                        ];
                         break;
                 }
             default:
