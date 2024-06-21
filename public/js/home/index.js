@@ -78,6 +78,15 @@ async function obtenerValor(value) {
             }
             $("#tipo_cambio_peru").html(tasa);
             break;
+        case "col_ven":
+            $("#monto_recibir_col_ven").val(calculo.data.recibir);
+            $("#monto_pagar_col_ven").html(calculo.data.pagar);
+            $("#monto_recibir_comision_col_ven").html(
+                calculo.data.pagar_con_comision ?? "0.00"
+            );
+            tasa = "$1 dólar = " + calculo.data.tasa.valor;
+            $("#tipo_cambio_colombia").html(tasa);
+            break;
         default:
             console.log("Selección no reconocida");
     }
@@ -103,14 +112,14 @@ function mapTipoMoneda(code) {
             var recibir = $("#paisesPeru").find("option:selected").data("code");
             code = enviar == "PEN" ? "TP-04" : "TP-05";
             return [code, recibir];
+        case "TP-06":
+            var recibir = $("#paisesColombia")
+                .find("option:selected")
+                .data("code");
+            return [code, recibir];
         /*  case "TP-05":
             var enviar = document.getElementById("montoColombia");
             var recibir = document.getElementById("paisesColombia");
-            var codigo = code + "-" + enviar.value + "-" + recibir.value;
-            return codigo;
-        case "TP-06":
-            var enviar = document.getElementById("montoVenezuela");
-            var recibir = document.getElementById("paisesVenezuela");
             var codigo = code + "-" + enviar.value + "-" + recibir.value;
             return codigo;
         case "TP-07":
@@ -132,7 +141,7 @@ function mapTipoMoneda(code) {
 
 function obtenerHoraVenezuela() {
     var horaActual = new Date();
-    var horaUTC = horaActual.getTime() + (horaActual.getTimezoneOffset() * 60000); // Obtener hora UTC
+    var horaUTC = horaActual.getTime() + horaActual.getTimezoneOffset() * 60000; // Obtener hora UTC
     var diferenciaHoraria = -4 * 60 * 60 * 1000; // UTC-4 para Venezuela
     var horaVenezuela = new Date(horaUTC + diferenciaHoraria); // Calcular hora en Venezuela
     return horaVenezuela;
@@ -143,47 +152,79 @@ function sumarHoras(cantidadHoras) {
     var minutosIniciales = fecha.getMinutes(); // Guardar los minutos actuales
 
     if (parseInt(cantidadHoras) === 8) {
-        if(fecha.getHours() > 20 && fecha.getHours() < 24) {
+        if (fecha.getHours() > 20 && fecha.getHours() < 24) {
             fecha.setDate(fecha.getDate() + 1);
-            fecha.setHours(6 + parseInt(cantidadHoras),0,0,0);
-        }else if (fecha.getHours() > 24 && fecha.getHours() < 6) {
-                    fecha.setHours(fecha.getHours() + parseInt(cantidadHoras),0,0,0);
-            }else if ((fecha.getHours() + parseInt(cantidadHoras)) > 20) {
-                        var horasExcedidas = (fecha.getHours() + 8) - 20;
-                        fecha.setDate(fecha.getDate() + 1);
-                        fecha.setHours(6 + horasExcedidas, minutosIniciales, 0, 0);
-                }else {
-                    fecha.setHours(fecha.getHours() + parseInt(cantidadHoras), minutosIniciales, 0, 0);
-                }
+            fecha.setHours(6 + parseInt(cantidadHoras), 0, 0, 0);
+        } else if (fecha.getHours() > 24 && fecha.getHours() < 6) {
+            fecha.setHours(fecha.getHours() + parseInt(cantidadHoras), 0, 0, 0);
+        } else if (fecha.getHours() + parseInt(cantidadHoras) > 20) {
+            var horasExcedidas = fecha.getHours() + 8 - 20;
+            fecha.setDate(fecha.getDate() + 1);
+            fecha.setHours(6 + horasExcedidas, minutosIniciales, 0, 0);
+        } else {
+            fecha.setHours(
+                fecha.getHours() + parseInt(cantidadHoras),
+                minutosIniciales,
+                0,
+                0
+            );
+        }
     } else {
         // Si cantidadHoras no es igual a 8, simplemente sumar las horas y mantener los minutos actuales
-        fecha.setHours(fecha.getHours() + parseInt(cantidadHoras), minutosIniciales, 0, 0);
+        fecha.setHours(
+            fecha.getHours() + parseInt(cantidadHoras),
+            minutosIniciales,
+            0,
+            0
+        );
     }
-    
+
     // Obtener el nombre del mes
-    var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    var meses = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre",
+    ];
     var nombreMes = meses[fecha.getMonth()];
 
     // Formatear la hora y minutos
-    var horas = fecha.getHours().toString().padStart(2, '0');
-    var minutos = fecha.getMinutes().toString().padStart(2, '0');
-    
+    var horas = fecha.getHours().toString().padStart(2, "0");
+    var minutos = fecha.getMinutes().toString().padStart(2, "0");
+
     // Formatear la fecha
-    var textoBoton = 'Recibirás el dinero máximo el ' + fecha.getDate() + ' de ' + nombreMes + ' a las ' + horas + ':' + minutos + " UTC-4";
-    
+    var textoBoton =
+        "Recibirás el dinero máximo el " +
+        fecha.getDate() +
+        " de " +
+        nombreMes +
+        " a las " +
+        horas +
+        ":" +
+        minutos +
+        " UTC-4";
+
     // Retornar el texto formateado
     return textoBoton;
 }
 
 function cargarTextosEnBotones() {
     // Definir un arreglo de IDs de botones
-    var botones = ["paypal-fecha","usdt-fecha","zinli-fecha","peru-fecha"]; // Puedes agregar más IDs si es necesario
-    
+    var botones = ["paypal-fecha", "usdt-fecha", "zinli-fecha", "peru-fecha"]; // Puedes agregar más IDs si es necesario
+
     // Iterar sobre los IDs de botones
     for (var i = 0; i < botones.length; i++) {
         var botonID = botones[i];
         var texto = "";
-        
+
         // Utilizar un switch para asignar texto según el ID del botón
         switch (botonID) {
             case "paypal-fecha":
@@ -200,19 +241,25 @@ function cargarTextosEnBotones() {
                 break;
             // Puedes agregar más casos según los IDs de tus botones y asignar las horas adecuadas
         }
-        
+
         // Mostrar el texto en el botón correspondiente
         document.getElementById(botonID).innerText = texto;
     }
 }
 
-window.onload = function() {
+window.onload = function () {
     cargarTextosEnBotones();
 };
 
 //valor ingresado calculadora
-function valorCalculadora(inputElement, errorElement, minValue, maxValue, moneda) {
-    inputElement.addEventListener('input', function() {
+function valorCalculadora(
+    inputElement,
+    errorElement,
+    minValue,
+    maxValue,
+    moneda
+) {
+    inputElement.addEventListener("input", function () {
         const value = parseFloat(inputElement.value);
 
         // Definimos los mensajes de error dentro de la función
@@ -221,20 +268,19 @@ function valorCalculadora(inputElement, errorElement, minValue, maxValue, moneda
 
         // Verifica si el valor está fuera del rango
         if (isNaN(value)) {
-                    errorElement.textContent = '';
-                    errorElement.style.display = 'none';
-                } else if (value < minValue) {
-                    errorElement.textContent = minErrorMessage;
-                    errorElement.style.display = 'inline';
-                } else if (value > maxValue) {
-                    errorElement.textContent = maxErrorMessage;
-                    errorElement.style.display = 'inline';
-                } else {
-                    errorElement.style.display = 'none';
-                }
+            errorElement.textContent = "";
+            errorElement.style.display = "none";
+        } else if (value < minValue) {
+            errorElement.textContent = minErrorMessage;
+            errorElement.style.display = "inline";
+        } else if (value > maxValue) {
+            errorElement.textContent = maxErrorMessage;
+            errorElement.style.display = "inline";
+        } else {
+            errorElement.style.display = "none";
+        }
     });
 }
-
 
 /* Paypal */
 document.addEventListener("DOMContentLoaded", function () {
@@ -244,7 +290,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var recibe = document.getElementById("monto_recibir_pay_ven");
     var input = document.getElementById("monto_cambiar_pay_ven");
     var error = document.getElementById("error-message-paypal");
-    valorCalculadora(input,error,5,500,"dolares");
+    valorCalculadora(input, error, 5, 500, "dolares");
 
     selectPaises.addEventListener("change", function () {
         var imagenUrl =
@@ -266,7 +312,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const bancos = document.getElementById("bancos_paypal");
     const monto = document.getElementById("monto_minimo_paypal");
     const tiempo = document.getElementById("tiempo_transferencia_paypal");
-    var fecha = document.getElementById('paypal-fecha');
+    var fecha = document.getElementById("paypal-fecha");
 
     miSelect.addEventListener("change", (event) => {
         const valor = event.target.value;
@@ -315,7 +361,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var imagenPais = document.getElementById("imagenPaisZinli");
     var input = document.getElementById("monto_cambiar_zinli_peru");
     var error = document.getElementById("error-message-zinli");
-    valorCalculadora(input,error,5,500,"dolares");
+    valorCalculadora(input, error, 5, 500, "dolares");
 
     selectPaises.addEventListener("change", function () {
         var imagenUrl =
@@ -337,7 +383,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var recibe = document.getElementById("monto_recibir_usdt_ven");
     var input = document.getElementById("monto_cambiar_usdt_ven");
     var error = document.getElementById("error-message-usdt");
-    valorCalculadora(input,error,5,500,"dolares");
+    valorCalculadora(input, error, 5, 500, "dolares");
 
     selectPaises.addEventListener("change", function () {
         var imagenUrl =
@@ -458,7 +504,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const monto = document.getElementById("monto_minimo_peru");
     var input = document.getElementById("monto_cambiar_peru_ven");
     var error = document.getElementById("error-message-peru");
-    valorCalculadora(input,error,20,2000,"soles");
+    valorCalculadora(input, error, 20, 2000, "soles");
 
     miSelect.addEventListener("change", (event) => {
         const valor = event.target.value;
@@ -466,11 +512,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
         switch (valor) {
             case "peru":
                 monto.textContent = "20 Soles";
-                valorCalculadora(input,error,20,2000,"soles");
+                valorCalculadora(input, error, 20, 2000, "soles");
                 break;
             case "peru-dolar":
                 monto.textContent = "$10 USD";
-                valorCalculadora(input,error,10,500,"dolares");
+                valorCalculadora(input, error, 10, 500, "dolares");
                 break;
             default:
                 moneda.textContent = "Ninguno";
