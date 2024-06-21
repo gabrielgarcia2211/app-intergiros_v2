@@ -66,6 +66,10 @@ class CoreMasterComboBancosSeeder extends Seeder
                         'valor1' => 'VES',
                     ],
                     [
+                        'name' => 'Banesco',
+                        'valor1' => 'VES',
+                    ],
+                    [
                         'name' => 'Banplus',
                         'valor1' => 'VES',
                     ],

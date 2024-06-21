@@ -84,7 +84,7 @@ async function obtenerValor(value) {
             $("#monto_recibir_comision_col_ven").html(
                 calculo.data.pagar_con_comision ?? "0.00"
             );
-            tasa = "$1 dólar = " + calculo.data.tasa.valor;
+            tasa = "$1 peso = " + calculo.data.tasa.valor;
             $("#tipo_cambio_colombia").html(tasa);
             break;
         default:
@@ -152,23 +152,20 @@ function sumarHoras(cantidadHoras) {
     var minutosIniciales = fecha.getMinutes(); // Guardar los minutos actuales
 
     if (parseInt(cantidadHoras) === 8) {
-        if (fecha.getHours() > 20 && fecha.getHours() < 24) {
+        if(fecha.getHours() > 20 && fecha.getHours() < 24) {
             fecha.setDate(fecha.getDate() + 1);
-            fecha.setHours(6 + parseInt(cantidadHoras), 0, 0, 0);
-        } else if (fecha.getHours() > 24 && fecha.getHours() < 6) {
-            fecha.setHours(fecha.getHours() + parseInt(cantidadHoras), 0, 0, 0);
-        } else if (fecha.getHours() + parseInt(cantidadHoras) > 20) {
-            var horasExcedidas = fecha.getHours() + 8 - 20;
-            fecha.setDate(fecha.getDate() + 1);
-            fecha.setHours(6 + horasExcedidas, minutosIniciales, 0, 0);
-        } else {
-            fecha.setHours(
-                fecha.getHours() + parseInt(cantidadHoras),
-                minutosIniciales,
-                0,
-                0
-            );
-        }
+            fecha.setHours(6 + parseInt(cantidadHoras),0,0,0);
+        }else 
+            if (fecha.getHours() > 0 && fecha.getHours() < 6) {
+                        fecha.setHours(6 + parseInt(cantidadHoras),0,0,0);
+                }else 
+                    if ((fecha.getHours() + parseInt(cantidadHoras)) > 20) {
+                                var horasExcedidas = (fecha.getHours() + 8) - 20;
+                                fecha.setDate(fecha.getDate() + 1);
+                                fecha.setHours(6 + horasExcedidas, minutosIniciales, 0, 0);
+                        }else {
+                            fecha.setHours(fecha.getHours() + parseInt(cantidadHoras), minutosIniciales, 0, 0);
+                        }
     } else {
         // Si cantidadHoras no es igual a 8, simplemente sumar las horas y mantener los minutos actuales
         fecha.setHours(
@@ -218,7 +215,7 @@ function sumarHoras(cantidadHoras) {
 
 function cargarTextosEnBotones() {
     // Definir un arreglo de IDs de botones
-    var botones = ["paypal-fecha", "usdt-fecha", "zinli-fecha", "peru-fecha"]; // Puedes agregar más IDs si es necesario
+    var botones = ["paypal-fecha", "usdt-fecha", "zinli-fecha", "peru-fecha", "colombia-fecha"]; // Puedes agregar más IDs si es necesario
 
     // Iterar sobre los IDs de botones
     for (var i = 0; i < botones.length; i++) {
@@ -237,6 +234,9 @@ function cargarTextosEnBotones() {
                 texto = sumarHoras(8); // Por ejemplo, aquí se suma 24 horas para el primer botón
                 break;
             case "peru-fecha":
+                texto = sumarHoras(8); // Por ejemplo, aquí se suma 24 horas para el primer botón
+                break;
+            case "colombia-fecha":
                 texto = sumarHoras(8); // Por ejemplo, aquí se suma 24 horas para el primer botón
                 break;
             // Puedes agregar más casos según los IDs de tus botones y asignar las horas adecuadas
@@ -549,6 +549,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const miSelect = document.getElementById("paisesColombia");
     const tipoCambio = document.getElementById("tipo_cambio_colombia");
     const bancos = document.getElementById("bancos_colombia");
+    var input = document.getElementById("monto_cambiar_col_ven");
+    var error = document.getElementById("error-message-colombia");
+    valorCalculadora(input, error, 10000, 1500000, "pesos");
 
     miSelect.addEventListener("change", (event) => {
         const valor = event.target.value;
