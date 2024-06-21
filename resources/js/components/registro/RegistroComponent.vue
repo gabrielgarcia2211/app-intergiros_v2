@@ -138,8 +138,7 @@
                                     filter
                                     @change="handleCodigoI"
                                 ></Dropdown>
-                                <InputMask
-                                    mask="?999999999999999"
+                                <InputText
                                     id=""
                                     v-model="registroForm.celular"
                                     placeholder="Número celular"
@@ -149,6 +148,8 @@
                                         'p-invalid': errors.celular,
                                     }"
                                     autocomplete="tel"
+                                    maxlength="15"
+                                    @input="soloNumeros"
                                 />
                             </InputGroup>
                             <small
@@ -750,6 +751,13 @@ export default {
             this.optionsCodigoI = responsePaisTelefono;
             this.optionsRedes = responseRedes;
             this.optionsPais = responsePais;
+        },
+        soloNumeros(event) {
+            // Eliminar todos los caracteres no numéricos
+            const soloNumeros = event.target.value.replace(/\D/g, '');
+            // Actualizar el campo de entrada y el modelo de datos
+            event.target.value = soloNumeros;
+            this.registroForm.celular = soloNumeros;
         },
         async validateFormInfoGeneral() {
             const schema = Yup.object().shape({

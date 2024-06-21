@@ -484,8 +484,7 @@
                                 :disabled="isEditDepositante"
                                 filter
                             ></Dropdown>
-                            <InputMask
-                                mask="?999999999999999"
+                            <InputText
                                 id=""
                                 v-model="depositanteForm.celularDepositante"
                                 placeholder="Número celular"
@@ -498,6 +497,8 @@
                                 }"
                                 :disabled="isEditDepositante"
                                 autocomplete="tel"
+                                maxlength="15"
+                                @input="soloNumeros"
                             />
                         </InputGroup>
                         <small
@@ -901,6 +902,13 @@ export default {
             // moneda Peru
             this.optionsBancosPeru = await this.$getBancoByMoneda(2);
             this.optionsDocumentDepositantePeru = await this.$getTDByMoneda(2);
+        },
+        soloNumeros(event) {
+            // Eliminar todos los caracteres no numéricos
+            const soloNumeros = event.target.value.replace(/\D/g, '');
+            // Actualizar el campo de entrada y el modelo de datos
+            event.target.value = soloNumeros;
+            this.registroForm.celular = soloNumeros;
         },
         async validateFormBeneficiario() {
             const schema = Yup.object().shape({

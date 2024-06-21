@@ -580,7 +580,10 @@
                 </div>
             </div>
             <div class="col-md-7 data">
-                <div class="form-group">
+                <div class="form-group mt-4">
+                    <div class="text-center">
+                        <span id="error-message-colombia" class="error" style="font-size: 15px; color: red;"></span>
+                    </div>
                     <div class="input-group" style="width: 100% !important;">
                         <input type="number" class="form-control w-100%" id="monto_cambiar_col_ven"
                             placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
@@ -638,7 +641,7 @@
                 </div>
                 <div class="mt-5 text-center">
                     <h6>Si realizas un pedido ahora:</h6>
-                    <button type="button" class="btn btn-primary">Recibirás el dinero máximo el 29 de agosto</button>
+                    <button type="button" id="colombia-fecha" class="btn btn-primary"></button>
                 </div>
             </div>
         </div>
