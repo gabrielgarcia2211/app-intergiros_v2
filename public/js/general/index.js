@@ -245,3 +245,10 @@ function obtenerParametroGET(parametro) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(parametro);
 }
+
+function validarEntero(input) {
+    var valor = input.value;
+    if (!Number.isInteger(parseFloat(valor))) {
+        input.value = valor.slice(0, -1);
+    }
+}

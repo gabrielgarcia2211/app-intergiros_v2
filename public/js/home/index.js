@@ -194,7 +194,9 @@ function sumarHoras(cantidadHoras) {
     var nombreMes = meses[fecha.getMonth()];
 
     // Formatear la hora y minutos
-    var horas = fecha.getHours().toString().padStart(2, "0");
+    var horas24 = fecha.getHours();
+    var horas12 = horas24 % 12 || 12; // Convertir al formato 12 horas
+    var ampm = horas24 >= 12 ? "PM" : "AM"; // Determinar AM o PM
     var minutos = fecha.getMinutes().toString().padStart(2, "0");
 
     // Formatear la fecha
@@ -204,10 +206,12 @@ function sumarHoras(cantidadHoras) {
         " de " +
         nombreMes +
         " a las " +
-        horas +
+        horas12.toString().padStart(2, "0") +
         ":" +
         minutos +
-        " UTC-4";
+        " " +
+        ampm +
+        " Caracas";
 
     // Retornar el texto formateado
     return textoBoton;

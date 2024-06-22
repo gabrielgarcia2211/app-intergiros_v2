@@ -100,7 +100,7 @@
                                 }"
                                 :disabled="isEditBeneficiario"
                             ></Dropdown>
-                            <InputNumber
+                            <InputText
                                 v-model="beneficiarioForm.documentoBeneficiario"
                                 placeholder="Número documento"
                                 class="w-full md:w-14rem input-telefono"
@@ -111,6 +111,7 @@
                                         errorsBeneficiario.documentoBeneficiario,
                                 }"
                                 :disabled="isEditBeneficiario"
+                                maxlength="15"
                             />
                         </InputGroup>
                         <small
@@ -180,6 +181,7 @@
                                         errorsBeneficiario.cuentaBeneficiario,
                                 }"
                                 :disabled="isEditBeneficiario"
+                                maxlength="20"
                             />
                         </InputGroup>
                         <small
@@ -201,6 +203,8 @@
                                 'input-readonly': isEditBeneficiario,
                             }"
                             :readOnly="isEditBeneficiario"
+                            maxlength="11"
+                            @input="soloNumeros"
                         />
                         <small
                             v-if="errorsBeneficiario.pagoMovilBeneficiario"
@@ -377,7 +381,7 @@
                                 }"
                                 :disabled="isEditDepositante"
                             ></Dropdown>
-                            <InputNumber
+                            <InputText
                                 v-model="depositanteForm.documentoDepositante"
                                 placeholder="Número documento"
                                 class="w-full md:w-14rem input-telefono"
@@ -388,6 +392,7 @@
                                         errorsDepositante.documentoDepositante,
                                 }"
                                 :disabled="isEditDepositante"
+                                maxlength="15"
                             />
                         </InputGroup>
                         <small
@@ -452,6 +457,7 @@
                                         errorsDepositante.cuentaDepositante,
                                 }"
                                 :disabled="isEditDepositante"
+                                maxlength="20"
                             />
                         </InputGroup>
                         <small
@@ -599,11 +605,11 @@
                         v-if="montoBruto < 5 || montoBruto > 500"
                         style="display: block; font-size: 16px"
                         class="p-error"
-                        ><p v-if="montoBruto < 5">
-                            El monto debe ser mayor a 5,00
+                        ><p v-if="montoBruto <= 10000">
+                            El monto debe ser mayor o igual a 10000,00
                         </p>
-                        <p v-else-if="montoBruto > 500">
-                            El monto debe ser menor a 500,00
+                        <p v-else-if="montoBruto >= 1500000">
+                            El monto debe ser menor o igual a 1500000,00
                         </p>
                     </small>
                     <div class="mt-5">
@@ -836,6 +842,13 @@ export default {
             this.optionsTipoCuenta = responseTipoCuenta;
             this.optionsCodigoI = responsePaisTelefono;
             this.optionsPais = responsePais;
+        },
+        soloNumeros(event) {
+            // Eliminar todos los caracteres no numéricos
+            const soloNumeros = event.target.value.replace(/\D/g, '');
+            // Actualizar el campo de entrada y el modelo de datos
+            event.target.value = soloNumeros;
+            this.registroForm.celular = soloNumeros;
         },
         async validateFormBeneficiario() {
             this.dynamicRules = {};
