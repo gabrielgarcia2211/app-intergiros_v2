@@ -40,7 +40,7 @@ class UpdateTerceroRequest extends FormRequest
                             'tipoCuentaBeneficiario' => 'required',
                             'bancoBeneficiario' => 'required',
                             'cuentaBeneficiario' => 'required',
-                            'pagoMovilBeneficiario' => 'required',
+                            'pagoMovilBeneficiario' => 'nullable',
                         ];
                         break;
                     case 'TP-06':

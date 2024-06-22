@@ -219,6 +219,7 @@
                                     'p-invalid': errors.tipoCuentaDepositante,
                                     'input-readonly': isEdit,
                                 }"
+                                @change="handleTipoC"
                             ></Dropdown>
                             <InputNumber
                                 v-model="depositanteForm.cuentaDepositante"
@@ -425,6 +426,16 @@ export default {
             );
             this.setForm(tmpAfiliado.data);
             this.$emit("formId", this.depositanteForm.id);
+        },
+        handleTipoC(event) {
+            const selectedObj = this.optionsTipoCuenta.find(
+                (option) => option.id === event.value
+            );
+            if (selectedObj) {
+                $("#tipoCuentaDepositante > .p-dropdown-label").text(
+                    selectedObj.valor1
+                );
+            }
         },
         onFileUpload() {
             const fileUploadComponent = this.$refs.fileUpload;

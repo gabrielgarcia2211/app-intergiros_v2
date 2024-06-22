@@ -245,6 +245,7 @@
                                     'input-readonly': isEdit,
                                 }"
                                 :disabled="isEdit"
+                                @change="handleTipoC"
                             ></Dropdown>
                             <InputNumber
                                 v-model="depositanteForm.cuentaDepositante"
@@ -513,6 +514,16 @@ export default {
             this.isVisibleForm = true;
             this.createOrUpdate = "edit";
             this.$emit("formId", this.depositanteForm.id, "depositante_id");
+        },
+        handleTipoC(event) {
+            const selectedObj = this.optionsTipoCuenta.find(
+                (option) => option.id === event.value
+            );
+            if (selectedObj) {
+                $("#tipoCuentaDepositante > .p-dropdown-label").text(
+                    selectedObj.valor1
+                );
+            }
         },
         habilitarEdicion() {
             this.errors = {};

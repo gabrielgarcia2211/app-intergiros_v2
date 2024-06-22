@@ -168,6 +168,7 @@
                                     'input-readonly': isEdit,
                                 }"
                                 :disabled="isEdit"
+                                @change="handleTipoC"
                             ></Dropdown>
                             <InputText
                                 v-model="beneficiarioForm.cuentaBeneficiario"
@@ -193,7 +194,7 @@
                     <div class="form-group">
                         <InputText
                             v-model="beneficiarioForm.pagoMovilBeneficiario"
-                            placeholder="Pago móvil"
+                            placeholder="Pago móvil (opcional)"
                             class="w-full md:w-14rem input-registro"
                             style="width: 100%"
                             :class="{
@@ -311,7 +312,7 @@ export default {
     mounted() {},
     methods: {
         async initModal() {
-            console.log(this.selectedTercero)
+            console.log(this.selectedTercero);
             this.beneficiarios = await this.$getTerceros(
                 "TB",
                 this.selectedService.codigo,
@@ -361,6 +362,16 @@ export default {
             });
             if (bancosPeru.includes(banco.code)) {
                 this.placeholderCuenta = "Código de cuenta interbancario";
+            }
+        },
+        handleTipoC(event) {
+            const selectedObj = this.optionsTipoCuenta.find(
+                (option) => option.id === event.value
+            );
+            if (selectedObj) {
+                $("#tipoCuentaBeneficiario > .p-dropdown-label").text(
+                    selectedObj.valor1
+                );
             }
         },
         async add() {
@@ -421,9 +432,17 @@ export default {
                 cuentaBeneficiario: Yup.string().required(
                     "La cuenta es obligatoria"
                 ),
-                pagoMovilBeneficiario: Yup.string().required(
-                    "El pago movil es obligatorio"
-                ),
+                pagoMovilBeneficiario: Yup.string()
+                    .nullable()
+                    .test(
+                        "length-check",
+                        "El pago movil debe tener entre 10 y 11 caracteres",
+                        (value) =>
+                            value === null ||
+                            value === undefined ||
+                            value === "" ||
+                            (value.length >= 10 && value.length <= 11)
+                    ),
             });
             this.errors = {};
             try {

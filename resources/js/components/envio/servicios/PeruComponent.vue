@@ -170,6 +170,7 @@
                                     'input-readonly': isEditBeneficiario,
                                 }"
                                 :disabled="isEditBeneficiario"
+                                @change="handleTipoC"
                             ></Dropdown>
                             <InputText
                                 v-model="beneficiarioForm.cuentaBeneficiario"
@@ -195,7 +196,7 @@
                     <div class="form-group">
                         <InputText
                             v-model="beneficiarioForm.pagoMovilBeneficiario"
-                            placeholder="Pago móvil"
+                            placeholder="Pago móvil (opcional)"
                             class="w-full md:w-14rem input-registro"
                             style="width: 80%"
                             :class="{
@@ -446,6 +447,7 @@
                                     'input-readonly': isEditDepositante,
                                 }"
                                 :disabled="isEditDepositante"
+                                @change="handleTipoCD"
                             ></Dropdown>
                             <InputText
                                 v-model="depositanteForm.cuentaDepositante"
@@ -911,7 +913,7 @@ export default {
         },
         soloNumeros(event) {
             // Eliminar todos los caracteres no numéricos
-            const soloNumeros = event.target.value.replace(/\D/g, '');
+            const soloNumeros = event.target.value.replace(/\D/g, "");
             // Actualizar el campo de entrada y el modelo de datos
             event.target.value = soloNumeros;
             this.registroForm.celular = soloNumeros;
@@ -940,9 +942,17 @@ export default {
                 cuentaBeneficiario: Yup.string().required(
                     "La cuenta es obligatoria"
                 ),
-                pagoMovilBeneficiario: Yup.string().required(
-                    "El pago movil es obligatorio"
-                ),
+                pagoMovilBeneficiario: Yup.string()
+                    .nullable()
+                    .test(
+                        "length-check",
+                        "El pago movil debe tener entre 10 y 11 caracteres",
+                        (value) =>
+                            value === null ||
+                            value === undefined ||
+                            value === "" ||
+                            (value.length >= 10 && value.length <= 11)
+                    ),
             });
             this.errorsBeneficiario = {};
             try {
@@ -1065,6 +1075,26 @@ export default {
             if (selectedObj) {
                 $("#codigoIDepositante > .p-dropdown-label").text(
                     selectedObj.name
+                );
+            }
+        },
+        handleTipoC(event) {
+            const selectedObj = this.optionsTipoCuenta.find(
+                (option) => option.id === event.value
+            );
+            if (selectedObj) {
+                $("#tipoCuentaBeneficiario > .p-dropdown-label").text(
+                    selectedObj.valor1
+                );
+            }
+        },
+        handleTipoCD(event) {
+            const selectedObj = this.optionsTipoCuenta.find(
+                (option) => option.id === event.value
+            );
+            if (selectedObj) {
+                $("#tipoCuentaDepositante > .p-dropdown-label").text(
+                    selectedObj.valor1
                 );
             }
         },
