@@ -59,7 +59,7 @@
                     <option value="zinli_ven" data-code="TP-03">Cambiar saldo Zinli en Venezuela</option>
                     <option value="peru_ven" data-code="TP-04-05">Enviar dinero de Perú</option>
                     <option value="col_ven" data-code="TP-06">Enviar dinero de Colombia</option>
-                           <!-- <option value="ven_col" data-code="TP-07">Enviar dinero de Venezuela</option>
+                        <!-- <option value="ven_col" data-code="TP-07">Enviar dinero de Venezuela</option>
                             <option value="zinli" data-code="TP-08">Recargar saldo Zinli</option>
                             <option value="paypal" data-code="TP-09">Recargar saldo PayPal</option> -->
                 </select>
@@ -120,7 +120,7 @@
                     </div>
                     <div class="input-group" style="width: 100% !important;">
                         <input type="number" class="form-control w-100%" id="monto_cambiar_pay_ven"
-                            placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)">
+                            placeholder="Monto a enviar" onkeyup="obtenerValor(this.value)" step="1" min="0" oninput="validarEntero(this)">
                         <div class="input-group-append">
                             <div id=""><img src="{{ asset('img/home/paypal.png') }}" alt=""
                                     style="margin-top: 10px;margin-left: 10px; width: 50px;"></div>

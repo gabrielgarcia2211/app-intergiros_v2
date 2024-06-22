@@ -426,6 +426,7 @@
                                     :class="{
                                         'p-invalid': errors.documento,
                                     }"
+                                    maxlength="15"
                                 />
                             </InputGroup>
                             <small
