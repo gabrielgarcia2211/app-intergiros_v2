@@ -152,20 +152,22 @@ function sumarHoras(cantidadHoras) {
     var minutosIniciales = fecha.getMinutes(); // Guardar los minutos actuales
 
     if (parseInt(cantidadHoras) === 8) {
-        if(fecha.getHours() > 20 && fecha.getHours() < 24) {
+        var diaSemana = fecha.getDay(); // 0 = domingo, 6 = sábado
+        var horaMaxima = (diaSemana === 0 || diaSemana === 6) ? 17 : 20; // 17:00 para sábado y domingo, 20:00 otros días
+        var horaMinima = (diaSemana === 0 || diaSemana === 6) ? 9 : 9; // 9:00 todos los días
+    
+        if (fecha.getHours() > horaMaxima && fecha.getHours() < 24) {
             fecha.setDate(fecha.getDate() + 1);
-            fecha.setHours(6 + parseInt(cantidadHoras),0,0,0);
-        }else 
-            if (fecha.getHours() > 0 && fecha.getHours() < 6) {
-                        fecha.setHours(6 + parseInt(cantidadHoras),0,0,0);
-                }else 
-                    if ((fecha.getHours() + parseInt(cantidadHoras)) > 20) {
-                                var horasExcedidas = (fecha.getHours() + 8) - 20;
-                                fecha.setDate(fecha.getDate() + 1);
-                                fecha.setHours(6 + horasExcedidas, minutosIniciales, 0, 0);
-                        }else {
-                            fecha.setHours(fecha.getHours() + parseInt(cantidadHoras), minutosIniciales, 0, 0);
-                        }
+            fecha.setHours(horaMinima + parseInt(cantidadHoras), 0, 0, 0);
+        } else if (fecha.getHours() > 0 && fecha.getHours() < horaMinima) {
+            fecha.setHours(horaMinima + parseInt(cantidadHoras), 0, 0, 0);
+        } else if ((fecha.getHours() + parseInt(cantidadHoras)) > horaMaxima) {
+            var horasExcedidas = (fecha.getHours() + 8) - horaMaxima;
+            fecha.setDate(fecha.getDate() + 1);
+            fecha.setHours(horaMinima + horasExcedidas, minutosIniciales, 0, 0);
+        } else {
+            fecha.setHours(fecha.getHours() + parseInt(cantidadHoras), minutosIniciales, 0, 0);
+        }
     } else {
         // Si cantidadHoras no es igual a 8, simplemente sumar las horas y mantener los minutos actuales
         fecha.setHours(
@@ -175,6 +177,7 @@ function sumarHoras(cantidadHoras) {
             0
         );
     }
+    
 
     // Obtener el nombre del mes
     var meses = [
@@ -407,6 +410,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const miSelect = document.getElementById("paisesUsdt");
     const tipoCambio = document.getElementById("tipo_cambio_usdt");
     const bancos = document.getElementById("bancos_usdt");
+    const tiempo = document.getElementById("tiempo_transferencia_usdt");
+    const fecha = document.getElementById("usdt-fecha");
 
     miSelect.addEventListener("change", (event) => {
         const valor = event.target.value;
@@ -415,20 +420,28 @@ document.addEventListener("DOMContentLoaded", (event) => {
             case "venezuela":
                 tipoCambio.textContent = "";
                 bancos.textContent = "BDV, pago móvil";
+                tiempo.textContent = "Máximo 8h laborales";
+                fecha.innerText = sumarHoras(8);
                 break;
             case "peru":
                 tipoCambio.textContent = "";
                 bancos.textContent =
                     "BCP, Interbank, BBVA Continental, Scotiabank";
+                tiempo.textContent = "Máximo 24h no laborales";
+                fecha.innerText = sumarHoras(24);
                 break;
             case "peru-dolar":
                 tipoCambio.textContent = "";
                 bancos.textContent =
                     "BCP, Interbank, BBVA Continental, Scotiabank";
+                tiempo.textContent = "Máximo 24h no laborales";
+                fecha.innerText = sumarHoras(24);
                 break;
             case "colombia":
                 tipoCambio.textContent = "";
                 bancos.textContent = "Banco de Bogotá, Bancolombia y Nequi";
+                tiempo.textContent = "Máximo 24h no laborales";
+                fecha.innerText = sumarHoras(24);
                 break;
             default:
                 tipoCambio.textContent = "Ninguno";
@@ -482,6 +495,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const miSelect = document.getElementById("paisesPeru");
     const tipoCambio = document.getElementById("tipo_cambio_peru");
     const bancos = document.getElementById("bancos_peru");
+    const tiempo = document.getElementById("tiempo_transferencia_peru");
+    const fecha = document.getElementById("peru-fecha");
 
     miSelect.addEventListener("change", (event) => {
         const valor = event.target.value;
@@ -489,11 +504,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
         switch (valor) {
             case "venezuela":
                 bancos.textContent = "BDV, pago móvil";
-                tiempo.textContent = "8h laborales";
+                tiempo.textContent = "Máximo 8h laborales";
+                fecha.innerText = sumarHoras(8);
                 break;
             case "colombia":
                 bancos.textContent = "Banco de Bogotá, Bancolombia y Nequi";
-                tiempo.textContent = "8h laborales";
+                tiempo.textContent = "Máximo 24h no laborales";
+                fecha.innerText = sumarHoras(24);
                 break;
             default:
                 tipoCambio.textContent = "Ninguno";
@@ -553,6 +570,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const miSelect = document.getElementById("paisesColombia");
     const tipoCambio = document.getElementById("tipo_cambio_colombia");
     const bancos = document.getElementById("bancos_colombia");
+    const tiempo = document.getElementById("tiempo_transferencia_colombia");
+    const fecha = document.getElementById("colombia-fecha");
     var input = document.getElementById("monto_cambiar_col_ven");
     var error = document.getElementById("error-message-colombia");
     valorCalculadora(input, error, 10000, 1500000, "pesos");
@@ -560,20 +579,26 @@ document.addEventListener("DOMContentLoaded", (event) => {
     miSelect.addEventListener("change", (event) => {
         const valor = event.target.value;
 
-        switch (valor) {
+        switch (valor) { 
             case "venezuela":
                 tipoCambio.textContent = "BS";
                 bancos.textContent = "BDV, pago móvil";
+                tiempo.textContent = "Máximo 8h laborales";
+                fecha.innerText = sumarHoras(8);
                 break;
             case "peru":
                 tipoCambio.textContent = "PEN";
                 bancos.textContent =
                     "BCP, Interbank, BBVA Continental, Scotiabank";
+                tiempo.textContent = "Máximo 24h no laborales";
+                fecha.innerText = sumarHoras(24);
                 break;
             case "peru-dolar":
                 tipoCambio.textContent = "PEN";
                 bancos.textContent =
                     "BCP, Interbank, BBVA Continental, Scotiabank";
+                tiempo.textContent = "Máximo 24h no laborales";
+                fecha.innerText = sumarHoras(24);
                 break;
             default:
                 tipoCambio.textContent = "Ninguno";

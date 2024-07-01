@@ -201,7 +201,7 @@
                     </div>
                     <div class="col-9">
                         <h5>Transferencias en</h5>
-                        <p>Máximo 8h laborales</p>
+                        <p id="tiempo_transferencia_usdt">Máximo 8h laborales</p>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -422,7 +422,7 @@
                     </div>
                     <div class="col-9">
                         <h5>Transferencias en</h5>
-                        <p>Máximo 8h laborales</p>
+                        <p id="tiempo_transferencia_peru">Máximo 8h laborales</p>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -545,7 +545,7 @@
                     </div>
                     <div class="col-9">
                         <h5>Transferencias en</h5>
-                        <p>Máximo 8h laborales</p>
+                        <p id="tiempo_transferencia_colombia">Máximo 8h laborales</p>
                     </div>
                 </div>
                 <div class="row mt-4">
